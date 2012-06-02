@@ -1,6 +1,7 @@
 class Vec2 extends Coordinate {
   const Vec2([num x = 0, num y = 0]) : super(x,y);
 
+
   static Vec2 difference(Coordinate a, Coordinate b) {
     return new Vec2(a.x - b.x, a.y - b.y);
   }
@@ -26,4 +27,5 @@ class Vec2 extends Coordinate {
   num getAngle (Vec2 other) => Math.acos(dot(other));
 
   String toString() => '{"x":${x},"y":${y}}';
+
 }

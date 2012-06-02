@@ -6,7 +6,7 @@ class TestVec2 {
         Expect.equals(3, v.x);
         Expect.equals(2, v.y);
       });
-
+      
       test('should be subtract by other Vec2', (){
         Vec2 v = new Vec2(5,3) - new Vec2(2,1);
         Expect.equals(3, v.x);
@@ -47,6 +47,7 @@ class TestVec2 {
         expect(n.length).approxEquals(4 * Math.SQRT2);
         expect(n.normal.length).approxEquals(1);
       });
+
     });
   }
 }
