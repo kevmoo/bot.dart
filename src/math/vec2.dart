@@ -8,77 +8,35 @@ class Vec2 extends Coordinate {
   static Vec2 difference(Coordinate a, Coordinate b) {
     return new Vec2(a.x - b.x, a.y - b.y);
   }
-<<<<<<< HEAD
 
+  /**
+   * Computes the length of the vector.
+   **/
   num get length() => Math.sqrt(x * x + y * y);
 
   Vec2 get normal() => this.scale(1 / this.length);
 
-  Vec2 operator +(Coordinate other) => new Vec2(x + other.x, y + other.y);
-
-  Vec2 operator -(Coordinate other) => difference(this, other);
-
-  Vec2 operator *(num magnitude) => this.scale(magnitude);
-
-  num getDistance (Coordinate other) => (this - other).length;
-
-  Vec2 scale(num magnitude) => new Vec2(x * magnitude, y * magnitude);
-
-  num dot(Vec2 other) => x * other.x + y * other.y;
-
-  num cross(Vec2 other) => x * other.y - y * other.x;
-
-  num getAngle (Vec2 other) => Math.acos(dot(other));
-=======
-  
   /**
    * Ads a (Coordinate) and returns the result as new (Vec2).
    **/
-  Vec2 operator +(Coordinate other){
-    return new Vec2(x + other.x, y + other.y);
-  }
+  Vec2 operator +(Coordinate other) => new Vec2(x + other.x, y + other.y);
 
   /**
    * Subtract a (Coordinate) and returns the result as new (Vec2).
    **/
-  Vec2 operator -(Coordinate other) { 
-      return new Vec2(x - other.x, y - other.y);
-  } 
- 
+  Vec2 operator -(Coordinate other) => difference(this, other);
+  
   /**
    * Multiply the vector with a (Coordinate) and returns the result as new (Vec2).
    **/
-  Vec2 operator *(Coordinate other) { 
-      return new Vec2(x * other.x, y * other.y);
-  } 
-
-  /**
-   * Divide the vector by a (Coordinate) and returns the result as new (Vec2).
-   **/
-  Vec2 operator /(Coordinate other) { 
-      return new Vec2(x / other.x, y / other.y);
-  } 
-
-
-  Vec2 operator %(Coordinate other) { 
-      return new Vec2(x % other.x, y % other.y);
-  } 
+  Vec2 operator *(num magnitude) => this.scale(magnitude);
 
   /**
    * Computes the distance between the (Coordinate) and the vector.
    **/
-  num getDistance (Coordinate other) {
-    num distX = other.x - x;
-    num distY = other.y - y;
-    return Math.sqrt(distX * distX + distY * distY);
-  }
-  
-  /**
-   * Computes the length of the vector.
-   **/
-  num length () {
-    return getDistance(new Coordinate());
-  }
+  num getDistance (Coordinate other) => (this - other).length;
+
+  Vec2 scale(num magnitude) => new Vec2(x * magnitude, y * magnitude);
 
   /**
    * Computes the dot product with the given vector.
@@ -97,11 +55,9 @@ class Vec2 extends Coordinate {
   num getAngle (Vec2 other) => Math.acos(dot(other));
   
   
-  Vec2 copy() {
+  Vec2 clone() {
     return new Vec2(x, y);
   }
-  
->>>>>>> Docs and new methods for Vec2
 
   String toString() => '{"x":${x},"y":${y}}';
 
