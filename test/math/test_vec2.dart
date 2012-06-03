@@ -6,7 +6,7 @@ class TestVec2 {
         Expect.equals(3, v.x);
         Expect.equals(2, v.y);
       });
-
+      
       test('should be subtract by other Vec2', (){
         Vec2 v = new Vec2(5,3) - new Vec2(2,1);
         Expect.equals(3, v.x);
@@ -33,7 +33,11 @@ class TestVec2 {
       test('should get the distance to another point', (){
         Expect.equals(5, new Vec2(0, 0).getDistance(new Vec2(3, 4)));
       });
-
+      
+      test('should get length of the vector', (){
+        Expect.equals(5, new Vec2(3, 4).length);
+      });
+      
       test('should calc the dot product', (){
         Expect.equals(23, new Vec2(2, 3).dot(new Vec2(4, 5)));
       });
@@ -46,6 +50,13 @@ class TestVec2 {
         var n = new Vec2(4, 4);
         expect(n.length).approxEquals(4 * Math.SQRT2);
         expect(n.normal.length).approxEquals(1);
+      });
+
+      test('should create a copy of itself', (){
+        Vec2 original = new Vec2(1,2);
+        Vec2 copy = original.clone();
+        Expect.equals(copy.x, original.x);
+        Expect.equals(copy.y, original.y);
       });
     });
   }
