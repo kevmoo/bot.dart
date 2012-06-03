@@ -47,6 +47,13 @@ class TestVec2 {
         expect(n.length).approxEquals(4 * Math.SQRT2);
         expect(n.normal.length).approxEquals(1);
       });
+      
+      test('should create a copy of itself', (){
+        Vec2 original = new Vec2(1,2);
+        Vec2 copy = original.copy();
+        Expect.equals(copy.x, original.x);
+        Expect.equals(copy.y, original.y);
+      });
     });
   }
 }
