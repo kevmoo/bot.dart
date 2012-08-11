@@ -28,7 +28,7 @@
 </div>
 <h3>Implements</h3>
 <p>
-<span class="type-box"><span class="icon-interface"></span><a href="../dartlib/Cloneable.html">Cloneable</a></span></p>
+<span class="type-box"><span class="icon-interface"></span><a href="../dartlib/Cloneable.html">Cloneable&lt;T&gt;</a></span></p>
 <h3>Constructors</h3>
 <div class="method"><h4 id="AffineTransform">
 <span class="show-code">Code</span>
@@ -180,6 +180,23 @@ bool operator ==(AffineTransform other) {
 <pre class="source">
 AffineTransform rotate(num theta, num x, num y) {
   return this.concatenate(new AffineTransform.rotate(theta, x, y));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="scale">
+<span class="show-code">Code</span>
+<a href="../dartlib/AffineTransform.html">AffineTransform</a> <strong>scale</strong>(num sx, num sy) <a class="anchor-link" href="#scale"
+              title="Permalink to AffineTransform.scale">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+AffineTransform scale(num sx, num sy) {
+  _m00 *= sx;
+  _m10 *= sx;
+  _m01 *= sy;
+  _m11 *= sy;
+  return this;
 }
 </pre>
 </div>
