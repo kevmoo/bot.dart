@@ -28,7 +28,7 @@
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../dartlib/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../dartlib/PropertyObject.html">PropertyObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>PElement</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../dartlib/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../dartlib/AttachableObjectImpl.html">AttachableObjectImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>PElement</strong></span></p>
 <h3>Subclasses</h3>
 <p>
 <span class="type-box"><span class="icon-class"></span><a href="../dartlib_retained/ElementParentImpl.html">ElementParentImpl</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../dartlib_retained/Shape.html">Shape</a></span></p>
@@ -212,7 +212,7 @@ num <strong>height</strong>() <a class="anchor-link" href="#height"
 <div class="doc">
 
 <pre class="source">
-num get height() =&gt; _height;
+num get height =&gt; _height;
 </pre>
 </div>
 </div>
@@ -239,7 +239,18 @@ void invalidateDraw(){
 <div class="doc">
 
 <pre class="source">
-core.EventRoot&lt;core.EventArgs&gt; get invalidated() =&gt; _invalidatedEventHandle;
+core.EventRoot&lt;core.EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="parent">
+<span class="show-code">Code</span>
+<a href="../dartlib_retained/ElementParent.html">ElementParent</a> <strong>parent</strong>() <a class="anchor-link" href="#parent"
+              title="Permalink to PElement.parent">#</a></h4>
+<div class="doc">
+
+<pre class="source">
+ElementParent get parent =&gt; _parent;
 </pre>
 </div>
 </div>
@@ -264,7 +275,7 @@ void registerParent(ElementParent parent) {
 <div class="doc">
 
 <pre class="source">
-core.Size get size() =&gt; new core.Size(_width, _height);
+core.Size get size =&gt; new core.Size(_width, _height);
 </pre>
 </div>
 </div>
@@ -288,7 +299,7 @@ void update(){
 <div class="doc">
 
 <pre class="source">
-core.EventRoot&lt;core.EventArgs&gt; get updated() =&gt; _updatedEventHandle;
+core.EventRoot&lt;core.EventArgs&gt; get updated =&gt; _updatedEventHandle;
 </pre>
 </div>
 </div>
@@ -299,7 +310,7 @@ int <strong>visualChildCount</strong>() <a class="anchor-link" href="#visualChil
 <div class="doc">
 
 <pre class="source">
-int get visualChildCount() =&gt; 0;
+int get visualChildCount =&gt; 0;
 </pre>
 </div>
 </div>
@@ -310,7 +321,7 @@ num <strong>width</strong>() <a class="anchor-link" href="#width"
 <div class="doc">
 
 <pre class="source">
-num get width() =&gt; _width;
+num get width =&gt; _width;
 </pre>
 </div>
 </div>
