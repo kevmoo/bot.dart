@@ -294,7 +294,7 @@ T first([Func1&lt;T, bool&gt; f = null]) {
  }
  final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
  if(!iter.hasNext) {
-   throw const InvalidOperationException('The input sequence is empty.');
+   throw const InvalidOperationError('The input sequence is empty.');
  }
  return iter.next();
 }
@@ -572,11 +572,11 @@ T single([Func1&lt;T, bool&gt; f = null]) {
  }
  final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
  if(!iter.hasNext) {
-   throw const InvalidOperationException('The input sequence is empty.');
+   throw const InvalidOperationError('The input sequence is empty.');
  }
  final value = iter.next();
  if(iter.hasNext) {
-   throw const InvalidOperationException('The input sequence contains more than one element.');
+   throw const InvalidOperationError('The input sequence contains more than one element.');
  }
  return value;
 }
@@ -599,7 +599,7 @@ T singleOrDefault([Func1&lt;T, bool&gt; f = null, T defaultValue = null]) {
  }
  final value = iter.next();
  if(iter.hasNext) {
-   throw const InvalidOperationException('The input sequence contains more than one element.');
+   throw const InvalidOperationError('The input sequence contains more than one element.');
  }
  return value;
 }

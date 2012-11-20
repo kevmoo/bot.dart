@@ -57,7 +57,7 @@ void <strong>requireArgumentNotNull</strong>(argument, [String argName = ""]) <a
 <pre class="source">
 void requireArgumentNotNull(argument, [String argName = ""]) {
  if(argument == null) {
-   throw new NullArgumentException(argName);
+   throw new NullArgumentError(argName);
  }
 }
 </pre>
@@ -72,7 +72,7 @@ void <strong>requireArgument</strong>(bool truth, [String arg = "", String messa
 void requireArgument(bool truth, [String arg = "", String message]) {
  if(!truth) {
    if(message != null) {
-     throw new DetailedIllegalArgumentException(arg, message);
+     throw new DetailedArgumentError(arg, message);
    } else {
      throw new ArgumentError(arg);
    }
@@ -389,19 +389,19 @@ Enumerable $(Iterable source) {
 <h3>Exceptions</h3>
           <div class="type">
           <h4>
-            <a href="bot/DetailedIllegalArgumentException.html"><strong>DetailedIllegalArgumentException</strong></a>
+            <a href="bot/DetailedArgumentError.html"><strong>DetailedArgumentError</strong></a>
           </h4>
           </div>
           
           <div class="type">
           <h4>
-            <a href="bot/InvalidOperationException.html"><strong>InvalidOperationException</strong></a>
+            <a href="bot/InvalidOperationError.html"><strong>InvalidOperationError</strong></a>
           </h4>
           </div>
           
           <div class="type">
           <h4>
-            <a href="bot/NullArgumentException.html"><strong>NullArgumentException</strong></a>
+            <a href="bot/NullArgumentError.html"><strong>NullArgumentError</strong></a>
           </h4>
           </div>
           
