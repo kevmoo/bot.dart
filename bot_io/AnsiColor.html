@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Color class / bot_io Library / Dart Documentation</title>
+        <title>AnsiColor class / bot_io Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_io" data-type="Color">
+        <body data-library="bot_io" data-type="AnsiColor">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/Color.html">Color</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/AnsiColor.html">AnsiColor</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -26,24 +26,26 @@
         
 </div>
 <div class="content">
-        <h2><strong>Color</strong>
+        <h2><strong>AnsiColor</strong>
           class
         </h2>
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
+<p><a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">More details</a></p>
 <pre class="source">
-class Color {
+class AnsiColor {
  const String _NO_COLOR = '\u001b[0m';
- static const BLACK = const Color._internal(0, 'black');
- static const BLUE = const Color._internal(4, 'blue');
- static const RED = const Color._internal(1, 'red');
- static const GREEN = const Color._internal(2, 'green');
+ static const BLACK = const AnsiColor._internal(0, 'black');
+ static const RED = const AnsiColor._internal(1, 'red');
+ static const GREEN = const AnsiColor._internal(2, 'green');
+ static const YELLOW = const AnsiColor._internal(3, 'yellow');
+ static const BLUE = const AnsiColor._internal(4, 'blue');
 
  final int id;
  final String name;
 
- const Color._internal(this.id, this.name);
+ const AnsiColor._internal(this.id, this.name);
 
  String toString() =&gt; "$name ($id)";
 
@@ -62,11 +64,11 @@ class Color {
 <button class="show-code">Code</button>
 const         <strong>BLACK</strong> <a class="anchor-link"
             href="#BLACK"
-            title="Permalink to Color.BLACK">#</a>
+            title="Permalink to AnsiColor.BLACK">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-static const BLACK = const Color._internal(0, 'black');
+static const BLACK = const AnsiColor._internal(0, 'black');
 </pre>
 </div>
 </div>
@@ -74,11 +76,11 @@ static const BLACK = const Color._internal(0, 'black');
 <button class="show-code">Code</button>
 const         <strong>BLUE</strong> <a class="anchor-link"
             href="#BLUE"
-            title="Permalink to Color.BLUE">#</a>
+            title="Permalink to AnsiColor.BLUE">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-static const BLUE = const Color._internal(4, 'blue');
+static const BLUE = const AnsiColor._internal(4, 'blue');
 </pre>
 </div>
 </div>
@@ -86,11 +88,11 @@ static const BLUE = const Color._internal(4, 'blue');
 <button class="show-code">Code</button>
 const         <strong>GREEN</strong> <a class="anchor-link"
             href="#GREEN"
-            title="Permalink to Color.GREEN">#</a>
+            title="Permalink to AnsiColor.GREEN">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-static const GREEN = const Color._internal(2, 'green');
+static const GREEN = const AnsiColor._internal(2, 'green');
 </pre>
 </div>
 </div>
@@ -98,11 +100,23 @@ static const GREEN = const Color._internal(2, 'green');
 <button class="show-code">Code</button>
 const         <strong>RED</strong> <a class="anchor-link"
             href="#RED"
-            title="Permalink to Color.RED">#</a>
+            title="Permalink to AnsiColor.RED">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-static const RED = const Color._internal(1, 'red');
+static const RED = const AnsiColor._internal(1, 'red');
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="YELLOW">
+<button class="show-code">Code</button>
+const         <strong>YELLOW</strong> <a class="anchor-link"
+            href="#YELLOW"
+            title="Permalink to AnsiColor.YELLOW">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+static const YELLOW = const AnsiColor._internal(3, 'yellow');
 </pre>
 </div>
 </div>
@@ -113,7 +127,7 @@ static const RED = const Color._internal(1, 'red');
 <button class="show-code">Code</button>
 final int         <strong>id</strong> <a class="anchor-link"
             href="#id"
-            title="Permalink to Color.id">#</a>
+            title="Permalink to AnsiColor.id">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
@@ -125,7 +139,7 @@ final int id;
 <button class="show-code">Code</button>
 final String         <strong>name</strong> <a class="anchor-link"
             href="#name"
-            title="Permalink to Color.name">#</a>
+            title="Permalink to AnsiColor.name">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
@@ -137,7 +151,7 @@ final String name;
 <button class="show-code">Code</button>
 final String         <strong>shellValue</strong> <a class="anchor-link"
             href="#shellValue"
-            title="Permalink to Color.shellValue">#</a>
+            title="Permalink to AnsiColor.shellValue">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
@@ -151,7 +165,7 @@ String get shellValue =&gt; '\u001b[3${id}m';
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
 String <strong>toString</strong>() <a class="anchor-link" href="#toString"
-              title="Permalink to Color.toString">#</a></h4>
+              title="Permalink to AnsiColor.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
@@ -164,7 +178,7 @@ String toString() =&gt; "$name ($id)";
 <div class="method"><h4 id="wrap">
 <button class="show-code">Code</button>
 String <strong>wrap</strong>(String input) <a class="anchor-link" href="#wrap"
-              title="Permalink to Color.wrap">#</a></h4>
+              title="Permalink to AnsiColor.wrap">#</a></h4>
 <div class="doc">
 <pre class="source">
 String wrap(String input) {
