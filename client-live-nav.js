@@ -62,7 +62,7 @@ $$.ConstantMap = {"": ["length>", "_jsObject", "_liblib0$_keys"],
 },
  forEach$1: function(f) {
   var t1 = this._liblib0$_keys;
-  $.getInterceptor(t1).forEach$1(t1, new $.ConstantMap_forEach_anon(f, this));
+  $.getInterceptor(t1).forEach$1(t1, new $.ConstantMap_forEach_anon(this, f));
 },
  get$isEmpty: function() {
   return $.eq(this.length, 0);
@@ -1388,8 +1388,8 @@ $$.JSString = {"": [],
   return receiver;
 },
  get$hashCode: function(receiver) {
-  var i, hash, hash0, hash1;
-  for (i = 0, hash = 0; i < receiver.length; ++i, hash = hash1) {
+  var hash, i, hash0, hash1;
+  for (hash = 0, i = 0; i < receiver.length; ++i, hash = hash1) {
     hash0 = 536870911 & hash + receiver.charCodeAt(i);
     hash1 = 536870911 & hash0 + (524287 & hash0) << 10;
     hash1 = hash1 ^ (hash1 >> 6);
@@ -1975,7 +1975,7 @@ $$._DataAttributeMap = {"": ["$$dom_attributes"],
 },
  forEach$1: function(f) {
   var t1 = this.$$dom_attributes;
-  $.getInterceptor(t1).forEach$1(t1, new $._DataAttributeMap_forEach_anon(this, f));
+  $.getInterceptor(t1).forEach$1(t1, new $._DataAttributeMap_forEach_anon(f, this));
 },
  get$keys: function() {
   var keys, t1;
@@ -4969,17 +4969,17 @@ $$.invokeClosure_anon = {"": ["closure_0"],
 }
 };
 
-$$.invokeClosure_anon0 = {"": ["arg1_2", "closure_1"],
+$$.invokeClosure_anon0 = {"": ["closure_2", "arg1_1"],
  "super": "Closure",
  call$0: function() {
-  return this.closure_1.call$1(this.arg1_2);
+  return this.closure_2.call$1(this.arg1_1);
 }
 };
 
-$$.invokeClosure_anon1 = {"": ["arg1_5", "arg2_4", "closure_3"],
+$$.invokeClosure_anon1 = {"": ["arg2_5", "closure_4", "arg1_3"],
  "super": "Closure",
  call$0: function() {
-  return this.closure_3.call$2(this.arg1_5, this.arg2_4);
+  return this.closure_4.call$2(this.arg1_3, this.arg2_5);
 }
 };
 
@@ -5047,26 +5047,26 @@ $$._DataAttributeMap_keys_anon = {"": ["this_1", "keys_0"],
 }
 };
 
-$$._DataAttributeMap_forEach_anon = {"": ["this_1", "f_0"],
+$$._DataAttributeMap_forEach_anon = {"": ["f_1", "this_0"],
  "super": "Closure",
  call$2: function(key, value) {
   if ($.getInterceptor(key).startsWith$1(key, 'data-') === true)
-    this.f_0.call$2($.getInterceptor(key).substring$1(key, 5), value);
+    this.f_1.call$2($.getInterceptor(key).substring$1(key, 5), value);
 }
 };
 
-$$.ConstantMap_forEach_anon = {"": ["f_1", "this_0"],
+$$.ConstantMap_forEach_anon = {"": ["this_1", "f_0"],
  "super": "Closure",
  call$1: function(key) {
-  return this.f_1.call$2(key, $.index(this.this_0, key));
+  return this.f_0.call$2(key, $.index(this.this_1, key));
 }
 };
 
-$$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["copies_3", "values_2"],
+$$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["values_3", "copies_2"],
  "super": "Closure",
  call$1: function(value) {
   var t1, length$, i, t2;
-  t1 = this.values_2;
+  t1 = this.values_3;
   if (typeof t1 !== 'string' && (typeof t1 !== 'object' || t1 === null || t1.constructor !== Array && !t1.is$JavaScriptIndexingBehavior()))
     return this.call$1$bailout0(1, value, t1);
   length$ = t1.length;
@@ -5076,7 +5076,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["copies_3", "
       return i;
   }
   $.getInterceptor(t1).add$1(t1, value);
-  t1 = this.copies_3;
+  t1 = this.copies_2;
   $.getInterceptor(t1).add$1(t1, null);
   return length$;
 },
@@ -5094,7 +5094,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["copies_3", "
   }
   switch (state0) {
     case 0:
-      t1 = this.values_2;
+      t1 = this.values_3;
     case 1:
       state0 = 0;
       length$ = $.getInterceptor(t1).get$length(t1);
@@ -5107,7 +5107,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["copies_3", "
           return i;
       }
       $.getInterceptor(t1).add$1(t1, value);
-      t1 = this.copies_3;
+      t1 = this.copies_2;
       $.getInterceptor(t1).add$1(t1, null);
       return length$;
   }
@@ -5134,7 +5134,7 @@ $$._convertDartToNative_PrepareForStructuredClone_cleanupSlots = {"": [],
 }
 };
 
-$$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "writeSlot_7", "findSlot_6"],
+$$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "readSlot_7", "findSlot_6"],
  "super": "Closure",
  call$1: function(e) {
   var t1, slot, t2, length$, copy, t3, i, element, elementCopy, copy0, j, t4;
@@ -5165,13 +5165,13 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
     return e;
   if (typeof e === 'object' && e !== null && e.is$Map()) {
     slot = this.findSlot_6.call$1(e);
-    t1.copy_1 = this.readSlot_8.call$1(slot);
+    t1.copy_1 = this.readSlot_7.call$1(slot);
     t2 = t1.copy_1;
     if (!(t2 == null))
       return t2;
     t1.copy_1 = {};
-    this.writeSlot_7.call$2(slot, t1.copy_1);
-    $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(t1, this));
+    this.writeSlot_8.call$2(slot, t1.copy_1);
+    $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(this, t1));
     return t1.copy_1;
   }
   if (typeof e === 'object' && e !== null && (e.constructor === Array || e.is$List())) {
@@ -5179,17 +5179,17 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
       return this.call$1$bailout(1, e);
     length$ = e.length;
     slot = this.findSlot_6.call$1(e);
-    t2 = this.readSlot_8;
+    t2 = this.readSlot_7;
     copy = t2.call$1(slot);
     if (!(copy == null)) {
       if (true === copy) {
         copy = new Array(length$);
-        this.writeSlot_7.call$2(slot, copy);
+        this.writeSlot_8.call$2(slot, copy);
       }
       return copy;
     }
     t1 = e instanceof Array && !!!(e.immutable$list);
-    t3 = this.writeSlot_7;
+    t3 = this.writeSlot_8;
     if (t1) {
       t3.call$2(slot, true);
       for (i = 0; i < length$; ++i) {
@@ -5231,7 +5231,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
       i = 0;
     }
     if (typeof copy !== 'object' || copy === null || (copy.constructor !== Array || !!copy.immutable$list) && !copy.is$JavaScriptIndexingBehavior())
-      return this.call$1$bailout(4, copy, e, i, length$);
+      return this.call$1$bailout(4, e, copy, i, length$);
     for (; i < length$; ++i) {
       if (i >= e.length)
         throw $.ioore(i);
@@ -5267,8 +5267,8 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
     case 4:
       length$ = env3;
       i = env2;
-      e = env1;
-      copy = env0;
+      copy = env1;
+      e = env0;
       break;
   }
   switch (state0) {
@@ -5300,13 +5300,13 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
         return e;
       if (typeof e === 'object' && e !== null && e.is$Map()) {
         slot = this.findSlot_6.call$1(e);
-        t1.copy_1 = this.readSlot_8.call$1(slot);
+        t1.copy_1 = this.readSlot_7.call$1(slot);
         t2 = t1.copy_1;
         if (!(t2 == null))
           return t2;
         t1.copy_1 = {};
-        this.writeSlot_7.call$2(slot, t1.copy_1);
-        $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(t1, this));
+        this.writeSlot_8.call$2(slot, t1.copy_1);
+        $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(this, t1));
         return t1.copy_1;
       }
     default:
@@ -5320,17 +5320,17 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
           case 2:
             state0 = 0;
             slot = this.findSlot_6.call$1(e);
-            t3 = this.readSlot_8;
+            t3 = this.readSlot_7;
             copy = t3.call$1(slot);
             if (!(copy == null)) {
               if (true === copy) {
                 copy = new Array(length$);
-                this.writeSlot_7.call$2(slot, copy);
+                this.writeSlot_8.call$2(slot, copy);
               }
               return copy;
             }
             t1 = e instanceof Array && !!!(e.immutable$list);
-            t2 = this.writeSlot_7;
+            t2 = this.writeSlot_8;
           case 3:
             if (state0 === 3 || state0 === 0 && t1)
               switch (state0) {
@@ -5387,7 +5387,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["readSlot_8", "wr
 }
 };
 
-$$._convertDartToNative_PrepareForStructuredClone_walk_anon = {"": ["box_0", "walk_9"],
+$$._convertDartToNative_PrepareForStructuredClone_walk_anon = {"": ["walk_9", "box_0"],
  "super": "Closure",
  call$2: function(key, value) {
   this.box_0.copy_1[key] = this.walk_9.call$1(value);
@@ -5638,18 +5638,18 @@ $.KeywordState_computeKeywordStateTable = function(start, strings, offset, lengt
     t3 = strings[i];
     t3 = $.getInterceptor(t3).get$length(t3);
     if (typeof t3 !== 'number')
-      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, t2, chunk, chunkStart, isLeaf, i);
+      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, i, t2, chunk, chunkStart, isLeaf);
     if (t3 === start)
       isLeaf = true;
     t3 = strings[i];
     t3 = $.getInterceptor(t3).get$length(t3);
     if (typeof t3 !== 'number')
-      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, offset, length$, result, isLeaf, t1, t3, t2, chunk, chunkStart, i);
+      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, offset, length$, result, isLeaf, t1, t3, i, t2, chunk, chunkStart);
     if (t3 > start) {
       t3 = strings[i];
       c = $.getInterceptor(t3).charCodeAt$1(t3, start);
       if (c !== (c | 0))
-        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, t2, chunk, chunkStart, i, c);
+        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, i, t2, chunk, chunkStart, c);
       if (chunk !== c) {
         if (chunkStart !== -1) {
           t3 = chunk - 97;
@@ -6085,6 +6085,10 @@ $._ExceptionImplementation$ = function(message) {
   return new $._ExceptionImplementation(message);
 };
 
+$.StackOverflowError$ = function() {
+  return new $.StackOverflowError();
+};
+
 $.Maps_mapToString = function(m) {
   var result = $.StringBuffer_StringBuffer('');
   $.Maps__emitMap(m, result, $._ListImpl_List(null));
@@ -6105,16 +6109,16 @@ $.DOMApplicationCacheEvents$ = function(_ptr) {
   return new $.DOMApplicationCacheEvents(_ptr);
 };
 
-$.StackOverflowError$ = function() {
-  return new $.StackOverflowError();
-};
-
 $.add = function(a, b) {
   return typeof a === 'number' && typeof b === 'number' ? a + b : $.add$slow(a, b);
 };
 
 $.sub = function(a, b) {
   return typeof a === 'number' && typeof b === 'number' ? a - b : $.sub$slow(a, b);
+};
+
+$.RuntimeError$ = function(message) {
+  return new $.RuntimeError(message);
 };
 
 $.gt = function(a, b) {
@@ -6151,18 +6155,6 @@ $.index = function(a, index) {
   return $.index$slow(a, index);
 };
 
-$.indexSet = function(a, index, value) {
-  var key;
-  if (a.constructor === Array && !a.immutable$list) {
-    key = index >>> 0;
-    if (key === index && key < a.length) {
-      a[key] = value;
-      return;
-    }
-  }
-  $.indexSet$slow(a, index, value);
-};
-
 $.checkNumbers = function(a, b) {
   if (typeof a === 'number')
     if (typeof b === 'number')
@@ -6182,12 +6174,29 @@ $.add$slow = function(a, b) {
   return a.operator$add$1(b);
 };
 
-$.RuntimeError$ = function(message) {
-  return new $.RuntimeError(message);
+$.indexSet = function(a, index, value) {
+  var key;
+  if (a.constructor === Array && !a.immutable$list) {
+    key = index >>> 0;
+    if (key === index && key < a.length) {
+      a[key] = value;
+      return;
+    }
+  }
+  $.indexSet$slow(a, index, value);
 };
 
 $._HttpRequestFactoryProvider_createHttpRequest_get = function(url, onComplete) {
   return $._HttpRequestUtils_get(url, onComplete, false);
+};
+
+$.tdiv = function(a, b) {
+  var t1;
+  if ($.checkNumbers(a, b)) {
+    t1 = a / b;
+    return $.getInterceptor(t1).truncate$0(t1);
+  }
+  return a.operator$tdiv$1(b);
 };
 
 $.eq = function(a, b) {
@@ -6210,15 +6219,6 @@ $.eqB = function(a, b) {
     if (!!a.operator$eq$1)
       return a.operator$eq$1(b) === true;
   return a === b;
-};
-
-$.tdiv = function(a, b) {
-  var t1;
-  if ($.checkNumbers(a, b)) {
-    t1 = a / b;
-    return $.getInterceptor(t1).truncate$0(t1);
-  }
-  return a.operator$tdiv$1(b);
 };
 
 $.gt$slow = function(a, b) {
@@ -6260,12 +6260,6 @@ $.and = function(a, b) {
   if ($.checkNumbers(a, b))
     return (a & b) >>> 0;
   return a.operator$and$1(b);
-};
-
-$.sub$slow = function(a, b) {
-  if ($.checkNumbers(a, b))
-    return a - b;
-  return a.operator$sub$1(b);
 };
 
 $.index$slow = function(a, index) {
@@ -6412,15 +6406,10 @@ $.makeLiteralMap = function(keyValuePairs) {
   return result;
 };
 
-$.invokeClosure = function(closure, isolate, numberOfArguments, arg1, arg2) {
-  if ($.eqB(numberOfArguments, 0))
-    return new $.invokeClosure_anon(closure).call$0();
-  else if ($.eqB(numberOfArguments, 1))
-    return new $.invokeClosure_anon0(arg1, closure).call$0();
-  else if ($.eqB(numberOfArguments, 2))
-    return new $.invokeClosure_anon1(arg1, arg2, closure).call$0();
-  else
-    throw $.$$throw($.Exception_Exception('Unsupported number of arguments for wrapped closure'));
+$.sub$slow = function(a, b) {
+  if ($.checkNumbers(a, b))
+    return a - b;
+  return a.operator$sub$1(b);
 };
 
 $.convertDartClosureToJS = function(closure, arity) {
@@ -6435,6 +6424,17 @@ $.convertDartClosureToJS = function(closure, arity) {
   };
   closure.$identity = function$;
   return function$;
+};
+
+$.invokeClosure = function(closure, isolate, numberOfArguments, arg1, arg2) {
+  if ($.eqB(numberOfArguments, 0))
+    return new $.invokeClosure_anon(closure).call$0();
+  else if ($.eqB(numberOfArguments, 1))
+    return new $.invokeClosure_anon0(closure, arg1).call$0();
+  else if ($.eqB(numberOfArguments, 2))
+    return new $.invokeClosure_anon1(arg2, closure, arg1).call$0();
+  else
+    throw $.$$throw($.Exception_Exception('Unsupported number of arguments for wrapped closure'));
 };
 
 $.setRuntimeTypeInfo = function(target, typeInfo) {
@@ -7618,9 +7618,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     throw $.ioore(index5);
   el5 = a[index5];
   if ($.gtB(compare.call$2(el1, el2), 0)) {
-    t0 = el1;
-    el1 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
     t0 = el5;
@@ -7628,9 +7628,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el4 = t0;
   }
   if ($.gtB(compare.call$2(el1, el3), 0)) {
-    t0 = el1;
-    el1 = el3;
-    el3 = t0;
+    t0 = el3;
+    el3 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -7638,9 +7638,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el1, el4), 0)) {
-    t0 = el1;
-    el1 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el3, el4), 0)) {
     t0 = el4;
@@ -7731,8 +7731,8 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
                 throw $.ioore(great);
               a[less] = a[great];
               a[great] = ak;
-              less = less0;
               great = great0;
+              less = less0;
               break;
             } else {
               if (great >= t2)
@@ -7929,11 +7929,11 @@ $._convertDartToNative_PrepareForStructuredClone = function(value) {
   var values, copies, t1, t2, t3, t4, copy;
   values = [];
   copies = [];
-  t1 = new $._convertDartToNative_PrepareForStructuredClone_findSlot(copies, values);
+  t1 = new $._convertDartToNative_PrepareForStructuredClone_findSlot(values, copies);
   t2 = new $._convertDartToNative_PrepareForStructuredClone_readSlot(copies);
   t3 = new $._convertDartToNative_PrepareForStructuredClone_writeSlot(copies);
   t4 = new $._convertDartToNative_PrepareForStructuredClone_cleanupSlots();
-  copy = new $._convertDartToNative_PrepareForStructuredClone_walk(t2, t3, t1).call$1(value);
+  copy = new $._convertDartToNative_PrepareForStructuredClone_walk(t3, t2, t1).call$1(value);
   t4.call$0();
   return copy;
 };
@@ -8001,10 +8001,10 @@ $.StringMatch$0 = function(searchText, text, matchOffset, matchEnd) {
 };
 
 $.classifySource = function(text) {
-  var html, token, inString, whitespaceOffset, whitespaceOffset0, kind, escapedText, stringClass;
+  var html, token, whitespaceOffset, inString, whitespaceOffset0, kind, escapedText, stringClass;
   html = $.StringBuffer_StringBuffer('');
   token = $.StringScanner$(text, true).tokenize$0();
-  for (inString = false, whitespaceOffset = 0; !$.eqB(token.get$kind(), 0); whitespaceOffset = whitespaceOffset0) {
+  for (whitespaceOffset = 0, inString = false; !$.eqB(token.get$kind(), 0); whitespaceOffset = whitespaceOffset0) {
     $.getInterceptor(html).add$1(html, $.getInterceptor(text).substring$2(text, whitespaceOffset, token.get$charOffset()));
     whitespaceOffset0 = $.add(token.get$charOffset(), token.get$slowCharCount());
     switch (token.get$kind()) {
@@ -8320,9 +8320,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     throw $.ioore(index5);
   el5 = a[index5];
   if ($.gtB(compare.call$2(el1, el2), 0)) {
-    t0 = el1;
-    el1 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
     t0 = el5;
@@ -8330,9 +8330,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el4 = t0;
   }
   if ($.gtB(compare.call$2(el1, el3), 0)) {
-    t0 = el1;
-    el1 = el3;
-    el3 = t0;
+    t0 = el3;
+    el3 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -8340,9 +8340,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el1, el4), 0)) {
-    t0 = el1;
-    el1 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el1;
+    el1 = t0;
   }
   if ($.gtB(compare.call$2(el3, el4), 0)) {
     t0 = el4;
@@ -8413,8 +8413,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
                 throw $.ioore(great);
               $.indexSet(a, less, a[great]);
               $.indexSet(a, great, ak);
-              less = less0;
               great = great0;
+              less = less0;
               break;
             } else {
               if (great >= t2)
@@ -8464,8 +8464,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
                 throw $.ioore(great);
               $.indexSet(a, less, a[great]);
               $.indexSet(a, great, ak);
-              less = less0;
               great = great0;
+              less = less0;
             } else {
               if (great >= t2)
                 throw $.ioore(great);
@@ -8542,8 +8542,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
                 throw $.ioore(great);
               $.indexSet(a, less, a[great]);
               $.indexSet(a, great, ak);
-              less = less0;
               great = great0;
+              less = less0;
             } else {
               if (great >= t2)
                 throw $.ioore(great);
@@ -8563,11 +8563,11 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
 $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, env2, env3, env4, env5, env6, env7, env8, env9, env10, env11) {
   switch (state0) {
     case 1:
-      i = env11;
-      isLeaf = env10;
-      chunkStart = env9;
-      chunk = env8;
-      t2 = env7;
+      isLeaf = env11;
+      chunkStart = env10;
+      chunk = env9;
+      t2 = env8;
+      i = env7;
       t1 = env6;
       result = env5;
       t3 = env4;
@@ -8577,10 +8577,10 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       start = env0;
       break;
     case 2:
-      i = env11;
-      chunkStart = env10;
-      chunk = env9;
-      t2 = env8;
+      chunkStart = env11;
+      chunk = env10;
+      t2 = env9;
+      i = env8;
       t3 = env7;
       t1 = env6;
       isLeaf = env5;
@@ -8592,10 +8592,10 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       break;
     case 3:
       c = env11;
-      i = env10;
-      chunkStart = env9;
-      chunk = env8;
-      t2 = env7;
+      chunkStart = env10;
+      chunk = env9;
+      t2 = env8;
+      i = env7;
       t1 = env6;
       isLeaf = env5;
       result = env4;
@@ -8938,6 +8938,7 @@ $.CTC23 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC73 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC167, 10, 62);
 $.CTC49 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC97, 6, 124);
 $.CTC68 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC213, 0, 130);
+$.PERIOD_INFO = Isolate.$isolateProperties.CTC25;
 $.KEYWORD_INFO = Isolate.$isolateProperties.CTC88;
 $.EOF_INFO = Isolate.$isolateProperties.CTC9;
 $.IDENTIFIER_INFO = Isolate.$isolateProperties.CTC80;
@@ -9255,7 +9256,6 @@ $.SLASH_INFO = Isolate.$isolateProperties.CTC36;
 $.STAR_INFO = Isolate.$isolateProperties.CTC56;
 $.TILDE_SLASH_INFO = Isolate.$isolateProperties.CTC40;
 $.POSTFIX_PRECEDENCE = 14;
-$.PERIOD_INFO = Isolate.$isolateProperties.CTC25;
 Isolate.$lazy($, 'quoteRegExp', 'quoteRegExp', 'get$quoteRegExp', function() {
   return $.JSSyntaxRegExp$('[-[\\]{}()*+?.,\\\\^$|#\\s]', false, false);
 });
