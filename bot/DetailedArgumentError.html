@@ -33,37 +33,39 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class DetailedArgumentError extends ArgumentError {
+class DetailedArgumentError implements ArgumentError {
  final argument;
+ final details;
 
- DetailedArgumentError([String arg = '', String message]) :
-   this.argument = arg,
-   super(message);
-
- String toString() {
-   if(message == null || message.length == 0) {
-     return "Illegal argument: $argument";
-   } else {
-     return "Illegal argument: $argument -- $message";
-   }
+ DetailedArgumentError(this.argument, this.details) {
+   requireArgumentNotNullOrEmpty(argument, 'argument');
+   requireArgumentNotNullOrEmpty(details, 'details');
  }
+
+ String get message =&gt; 'Illegal argument: "$argument" -- $details';
+
+ String toString() =&gt; message;
 }
 </pre>
 </div>
-<h3>Extends</h3>
+<h3>Subclasses</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../dart_core/ArgumentError.html">ArgumentError</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>DetailedArgumentError</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/NullArgumentError.html">NullArgumentError</a></span></p>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_core/ArgumentError.html">ArgumentError</a></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="DetailedArgumentError">
 <button class="show-code">Code</button>
-new <strong>DetailedArgumentError</strong>([String arg = '', String message]) <a class="anchor-link" href="#DetailedArgumentError"
+new <strong>DetailedArgumentError</strong>(argument, details) <a class="anchor-link" href="#DetailedArgumentError"
               title="Permalink to DetailedArgumentError.DetailedArgumentError">#</a></h4>
 <div class="doc">
 <pre class="source">
-DetailedArgumentError([String arg = '', String message]) :
- this.argument = arg,
- super(message);
+DetailedArgumentError(this.argument, this.details) {
+ requireArgumentNotNullOrEmpty(argument, 'argument');
+ requireArgumentNotNullOrEmpty(details, 'details');
+}
 </pre>
 </div>
 </div>
@@ -79,6 +81,18 @@ final         <strong>argument</strong> <a class="anchor-link"
         <div class="doc">
 <pre class="source">
 final argument;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="details">
+<button class="show-code">Code</button>
+final         <strong>details</strong> <a class="anchor-link"
+            href="#details"
+            title="Permalink to DetailedArgumentError.details">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+final details;
 </pre>
 </div>
 </div>
@@ -106,13 +120,7 @@ String <strong>toString</strong>() <a class="anchor-link" href="#toString"
 <p>Returns a string representation of this object.</p>
 <div class="docs-inherited-from">docs inherited from Object </div></div>
 <pre class="source">
-String toString() {
- if(message == null || message.length == 0) {
-   return "Illegal argument: $argument";
- } else {
-   return "Illegal argument: $argument -- $message";
- }
-}
+String toString() =&gt; message;
 </pre>
 </div>
 </div>

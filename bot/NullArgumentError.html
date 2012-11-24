@@ -33,20 +33,14 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class NullArgumentError implements ArgumentError {
- final String argument;
-
- NullArgumentError(this.argument);
-
- String get message =&gt; 'Null argument: $argument';
-
- String toString() =&gt; message;
+class NullArgumentError extends DetailedArgumentError {
+ NullArgumentError(String argument) : super(argument, "cannot be null");
 }
 </pre>
 </div>
-<h3>Implements</h3>
+<h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../dart_core/ArgumentError.html">ArgumentError</a></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>NullArgumentError</strong></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="NullArgumentError">
@@ -55,45 +49,57 @@ new <strong>NullArgumentError</strong>(String argument) <a class="anchor-link" h
               title="Permalink to NullArgumentError.NullArgumentError">#</a></h4>
 <div class="doc">
 <pre class="source">
-NullArgumentError(this.argument);
+NullArgumentError(String argument) : super(argument, "cannot be null");
 </pre>
 </div>
 </div>
 </div>
-<div>
+<div class="inherited">
 <h3>Properties</h3>
-<div class="field"><h4 id="argument">
+<div class="field inherited"><h4 id="argument">
 <button class="show-code">Code</button>
-final String         <strong>argument</strong> <a class="anchor-link"
+final         <strong>argument</strong> <a class="anchor-link"
             href="#argument"
             title="Permalink to NullArgumentError.argument">#</a>
         </h4>
-        <div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a> </div><div class="doc">
 <pre class="source">
-final String argument;
+final argument;
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="message">
+<div class="field inherited"><h4 id="details">
 <button class="show-code">Code</button>
-final String         <strong>message</strong> <a class="anchor-link"
+final         <strong>details</strong> <a class="anchor-link"
+            href="#details"
+            title="Permalink to NullArgumentError.details">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a> </div><div class="doc">
+<pre class="source">
+final details;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="message">
+<button class="show-code">Code</button>
+final         <strong>message</strong> <a class="anchor-link"
             href="#message"
             title="Permalink to NullArgumentError.message">#</a>
         </h4>
-        <div class="doc">
+        <div class="inherited-from">inherited from ArgumentError </div><div class="doc">
 <pre class="source">
-String get message =&gt; 'Null argument: $argument';
+final message;
 </pre>
 </div>
 </div>
 </div>
-<div>
+<div class="inherited">
 <h3>Methods</h3>
-<div class="method"><h4 id="toString">
+<div class="method inherited"><h4 id="toString">
 <button class="show-code">Code</button>
 String <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to NullArgumentError.toString">#</a></h4>
-<div class="doc">
+<div class="inherited-from">inherited from <a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a> </div><div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
 <div class="docs-inherited-from">docs inherited from Object </div></div>

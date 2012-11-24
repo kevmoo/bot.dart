@@ -34,7 +34,9 @@
 <div class="doc">
 <pre class="source">
 class Util {
- static int getHashCode(Iterable&lt;Hashable&gt; source) {
+ static int getHashCode(Iterable source) {
+   requireArgumentNotNull(source, 'source');
+
    int hash = 0;
    for (final h in source) {
      int next = h == null ? 0 : h.hashCode;
@@ -46,6 +48,12 @@ class Util {
    hash ^= hash &gt;&gt; 11;
    return 0x1fffffff &amp; (hash + ((0x00003fff &amp; hash) &lt;&lt; 15));
  }
+
+ static List&lt;String&gt; splitLines(String input) {
+   requireArgumentNotNull(input, 'input');
+   final split = '\n';
+   return input.split(split);
+ }
 }
 </pre>
 </div>
@@ -53,11 +61,13 @@ class Util {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="getHashCode">
 <button class="show-code">Code</button>
-int <strong>getHashCode</strong>(Iterable&lt;Hashable&gt; source) <a class="anchor-link" href="#getHashCode"
+int <strong>getHashCode</strong>(Iterable source) <a class="anchor-link" href="#getHashCode"
               title="Permalink to Util.getHashCode">#</a></h4>
 <div class="doc">
 <pre class="source">
-static int getHashCode(Iterable&lt;Hashable&gt; source) {
+static int getHashCode(Iterable source) {
+ requireArgumentNotNull(source, 'source');
+
  int hash = 0;
  for (final h in source) {
    int next = h == null ? 0 : h.hashCode;
@@ -68,6 +78,20 @@ static int getHashCode(Iterable&lt;Hashable&gt; source) {
  hash = 0x1fffffff &amp; (hash + ((0x03ffffff &amp; hash) &lt;&lt; 3));
  hash ^= hash &gt;&gt; 11;
  return 0x1fffffff &amp; (hash + ((0x00003fff &amp; hash) &lt;&lt; 15));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="splitLines">
+<button class="show-code">Code</button>
+List&lt;String&gt; <strong>splitLines</strong>(String input) <a class="anchor-link" href="#splitLines"
+              title="Permalink to Util.splitLines">#</a></h4>
+<div class="doc">
+<pre class="source">
+static List&lt;String&gt; splitLines(String input) {
+ requireArgumentNotNull(input, 'input');
+ final split = '\n';
+ return input.split(split);
 }
 </pre>
 </div>

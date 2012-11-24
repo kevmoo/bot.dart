@@ -29,6 +29,21 @@
 <h2><strong>bot</strong> library</h2>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="protected">
+<button class="show-code">Code</button>
+const         <strong>protected</strong> <a class="anchor-link"
+            href="#protected"
+            title="Permalink to protected">#</a>
+        </h4>
+        <div class="doc">
+<p>An annotation used to mark a field, getter, setter, or method, as one that
+should only be accessed by subclasses.
+DARTBUG http://code.google.com/p/dart/issues/detail?id=6119</p>
+<pre class="source">
+const protected = const _Protected();
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="rnd">
 <button class="show-code">Code</button>
 final Random         <strong>rnd</strong> <a class="anchor-link"
@@ -49,52 +64,6 @@ math.Random get rnd {
 </div>
 <div>
 <h3>Functions</h3>
-<div class="method"><h4 id="requireArgumentNotNull">
-<button class="show-code">Code</button>
-void <strong>requireArgumentNotNull</strong>(argument, [String argName = ""]) <a class="anchor-link" href="#requireArgumentNotNull"
-              title="Permalink to requireArgumentNotNull">#</a></h4>
-<div class="doc">
-<pre class="source">
-void requireArgumentNotNull(argument, [String argName = ""]) {
- if(argument == null) {
-   throw new NullArgumentError(argName);
- }
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="requireArgument">
-<button class="show-code">Code</button>
-void <strong>requireArgument</strong>(bool truth, [String arg = "", String message]) <a class="anchor-link" href="#requireArgument"
-              title="Permalink to requireArgument">#</a></h4>
-<div class="doc">
-<pre class="source">
-void requireArgument(bool truth, [String arg = "", String message]) {
- if(!truth) {
-   if(message != null) {
-     throw new DetailedArgumentError(arg, message);
-   } else {
-     throw new ArgumentError(arg);
-   }
- }
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="require">
-<button class="show-code">Code</button>
-void <strong>require</strong>(bool truth, [String message = '']) <a class="anchor-link" href="#require"
-              title="Permalink to require">#</a></h4>
-<div class="doc">
-<pre class="source">
-void require(bool truth, [String message = '']) {
- if(!truth) {
-   throw new Exception(message);
- }
-}
-</pre>
-</div>
-</div>
 <div class="method"><h4 id="isValidNumber">
 <button class="show-code">Code</button>
 bool <strong>isValidNumber</strong>(num value) <a class="anchor-link" href="#isValidNumber"
@@ -130,6 +99,68 @@ Enumerable $(Iterable source) {
    return source;
  } else {
    return new Enumerable.fromIterable(source);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="requireArgumentNotNullOrEmpty">
+<button class="show-code">Code</button>
+void <strong>requireArgumentNotNullOrEmpty</strong>(String argument, String argName) <a class="anchor-link" href="#requireArgumentNotNullOrEmpty"
+              title="Permalink to requireArgumentNotNullOrEmpty">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireArgumentNotNullOrEmpty(String argument, String argName) {
+ _metaRequireArgumentNotNullOrEmpty(argName);
+ if(argument == null) {
+   throw new NullArgumentError(argName);
+ }
+ else if(argument.length == 0) {
+   throw new DetailedArgumentError(argName, 'cannot be an empty string');
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="requireArgumentNotNull">
+<button class="show-code">Code</button>
+void <strong>requireArgumentNotNull</strong>(argument, String argName) <a class="anchor-link" href="#requireArgumentNotNull"
+              title="Permalink to requireArgumentNotNull">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireArgumentNotNull(argument, String argName) {
+ _metaRequireArgumentNotNullOrEmpty(argName);
+ if(argument == null) {
+   throw new NullArgumentError(argName);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="requireArgument">
+<button class="show-code">Code</button>
+void <strong>requireArgument</strong>(bool truth, String argName, [String message]) <a class="anchor-link" href="#requireArgument"
+              title="Permalink to requireArgument">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireArgument(bool truth, String argName, [String message]) {
+ _metaRequireArgumentNotNullOrEmpty(argName);
+ if(!truth) {
+   throw new DetailedArgumentError(argName, message);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="require">
+<button class="show-code">Code</button>
+void <strong>require</strong>(bool truth, [String message]) <a class="anchor-link" href="#require"
+              title="Permalink to require">#</a></h4>
+<div class="doc">
+<pre class="source">
+void require(bool truth, [String message]) {
+ if(!truth) {
+   throw new Exception(message);
  }
 }
 </pre>

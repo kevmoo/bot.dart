@@ -49,6 +49,9 @@ abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt;
  num sum() {
    num theSum = 0;
    for(final n in this) {
+     if(n == null) {
+       throw const InvalidOperationError('Input contained a null item');
+     }
      theSum += n;
    }
    return theSum;
@@ -58,6 +61,9 @@ abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt;
    int theCount = 0;
    num theSum = 0;
    for(final n in this) {
+     if(n == null) {
+       throw const InvalidOperationError('Input contained a null item');
+     }
      theSum += n;
      theCount++;
    }
@@ -67,6 +73,9 @@ abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt;
  num max() {
    num theMax = null;
    for(final n in this) {
+     if(n == null) {
+       throw const InvalidOperationError('Input contained a null item');
+     }
      theMax = theMax == null ? n : math.max(theMax, n);
    }
    return theMax;
@@ -75,6 +84,9 @@ abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt;
  num min() {
    num theMin = null;
    for(final n in this) {
+     if(n == null) {
+       throw const InvalidOperationError('Input contained a null item');
+     }
      theMin = theMin == null ? n : math.min(theMin, n);
    }
    return theMin;
@@ -163,6 +175,9 @@ num average() {
  int theCount = 0;
  num theSum = 0;
  for(final n in this) {
+   if(n == null) {
+     throw const InvalidOperationError('Input contained a null item');
+   }
    theSum += n;
    theCount++;
  }
@@ -407,6 +422,9 @@ num <strong>max</strong>() <a class="anchor-link" href="#max"
 num max() {
  num theMax = null;
  for(final n in this) {
+   if(n == null) {
+     throw const InvalidOperationError('Input contained a null item');
+   }
    theMax = theMax == null ? n : math.max(theMax, n);
  }
  return theMax;
@@ -423,6 +441,9 @@ num <strong>min</strong>() <a class="anchor-link" href="#min"
 num min() {
  num theMin = null;
  for(final n in this) {
+   if(n == null) {
+     throw const InvalidOperationError('Input contained a null item');
+   }
    theMin = theMin == null ? n : math.min(theMin, n);
  }
  return theMin;
@@ -554,6 +575,9 @@ num <strong>sum</strong>() <a class="anchor-link" href="#sum"
 num sum() {
  num theSum = 0;
  for(final n in this) {
+   if(n == null) {
+     throw const InvalidOperationError('Input contained a null item');
+   }
    theSum += n;
  }
  return theSum;
