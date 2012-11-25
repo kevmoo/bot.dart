@@ -53,6 +53,7 @@ class Array2d&lt;T&gt; extends ListBase&lt;T&gt; {
    requireArgument(height &gt; 0, 'height');
    final s = new List&lt;T&gt;();
    s.insertRange(0, width * height, initialValue);
+   assert(s.length == width * height);
    return new Array2d.wrap(width, s);
  }
 
@@ -83,6 +84,11 @@ class Array2d&lt;T&gt; extends ListBase&lt;T&gt; {
  void operator []=(int index, T value) {
    _source[index] = value;
  }
+
+ // TODO: test
+ //  - especially equality across instances, rows, etc
+ ListBase&lt;ListBase&lt;T&gt;&gt; get rows =&gt;
+     new _Array2dRows(this);
 
  T get(int x, int y) {
    final i = _getIndex(x, y);
@@ -145,6 +151,7 @@ factory Array2d(int width, int height, [T initialValue]) {
  requireArgument(height &gt; 0, 'height');
  final s = new List&lt;T&gt;();
  s.insertRange(0, width * height, initialValue);
+ assert(s.length == width * height);
  return new Array2d.wrap(width, s);
 }
 </pre>
@@ -234,6 +241,19 @@ final int         <strong>length</strong> <a class="anchor-link"
 <div class="docs-inherited-from">docs inherited from <a href="../bot/ListBase.html">ListBase</a>&lt;<a href="../bot/Array2d.html">T</a>&gt; </div></div>
 <pre class="source">
 int get length =&gt; _source.length;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="rows">
+<button class="show-code">Code</button>
+final <a href="../bot/ListBase.html">ListBase</a>&lt;<a href="../bot/ListBase.html">ListBase</a>&lt;<a href="../bot/Array2d.html">T</a>&gt;&gt;         <strong>rows</strong> <a class="anchor-link"
+            href="#rows"
+            title="Permalink to Array2d&lt;T&gt;.rows">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+ListBase&lt;ListBase&lt;T&gt;&gt; get rows =&gt;
+   new _Array2dRows(this);
 </pre>
 </div>
 </div>
