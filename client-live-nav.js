@@ -1981,7 +1981,7 @@ $$._DataAttributeMap = {"": ["$$dom_attributes"],
   var keys, t1;
   keys = $._ListImpl_List(null);
   t1 = this.$$dom_attributes;
-  $.getInterceptor(t1).forEach$1(t1, new $._DataAttributeMap_keys_anon(this, keys));
+  $.getInterceptor(t1).forEach$1(t1, new $._DataAttributeMap_keys_anon(keys, this));
   return keys;
 },
  get$length: function() {
@@ -3924,7 +3924,7 @@ $$.AbstractScanner = {"": [],
   } else
     isDynamicBuiltIn = false;
   if (typeof next !== 'number')
-    return this.tokenizeIdentifier$3$bailout(2, start, allowDollar, isDynamicBuiltIn, next);
+    return this.tokenizeIdentifier$3$bailout(2, start, allowDollar, next, isDynamicBuiltIn);
   for (isAscii = true; true; isDynamicBuiltIn = false) {
     if (!($.leB(97, next) && $.leB(next, 122)))
       if (!($.leB(65, next) && $.leB(next, 90)))
@@ -3975,8 +3975,8 @@ $$.AbstractScanner = {"": [],
       next = env0;
       break;
     case 2:
-      next = env3;
-      isDynamicBuiltIn = env2;
+      isDynamicBuiltIn = env3;
+      next = env2;
       allowDollar = env1;
       start = env0;
       break;
@@ -5036,12 +5036,12 @@ $$.KeywordState_KEYWORD_STATE_anon = {"": [],
 }
 };
 
-$$._DataAttributeMap_keys_anon = {"": ["this_1", "keys_0"],
+$$._DataAttributeMap_keys_anon = {"": ["keys_1", "this_0"],
  "super": "Closure",
  call$2: function(key, value) {
   var t1;
   if ($.getInterceptor(key).startsWith$1(key, 'data-') === true) {
-    t1 = this.keys_0;
+    t1 = this.keys_1;
     $.getInterceptor(t1).add$1(t1, $.getInterceptor(key).substring$1(key, 5));
   }
 }
@@ -5204,7 +5204,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
             t3.call$2(slot, copy0);
           }
           if (typeof copy0 !== 'object' || copy0 === null || (copy0.constructor !== Array || !!copy0.immutable$list) && !copy0.is$JavaScriptIndexingBehavior())
-            return this.call$1$bailout(3, e, t3, elementCopy, length$, i, copy0, slot, t2, copy);
+            return this.call$1$bailout(3, e, t3, elementCopy, length$, copy0, slot, t2, i, copy);
           for (t1 = e.length, t2 = copy0.length, j = 0; j < i; ++j) {
             if (j >= t1)
               throw $.ioore(j);
@@ -5231,7 +5231,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
       i = 0;
     }
     if (typeof copy !== 'object' || copy === null || (copy.constructor !== Array || !!copy.immutable$list) && !copy.is$JavaScriptIndexingBehavior())
-      return this.call$1$bailout(4, e, copy, i, length$);
+      return this.call$1$bailout(4, e, length$, copy, i);
     for (; i < length$; ++i) {
       if (i >= e.length)
         throw $.ioore(i);
@@ -5255,19 +5255,19 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
       break;
     case 3:
       copy = env8;
-      t3 = env7;
-      slot = env6;
-      copy0 = env5;
-      i = env4;
+      i = env7;
+      t3 = env6;
+      slot = env5;
+      copy0 = env4;
       length$ = env3;
       elementCopy = env2;
       t2 = env1;
       e = env0;
       break;
     case 4:
-      length$ = env3;
-      i = env2;
-      copy = env1;
+      i = env3;
+      copy = env2;
+      length$ = env1;
       e = env0;
       break;
   }
@@ -5411,6 +5411,10 @@ $$.BoundClosure0 = {'':
 'super': 'Closure',
 call$1: function(p0) { return this.self[this.target](p0); }
 };
+$.IDBRequestEvents$ = function(_ptr) {
+  return new $.IDBRequestEvents(_ptr);
+};
+
 $._AllMatchesIterable$ = function(_re, _str) {
   return new $._AllMatchesIterable(_re, _str);
 };
@@ -6458,6 +6462,14 @@ $.RuntimeError$ = function(message) {
   return new $.RuntimeError(message);
 };
 
+$.StackOverflowError$ = function() {
+  return new $.StackOverflowError();
+};
+
+$._ExceptionImplementation$ = function(message) {
+  return new $._ExceptionImplementation(message);
+};
+
 $.throwCyclicInit = function(staticName) {
   throw $.$$throw($.RuntimeError$('Cyclic initialization for static ' + $.S(staticName)));
 };
@@ -6860,14 +6872,6 @@ $.SearchText$ = function(searchText) {
     t2 = t3;
   }
   return new $.SearchText(searchText, t1, t2);
-};
-
-$._ExceptionImplementation$ = function(message) {
-  return new $._ExceptionImplementation(message);
-};
-
-$.StackOverflowError$ = function() {
-  return new $.StackOverflowError();
 };
 
 $.coreSort = function(l, compare) {
@@ -8196,10 +8200,6 @@ $.IDBOpenDBRequestEvents$ = function(_ptr) {
   return new $.IDBOpenDBRequestEvents(_ptr);
 };
 
-$.IDBRequestEvents$ = function(_ptr) {
-  return new $.IDBRequestEvents(_ptr);
-};
-
 $._Sort_insertionSort_$bailout = function(state0, a, left, right, compare) {
   var i, el, j, t1, t2, j0;
   for (i = left + 1; i <= right; ++i) {
@@ -8927,8 +8927,8 @@ $.CTC70 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC220 = new Isolate.$isolateProperties.Creates('=List|=Object|num|String');
 $.CTC50 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC194, 5, 144);
 $.CTC55 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC191, 1, 148);
-$.CTC32 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC186, 0, 159);
 $.CTC37 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC185, 0, 158);
+$.CTC32 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC186, 0, 159);
 $.CTC25 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC172, 14, 46);
 $.CTC75 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC202, 1, 136);
 $.CTC78 = new Isolate.$isolateProperties.StringWrapper('expected identifier');
@@ -8938,6 +8938,7 @@ $.CTC23 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC73 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC167, 10, 62);
 $.CTC49 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC97, 6, 124);
 $.CTC68 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC213, 0, 130);
+$.QUESTION_INFO = Isolate.$isolateProperties.CTC16;
 $.BAR_BAR_INFO = Isolate.$isolateProperties.CTC47;
 $.AMPERSAND_AMPERSAND_INFO = Isolate.$isolateProperties.CTC50;
 $.BAR_INFO = Isolate.$isolateProperties.CTC49;
@@ -9070,9 +9071,9 @@ $.$$CLOSE_CURLY_BRACKET = 125;
 $._idbKey = '=List|=Object|num|String';
 $.$$TILDE = 126;
 $._annotation_Creates_IDBKey = Isolate.$isolateProperties.CTC220;
-$.$$BAR = 124;
 $._annotation_Returns_IDBKey = Isolate.$isolateProperties.CTC219;
 $.$$NBSP = 160;
+$.$$BAR = 124;
 $.$$z = 122;
 $._getTypeNameOf = null;
 $.KeyName_UP = 'Up';
@@ -9255,7 +9256,6 @@ $.PLUS_EQ_INFO = Isolate.$isolateProperties.CTC61;
 $.SLASH_EQ_INFO = Isolate.$isolateProperties.CTC35;
 $.TILDE_SLASH_EQ_INFO = Isolate.$isolateProperties.CTC39;
 $.STAR_EQ_INFO = Isolate.$isolateProperties.CTC55;
-$.QUESTION_INFO = Isolate.$isolateProperties.CTC16;
 Isolate.$lazy($, 'quoteRegExp', 'quoteRegExp', 'get$quoteRegExp', function() {
   return $.JSSyntaxRegExp$('[-[\\]{}()*+?.,\\\\^$|#\\s]', false, false);
 });
