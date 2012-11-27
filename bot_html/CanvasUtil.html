@@ -43,6 +43,14 @@ class CanvasUtil {
    return new Size(canvasElement.width, canvasElement.height);
  }
 
+ static void setTransform(CanvasRenderingContext2D ctx, AffineTransform tx){
+   requireArgumentNotNull(ctx, 'ctx');
+   requireArgumentNotNull(tx, 'tx');
+
+   ctx.setTransform(tx.scaleX, tx.shearY, tx.shearX,
+     tx.scaleY, tx.translateX, tx.translateY);
+ }
+
  static void transform(CanvasRenderingContext2D ctx, AffineTransform tx){
    requireArgumentNotNull(ctx, 'ctx');
    requireArgumentNotNull(tx, 'tx');
@@ -161,6 +169,22 @@ static final num kappa = 0.55228474983079339840225163227959743809289583383593;
 <pre class="source">
 static Size getCanvasSize(CanvasElement canvasElement) {
  return new Size(canvasElement.width, canvasElement.height);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setTransform">
+<button class="show-code">Code</button>
+void <strong>setTransform</strong>(CanvasRenderingContext2D ctx, <a href="../bot/AffineTransform.html">AffineTransform</a> tx) <a class="anchor-link" href="#setTransform"
+              title="Permalink to CanvasUtil.setTransform">#</a></h4>
+<div class="doc">
+<pre class="source">
+static void setTransform(CanvasRenderingContext2D ctx, AffineTransform tx){
+ requireArgumentNotNull(ctx, 'ctx');
+ requireArgumentNotNull(tx, 'tx');
+
+ ctx.setTransform(tx.scaleX, tx.shearY, tx.shearX,
+   tx.scaleY, tx.translateX, tx.translateY);
 }
 </pre>
 </div>
