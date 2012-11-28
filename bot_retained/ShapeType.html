@@ -33,15 +33,17 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class ShapeType {
+class ShapeType extends _RetainedEnum {
  static const ShapeType rect = const ShapeType._internal("Rect");
  static const ShapeType ellipse = const ShapeType._internal("Ellipse");
- final String name;
 
- const ShapeType._internal(this.name);
+ const ShapeType._internal(String name) : super(name);
 }
 </pre>
 </div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/_RetainedEnum.html">_RetainedEnum</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>ShapeType</strong></span></p>
 <div>
 <h3>Static Properties</h3>
 <div class="field"><h4 id="ellipse">
@@ -69,17 +71,33 @@ static const ShapeType rect = const ShapeType._internal("Rect");
 </div>
 </div>
 </div>
-<div>
+<div class="inherited">
 <h3>Properties</h3>
-<div class="field"><h4 id="name">
+<div class="field inherited"><h4 id="name">
 <button class="show-code">Code</button>
 final String         <strong>name</strong> <a class="anchor-link"
             href="#name"
             title="Permalink to ShapeType.name">#</a>
         </h4>
-        <div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/_RetainedEnum.html">_RetainedEnum</a> </div><div class="doc">
 <pre class="source">
 final String name;
+</pre>
+</div>
+</div>
+</div>
+<div class="inherited">
+<h3>Methods</h3>
+<div class="method inherited"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to ShapeType.toString">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/_RetainedEnum.html">_RetainedEnum</a> </div><div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString() =&gt; name;
 </pre>
 </div>
 </div>
