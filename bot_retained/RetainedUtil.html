@@ -34,6 +34,51 @@
 <div class="doc">
 <pre class="source">
 class RetainedUtil {
+
+ static Vector getOffsetVector(Size parentSize, Size childSize,
+                        HorizontalAlignment horizontalAlignment,
+                        VerticalAlignment verticalAlignment,
+                        Vector offset) {
+   requireArgumentNotNull(parentSize, 'parentSize');
+   requireArgumentNotNull(childSize, 'childSize');
+   requireArgumentNotNull(horizontalAlignment, 'horizontalAlignment');
+   requireArgumentNotNull(verticalAlignment, 'verticalAlignment');
+   requireArgumentNotNull(offset, 'offset');
+
+   num x = offset.x, y = offset.y;
+
+
+   switch (horizontalAlignment) {
+     case HorizontalAlignment.LEFT:
+       //no-op
+       break;
+     case HorizontalAlignment.CENTER:
+       x += (parentSize.width - childSize.width) / 2;
+       break;
+     case HorizontalAlignment.RIGHT:
+       x += parentSize.width - childSize.width;
+       break;
+     default:
+       throw new ArgumentError('horizontalAlignment value not expected $horizontalAlignment');
+   }
+
+   switch (verticalAlignment) {
+     case VerticalAlignment.TOP:
+       //no-op
+       break;
+     case VerticalAlignment.MIDDLE:
+       y += (parentSize.height - childSize.height) / 2;
+       break;
+     case VerticalAlignment.BOTTOM:
+       y += parentSize.height - childSize.height;
+       break;
+     default:
+       throw new ArgumentError('verticalAlignment value not expected $verticalAlignment');
+   }
+
+   return new Vector(x, y);
+ }
+
  static List&lt;PElement&gt; hitTest(Stage stage, Coordinate point){
    return _hitTest(stage.rootElement, point);
  }
@@ -86,6 +131,58 @@ class RetainedUtil {
 </div>
 <div>
 <h3>Static Methods</h3>
+<div class="method"><h4 id="getOffsetVector">
+<button class="show-code">Code</button>
+<a href="../bot/Vector.html">Vector</a> <strong>getOffsetVector</strong>(<a href="../bot/Size.html">Size</a> parentSize, <a href="../bot/Size.html">Size</a> childSize, <a href="../bot_retained/HorizontalAlignment.html">HorizontalAlignment</a> horizontalAlignment, <a href="../bot_retained/VerticalAlignment.html">VerticalAlignment</a> verticalAlignment, <a href="../bot/Vector.html">Vector</a> offset) <a class="anchor-link" href="#getOffsetVector"
+              title="Permalink to RetainedUtil.getOffsetVector">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Vector getOffsetVector(Size parentSize, Size childSize,
+                      HorizontalAlignment horizontalAlignment,
+                      VerticalAlignment verticalAlignment,
+                      Vector offset) {
+ requireArgumentNotNull(parentSize, 'parentSize');
+ requireArgumentNotNull(childSize, 'childSize');
+ requireArgumentNotNull(horizontalAlignment, 'horizontalAlignment');
+ requireArgumentNotNull(verticalAlignment, 'verticalAlignment');
+ requireArgumentNotNull(offset, 'offset');
+
+ num x = offset.x, y = offset.y;
+
+
+ switch (horizontalAlignment) {
+   case HorizontalAlignment.LEFT:
+     //no-op
+     break;
+   case HorizontalAlignment.CENTER:
+     x += (parentSize.width - childSize.width) / 2;
+     break;
+   case HorizontalAlignment.RIGHT:
+     x += parentSize.width - childSize.width;
+     break;
+   default:
+     throw new ArgumentError('horizontalAlignment value not expected $horizontalAlignment');
+ }
+
+ switch (verticalAlignment) {
+   case VerticalAlignment.TOP:
+     //no-op
+     break;
+   case VerticalAlignment.MIDDLE:
+     y += (parentSize.height - childSize.height) / 2;
+     break;
+   case VerticalAlignment.BOTTOM:
+     y += parentSize.height - childSize.height;
+     break;
+   default:
+     throw new ArgumentError('verticalAlignment value not expected $verticalAlignment');
+ }
+
+ return new Vector(x, y);
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="hitTest">
 <button class="show-code">Code</button>
 List&lt;<a href="../bot_retained/PElement.html">PElement</a>&gt; <strong>hitTest</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, <a href="../bot/Coordinate.html">Coordinate</a> point) <a class="anchor-link" href="#hitTest"

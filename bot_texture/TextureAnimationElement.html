@@ -103,6 +103,26 @@ TextureAnimationElement(num width, num height, this._textureData) :
 </div>
 <div class="inherited">
 <h3>Properties</h3>
+<div class="field inherited"><h4 id="alpha">
+<button class="show-code">Code</button>
+num         <strong>alpha</strong> <a class="anchor-link"
+            href="#alpha"
+            title="Permalink to TextureAnimationElement.alpha">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+<pre class="source">
+num get alpha =&gt; _alpha;
+</pre>
+<pre class="source">
+void set alpha(num value) {
+ requireArgument(isValidNumber(value), 'value');
+ requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
+ _alpha = value;
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="cacheEnabled">
 <button class="show-code">Code</button>
 final bool         <strong>cacheEnabled</strong> <a class="anchor-link"

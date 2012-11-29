@@ -51,6 +51,10 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
    return new AffineTransform().setToScale(sx, sy);
  }
 
+ factory AffineTransform.fromTranslat(num x, num y) {
+   return new AffineTransform().setToTranslation(x, y);
+ }
+
  num get scaleX =&gt; _m00;
 
  num get scaleY =&gt; _m11;
@@ -158,6 +162,19 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
        (_m10 * _m02 - _m00 * _m12) / det);
  }
 
+ AffineTransform lerpTx(AffineTransform other, num x) {
+   requireArgumentNotNull(other, 'other');
+
+   final m00 = lerp(scaleX, other.scaleX, x);
+   final m10 = lerp(shearY, other.shearY, x);
+   final m01 = lerp(shearX, other.shearX, x);
+   final m11 = lerp(scaleY, other.scaleY, x);
+   final m02 = lerp(translateX, other.translateX, x);
+   final m12 = lerp(translateY, other.translateY, x);
+
+   return new AffineTransform(m00, m10, m01, m11, m02, m12);
+ }
+
  AffineTransform clone(){
    return new AffineTransform(_m00, _m10, _m01, _m11, _m02, _m12);
  }
@@ -215,6 +232,18 @@ factory <strong>AffineTransform.fromScale</strong>(sx, sy) <a class="anchor-link
 <pre class="source">
 factory AffineTransform.fromScale(sx, sy) {
  return new AffineTransform().setToScale(sx, sy);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="AffineTransform.fromTranslat">
+<button class="show-code">Code</button>
+factory <strong>AffineTransform.fromTranslat</strong>(num x, num y) <a class="anchor-link" href="#AffineTransform.fromTranslat"
+              title="Permalink to AffineTransform.AffineTransform.fromTranslat">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory AffineTransform.fromTranslat(num x, num y) {
+ return new AffineTransform().setToTranslation(x, y);
 }
 </pre>
 </div>
@@ -412,6 +441,27 @@ AffineTransform createInverse() {
      _m00 / det,
      (_m01 * _m12 - _m11 * _m02) / det,
      (_m10 * _m02 - _m00 * _m12) / det);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lerpTx">
+<button class="show-code">Code</button>
+<a href="../bot/AffineTransform.html">AffineTransform</a> <strong>lerpTx</strong>(<a href="../bot/AffineTransform.html">AffineTransform</a> other, num x) <a class="anchor-link" href="#lerpTx"
+              title="Permalink to AffineTransform.lerpTx">#</a></h4>
+<div class="doc">
+<pre class="source">
+AffineTransform lerpTx(AffineTransform other, num x) {
+ requireArgumentNotNull(other, 'other');
+
+ final m00 = lerp(scaleX, other.scaleX, x);
+ final m10 = lerp(shearY, other.shearY, x);
+ final m01 = lerp(shearX, other.shearX, x);
+ final m11 = lerp(scaleY, other.scaleY, x);
+ final m02 = lerp(translateX, other.translateX, x);
+ final m12 = lerp(translateY, other.translateY, x);
+
+ return new AffineTransform(m00, m10, m01, m11, m02, m12);
 }
 </pre>
 </div>

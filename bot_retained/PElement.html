@@ -39,7 +39,7 @@ abstract class PElement extends AttachableObject {
  final EventHandle&lt;EventArgs&gt; _invalidatedEventHandle = new EventHandle&lt;EventArgs&gt;();
  CanvasElement _cacheCanvas;
 
- num _width, _height, _alpha;
+ num _width, _height, _alpha = 1;
  Size _lastDrawSize;
  bool clip = false;
  ElementParent _parent;
@@ -68,6 +68,15 @@ abstract class PElement extends AttachableObject {
    assert(value.isValid);
    _width = value.width;
    _height = value.height;
+   invalidateDraw();
+ }
+
+ num get alpha =&gt; _alpha;
+
+ void set alpha(num value) {
+   requireArgument(isValidNumber(value), 'value');
+   requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
+   _alpha = value;
    invalidateDraw();
  }
 
@@ -208,13 +217,21 @@ abstract class PElement extends AttachableObject {
  }
 
  void _drawInternal(CanvasRenderingContext2D ctx){
-   if (_alpha != null) {
+   if (_alpha != 1) {
+     assert(_alpha != null);
+     assert(_alpha &gt;= 0);
+     assert(_alpha &lt;= 1);
+     assert(ctx.globalAlpha == 1);
      ctx.globalAlpha = _alpha;
    }
 
+   // possible for invalidateParent to be called during draw
+   // which signals that another frame is wanted for animating content
+   // so we're setting _lastDrawSize here
+   _lastDrawSize = this.size;
+
    // call the abstract draw method
    drawOverride(ctx);
-   _lastDrawSize = this.size;
  }
 
  bool _isClipped(AffineTransform tx, CanvasRenderingContext2D ctx){
@@ -237,7 +254,7 @@ abstract class PElement extends AttachableObject {
 <span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>PElement</strong></span></p>
 <h3>Subclasses</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ImgElement.html">ImgElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ParentElement.html">ParentElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Shape.html">Shape</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_texture/TextureAnimationElement.html">TextureAnimationElement</a></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ImgElement.html">ImgElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ParentElement.html">ParentElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Shape.html">Shape</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/SubCanvasElement.html">SubCanvasElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/TextElement.html">TextElement</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_texture/TextureAnimationElement.html">TextureAnimationElement</a></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="PElement">
@@ -253,6 +270,26 @@ PElement(this._width, this._height, [this.cacheEnabled = false]);
 </div>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="alpha">
+<button class="show-code">Code</button>
+num         <strong>alpha</strong> <a class="anchor-link"
+            href="#alpha"
+            title="Permalink to PElement.alpha">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+num get alpha =&gt; _alpha;
+</pre>
+<pre class="source">
+void set alpha(num value) {
+ requireArgument(isValidNumber(value), 'value');
+ requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
+ _alpha = value;
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="cacheEnabled">
 <button class="show-code">Code</button>
 final bool         <strong>cacheEnabled</strong> <a class="anchor-link"

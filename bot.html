@@ -64,6 +64,24 @@ math.Random get rnd {
 </div>
 <div>
 <h3>Functions</h3>
+<div class="method"><h4 id="lerp">
+<button class="show-code">Code</button>
+<strong>lerp</strong>(num a, num b, num x) <a class="anchor-link" href="#lerp"
+              title="Permalink to lerp">#</a></h4>
+<div class="doc">
+<p>Performs linear interpolation between values a and b. Returns the value
+between a and b proportional to x (when x is between 0 and 1. When x is
+outside this range, the return value is a linear extrapolation).</p>
+<pre class="source">
+lerp(num a, num b, num x) {
+ requireArgument(isValidNumber(a), 'a');
+ requireArgument(isValidNumber(b), 'b');
+ requireArgument(isValidNumber(x), 'x');
+ return a + x * (b - a);
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="isValidNumber">
 <button class="show-code">Code</button>
 bool <strong>isValidNumber</strong>(num value) <a class="anchor-link" href="#isValidNumber"
