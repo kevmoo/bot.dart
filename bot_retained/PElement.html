@@ -217,13 +217,10 @@ abstract class PElement extends AttachableObject {
  }
 
  void _drawInternal(CanvasRenderingContext2D ctx){
-   if (_alpha != 1) {
-     assert(_alpha != null);
-     assert(_alpha &gt;= 0);
-     assert(_alpha &lt;= 1);
-     assert(ctx.globalAlpha == 1);
-     ctx.globalAlpha = _alpha;
-   }
+   assert(_alpha != null);
+   assert(_alpha &gt;= 0);
+   assert(_alpha &lt;= 1);
+   ctx.globalAlpha = _alpha;
 
    // possible for invalidateParent to be called during draw
    // which signals that another frame is wanted for animating content
