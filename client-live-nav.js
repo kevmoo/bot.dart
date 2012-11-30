@@ -3686,17 +3686,17 @@ $$.AbstractScanner = {
   }
 },
  tokenizeFractionPart$2: function(next, start) {
-  var hasDigit, done;
+  var done, hasDigit;
   if (typeof next !== 'number')
     return this.tokenizeFractionPart$2$bailout(1, next, start);
   $LOOP$0:
-    for (hasDigit = false, done = false; !done;) {
+    for (done = false, hasDigit = false; !done;) {
       if ($.leB(48, next) && $.leB(next, 57))
         ;
       else if (101 === next || 69 === next) {
         next = this.tokenizeExponent$1(this.advance$0());
-        hasDigit = true;
         done = true;
+        hasDigit = true;
         continue $LOOP$0;
       } else {
         done = true;
@@ -3718,15 +3718,15 @@ $$.AbstractScanner = {
   return next;
 },
  tokenizeFractionPart$2$bailout: function(state0, next, start) {
-  var hasDigit, done;
+  var done, hasDigit;
   $LOOP$0:
-    for (hasDigit = false, done = false; !done;) {
+    for (done = false, hasDigit = false; !done;) {
       if ($.leB(48, next) && $.leB(next, 57))
         ;
       else if (101 === next || 69 === next) {
         next = this.tokenizeExponent$1(this.advance$0());
-        hasDigit = true;
         done = true;
+        hasDigit = true;
         continue $LOOP$0;
       } else {
         done = true;
@@ -4784,18 +4784,18 @@ $$.main_anon = {
 }
 };
 
-$$.Maps__emitMap_anon = {"": ["result_3", "box_0", "visiting_2"],
+$$.Maps__emitMap_anon = {"": ["box_0", "visiting_3", "result_2"],
  "super": "Closure",
  call$2: function(k, v) {
   var t1, t2;
   t1 = this.box_0;
   if (t1.first_1 !== true) {
-    t2 = this.result_3;
+    t2 = this.result_2;
     $.getInterceptor(t2).add$1(t2, ", ");
   }
   t1.first_1 = false;
-  t1 = this.result_3;
-  t2 = this.visiting_2;
+  t1 = this.result_2;
+  t2 = this.visiting_3;
   $.Collections__emitObject(k, t1, t2);
   $.getInterceptor(t1).add$1(t1, ": ");
   $.Collections__emitObject(v, t1, t2);
@@ -5005,17 +5005,17 @@ $$.invokeClosure_anon = {"": ["closure_0"],
 }
 };
 
-$$.invokeClosure_anon0 = {"": ["closure_2", "arg1_1"],
+$$.invokeClosure_anon0 = {"": ["arg1_2", "closure_1"],
  "super": "Closure",
  call$0: function() {
-  return this.closure_2.call$1(this.arg1_1);
+  return this.closure_1.call$1(this.arg1_2);
 }
 };
 
-$$.invokeClosure_anon1 = {"": ["arg2_5", "arg1_4", "closure_3"],
+$$.invokeClosure_anon1 = {"": ["arg1_5", "arg2_4", "closure_3"],
  "super": "Closure",
  call$0: function() {
-  return this.closure_3.call$2(this.arg1_4, this.arg2_5);
+  return this.closure_3.call$2(this.arg1_5, this.arg2_4);
 }
 };
 
@@ -5098,11 +5098,11 @@ $$.ConstantMap_forEach_anon = {"": ["f_1", "this_0"],
 }
 };
 
-$$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["values_3", "copies_2"],
+$$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["copies_3", "values_2"],
  "super": "Closure",
  call$1: function(value) {
   var t1, length$, i, t2;
-  t1 = this.values_3;
+  t1 = this.values_2;
   if (typeof t1 !== 'string' && (typeof t1 !== 'object' || t1 === null || t1.constructor !== Array && !t1.is$JavaScriptIndexingBehavior()))
     return this.call$1$bailout0(1, value, t1);
   length$ = t1.length;
@@ -5112,7 +5112,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["values_3", "
       return i;
   }
   $.getInterceptor(t1).add$1(t1, value);
-  t1 = this.copies_2;
+  t1 = this.copies_3;
   $.getInterceptor(t1).add$1(t1, null);
   return length$;
 },
@@ -5130,7 +5130,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["values_3", "
   }
   switch (state0) {
     case 0:
-      t1 = this.values_3;
+      t1 = this.values_2;
     case 1:
       state0 = 0;
       length$ = $.getInterceptor(t1).get$length(t1);
@@ -5143,7 +5143,7 @@ $$._convertDartToNative_PrepareForStructuredClone_findSlot = {"": ["values_3", "
           return i;
       }
       $.getInterceptor(t1).add$1(t1, value);
-      t1 = this.copies_2;
+      t1 = this.copies_3;
       $.getInterceptor(t1).add$1(t1, null);
       return length$;
   }
@@ -5207,7 +5207,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
       return t2;
     t1.copy_1 = {};
     this.writeSlot_8.call$2(slot, t1.copy_1);
-    $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(t1, this));
+    $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(this, t1));
     return t1.copy_1;
   }
   if (typeof e === 'object' && e !== null && (e.constructor === Array || e.is$List())) {
@@ -5267,7 +5267,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
       i = 0;
     }
     if (typeof copy !== 'object' || copy === null || (copy.constructor !== Array || !!copy.immutable$list) && !copy.is$JavaScriptIndexingBehavior())
-      return this.call$1$bailout(4, e, length$, copy, i);
+      return this.call$1$bailout(4, e, length$, i, copy);
     for (; i < length$; ++i) {
       if (i >= e.length)
         throw $.ioore(i);
@@ -5301,8 +5301,8 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
       e = env0;
       break;
     case 4:
-      i = env3;
-      copy = env2;
+      copy = env3;
+      i = env2;
       length$ = env1;
       e = env0;
       break;
@@ -5342,7 +5342,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
           return t2;
         t1.copy_1 = {};
         this.writeSlot_8.call$2(slot, t1.copy_1);
-        $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(t1, this));
+        $.getInterceptor(e).forEach$1(e, new $._convertDartToNative_PrepareForStructuredClone_walk_anon(this, t1));
         return t1.copy_1;
       }
     default:
@@ -5423,7 +5423,7 @@ $$._convertDartToNative_PrepareForStructuredClone_walk = {"": ["writeSlot_8", "r
 }
 };
 
-$$._convertDartToNative_PrepareForStructuredClone_walk_anon = {"": ["box_0", "walk_9"],
+$$._convertDartToNative_PrepareForStructuredClone_walk_anon = {"": ["walk_9", "box_0"],
  "super": "Closure",
  call$2: function(key, value) {
   this.box_0.copy_1[key] = this.walk_9.call$1(value);
@@ -5694,26 +5694,26 @@ $.KeywordState_KEYWORD_STATE = function() {
 };
 
 $.KeywordState_computeKeywordStateTable = function(start, strings, offset, length$) {
-  var result, t1, t2, i, chunkStart, isLeaf, chunk, t3, c, t4;
+  var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, c, t4;
   result = $.List_List(26);
-  for (t1 = start + 1, t2 = strings.length, i = offset, chunkStart = -1, isLeaf = false, chunk = 0; t3 = offset + length$, i < t3; ++i) {
+  for (t1 = start + 1, t2 = strings.length, i = offset, chunk = 0, chunkStart = -1, isLeaf = false; t3 = offset + length$, i < t3; ++i) {
     if (i < 0)
       throw $.ioore(i);
     t3 = strings[i];
     t3 = $.getInterceptor(t3).get$length(t3);
     if (typeof t3 !== 'number')
-      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, chunkStart, isLeaf, i, t2, chunk);
+      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, chunk, chunkStart, isLeaf, i, t2);
     if (t3 === start)
       isLeaf = true;
     t3 = strings[i];
     t3 = $.getInterceptor(t3).get$length(t3);
     if (typeof t3 !== 'number')
-      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, offset, length$, result, isLeaf, t1, chunkStart, t3, i, t2, chunk);
+      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, offset, length$, result, isLeaf, t1, t3, chunkStart, i, t2, chunk);
     if (t3 > start) {
       t3 = strings[i];
       c = $.getInterceptor(t3).charCodeAt$1(t3, start);
       if (c !== (c | 0))
-        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, chunkStart, i, t2, c, chunk);
+        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, chunk, chunkStart, i, t2, c);
       if (chunk !== c) {
         if (chunkStart !== -1) {
           t3 = chunk - 97;
@@ -5722,8 +5722,8 @@ $.KeywordState_computeKeywordStateTable = function(start, strings, offset, lengt
             throw $.ioore(t3);
           result[t3] = t4;
         }
-        chunk = c;
         chunkStart = i;
+        chunk = c;
       }
     }
   }
@@ -6014,6 +6014,13 @@ $._StringBufferImpl$ = function(content$) {
   return t1;
 };
 
+$.LinkEntry$ = function(head, tail, T) {
+  var t1 = tail == null ? $.Link$($.getRuntimeTypeInfo(this)[0]) : tail;
+  t1 = new $.LinkEntry(head, t1);
+  $.setRuntimeTypeInfo(t1, [T]);
+  return t1;
+};
+
 $.Strings_join = function(strings, separator) {
   $.checkNull(strings);
   return $.stringJoinUnchecked($.Strings__toJsStringArray(strings), separator);
@@ -6046,13 +6053,6 @@ $.Strings__toJsStringArray = function(strings) {
     }
   }
   return array;
-};
-
-$.LinkEntry$ = function(head, tail, T) {
-  var t1 = tail == null ? $.Link$($.getRuntimeTypeInfo(this)[0]) : tail;
-  t1 = new $.LinkEntry(head, t1);
-  $.setRuntimeTypeInfo(t1, [T]);
-  return t1;
 };
 
 $.UnsupportedError$ = function(message) {
@@ -6152,7 +6152,7 @@ $.Maps__emitMap = function(m, result, visiting) {
   $.getInterceptor(visiting).add$1(visiting, m);
   $.getInterceptor(result).add$1(result, "{");
   t1.first_1 = true;
-  $.getInterceptor(m).forEach$1(m, new $.Maps__emitMap_anon(result, t1, visiting));
+  $.getInterceptor(m).forEach$1(m, new $.Maps__emitMap_anon(t1, visiting, result));
   $.getInterceptor(result).add$1(result, "}");
   $.getInterceptor(visiting).removeLast$0(visiting);
 };
@@ -6530,9 +6530,9 @@ $.invokeClosure = function(closure, isolate, numberOfArguments, arg1, arg2) {
   if ($.eqB(numberOfArguments, 0))
     return new $.invokeClosure_anon(closure).call$0();
   else if ($.eqB(numberOfArguments, 1))
-    return new $.invokeClosure_anon0(closure, arg1).call$0();
+    return new $.invokeClosure_anon0(arg1, closure).call$0();
   else if ($.eqB(numberOfArguments, 2))
-    return new $.invokeClosure_anon1(arg2, arg1, closure).call$0();
+    return new $.invokeClosure_anon1(arg1, arg2, closure).call$0();
   else
     throw $.$$throw($.Exception_Exception("Unsupported number of arguments for wrapped closure"));
 };
@@ -8073,7 +8073,7 @@ $._convertDartToNative_PrepareForStructuredClone = function(value) {
   var values, copies, t1, t2, t3, t4, copy;
   values = [];
   copies = [];
-  t1 = new $._convertDartToNative_PrepareForStructuredClone_findSlot(values, copies);
+  t1 = new $._convertDartToNative_PrepareForStructuredClone_findSlot(copies, values);
   t2 = new $._convertDartToNative_PrepareForStructuredClone_readSlot(copies);
   t3 = new $._convertDartToNative_PrepareForStructuredClone_writeSlot(copies);
   t4 = new $._convertDartToNative_PrepareForStructuredClone_cleanupSlots();
@@ -8380,11 +8380,11 @@ $._Lists_indexOf$bailout = function(state0, a, element, startIndex, endIndex) {
 $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, env2, env3, env4, env5, env6, env7, env8, env9, env10, env11) {
   switch (state0) {
     case 1:
-      chunk = env11;
-      t2 = env10;
-      i = env9;
-      isLeaf = env8;
-      chunkStart = env7;
+      t2 = env11;
+      i = env10;
+      isLeaf = env9;
+      chunkStart = env8;
+      chunk = env7;
       t1 = env6;
       result = env5;
       t3 = env4;
@@ -8397,8 +8397,8 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       chunk = env11;
       t2 = env10;
       i = env9;
-      t3 = env8;
-      chunkStart = env7;
+      chunkStart = env8;
+      t3 = env7;
       t1 = env6;
       isLeaf = env5;
       result = env4;
@@ -8408,11 +8408,11 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       start = env0;
       break;
     case 3:
-      chunk = env11;
-      c = env10;
-      t2 = env9;
-      i = env8;
-      chunkStart = env7;
+      c = env11;
+      t2 = env10;
+      i = env9;
+      chunkStart = env8;
+      chunk = env7;
       t1 = env6;
       isLeaf = env5;
       result = env4;
@@ -8428,11 +8428,11 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       t1 = start + 1;
       t2 = strings.length;
       i = offset;
+      chunk = 0;
       chunkStart = -1;
       isLeaf = false;
-      chunk = 0;
     default:
-      var result, t1, t2, i, chunkStart, isLeaf, chunk, t3, length$, offset, strings, start, c, t4;
+      var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, length$, offset, strings, start, c, t4;
       L0:
         while (true)
           switch (state0) {
@@ -8470,8 +8470,8 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
                           throw $.ioore(t3);
                         result[t3] = t4;
                       }
-                      chunk = c;
                       chunkStart = i;
+                      chunk = c;
                     }
                 }
               ++i;
@@ -8821,6 +8821,10 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     $._Sort__doSort(a, less, great, compare);
 };
 
+$.constructorNameFallback.call$1 = $.constructorNameFallback;
+$.constructorNameFallback.$name = "constructorNameFallback";
+$.invokeClosure.call$5 = $.invokeClosure;
+$.invokeClosure.$name = "invokeClosure";
 $.handleUpDown.call$1 = $.handleUpDown;
 $.handleUpDown.$name = "handleUpDown";
 $.dynamicBind.call$4 = $.dynamicBind;
@@ -8843,12 +8847,8 @@ $.typeNameInOpera.call$1 = $.typeNameInOpera;
 $.typeNameInOpera.$name = "typeNameInOpera";
 $.typeNameInFirefox.call$1 = $.typeNameInFirefox;
 $.typeNameInFirefox.$name = "typeNameInFirefox";
-$.invokeClosure.call$5 = $.invokeClosure;
-$.invokeClosure.$name = "invokeClosure";
 $.typeNameInIE.call$1 = $.typeNameInIE;
 $.typeNameInIE.$name = "typeNameInIE";
-$.constructorNameFallback.call$1 = $.constructorNameFallback;
-$.constructorNameFallback.$name = "constructorNameFallback";
 Isolate.$finishClasses($$);
 $$ = {};
 Isolate.makeConstantList = function(list) {
@@ -8962,9 +8962,9 @@ $.CTC63 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC168 = new Isolate.$isolateProperties.Creates("ArrayBuffer|Blob|Document|=Object|=List|String|num");
 $.CTC169 = new Isolate.$isolateProperties.StringWrapper("comment");
 $.CTC37 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC169, 0, 158);
-$.CTC170 = new Isolate.$isolateProperties.StringWrapper("${");
-$.CTC171 = new Isolate.$isolateProperties.StringWrapper("^=");
-$.CTC45 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC171, 1, 157);
+$.CTC170 = new Isolate.$isolateProperties.StringWrapper("^=");
+$.CTC45 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC170, 1, 157);
+$.CTC171 = new Isolate.$isolateProperties.StringWrapper("${");
 $.CTC172 = new Isolate.$isolateProperties.StringWrapper("--");
 $.CTC173 = new Isolate.$isolateProperties.StringWrapper(".");
 $.CTC174 = new Isolate.$isolateProperties.StringWrapper("!=");
@@ -9054,7 +9054,7 @@ $.CTC71 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC20 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC197, 0, 125);
 $.CTC14 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC205, 0, 58);
 $.CTC16 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC202, 3, 63);
-$.CTC33 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC170, 0, 128);
+$.CTC33 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC171, 0, 128);
 $.CTC64 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC174, 9, 143);
 $.CTC57 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC172, 14, 151);
 $.CTC10 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC185, 0, 92);
@@ -9078,6 +9078,7 @@ $.CTC23 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperti
 $.CTC26 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC145, 0, 100);
 $.CTC49 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC150, 6, 124);
 $.CTC68 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CTC213, 0, 130);
+$.SEMICOLON_TOKEN = 59;
 $.SLASH_TOKEN = 47;
 $.TILDE_TOKEN = 126;
 $.STAR_TOKEN = 42;
@@ -9395,7 +9396,6 @@ $.AT_TOKEN = 64;
 $.CLOSE_CURLY_BRACKET_TOKEN = 125;
 $.CLOSE_SQUARE_BRACKET_TOKEN = 93;
 $.CLOSE_PAREN_TOKEN = 41;
-$.SEMICOLON_TOKEN = 59;
 Isolate.$lazy($, 'quoteRegExp', 'quoteRegExp', 'get$quoteRegExp', function() {
   return $.JSSyntaxRegExp$("[-[\\]{}()*+?.,\\\\^$|#\\s]", false, false);
 });

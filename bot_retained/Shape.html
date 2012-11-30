@@ -37,8 +37,8 @@ class Shape extends PElement {
  dynamic _fillStyle;
  final ShapeType shapeType;
 
- Shape(num w, num h, [dynamic fillStyle = 'blue', this.shapeType = ShapeType.rect])
-   : _fillStyle = fillStyle, super(w, h, true);
+ Shape(num w, num h, {dynamic fillStyle: 'blue', this.shapeType: ShapeType.rect, bool cacheEnabled: true})
+   : _fillStyle = fillStyle, super(w, h, cacheEnabled);
 
  dynamic get fillStyle =&gt; _fillStyle;
 
@@ -73,12 +73,12 @@ class Shape extends PElement {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Shape">
 <button class="show-code">Code</button>
-new <strong>Shape</strong>(num w, num h, [fillStyle = 'blue', <a href="../bot_retained/ShapeType.html">ShapeType</a> shapeType = ShapeType.rect]) <a class="anchor-link" href="#Shape"
+new <strong>Shape</strong>(num w, num h, {fillStyle: 'blue', <a href="../bot_retained/ShapeType.html">ShapeType</a> shapeType: ShapeType.rect, bool cacheEnabled: true}) <a class="anchor-link" href="#Shape"
               title="Permalink to Shape.Shape">#</a></h4>
 <div class="doc">
 <pre class="source">
-Shape(num w, num h, [dynamic fillStyle = 'blue', this.shapeType = ShapeType.rect])
- : _fillStyle = fillStyle, super(w, h, true);
+Shape(num w, num h, {dynamic fillStyle: 'blue', this.shapeType: ShapeType.rect, bool cacheEnabled: true})
+ : _fillStyle = fillStyle, super(w, h, cacheEnabled);
 </pre>
 </div>
 </div>
