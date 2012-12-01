@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>TextElement class / bot_retained Library / Dart Documentation</title>
+        <title>SpriteThing class / bot_retained Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_retained" data-type="TextElement">
+        <body data-library="bot_retained" data-type="SpriteThing">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/TextElement.html">TextElement</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/SpriteThing.html">SpriteThing</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -26,48 +26,89 @@
         
 </div>
 <div class="content">
-        <h2><strong>TextElement</strong>
+        <h2><strong>SpriteThing</strong>
           class
         </h2>
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class TextElement extends PElement {
- final String _value;
+class SpriteThing extends ImageThing {
+ final Coordinate startCoordinate;
+ final Vector nextDelta;
+ final int count;
 
- dynamic fillStyle = 'white';
- dynamic textFillStyle = 'black';
+ int _frame = 0;
 
- TextElement(this._value, num width, num height, [bool cacheEnabled = true])
-     : super(width, height, cacheEnabled);
+ factory SpriteThing.horizontalFromUrl(String src, num w, num h,
+     int count, num xDelta, [Coordinate start = const Coordinate()]) {
+   final img = new ImageElement(src: src);
 
- void drawOverride(CanvasRenderingContext2D ctx) {
-   if(fillStyle != null) {
-     ctx.fillStyle = fillStyle;
-     ctx.fillRect(0, 0, this.width, this.height);
-   }
+   return new SpriteThing(img, w, h, start, new Vector(xDelta, 0), count);
+ }
 
-   ctx.fillStyle = textFillStyle;
-   ctx.textBaseline = 'top';
-   ctx.fillText(_value, 0, 0);
+ SpriteThing(ImageElement image, num width, num height,
+               this.startCoordinate, this.nextDelta, this.count) :
+   super(width, height, image);
+
+ void nextFrame() {
+   setFrame(_frame + 1);
+ }
+
+ void previousFrame() {
+   setFrame(_frame - 1);
+ }
+
+ void setFrame(int frame) {
+   _frame = (frame % count);
+   invalidateDraw();
+ }
+
+ void _doDraw(CanvasRenderingContext2D ctx) {
+   final int msPerFrame = 1000 ~/ count;
+
+   final int currentMS = window.performance.now().toInt();
+
+   final int theFrame = (currentMS ~/ msPerFrame) % count;
+
+   final sourceCoord = startCoordinate + nextDelta * theFrame;
+
+   final rect = new Box.fromCoordSize(sourceCoord, size);
+
+   CanvasUtil.drawImage(ctx, _image, rect);
  }
 }
 </pre>
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/PElement.html">PElement</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>TextElement</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Thing.html">Thing</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ImageThing.html">ImageThing</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>SpriteThing</strong></span></p>
 <div>
 <h3>Constructors</h3>
-<div class="method"><h4 id="TextElement">
+<div class="method"><h4 id="SpriteThing">
 <button class="show-code">Code</button>
-new <strong>TextElement</strong>(String _value, num width, num height, [bool cacheEnabled = true]) <a class="anchor-link" href="#TextElement"
-              title="Permalink to TextElement.TextElement">#</a></h4>
+new <strong>SpriteThing</strong>(ImageElement image, num width, num height, <a href="../bot/Coordinate.html">Coordinate</a> startCoordinate, <a href="../bot/Vector.html">Vector</a> nextDelta, int count) <a class="anchor-link" href="#SpriteThing"
+              title="Permalink to SpriteThing.SpriteThing">#</a></h4>
 <div class="doc">
 <pre class="source">
-TextElement(this._value, num width, num height, [bool cacheEnabled = true])
-   : super(width, height, cacheEnabled);
+SpriteThing(ImageElement image, num width, num height,
+             this.startCoordinate, this.nextDelta, this.count) :
+ super(width, height, image);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="SpriteThing.horizontalFromUrl">
+<button class="show-code">Code</button>
+factory <strong>SpriteThing.horizontalFromUrl</strong>(String src, num w, num h, int count, num xDelta, [<a href="../bot/Coordinate.html">Coordinate</a> start = const Coordinate()]) <a class="anchor-link" href="#SpriteThing.horizontalFromUrl"
+              title="Permalink to SpriteThing.SpriteThing.horizontalFromUrl">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory SpriteThing.horizontalFromUrl(String src, num w, num h,
+   int count, num xDelta, [Coordinate start = const Coordinate()]) {
+ final img = new ImageElement(src: src);
+
+ return new SpriteThing(img, w, h, start, new Vector(xDelta, 0), count);
+}
 </pre>
 </div>
 </div>
@@ -78,9 +119,9 @@ TextElement(this._value, num width, num height, [bool cacheEnabled = true])
 <button class="show-code">Code</button>
 num         <strong>alpha</strong> <a class="anchor-link"
             href="#alpha"
-            title="Permalink to TextElement.alpha">#</a>
+            title="Permalink to SpriteThing.alpha">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get alpha =&gt; _alpha;
 </pre>
@@ -98,9 +139,9 @@ void set alpha(num value) {
 <button class="show-code">Code</button>
 final bool         <strong>cacheEnabled</strong> <a class="anchor-link"
             href="#cacheEnabled"
-            title="Permalink to TextElement.cacheEnabled">#</a>
+            title="Permalink to SpriteThing.cacheEnabled">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 final bool cacheEnabled;
 </pre>
@@ -110,23 +151,23 @@ final bool cacheEnabled;
 <button class="show-code">Code</button>
 bool         <strong>clip</strong> <a class="anchor-link"
             href="#clip"
-            title="Permalink to TextElement.clip">#</a>
+            title="Permalink to SpriteThing.clip">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 bool clip = false;
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="fillStyle">
+<div class="field"><h4 id="count">
 <button class="show-code">Code</button>
-var         <strong>fillStyle</strong> <a class="anchor-link"
-            href="#fillStyle"
-            title="Permalink to TextElement.fillStyle">#</a>
+final int         <strong>count</strong> <a class="anchor-link"
+            href="#count"
+            title="Permalink to SpriteThing.count">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-dynamic fillStyle = 'white';
+final int count;
 </pre>
 </div>
 </div>
@@ -134,9 +175,9 @@ dynamic fillStyle = 'white';
 <button class="show-code">Code</button>
 num         <strong>height</strong> <a class="anchor-link"
             href="#height"
-            title="Permalink to TextElement.height">#</a>
+            title="Permalink to SpriteThing.height">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get height =&gt; _height;
 </pre>
@@ -153,9 +194,9 @@ void set height(num value) {
 <button class="show-code">Code</button>
 final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>invalidated</strong> <a class="anchor-link"
             href="#invalidated"
-            title="Permalink to TextElement.invalidated">#</a>
+            title="Permalink to SpriteThing.invalidated">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
 </pre>
@@ -165,7 +206,7 @@ EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
 <button class="show-code">Code</button>
 final bool         <strong>isDisposed</strong> <a class="anchor-link"
             href="#isDisposed"
-            title="Permalink to TextElement.isDisposed">#</a>
+            title="Permalink to SpriteThing.isDisposed">#</a>
         </h4>
         <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
@@ -173,15 +214,27 @@ bool get isDisposed =&gt; _disposed;
 </pre>
 </div>
 </div>
+<div class="field"><h4 id="nextDelta">
+<button class="show-code">Code</button>
+final <a href="../bot/Vector.html">Vector</a>         <strong>nextDelta</strong> <a class="anchor-link"
+            href="#nextDelta"
+            title="Permalink to SpriteThing.nextDelta">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+final Vector nextDelta;
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="parent">
 <button class="show-code">Code</button>
-final <a href="../bot_retained/ElementParent.html">ElementParent</a>         <strong>parent</strong> <a class="anchor-link"
+final <a href="../bot_retained/ThingParent.html">ThingParent</a>         <strong>parent</strong> <a class="anchor-link"
             href="#parent"
-            title="Permalink to TextElement.parent">#</a>
+            title="Permalink to SpriteThing.parent">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-ElementParent get parent =&gt; _parent;
+ThingParent get parent =&gt; _parent;
 </pre>
 </div>
 </div>
@@ -189,9 +242,9 @@ ElementParent get parent =&gt; _parent;
 <button class="show-code">Code</button>
 <a href="../bot/Size.html">Size</a>         <strong>size</strong> <a class="anchor-link"
             href="#size"
-            title="Permalink to TextElement.size">#</a>
+            title="Permalink to SpriteThing.size">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 Size get size =&gt; new Size(_width, _height);
 </pre>
@@ -205,15 +258,15 @@ void set size(Size value) {
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="textFillStyle">
+<div class="field"><h4 id="startCoordinate">
 <button class="show-code">Code</button>
-var         <strong>textFillStyle</strong> <a class="anchor-link"
-            href="#textFillStyle"
-            title="Permalink to TextElement.textFillStyle">#</a>
+final <a href="../bot/Coordinate.html">Coordinate</a>         <strong>startCoordinate</strong> <a class="anchor-link"
+            href="#startCoordinate"
+            title="Permalink to SpriteThing.startCoordinate">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-dynamic textFillStyle = 'black';
+final Coordinate startCoordinate;
 </pre>
 </div>
 </div>
@@ -221,9 +274,9 @@ dynamic textFillStyle = 'black';
 <button class="show-code">Code</button>
 num         <strong>width</strong> <a class="anchor-link"
             href="#width"
-            title="Permalink to TextElement.width">#</a>
+            title="Permalink to SpriteThing.width">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get width =&gt; _width;
 </pre>
@@ -242,8 +295,8 @@ void set width(num value) {
 <div class="method inherited"><h4 id="addTransform">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>addTransform</strong>() <a class="anchor-link" href="#addTransform"
-              title="Permalink to TextElement.addTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.addTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform addTransform(){
  validateNotDisposed();
@@ -257,7 +310,7 @@ AffineTransform addTransform(){
 <div class="method inherited"><h4 id="dispose">
 <button class="show-code">Code</button>
 void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
-              title="Permalink to TextElement.dispose">#</a></h4>
+              title="Permalink to SpriteThing.dispose">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void dispose(){
@@ -274,8 +327,8 @@ void dispose(){
 <div class="method inherited"><h4 id="disposeInternal">
 <button class="show-code">Code</button>
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
-              title="Permalink to TextElement.disposeInternal">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.disposeInternal">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <div class="inherited">
 <p>Do not call this method directly. Call <code>dispose</code> instead.
 Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
@@ -291,8 +344,8 @@ void disposeInternal(){
 <div class="method inherited"><h4 id="drawCore">
 <button class="show-code">Code</button>
 void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawCore"
-              title="Permalink to TextElement.drawCore">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.drawCore">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void drawCore(CanvasRenderingContext2D ctx){
  if(cacheEnabled) {
@@ -304,21 +357,21 @@ void drawCore(CanvasRenderingContext2D ctx){
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="drawOverride">
+<div class="method inherited"><h4 id="drawOverride">
 <button class="show-code">Code</button>
 void <strong>drawOverride</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawOverride"
-              title="Permalink to TextElement.drawOverride">#</a></h4>
-<div class="doc">
+              title="Permalink to SpriteThing.drawOverride">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/ImageThing.html">ImageThing</a> </div><div class="doc">
 <pre class="source">
 void drawOverride(CanvasRenderingContext2D ctx) {
- if(fillStyle != null) {
-   ctx.fillStyle = fillStyle;
-   ctx.fillRect(0, 0, this.width, this.height);
+ if(_image.complete) {
+   _doDraw(ctx);
+ } else if(!_waitingOnLoad) {
+   _waitingOnLoad = true;
+   // TODO: some day we'll have a way to remove these cleanly
+   //       ...because this handled should be disposed :-/
+   _image.on.load.add(_onImageLoad);
  }
-
- ctx.fillStyle = textFillStyle;
- ctx.textBaseline = 'top';
- ctx.fillText(_value, 0, 0);
 }
 </pre>
 </div>
@@ -326,8 +379,8 @@ void drawOverride(CanvasRenderingContext2D ctx) {
 <div class="method inherited"><h4 id="getTransform">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransform</strong>() <a class="anchor-link" href="#getTransform"
-              title="Permalink to TextElement.getTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.getTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform getTransform() {
  var tx = new AffineTransform();
@@ -340,8 +393,8 @@ AffineTransform getTransform() {
 <div class="method inherited"><h4 id="getTransformToRoot">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransformToRoot</strong>() <a class="anchor-link" href="#getTransformToRoot"
-              title="Permalink to TextElement.getTransformToRoot">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.getTransformToRoot">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform getTransformToRoot(){
  var tx = new AffineTransform();
@@ -357,8 +410,8 @@ AffineTransform getTransformToRoot(){
 <div class="method inherited"><h4 id="invalidateDraw">
 <button class="show-code">Code</button>
 void <strong>invalidateDraw</strong>() <a class="anchor-link" href="#invalidateDraw"
-              title="Permalink to TextElement.invalidateDraw">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.invalidateDraw">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void invalidateDraw(){
  validateNotDisposed();
@@ -370,13 +423,37 @@ void invalidateDraw(){
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="nextFrame">
+<button class="show-code">Code</button>
+void <strong>nextFrame</strong>() <a class="anchor-link" href="#nextFrame"
+              title="Permalink to SpriteThing.nextFrame">#</a></h4>
+<div class="doc">
+<pre class="source">
+void nextFrame() {
+ setFrame(_frame + 1);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="previousFrame">
+<button class="show-code">Code</button>
+void <strong>previousFrame</strong>() <a class="anchor-link" href="#previousFrame"
+              title="Permalink to SpriteThing.previousFrame">#</a></h4>
+<div class="doc">
+<pre class="source">
+void previousFrame() {
+ setFrame(_frame - 1);
+}
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="registerParent">
 <button class="show-code">Code</button>
-void <strong>registerParent</strong>(<a href="../bot_retained/ElementParent.html">ElementParent</a> parent) <a class="anchor-link" href="#registerParent"
-              title="Permalink to TextElement.registerParent">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+void <strong>registerParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#registerParent"
+              title="Permalink to SpriteThing.registerParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-void registerParent(ElementParent parent) {
+void registerParent(ThingParent parent) {
  require(_parent == null, 'parent already set');
  requireArgumentNotNull(parent, 'parent');
  _parent = parent;
@@ -387,8 +464,8 @@ void registerParent(ElementParent parent) {
 <div class="method inherited"><h4 id="removeTransform">
 <button class="show-code">Code</button>
 bool <strong>removeTransform</strong>(<a href="../bot/AffineTransform.html">AffineTransform</a> tx) <a class="anchor-link" href="#removeTransform"
-              title="Permalink to TextElement.removeTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.removeTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 bool removeTransform(AffineTransform tx) {
  requireArgumentNotNull(tx, 'tx');
@@ -403,13 +480,26 @@ bool removeTransform(AffineTransform tx) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="setFrame">
+<button class="show-code">Code</button>
+void <strong>setFrame</strong>(int frame) <a class="anchor-link" href="#setFrame"
+              title="Permalink to SpriteThing.setFrame">#</a></h4>
+<div class="doc">
+<pre class="source">
+void setFrame(int frame) {
+ _frame = (frame % count);
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="unregisterParent">
 <button class="show-code">Code</button>
-void <strong>unregisterParent</strong>(<a href="../bot_retained/ElementParent.html">ElementParent</a> parent) <a class="anchor-link" href="#unregisterParent"
-              title="Permalink to TextElement.unregisterParent">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+void <strong>unregisterParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#unregisterParent"
+              title="Permalink to SpriteThing.unregisterParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-void unregisterParent(ElementParent parent) {
+void unregisterParent(ThingParent parent) {
  requireArgumentNotNull(parent, 'parent');
  requireArgument(parent == _parent, 'parent');
  _parent = null;
@@ -420,8 +510,8 @@ void unregisterParent(ElementParent parent) {
 <div class="method inherited"><h4 id="update">
 <button class="show-code">Code</button>
 void <strong>update</strong>() <a class="anchor-link" href="#update"
-              title="Permalink to TextElement.update">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to SpriteThing.update">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void update(){ }
 </pre>
@@ -430,7 +520,7 @@ void update(){ }
 <div class="method inherited"><h4 id="validateNotDisposed">
 <button class="show-code">Code</button>
 void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#validateNotDisposed"
-              title="Permalink to TextElement.validateNotDisposed">#</a></h4>
+              title="Permalink to SpriteThing.validateNotDisposed">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void validateNotDisposed() {

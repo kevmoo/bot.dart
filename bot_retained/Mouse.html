@@ -38,15 +38,15 @@ class Mouse {
      new Property&lt;bool&gt;("IsMouseOver", false);
  static final Property&lt;bool&gt; isMouseDirectlyOverProperty =
      new Property&lt;bool&gt;("IsMouseDirectlyOver", false);
- static final Property&lt;List&lt;PElement&gt;&gt; _stageMouseCacheProperty =
-     new Property&lt;List&lt;PElement&gt;&gt;("_stageMouseCacheProperty");
+ static final Property&lt;List&lt;Thing&gt;&gt; _stageMouseCacheProperty =
+     new Property&lt;List&lt;Thing&gt;&gt;("_stageMouseCacheProperty");
 
- static bool isMouseOver(PElement element) =&gt; isMouseOverProperty.get(element);
+ static bool isMouseOver(Thing thing) =&gt; isMouseOverProperty.get(thing);
 
- static bool isMouseDirectlyOver(PElement element) =&gt;
-     isMouseDirectlyOverProperty.get(element);
+ static bool isMouseDirectlyOver(Thing thing) =&gt;
+     isMouseDirectlyOverProperty.get(thing);
 
- static List&lt;PElement&gt; markMouseOver(Stage stage,
+ static List&lt;Thing&gt; markMouseOver(Stage stage,
      [Coordinate coordinate = null]) {
    requireArgumentNotNull(stage, 'stage');
    requireArgument(coordinate == null || coordinate.isValid, 'coordinate');
@@ -108,32 +108,32 @@ static final Property&lt;bool&gt; isMouseOverProperty =
 <h3>Static Methods</h3>
 <div class="method"><h4 id="isMouseOver">
 <button class="show-code">Code</button>
-bool <strong>isMouseOver</strong>(<a href="../bot_retained/PElement.html">PElement</a> element) <a class="anchor-link" href="#isMouseOver"
+bool <strong>isMouseOver</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#isMouseOver"
               title="Permalink to Mouse.isMouseOver">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool isMouseOver(PElement element) =&gt; isMouseOverProperty.get(element);
+static bool isMouseOver(Thing thing) =&gt; isMouseOverProperty.get(thing);
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="isMouseDirectlyOver">
 <button class="show-code">Code</button>
-bool <strong>isMouseDirectlyOver</strong>(<a href="../bot_retained/PElement.html">PElement</a> element) <a class="anchor-link" href="#isMouseDirectlyOver"
+bool <strong>isMouseDirectlyOver</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#isMouseDirectlyOver"
               title="Permalink to Mouse.isMouseDirectlyOver">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool isMouseDirectlyOver(PElement element) =&gt;
-   isMouseDirectlyOverProperty.get(element);
+static bool isMouseDirectlyOver(Thing thing) =&gt;
+   isMouseDirectlyOverProperty.get(thing);
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="markMouseOver">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot_retained/PElement.html">PElement</a>&gt; <strong>markMouseOver</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, [<a href="../bot/Coordinate.html">Coordinate</a> coordinate = null]) <a class="anchor-link" href="#markMouseOver"
+List&lt;<a href="../bot_retained/Thing.html">Thing</a>&gt; <strong>markMouseOver</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, [<a href="../bot/Coordinate.html">Coordinate</a> coordinate = null]) <a class="anchor-link" href="#markMouseOver"
               title="Permalink to Mouse.markMouseOver">#</a></h4>
 <div class="doc">
 <pre class="source">
-static List&lt;PElement&gt; markMouseOver(Stage stage,
+static List&lt;Thing&gt; markMouseOver(Stage stage,
    [Coordinate coordinate = null]) {
  requireArgumentNotNull(stage, 'stage');
  requireArgument(coordinate == null || coordinate.isValid, 'coordinate');

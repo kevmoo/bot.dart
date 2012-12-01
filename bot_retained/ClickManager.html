@@ -40,24 +40,24 @@ class ClickManager {
  static final Property&lt;bool&gt; _isClickableProperty =
      new Property&lt;bool&gt;("isClickable", false);
 
- static final AttachedEvent&lt;ElementMouseEventArgs&gt; _clickEvent =
-     new AttachedEvent&lt;ElementMouseEventArgs&gt;('clickEvent');
+ static final AttachedEvent&lt;ThingMouseEventArgs&gt; _clickEvent =
+     new AttachedEvent&lt;ThingMouseEventArgs&gt;('clickEvent');
 
- static final AttachedEvent&lt;ElementMouseEventArgs&gt; _mouseDownEvent =
-     new AttachedEvent&lt;ElementMouseEventArgs&gt;('mouseDown');
+ static final AttachedEvent&lt;ThingMouseEventArgs&gt; _mouseDownEvent =
+     new AttachedEvent&lt;ThingMouseEventArgs&gt;('mouseDown');
 
- static final AttachedEvent&lt;ElementMouseEventArgs&gt; _mouseUpEvent =
-     new AttachedEvent&lt;ElementMouseEventArgs&gt;('mouseUp');
+ static final AttachedEvent&lt;ThingMouseEventArgs&gt; _mouseUpEvent =
+     new AttachedEvent&lt;ThingMouseEventArgs&gt;('mouseUp');
 
- static final AttachedEvent&lt;ElementMouseEventArgs&gt; _mouseMoveEvent =
-     new AttachedEvent&lt;ElementMouseEventArgs&gt;('mouseMove');
+ static final AttachedEvent&lt;ThingMouseEventArgs&gt; _mouseMoveEvent =
+     new AttachedEvent&lt;ThingMouseEventArgs&gt;('mouseMove');
 
  static final AttachedEvent _mouseOutEvent =
      new AttachedEvent('mouseOut');
 
  final Stage _stage;
 
- PElement _mouseDownElement;
+ Thing _mouseDownThing;
 
  factory ClickManager(Stage stage) {
    requireArgumentNotNull(stage, 'stage');
@@ -75,70 +75,70 @@ class ClickManager {
    _stage._canvas.on.mouseDown.add(_mouseDown);
  }
 
- static void setClickable(PElement element, bool value) {
-   assert(element != null);
+ static void setClickable(Thing thing, bool value) {
+   assert(thing != null);
    assert(value != null);
    if(value) {
-     _isClickableProperty.set(element, true);
+     _isClickableProperty.set(thing, true);
    } else {
-     _isClickableProperty.clear(element);
+     _isClickableProperty.clear(thing);
    }
  }
 
- static bool getClickable(PElement element) {
-   assert(element != null);
-   return _isClickableProperty.get(element);
+ static bool getClickable(Thing thing) {
+   assert(thing != null);
+   return _isClickableProperty.get(thing);
  }
 
- static GlobalId addHandler(PElement element,
-                            Action1&lt;ElementMouseEventArgs&gt; handler) {
-   return _clickEvent.addHandler(element, handler);
+ static GlobalId addHandler(Thing thing,
+                            Action1&lt;ThingMouseEventArgs&gt; handler) {
+   return _clickEvent.addHandler(thing, handler);
  }
 
- static bool removeHandler(PElement obj, GlobalId handlerId) {
+ static bool removeHandler(Thing obj, GlobalId handlerId) {
    return _clickEvent.removeHandler(obj, handlerId);
  }
 
- static GlobalId addMouseMoveHandler(PElement obj,
-                                     Action1&lt;ElementMouseEventArgs&gt; handler) {
-   return _mouseMoveEvent.addHandler(obj, handler);
+ static GlobalId addMouseMoveHandler(Thing thing,
+                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
+   return _mouseMoveEvent.addHandler(thing, handler);
  }
 
- static bool removeMouseMoveHandler(PElement obj, GlobalId handlerId) {
-   return _mouseMoveEvent.removeHandler(obj, handlerId);
+ static bool removeMouseMoveHandler(Thing thing, GlobalId handlerId) {
+   return _mouseMoveEvent.removeHandler(thing, handlerId);
  }
 
- static GlobalId addMouseUpHandler(PElement obj,
-                                     Action1&lt;ElementMouseEventArgs&gt; handler) {
-   return _mouseUpEvent.addHandler(obj, handler);
+ static GlobalId addMouseUpHandler(Thing thing,
+                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
+   return _mouseUpEvent.addHandler(thing, handler);
  }
 
- static bool removeMouseUpHandler(PElement obj, GlobalId handlerId) {
-   return _mouseUpEvent.removeHandler(obj, handlerId);
+ static bool removeMouseUpHandler(Thing thing, GlobalId handlerId) {
+   return _mouseUpEvent.removeHandler(thing, handlerId);
  }
 
- static GlobalId addMouseDownHandler(PElement obj,
-                                     Action1&lt;ElementMouseEventArgs&gt; handler) {
-   return _mouseDownEvent.addHandler(obj, handler);
+ static GlobalId addMouseDownHandler(Thing thing,
+                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
+   return _mouseDownEvent.addHandler(thing, handler);
  }
 
- static bool removeMouseDownHandler(PElement obj, GlobalId handlerId) {
-   return _mouseDownEvent.removeHandler(obj, handlerId);
+ static bool removeMouseDownHandler(Thing thing, GlobalId handlerId) {
+   return _mouseDownEvent.removeHandler(thing, handlerId);
  }
 
- static GlobalId addMouseOutHandler(Stage obj,
-                                    Action1&lt;ElementMouseEventArgs&gt; handler) {
-   return _mouseOutEvent.addHandler(obj, handler);
+ static GlobalId addMouseOutHandler(Stage stage,
+                                    Action1&lt;ThingMouseEventArgs&gt; handler) {
+   return _mouseOutEvent.addHandler(stage, handler);
  }
 
- static bool removeMouseOutHandler(Stage obj, GlobalId handlerId) {
-   return _mouseOutEvent.removeHandler(obj, handlerId);
+ static bool removeMouseOutHandler(Stage stage, GlobalId handlerId) {
+   return _mouseOutEvent.removeHandler(stage, handlerId);
  }
 
  void _mouseMove(MouseEvent e) {
    final items = _updateMouseLocation(getMouseEventCoordinate(e));
    if(items.length &gt; 0) {
-     final args = new ElementMouseEventArgs(items[0], e);
+     final args = new ThingMouseEventArgs(items[0], e);
      items.forEach((e) =&gt; _mouseMoveEvent.fireEvent(e, args));
    }
  }
@@ -150,60 +150,60 @@ class ClickManager {
 
  void _mouseUp(MouseEvent e) {
    // TODO: this does not handle the case where:
-   //       1) the mouse left the element
+   //       1) the mouse left the thing
    //       2) mouse up
-   //       3) mouse down (outside the element)
-   //       4) mouse up on the down element
+   //       3) mouse down (outside the thing)
+   //       4) mouse up on the down thing
    //       Weird edge case, but important for comeletness :-/
    //       Mouse capture anyone?
 
    final hits = _updateMouseLocation(getMouseEventCoordinate(e));
-   final upElement = $(hits).firstOrDefault((e) {
+   final thing = $(hits).firstOrDefault((e) {
      return _isClickableProperty.get(e);
    });
 
-   if(upElement != null) {
-     _doMouseUp(upElement, e);
+   if(thing != null) {
+     _doMouseUp(thing, e);
 
      // handle click
-     if(upElement == _mouseDownElement) {
-       _doClick(upElement, e);
+     if(thing == _mouseDownThing) {
+       _doClick(thing, e);
      }
-     _mouseDownElement = null;
+     _mouseDownThing = null;
    }
  }
 
  void _mouseDown(MouseEvent e) {
    final coord = getMouseEventCoordinate(e);
    final hits = _updateMouseLocation(coord);
-   _mouseDownElement = $(hits).firstOrDefault((e) {
+   _mouseDownThing = $(hits).firstOrDefault((e) {
      return _isClickableProperty.get(e);
    });
-   if(_mouseDownElement != null) {
-     _doMouseDown(_mouseDownElement, e);
+   if(_mouseDownThing != null) {
+     _doMouseDown(_mouseDownThing, e);
    }
  }
 
- List&lt;PElement&gt; _updateMouseLocation(Coordinate value) {
+ List&lt;Thing&gt; _updateMouseLocation(Coordinate value) {
    return Mouse.markMouseOver(_stage, value);
  }
 
- void _doMouseDown(PElement element, MouseEvent e) {
-   assert(element != null);
-   final args = new ElementMouseEventArgs(element, e);
-   _mouseDownEvent.fireEvent(element, args);
+ void _doMouseDown(Thing thing, MouseEvent e) {
+   assert(thing != null);
+   final args = new ThingMouseEventArgs(thing, e);
+   _mouseDownEvent.fireEvent(thing, args);
  }
 
- void _doMouseUp(PElement element, MouseEvent e) {
-   assert(element != null);
-   final args = new ElementMouseEventArgs(element, e);
-   _mouseUpEvent.fireEvent(element, args);
+ void _doMouseUp(Thing thing, MouseEvent e) {
+   assert(thing != null);
+   final args = new ThingMouseEventArgs(thing, e);
+   _mouseUpEvent.fireEvent(thing, args);
  }
 
- void _doClick(PElement element, MouseEvent e) {
-   assert(element != null);
-   final args = new ElementMouseEventArgs(element, e);
-   _clickEvent.fireEvent(element, args);
+ void _doClick(Thing thing, MouseEvent e) {
+   assert(thing != null);
+   final args = new ThingMouseEventArgs(thing, e);
+   _clickEvent.fireEvent(thing, args);
  }
 }
 </pre>
@@ -212,17 +212,17 @@ class ClickManager {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="setClickable">
 <button class="show-code">Code</button>
-void <strong>setClickable</strong>(<a href="../bot_retained/PElement.html">PElement</a> element, bool value) <a class="anchor-link" href="#setClickable"
+void <strong>setClickable</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, bool value) <a class="anchor-link" href="#setClickable"
               title="Permalink to ClickManager.setClickable">#</a></h4>
 <div class="doc">
 <pre class="source">
-static void setClickable(PElement element, bool value) {
- assert(element != null);
+static void setClickable(Thing thing, bool value) {
+ assert(thing != null);
  assert(value != null);
  if(value) {
-   _isClickableProperty.set(element, true);
+   _isClickableProperty.set(thing, true);
  } else {
-   _isClickableProperty.clear(element);
+   _isClickableProperty.clear(thing);
  }
 }
 </pre>
@@ -230,37 +230,37 @@ static void setClickable(PElement element, bool value) {
 </div>
 <div class="method"><h4 id="getClickable">
 <button class="show-code">Code</button>
-bool <strong>getClickable</strong>(<a href="../bot_retained/PElement.html">PElement</a> element) <a class="anchor-link" href="#getClickable"
+bool <strong>getClickable</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getClickable"
               title="Permalink to ClickManager.getClickable">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool getClickable(PElement element) {
- assert(element != null);
- return _isClickableProperty.get(element);
+static bool getClickable(Thing thing) {
+ assert(thing != null);
+ return _isClickableProperty.get(thing);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="addHandler">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> element, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addHandler"
+<a href="../bot/GlobalId.html">GlobalId</a> <strong>addHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addHandler"
               title="Permalink to ClickManager.addHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addHandler(PElement element,
-                          Action1&lt;ElementMouseEventArgs&gt; handler) {
- return _clickEvent.addHandler(element, handler);
+static GlobalId addHandler(Thing thing,
+                          Action1&lt;ThingMouseEventArgs&gt; handler) {
+ return _clickEvent.addHandler(thing, handler);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="removeHandler">
 <button class="show-code">Code</button>
-bool <strong>removeHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeHandler"
+bool <strong>removeHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeHandler"
               title="Permalink to ClickManager.removeHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeHandler(PElement obj, GlobalId handlerId) {
+static bool removeHandler(Thing obj, GlobalId handlerId) {
  return _clickEvent.removeHandler(obj, handlerId);
 }
 </pre>
@@ -268,100 +268,100 @@ static bool removeHandler(PElement obj, GlobalId handlerId) {
 </div>
 <div class="method"><h4 id="addMouseMoveHandler">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseMoveHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseMoveHandler"
+<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseMoveHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseMoveHandler"
               title="Permalink to ClickManager.addMouseMoveHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseMoveHandler(PElement obj,
-                                   Action1&lt;ElementMouseEventArgs&gt; handler) {
- return _mouseMoveEvent.addHandler(obj, handler);
+static GlobalId addMouseMoveHandler(Thing thing,
+                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
+ return _mouseMoveEvent.addHandler(thing, handler);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="removeMouseMoveHandler">
 <button class="show-code">Code</button>
-bool <strong>removeMouseMoveHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseMoveHandler"
+bool <strong>removeMouseMoveHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseMoveHandler"
               title="Permalink to ClickManager.removeMouseMoveHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseMoveHandler(PElement obj, GlobalId handlerId) {
- return _mouseMoveEvent.removeHandler(obj, handlerId);
+static bool removeMouseMoveHandler(Thing thing, GlobalId handlerId) {
+ return _mouseMoveEvent.removeHandler(thing, handlerId);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="addMouseUpHandler">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseUpHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseUpHandler"
+<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseUpHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseUpHandler"
               title="Permalink to ClickManager.addMouseUpHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseUpHandler(PElement obj,
-                                   Action1&lt;ElementMouseEventArgs&gt; handler) {
- return _mouseUpEvent.addHandler(obj, handler);
+static GlobalId addMouseUpHandler(Thing thing,
+                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
+ return _mouseUpEvent.addHandler(thing, handler);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="removeMouseUpHandler">
 <button class="show-code">Code</button>
-bool <strong>removeMouseUpHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseUpHandler"
+bool <strong>removeMouseUpHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseUpHandler"
               title="Permalink to ClickManager.removeMouseUpHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseUpHandler(PElement obj, GlobalId handlerId) {
- return _mouseUpEvent.removeHandler(obj, handlerId);
+static bool removeMouseUpHandler(Thing thing, GlobalId handlerId) {
+ return _mouseUpEvent.removeHandler(thing, handlerId);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="addMouseDownHandler">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseDownHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseDownHandler"
+<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseDownHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseDownHandler"
               title="Permalink to ClickManager.addMouseDownHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseDownHandler(PElement obj,
-                                   Action1&lt;ElementMouseEventArgs&gt; handler) {
- return _mouseDownEvent.addHandler(obj, handler);
+static GlobalId addMouseDownHandler(Thing thing,
+                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
+ return _mouseDownEvent.addHandler(thing, handler);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="removeMouseDownHandler">
 <button class="show-code">Code</button>
-bool <strong>removeMouseDownHandler</strong>(<a href="../bot_retained/PElement.html">PElement</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseDownHandler"
+bool <strong>removeMouseDownHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseDownHandler"
               title="Permalink to ClickManager.removeMouseDownHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseDownHandler(PElement obj, GlobalId handlerId) {
- return _mouseDownEvent.removeHandler(obj, handlerId);
+static bool removeMouseDownHandler(Thing thing, GlobalId handlerId) {
+ return _mouseDownEvent.removeHandler(thing, handlerId);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="addMouseOutHandler">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> obj, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseOutHandler"
+<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseOutHandler"
               title="Permalink to ClickManager.addMouseOutHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseOutHandler(Stage obj,
-                                  Action1&lt;ElementMouseEventArgs&gt; handler) {
- return _mouseOutEvent.addHandler(obj, handler);
+static GlobalId addMouseOutHandler(Stage stage,
+                                  Action1&lt;ThingMouseEventArgs&gt; handler) {
+ return _mouseOutEvent.addHandler(stage, handler);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="removeMouseOutHandler">
 <button class="show-code">Code</button>
-bool <strong>removeMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseOutHandler"
+bool <strong>removeMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseOutHandler"
               title="Permalink to ClickManager.removeMouseOutHandler">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseOutHandler(Stage obj, GlobalId handlerId) {
- return _mouseOutEvent.removeHandler(obj, handlerId);
+static bool removeMouseOutHandler(Stage stage, GlobalId handlerId) {
+ return _mouseOutEvent.removeHandler(stage, handlerId);
 }
 </pre>
 </div>

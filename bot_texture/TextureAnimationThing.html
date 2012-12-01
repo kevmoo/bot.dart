@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>ParentElement abstract class / bot_retained Library / Dart Documentation</title>
+        <title>TextureAnimationThing class / bot_texture Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_retained" data-type="ParentElement">
+        <body data-library="bot_texture" data-type="TextureAnimationThing">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/ParentElement.html">ParentElement</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_texture.html">bot_texture</a> &rsaquo; <a href="../bot_texture/TextureAnimationThing.html">TextureAnimationThing</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -26,56 +26,59 @@
         
 </div>
 <div class="content">
-        <h2><strong>ParentElement</strong>
-          abstract class
+        <h2><strong>TextureAnimationThing</strong>
+          class
         </h2>
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-abstract class ParentElement
- extends PElement
- implements ElementParent {
+class TextureAnimationThing extends Thing {
+ final TextureData _textureData;
+ final List&lt;TextureAnimationRequest&gt; _requests = new List&lt;TextureAnimationRequest&gt;();
 
- ParentElement(num w, num h, [bool enableCache = false]) :
-   super(w, h, enableCache);
+ TextureAnimationThing(num width, num height, this._textureData) :
+   super(width, height);
 
- bool hasVisualChild(PElement element){
-   var length = visualChildCount;
-   for(var i=0;i&lt;length;i++){
-     if(identical(element, getVisualChild(i))){
-       return true;
+ void add(TextureAnimationRequest request) {
+   assert(request != null);
+   assert(request.fresh);
+   _requests.add(request);
+   invalidateDraw();
+ }
+
+ void update() {
+
+   var toRemove = new List&lt;TextureAnimationRequest&gt;();
+   for(final r in _requests) {
+     r.update();
+     assert(!r.fresh);
+     if(r.done) {
+       toRemove.add(r);
      }
    }
-   return false;
- }
 
- void onChildrenChanged(){
-   invalidateDraw();
- }
+   for(final r in toRemove) {
+     final i = _requests.indexOf(r, 0);
+     assert(i &gt;= 0);
+     _requests.removeRange(i, 1);
+   }
 
- PElement getVisualChild(int index);
-
- int get visualChildCount;
-
- void childInvalidated(PElement child){
-   assert(hasVisualChild(child));
-   invalidateDraw();
- }
-
- void update(){
-   _forEach((e) =&gt; e.update());
-   super.update();
+   if(_requests.length &gt; 0) {
+     invalidateDraw();
+   }
  }
 
  void drawOverride(CanvasRenderingContext2D ctx) {
-   _forEach((e) =&gt; e.drawCore(ctx));
- }
+   for(final r in _requests) {
+     final data = r._getFrameDetails();
+     final offset = data.item1;
+     final frameName = data.item2;
 
- void _forEach(Action1&lt;PElement&gt; f) {
-   final length = visualChildCount;
-   for(int i = 0; i &lt; length; i++) {
-     f(getVisualChild(i));
+     ctx.save();
+     ctx.translate(offset.x, offset.y);
+     _textureData.drawTextureKeyAt(ctx, frameName);
+     ctx.restore();
    }
  }
 }
@@ -83,36 +86,30 @@ abstract class ParentElement
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/PElement.html">PElement</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>ParentElement</strong></span></p>
-<h3>Subclasses</h3>
-<p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/NavLayer.html">NavLayer</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Panel.html">Panel</a></span></p>
-<h3>Implements</h3>
-<p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ElementParent.html">ElementParent</a></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Thing.html">Thing</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>TextureAnimationThing</strong></span></p>
 <div>
 <h3>Constructors</h3>
-<div class="method"><h4 id="ParentElement">
+<div class="method"><h4 id="TextureAnimationThing">
 <button class="show-code">Code</button>
-new <strong>ParentElement</strong>(num w, num h, [bool enableCache = false]) <a class="anchor-link" href="#ParentElement"
-              title="Permalink to ParentElement.ParentElement">#</a></h4>
+new <strong>TextureAnimationThing</strong>(num width, num height, <a href="../bot_texture/TextureData.html">TextureData</a> _textureData) <a class="anchor-link" href="#TextureAnimationThing"
+              title="Permalink to TextureAnimationThing.TextureAnimationThing">#</a></h4>
 <div class="doc">
 <pre class="source">
-ParentElement(num w, num h, [bool enableCache = false]) :
- super(w, h, enableCache);
+TextureAnimationThing(num width, num height, this._textureData) :
+ super(width, height);
 </pre>
 </div>
 </div>
 </div>
-<div>
+<div class="inherited">
 <h3>Properties</h3>
 <div class="field inherited"><h4 id="alpha">
 <button class="show-code">Code</button>
 num         <strong>alpha</strong> <a class="anchor-link"
             href="#alpha"
-            title="Permalink to ParentElement.alpha">#</a>
+            title="Permalink to TextureAnimationThing.alpha">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get alpha =&gt; _alpha;
 </pre>
@@ -130,9 +127,9 @@ void set alpha(num value) {
 <button class="show-code">Code</button>
 final bool         <strong>cacheEnabled</strong> <a class="anchor-link"
             href="#cacheEnabled"
-            title="Permalink to ParentElement.cacheEnabled">#</a>
+            title="Permalink to TextureAnimationThing.cacheEnabled">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 final bool cacheEnabled;
 </pre>
@@ -142,9 +139,9 @@ final bool cacheEnabled;
 <button class="show-code">Code</button>
 bool         <strong>clip</strong> <a class="anchor-link"
             href="#clip"
-            title="Permalink to ParentElement.clip">#</a>
+            title="Permalink to TextureAnimationThing.clip">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 bool clip = false;
 </pre>
@@ -154,9 +151,9 @@ bool clip = false;
 <button class="show-code">Code</button>
 num         <strong>height</strong> <a class="anchor-link"
             href="#height"
-            title="Permalink to ParentElement.height">#</a>
+            title="Permalink to TextureAnimationThing.height">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get height =&gt; _height;
 </pre>
@@ -173,9 +170,9 @@ void set height(num value) {
 <button class="show-code">Code</button>
 final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>invalidated</strong> <a class="anchor-link"
             href="#invalidated"
-            title="Permalink to ParentElement.invalidated">#</a>
+            title="Permalink to TextureAnimationThing.invalidated">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
 </pre>
@@ -185,7 +182,7 @@ EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
 <button class="show-code">Code</button>
 final bool         <strong>isDisposed</strong> <a class="anchor-link"
             href="#isDisposed"
-            title="Permalink to ParentElement.isDisposed">#</a>
+            title="Permalink to TextureAnimationThing.isDisposed">#</a>
         </h4>
         <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
@@ -195,13 +192,13 @@ bool get isDisposed =&gt; _disposed;
 </div>
 <div class="field inherited"><h4 id="parent">
 <button class="show-code">Code</button>
-final <a href="../bot_retained/ElementParent.html">ElementParent</a>         <strong>parent</strong> <a class="anchor-link"
+final <a href="../bot_retained/ThingParent.html">ThingParent</a>         <strong>parent</strong> <a class="anchor-link"
             href="#parent"
-            title="Permalink to ParentElement.parent">#</a>
+            title="Permalink to TextureAnimationThing.parent">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-ElementParent get parent =&gt; _parent;
+ThingParent get parent =&gt; _parent;
 </pre>
 </div>
 </div>
@@ -209,9 +206,9 @@ ElementParent get parent =&gt; _parent;
 <button class="show-code">Code</button>
 <a href="../bot/Size.html">Size</a>         <strong>size</strong> <a class="anchor-link"
             href="#size"
-            title="Permalink to ParentElement.size">#</a>
+            title="Permalink to TextureAnimationThing.size">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 Size get size =&gt; new Size(_width, _height);
 </pre>
@@ -225,25 +222,13 @@ void set size(Size value) {
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="visualChildCount">
-<button class="show-code">Code</button>
-final int         <strong>visualChildCount</strong> <a class="anchor-link"
-            href="#visualChildCount"
-            title="Permalink to ParentElement.visualChildCount">#</a>
-        </h4>
-        <div class="doc">
-<pre class="source">
-int get visualChildCount;
-</pre>
-</div>
-</div>
 <div class="field inherited"><h4 id="width">
 <button class="show-code">Code</button>
 num         <strong>width</strong> <a class="anchor-link"
             href="#width"
-            title="Permalink to ParentElement.width">#</a>
+            title="Permalink to TextureAnimationThing.width">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 num get width =&gt; _width;
 </pre>
@@ -259,11 +244,26 @@ void set width(num value) {
 </div>
 <div>
 <h3>Methods</h3>
+<div class="method"><h4 id="add">
+<button class="show-code">Code</button>
+void <strong>add</strong>(<a href="../bot_texture/TextureAnimationRequest.html">TextureAnimationRequest</a> request) <a class="anchor-link" href="#add"
+              title="Permalink to TextureAnimationThing.add">#</a></h4>
+<div class="doc">
+<pre class="source">
+void add(TextureAnimationRequest request) {
+ assert(request != null);
+ assert(request.fresh);
+ _requests.add(request);
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="addTransform">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>addTransform</strong>() <a class="anchor-link" href="#addTransform"
-              title="Permalink to ParentElement.addTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.addTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform addTransform(){
  validateNotDisposed();
@@ -274,23 +274,10 @@ AffineTransform addTransform(){
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="childInvalidated">
-<button class="show-code">Code</button>
-void <strong>childInvalidated</strong>(<a href="../bot_retained/PElement.html">PElement</a> child) <a class="anchor-link" href="#childInvalidated"
-              title="Permalink to ParentElement.childInvalidated">#</a></h4>
-<div class="doc">
-<pre class="source">
-void childInvalidated(PElement child){
- assert(hasVisualChild(child));
- invalidateDraw();
-}
-</pre>
-</div>
-</div>
 <div class="method inherited"><h4 id="dispose">
 <button class="show-code">Code</button>
 void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
-              title="Permalink to ParentElement.dispose">#</a></h4>
+              title="Permalink to TextureAnimationThing.dispose">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void dispose(){
@@ -307,8 +294,8 @@ void dispose(){
 <div class="method inherited"><h4 id="disposeInternal">
 <button class="show-code">Code</button>
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
-              title="Permalink to ParentElement.disposeInternal">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.disposeInternal">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <div class="inherited">
 <p>Do not call this method directly. Call <code>dispose</code> instead.
 Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
@@ -324,8 +311,8 @@ void disposeInternal(){
 <div class="method inherited"><h4 id="drawCore">
 <button class="show-code">Code</button>
 void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawCore"
-              title="Permalink to ParentElement.drawCore">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.drawCore">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void drawCore(CanvasRenderingContext2D ctx){
  if(cacheEnabled) {
@@ -340,11 +327,20 @@ void drawCore(CanvasRenderingContext2D ctx){
 <div class="method"><h4 id="drawOverride">
 <button class="show-code">Code</button>
 void <strong>drawOverride</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawOverride"
-              title="Permalink to ParentElement.drawOverride">#</a></h4>
+              title="Permalink to TextureAnimationThing.drawOverride">#</a></h4>
 <div class="doc">
 <pre class="source">
 void drawOverride(CanvasRenderingContext2D ctx) {
- _forEach((e) =&gt; e.drawCore(ctx));
+ for(final r in _requests) {
+   final data = r._getFrameDetails();
+   final offset = data.item1;
+   final frameName = data.item2;
+
+   ctx.save();
+   ctx.translate(offset.x, offset.y);
+   _textureData.drawTextureKeyAt(ctx, frameName);
+   ctx.restore();
+ }
 }
 </pre>
 </div>
@@ -352,8 +348,8 @@ void drawOverride(CanvasRenderingContext2D ctx) {
 <div class="method inherited"><h4 id="getTransform">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransform</strong>() <a class="anchor-link" href="#getTransform"
-              title="Permalink to ParentElement.getTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.getTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform getTransform() {
  var tx = new AffineTransform();
@@ -366,8 +362,8 @@ AffineTransform getTransform() {
 <div class="method inherited"><h4 id="getTransformToRoot">
 <button class="show-code">Code</button>
 <a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransformToRoot</strong>() <a class="anchor-link" href="#getTransformToRoot"
-              title="Permalink to ParentElement.getTransformToRoot">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.getTransformToRoot">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 AffineTransform getTransformToRoot(){
  var tx = new AffineTransform();
@@ -380,35 +376,11 @@ AffineTransform getTransformToRoot(){
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="getVisualChild">
-abstract <a href="../bot_retained/PElement.html">PElement</a> <strong>getVisualChild</strong>(int index) <a class="anchor-link" href="#getVisualChild"
-              title="Permalink to ParentElement.getVisualChild">#</a></h4>
-<div class="doc">
-</div>
-</div>
-<div class="method"><h4 id="hasVisualChild">
-<button class="show-code">Code</button>
-bool <strong>hasVisualChild</strong>(<a href="../bot_retained/PElement.html">PElement</a> element) <a class="anchor-link" href="#hasVisualChild"
-              title="Permalink to ParentElement.hasVisualChild">#</a></h4>
-<div class="doc">
-<pre class="source">
-bool hasVisualChild(PElement element){
- var length = visualChildCount;
- for(var i=0;i&lt;length;i++){
-   if(identical(element, getVisualChild(i))){
-     return true;
-   }
- }
- return false;
-}
-</pre>
-</div>
-</div>
 <div class="method inherited"><h4 id="invalidateDraw">
 <button class="show-code">Code</button>
 void <strong>invalidateDraw</strong>() <a class="anchor-link" href="#invalidateDraw"
-              title="Permalink to ParentElement.invalidateDraw">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.invalidateDraw">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void invalidateDraw(){
  validateNotDisposed();
@@ -420,25 +392,13 @@ void invalidateDraw(){
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="onChildrenChanged">
-<button class="show-code">Code</button>
-void <strong>onChildrenChanged</strong>() <a class="anchor-link" href="#onChildrenChanged"
-              title="Permalink to ParentElement.onChildrenChanged">#</a></h4>
-<div class="doc">
-<pre class="source">
-void onChildrenChanged(){
- invalidateDraw();
-}
-</pre>
-</div>
-</div>
 <div class="method inherited"><h4 id="registerParent">
 <button class="show-code">Code</button>
-void <strong>registerParent</strong>(<a href="../bot_retained/ElementParent.html">ElementParent</a> parent) <a class="anchor-link" href="#registerParent"
-              title="Permalink to ParentElement.registerParent">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+void <strong>registerParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#registerParent"
+              title="Permalink to TextureAnimationThing.registerParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-void registerParent(ElementParent parent) {
+void registerParent(ThingParent parent) {
  require(_parent == null, 'parent already set');
  requireArgumentNotNull(parent, 'parent');
  _parent = parent;
@@ -449,8 +409,8 @@ void registerParent(ElementParent parent) {
 <div class="method inherited"><h4 id="removeTransform">
 <button class="show-code">Code</button>
 bool <strong>removeTransform</strong>(<a href="../bot/AffineTransform.html">AffineTransform</a> tx) <a class="anchor-link" href="#removeTransform"
-              title="Permalink to ParentElement.removeTransform">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+              title="Permalink to TextureAnimationThing.removeTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 bool removeTransform(AffineTransform tx) {
  requireArgumentNotNull(tx, 'tx');
@@ -467,11 +427,11 @@ bool removeTransform(AffineTransform tx) {
 </div>
 <div class="method inherited"><h4 id="unregisterParent">
 <button class="show-code">Code</button>
-void <strong>unregisterParent</strong>(<a href="../bot_retained/ElementParent.html">ElementParent</a> parent) <a class="anchor-link" href="#unregisterParent"
-              title="Permalink to ParentElement.unregisterParent">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot_retained/PElement.html">PElement</a> </div><div class="doc">
+void <strong>unregisterParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#unregisterParent"
+              title="Permalink to TextureAnimationThing.unregisterParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-void unregisterParent(ElementParent parent) {
+void unregisterParent(ThingParent parent) {
  requireArgumentNotNull(parent, 'parent');
  requireArgument(parent == _parent, 'parent');
  _parent = null;
@@ -482,12 +442,29 @@ void unregisterParent(ElementParent parent) {
 <div class="method"><h4 id="update">
 <button class="show-code">Code</button>
 void <strong>update</strong>() <a class="anchor-link" href="#update"
-              title="Permalink to ParentElement.update">#</a></h4>
+              title="Permalink to TextureAnimationThing.update">#</a></h4>
 <div class="doc">
 <pre class="source">
-void update(){
- _forEach((e) =&gt; e.update());
- super.update();
+void update() {
+
+ var toRemove = new List&lt;TextureAnimationRequest&gt;();
+ for(final r in _requests) {
+   r.update();
+   assert(!r.fresh);
+   if(r.done) {
+     toRemove.add(r);
+   }
+ }
+
+ for(final r in toRemove) {
+   final i = _requests.indexOf(r, 0);
+   assert(i &gt;= 0);
+   _requests.removeRange(i, 1);
+ }
+
+ if(_requests.length &gt; 0) {
+   invalidateDraw();
+ }
 }
 </pre>
 </div>
@@ -495,7 +472,7 @@ void update(){
 <div class="method inherited"><h4 id="validateNotDisposed">
 <button class="show-code">Code</button>
 void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#validateNotDisposed"
-              title="Permalink to ParentElement.validateNotDisposed">#</a></h4>
+              title="Permalink to TextureAnimationThing.validateNotDisposed">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void validateNotDisposed() {
