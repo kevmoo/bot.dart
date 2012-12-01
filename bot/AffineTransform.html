@@ -48,11 +48,11 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
  }
 
  factory AffineTransform.fromScale(sx, sy) {
-   return new AffineTransform().setToScale(sx, sy);
+   return new AffineTransform(sx, 0, 0, sy, 0, 0);
  }
 
  factory AffineTransform.fromTranslat(num x, num y) {
-   return new AffineTransform().setToTranslation(x, y);
+   return new AffineTransform(1, 0, 0, 1, x, y);
  }
 
  num get scaleX =&gt; _m00;
@@ -125,7 +125,6 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
    return setTransform(1, 0, 0, 1, dx, dy);
  }
 
- // TODO: test!!
  AffineTransform setFromTransfrom(AffineTransform tx) {
    requireArgumentNotNull(tx, 'tx');
    return setTransform(tx._m00, tx._m10,
@@ -186,7 +185,7 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
  }
 
  String toString() {
-   final values = [translateX, translateY, scaleX, scaleY, shearX, shearY];
+   final values = [scaleX, shearY, shearX, scaleY, translateX, translateY];
    return Strings.join($(values).map((n) =&gt; n.toString()).toList(), ', ');
  }
 }
@@ -231,7 +230,7 @@ factory <strong>AffineTransform.fromScale</strong>(sx, sy) <a class="anchor-link
 <div class="doc">
 <pre class="source">
 factory AffineTransform.fromScale(sx, sy) {
- return new AffineTransform().setToScale(sx, sy);
+ return new AffineTransform(sx, 0, 0, sy, 0, 0);
 }
 </pre>
 </div>
@@ -243,7 +242,7 @@ factory <strong>AffineTransform.fromTranslat</strong>(num x, num y) <a class="an
 <div class="doc">
 <pre class="source">
 factory AffineTransform.fromTranslat(num x, num y) {
- return new AffineTransform().setToTranslation(x, y);
+ return new AffineTransform(1, 0, 0, 1, x, y);
 }
 </pre>
 </div>
@@ -577,7 +576,7 @@ String <strong>toString</strong>() <a class="anchor-link" href="#toString"
 <div class="docs-inherited-from">docs inherited from Object </div></div>
 <pre class="source">
 String toString() {
- final values = [translateX, translateY, scaleX, scaleY, shearX, shearY];
+ final values = [scaleX, shearY, shearX, scaleY, translateX, translateY];
  return Strings.join($(values).map((n) =&gt; n.toString()).toList(), ', ');
 }
 </pre>
