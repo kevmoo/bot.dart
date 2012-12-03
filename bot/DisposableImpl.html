@@ -37,27 +37,27 @@ class DisposableImpl implements Disposable {
  bool _disposed = false;
 
  void dispose(){
-   if (!_disposed) {
-     // Set disposed_ to true first, in case during the chain of disposal this
-     // gets disposed recursively.
-     this._disposed = true;
-     this.disposeInternal();
-   }
+   validateNotDisposed();
+   // Set disposed_ to true first, in case during the chain of disposal this
+   // gets disposed recursively.
+   this._disposed = true;
+   this.disposeInternal();
  }
 
- // TODO: throw an object disposed exception?
  void validateNotDisposed() {
-   assert(!_disposed);
+   if(_disposed) {
+     throw const DisposedError();
+   }
  }
 
  bool get isDisposed =&gt; _disposed;
 
+ @protected
  /**
   * Do not call this method directly. Call [dispose] instead.
   * Subclasses should override this method to implement [Disposable] behavior.
   */
- void disposeInternal() {
- }
+ void disposeInternal() { }
 }
 </pre>
 </div>
@@ -91,12 +91,11 @@ void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
 <div class="doc">
 <pre class="source">
 void dispose(){
- if (!_disposed) {
-   // Set disposed_ to true first, in case during the chain of disposal this
-   // gets disposed recursively.
-   this._disposed = true;
-   this.disposeInternal();
- }
+ validateNotDisposed();
+ // Set disposed_ to true first, in case during the chain of disposal this
+ // gets disposed recursively.
+ this._disposed = true;
+ this.disposeInternal();
 }
 </pre>
 </div>
@@ -109,8 +108,7 @@ void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInt
 <p>Do not call this method directly. Call <a class="crossref" href="../bot/DisposableImpl.html#dispose">dispose</a> instead.
 Subclasses should override this method to implement <a class="crossref" href="../bot/Disposable.html">Disposable</a> behavior.</p>
 <pre class="source">
-void disposeInternal() {
-}
+void disposeInternal() { }
 </pre>
 </div>
 </div>
@@ -121,7 +119,9 @@ void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#valida
 <div class="doc">
 <pre class="source">
 void validateNotDisposed() {
- assert(!_disposed);
+ if(_disposed) {
+   throw const DisposedError();
+ }
 }
 </pre>
 </div>

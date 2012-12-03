@@ -227,12 +227,11 @@ void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void dispose(){
- if (!_disposed) {
-   // Set disposed_ to true first, in case during the chain of disposal this
-   // gets disposed recursively.
-   this._disposed = true;
-   this.disposeInternal();
- }
+ validateNotDisposed();
+ // Set disposed_ to true first, in case during the chain of disposal this
+ // gets disposed recursively.
+ this._disposed = true;
+ this.disposeInternal();
 }
 </pre>
 </div>
@@ -393,7 +392,9 @@ void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#valida
 <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
 <pre class="source">
 void validateNotDisposed() {
- assert(!_disposed);
+ if(_disposed) {
+   throw const DisposedError();
+ }
 }
 </pre>
 </div>
