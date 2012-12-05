@@ -81,7 +81,7 @@ class AudioLoader extends ResourceLoader&lt;AudioBuffer&gt; {
 <h3>Constructors</h3>
 <div class="method"><h4 id="AudioLoader">
 <button class="show-code">Code</button>
-new <strong>AudioLoader</strong>(context, Iterable&lt;String&gt; urlList) <a class="anchor-link" href="#AudioLoader"
+new <strong>AudioLoader</strong>(AudioContext context, Iterable&lt;String&gt; urlList) <a class="anchor-link" href="#AudioLoader"
               title="Permalink to AudioLoader.AudioLoader">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -121,7 +121,7 @@ int get completedCount =&gt; _entries.count((e) =&gt; e.completed);
 </div>
 <div class="field"><h4 id="context">
 <button class="show-code">Code</button>
-final         <strong>context</strong> <a class="anchor-link"
+final AudioContext         <strong>context</strong> <a class="anchor-link"
             href="#context"
             title="Permalink to AudioLoader.context">#</a>
         </h4>

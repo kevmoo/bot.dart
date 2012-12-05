@@ -11141,8 +11141,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Dynamic_",
-                  "refId": "Dynamic_"
+                  "name": "AudioContext",
+                  "refId": "AudioContext"
                 },
                 "kind": "param",
                 "name": "context",
@@ -11243,8 +11243,8 @@
               },
               {
                 "ref": {
-                  "name": "Dynamic_",
-                  "refId": "Dynamic_"
+                  "name": "AudioBuffer",
+                  "refId": "AudioBuffer"
                 },
                 "kind": "param",
                 "name": "buffer",
@@ -11255,8 +11255,8 @@
           },
           {
             "ref": {
-              "name": "Dynamic_",
-              "refId": "Dynamic_"
+              "name": "AudioContext",
+              "refId": "AudioContext"
             },
             "kind": "property",
             "name": "context",
@@ -11272,8 +11272,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Dynamic_",
-                  "refId": "Dynamic_"
+                  "name": "AudioContext",
+                  "refId": "AudioContext"
                 },
                 "kind": "param",
                 "name": "context",
