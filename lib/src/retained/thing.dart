@@ -84,7 +84,9 @@ abstract class Thing extends AttachableObject {
   }
 
   @protected
-  void update(){ }
+  void update(){
+    _Logging.log(this, 'update');
+  }
 
   @protected
   void drawCore(CanvasRenderingContext2D ctx){
@@ -168,6 +170,12 @@ abstract class Thing extends AttachableObject {
       this._cacheCanvas = new CanvasElement();
     }
 
+    if(_lastDrawSize == null) {
+      _Logging.log(this, 'draw_cached_dirty');
+    } else {
+      _Logging.log(this, 'draw_cached_clean');
+    }
+
     final intLastDrawSize = (_lastDrawSize == null) ?
         null : new Size(_lastDrawSize.width.toInt(), _lastDrawSize.height.toInt());
 
@@ -184,6 +192,12 @@ abstract class Thing extends AttachableObject {
   }
 
   void _drawNormal(CanvasRenderingContext2D ctx){
+    if(_lastDrawSize == null) {
+      _Logging.log(this, 'draw_normal_dirty');
+    } else {
+      _Logging.log(this, 'draw_normal_clean');
+    }
+
     _drawInternal(ctx);
   }
 
