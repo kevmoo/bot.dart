@@ -1,0 +1,716 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>unittest Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="unittest">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="unittest.html">unittest</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>unittest</strong> library</h2>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="config">
+<button class="show-code">Code</button>
+final <a href="unittest/Configuration.html">Configuration</a>         <strong>config</strong> <a class="anchor-link"
+            href="#config"
+            title="Permalink to config">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Configuration get config =&gt; _config;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="ERROR">
+<button class="show-code">Code</button>
+const         <strong>ERROR</strong> <a class="anchor-link"
+            href="#ERROR"
+            title="Permalink to ERROR">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+const ERROR = 'error';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="FAIL">
+<button class="show-code">Code</button>
+const         <strong>FAIL</strong> <a class="anchor-link"
+            href="#FAIL"
+            title="Permalink to FAIL">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+const FAIL  = 'fail';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="groupSep">
+<button class="show-code">Code</button>
+String         <strong>groupSep</strong> <a class="anchor-link"
+            href="#groupSep"
+            title="Permalink to groupSep">#</a>
+        </h4>
+        <div class="doc">
+<p>Separator used between group names and test names.</p>
+<pre class="source">
+String groupSep = ' ';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="PASS">
+<button class="show-code">Code</button>
+const         <strong>PASS</strong> <a class="anchor-link"
+            href="#PASS"
+            title="Permalink to PASS">#</a>
+        </h4>
+        <div class="doc">
+<p>Test case result strings.</p>
+<pre class="source">
+const PASS  = 'pass';
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="testCases">
+<button class="show-code">Code</button>
+final         <strong>testCases</strong> <a class="anchor-link"
+            href="#testCases"
+            title="Permalink to testCases">#</a>
+        </h4>
+        <div class="doc">
+<p>Get the list of tests.</p>
+<pre class="source">
+get testCases =&gt; _tests;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="testState">
+<button class="show-code">Code</button>
+Map         <strong>testState</strong> <a class="anchor-link"
+            href="#testState"
+            title="Permalink to testState">#</a>
+        </h4>
+        <div class="doc">
+<p>A map that can be used to communicate state between a test driver
+or main() function and the tests, particularly when these two
+are otherwise independent. For example, a test driver that starts
+an HTTP server and then runs tests that access that server could use
+this as a way of communicating the server port to the tests.</p>
+<pre class="source">
+Map testState = {};
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="disableTest">
+<button class="show-code">Code</button>
+void <strong>disableTest</strong>(int testId) <a class="anchor-link" href="#disableTest"
+              title="Permalink to disableTest">#</a></h4>
+<div class="doc">
+<p>Disable a test by ID.</p>
+<pre class="source">
+void disableTest(int testId) =&gt; _setTestEnabledState(testId, false);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="enableTest">
+<button class="show-code">Code</button>
+void <strong>enableTest</strong>(int testId) <a class="anchor-link" href="#enableTest"
+              title="Permalink to enableTest">#</a></h4>
+<div class="doc">
+<p>Enable a test by ID.</p>
+<pre class="source">
+void enableTest(int testId) =&gt; _setTestEnabledState(testId, true);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setSoloTest">
+<button class="show-code">Code</button>
+void <strong>setSoloTest</strong>(int id) <a class="anchor-link" href="#setSoloTest"
+              title="Permalink to setSoloTest">#</a></h4>
+<div class="doc">
+<p>Select a solo test by ID.</p>
+<pre class="source">
+void setSoloTest(int id) {
+ for (var i = 0; i &lt; _tests.length; i++) {
+   if (_tests[i].id == id) {
+     _soloTest = _tests[i];
+     break;
+   }
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="ensureInitialized">
+<button class="show-code">Code</button>
+<strong>ensureInitialized</strong>() <a class="anchor-link" href="#ensureInitialized"
+              title="Permalink to ensureInitialized">#</a></h4>
+<div class="doc">
+<p>Lazily initializes the test library if not already initialized.</p>
+<pre class="source">
+ensureInitialized() {
+ if (_initialized) {
+   return;
+ }
+ _initialized = true;
+ // Hook our async guard into the matcher library.
+ wrapAsync = expectAsync1;
+
+ _tests = &lt;TestCase&gt;[];
+ _testRunner = _nextBatch;
+ _uncaughtErrorMessage = null;
+
+ if (_config == null) {
+   _config = new Configuration();
+ }
+ _config.onInit();
+
+ if (_config.autoStart) {
+   // Immediately queue the suite up. It will run after a timeout (i.e. after
+   // main() has returned).
+   _defer(runTests);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="fail">
+<button class="show-code">Code</button>
+void <strong>fail</strong>(String message) <a class="anchor-link" href="#fail"
+              title="Permalink to fail">#</a></h4>
+<div class="doc">
+<pre class="source">
+void fail(String message) {
+ throw new ExpectException(message);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="registerException">
+<button class="show-code">Code</button>
+<strong>registerException</strong>(e, [trace]) <a class="anchor-link" href="#registerException"
+              title="Permalink to registerException">#</a></h4>
+<div class="doc">
+<p>Registers that an exception was caught for the current test.</p>
+<pre class="source">
+registerException(e, [trace]) {
+ _registerException(_currentTest, e, trace);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="guardAsync">
+<button class="show-code">Code</button>
+<strong>guardAsync</strong>(tryBody, [finallyBody, testNum = -1]) <a class="anchor-link" href="#guardAsync"
+              title="Permalink to guardAsync">#</a></h4>
+<div class="doc">
+<p>Run 
+<span class="param">tryBody</span> guarded in a try-catch block. If an exception is thrown, update
+the <a class="crossref" href="unittest.html#_currentTest">_currentTest</a> status accordingly.</p>
+<pre class="source">
+guardAsync(tryBody, [finallyBody, testNum = -1]) {
+ if (testNum &lt; 0) testNum = _currentTest;
+ try {
+   return tryBody();
+ } catch (e, trace) {
+   _registerException(testNum, e, trace);
+ } finally {
+   if (finallyBody != null) finallyBody();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="runTests">
+<button class="show-code">Code</button>
+<strong>runTests</strong>() <a class="anchor-link" href="#runTests"
+              title="Permalink to runTests">#</a></h4>
+<div class="doc">
+<p>Runs all queued tests, one at a time.</p>
+<pre class="source">
+runTests() {
+ _currentTest = 0;
+ _currentGroup = '';
+
+ // If we are soloing a test, remove all the others.
+ if (_soloTest != null) {
+   filterTests((t) =&gt; t == _soloTest);
+ }
+
+ _config.onStart();
+
+ _defer(() {
+   _testRunner();
+ });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="filterTests">
+<button class="show-code">Code</button>
+void <strong>filterTests</strong>(testFilter) <a class="anchor-link" href="#filterTests"
+              title="Permalink to filterTests">#</a></h4>
+<div class="doc">
+<p>Filter the tests. 
+<span class="param">testFilter</span> can be a <code>RegExp</code>, a <code>String</code> or a
+predicate function. This is different to enabling/disabling tests
+in that it removes the tests completely.</p>
+<pre class="source">
+void filterTests(testFilter) {
+ var filterFunction;
+ if (testFilter is String) {
+   RegExp re = new RegExp(testFilter);
+   filterFunction = (t) =&gt; re.hasMatch(t.description);
+ } else if (testFilter is RegExp) {
+   filterFunction = (t) =&gt; testFilter.hasMatch(t.description);
+ } else if (testFilter is Function) {
+   filterFunction = testFilter;
+ }
+ _tests = _tests.filter(filterFunction);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="rerunTests">
+<button class="show-code">Code</button>
+<strong>rerunTests</strong>() <a class="anchor-link" href="#rerunTests"
+              title="Permalink to rerunTests">#</a></h4>
+<div class="doc">
+<pre class="source">
+rerunTests() {
+ _uncaughtErrorMessage = null;
+ _initialized = true; // We don't want to reset the test array.
+ runTests();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="callbackDone">
+<button class="show-code">Code</button>
+void <strong>callbackDone</strong>() <a class="anchor-link" href="#callbackDone"
+              title="Permalink to callbackDone">#</a></h4>
+<div class="doc">
+<p>Temporary hack: expose old API.
+TODO(gram) remove this when WebKit tests are working with new framework</p>
+<pre class="source">
+void callbackDone() {
+ _handleCallbackFunctionComplete(_currentTest);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="tearDown">
+<button class="show-code">Code</button>
+void <strong>tearDown</strong>(Function teardownTest) <a class="anchor-link" href="#tearDown"
+              title="Permalink to tearDown">#</a></h4>
+<div class="doc">
+<p>Register a <a class="crossref" href="unittest.html#tearDown">tearDown</a> function for a test <a class="crossref" href="unittest.html#group">group</a>. This function will
+be called after each test in the group is run. Note that if groups
+are nested only the most locally scoped <a class="crossref" href="unittest.html#tearDown">tearDown</a> function will be run.
+<a class="crossref" href="unittest.html#setUp">setUp</a> and <a class="crossref" href="unittest.html#tearDown">tearDown</a> should be called within the <a class="crossref" href="unittest.html#group">group</a> before any
+calls to <a class="crossref" href="unittest.html#test">test</a>.</p>
+<pre class="source">
+void tearDown(Function teardownTest) {
+ _testTeardown = teardownTest;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="setUp">
+<button class="show-code">Code</button>
+void <strong>setUp</strong>(Function setupTest) <a class="anchor-link" href="#setUp"
+              title="Permalink to setUp">#</a></h4>
+<div class="doc">
+<p>Register a <a class="crossref" href="unittest.html#setUp">setUp</a> function for a test <a class="crossref" href="unittest.html#group">group</a>. This function will
+be called before each test in the group is run. Note that if groups
+are nested only the most locally scoped <a class="crossref" href="unittest.html#setUp">setUp</a> function will be run.
+<a class="crossref" href="unittest.html#setUp">setUp</a> and <a class="crossref" href="unittest.html#tearDown">tearDown</a> should be called within the <a class="crossref" href="unittest.html#group">group</a> before any
+calls to <a class="crossref" href="unittest.html#test">test</a>.</p>
+<pre class="source">
+void setUp(Function setupTest) {
+ _testSetup = setupTest;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="group">
+<button class="show-code">Code</button>
+void <strong>group</strong>(String description, void body()) <a class="anchor-link" href="#group"
+              title="Permalink to group">#</a></h4>
+<div class="doc">
+<p>Creates a new named group of tests. Calls to group() or test() within the
+body of the function passed to this will inherit this group's description.</p>
+<pre class="source">
+void group(String description, void body()) {
+ ensureInitialized();
+ // Concatenate the new group.
+ final parentGroup = _currentGroup;
+ if (_currentGroup != '') {
+   // Add a space.
+   _currentGroup = '$_currentGroup$groupSep$description';
+ } else {
+   // The first group.
+   _currentGroup = description;
+ }
+
+ // Groups can be nested, so we need to preserve the current
+ // settings for test setup/teardown.
+ Function parentSetup = _testSetup;
+ Function parentTeardown = _testTeardown;
+
+ try {
+   _testSetup = null;
+   _testTeardown = null;
+   body();
+ } catch (e, trace) {
+   var stack = (trace == null) ? '' : ': ${trace.toString()}';
+   _uncaughtErrorMessage = "${e.toString()}$stack";
+ } finally {
+   // Now that the group is over, restore the previous one.
+   _currentGroup = parentGroup;
+   _testSetup = parentSetup;
+   _testTeardown = parentTeardown;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="protectAsync2">
+<button class="show-code">Code</button>
+Function <strong>protectAsync2</strong>(Function callback) <a class="anchor-link" href="#protectAsync2"
+              title="Permalink to protectAsync2">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#protectAsync0">protectAsync0</a> but 
+<span class="param">callback</span> should take 2 positional arguments.</p>
+<pre class="source">
+Function protectAsync2(Function callback) {
+ return new _SpreadArgsHelper.optionalCalls(callback).invoke2;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="protectAsync1">
+<button class="show-code">Code</button>
+Function <strong>protectAsync1</strong>(Function callback) <a class="anchor-link" href="#protectAsync1"
+              title="Permalink to protectAsync1">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#protectAsync0">protectAsync0</a> but 
+<span class="param">callback</span> should take 1 positional argument.</p>
+<pre class="source">
+Function protectAsync1(Function callback) {
+ return new _SpreadArgsHelper.optionalCalls(callback).invoke1;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="protectAsync0">
+<button class="show-code">Code</button>
+Function <strong>protectAsync0</strong>(Function callback) <a class="anchor-link" href="#protectAsync0"
+              title="Permalink to protectAsync0">#</a></h4>
+<div class="doc">
+<p>Wraps the 
+<span class="param">callback</span> in a new function and returns that function. The new
+function will be able to handle exceptions by directing them to the correct
+test. This is thus similar to expectAsync0. Use it to wrap any callbacks that
+might optionally be called but may never be called during the test.
+
+<span class="param">callback</span> should take 0 positional arguments (named arguments are not
+supported).</p>
+<pre class="source">
+Function protectAsync0(Function callback) {
+ return new _SpreadArgsHelper.optionalCalls(callback).invoke0;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsyncUntil2">
+<button class="show-code">Code</button>
+Function <strong>expectAsyncUntil2</strong>(Function callback, Function isDone) <a class="anchor-link" href="#expectAsyncUntil2"
+              title="Permalink to expectAsyncUntil2">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#expectAsyncUntil0">expectAsyncUntil0</a> but 
+<span class="param">callback</span> should take 2 positional arguments.</p>
+<pre class="source">
+Function expectAsyncUntil2(Function callback, Function isDone) {
+ return new _SpreadArgsHelper.variableCallCount(callback, isDone).invoke2;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsyncUntil1">
+<button class="show-code">Code</button>
+Function <strong>expectAsyncUntil1</strong>(Function callback, Function isDone) <a class="anchor-link" href="#expectAsyncUntil1"
+              title="Permalink to expectAsyncUntil1">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#expectAsyncUntil0">expectAsyncUntil0</a> but 
+<span class="param">callback</span> should take 1 positional argument.</p>
+<pre class="source">
+Function expectAsyncUntil1(Function callback, Function isDone) {
+ return new _SpreadArgsHelper.variableCallCount(callback, isDone).invoke1;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsyncUntil0">
+<button class="show-code">Code</button>
+Function <strong>expectAsyncUntil0</strong>(Function callback, Function isDone) <a class="anchor-link" href="#expectAsyncUntil0"
+              title="Permalink to expectAsyncUntil0">#</a></h4>
+<div class="doc">
+<p>Indicate that 
+<span class="param">callback</span> is expected to be called until 
+<span class="param">isDone</span> returns
+true. The unittest framework check 
+<span class="param">isDone</span> after each callback and only
+when it returns true will it continue with the following test. Using
+<a class="crossref" href="unittest.html#expectAsyncUntil0">expectAsyncUntil0</a> will also ensure that errors that occur within
+
+<span class="param">callback</span> are tracked and reported. 
+<span class="param">callback</span> should take 0 positional
+arguments (named arguments are not supported).</p>
+<pre class="source">
+Function expectAsyncUntil0(Function callback, Function isDone) {
+ return new _SpreadArgsHelper.variableCallCount(callback, isDone).invoke0;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsync2">
+<button class="show-code">Code</button>
+Function <strong>expectAsync2</strong>(Function callback, [int count = 1]) <a class="anchor-link" href="#expectAsync2"
+              title="Permalink to expectAsync2">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
+<span class="param">callback</span> should take 2 positional arguments.</p>
+<pre class="source">
+Function expectAsync2(Function callback, [int count = 1]) {
+ return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke2;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsync1">
+<button class="show-code">Code</button>
+Function <strong>expectAsync1</strong>(Function callback, {int count: 1}) <a class="anchor-link" href="#expectAsync1"
+              title="Permalink to expectAsync1">#</a></h4>
+<div class="doc">
+<p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
+<span class="param">callback</span> should take 1 positional argument.</p>
+<pre class="source">
+Function expectAsync1(Function callback, {int count: 1}) {
+ return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke1;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectAsync0">
+<button class="show-code">Code</button>
+Function <strong>expectAsync0</strong>(Function callback, [int count = 1]) <a class="anchor-link" href="#expectAsync0"
+              title="Permalink to expectAsync0">#</a></h4>
+<div class="doc">
+<p>Indicate that 
+<span class="param">callback</span> is expected to be called a 
+<span class="param">count</span> number of times
+(by default 1). The unittest framework will wait for the callback to run the
+specified 
+<span class="param">count</span> times before it continues with the following test.  Using
+<a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> will also ensure that errors that occur within 
+<span class="param">callback</span> are
+tracked and reported. 
+<span class="param">callback</span> should take 0 positional arguments (named
+arguments are not supported).</p>
+<pre class="source">
+Function expectAsync0(Function callback, [int count = 1]) {
+ return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke0;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="solo_test">
+<button class="show-code">Code</button>
+void <strong>solo_test</strong>(String spec, <a href="unittest/TestFunction.html">TestFunction</a> body) <a class="anchor-link" href="#solo_test"
+              title="Permalink to solo_test">#</a></h4>
+<div class="doc">
+<p>Creates a new test case with the given description and body. The
+description will include the descriptions of any surrounding group()
+calls.</p>
+<p>"solo<em>" means that this will be the only test that is run. All other tests
+will be skipped. This is a convenience function to let you quickly isolate
+a single test by adding "solo</em>" before it to temporarily disable all other
+tests.</p>
+<pre class="source">
+void solo_test(String spec, TestFunction body) {
+ // TODO(rnystrom): Support multiple solos. If more than one test is solo-ed,
+ // all of the solo-ed tests and none of the non-solo-ed ones should run.
+ if (_soloTest != null) {
+   throw new Exception('Only one test can be soloed right now.');
+ }
+
+ ensureInitialized();
+
+ _soloTest = new TestCase(_tests.length + 1, _fullSpec(spec), body, 0);
+ _tests.add(_soloTest);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="asyncTest">
+<button class="show-code">Code</button>
+void <strong>asyncTest</strong>(String spec, int callbacks, <a href="unittest/TestFunction.html">TestFunction</a> body) <a class="anchor-link" href="#asyncTest"
+              title="Permalink to asyncTest">#</a></h4>
+<div class="doc">
+<p>(Deprecated) Creates a new async test case with the given description
+and body. The description will include the descriptions of any surrounding
+group() calls.</p>
+<pre class="source">
+void asyncTest(String spec, int callbacks, TestFunction body) {
+ ensureInitialized();
+
+ final testCase = new TestCase(
+     _tests.length + 1, _fullSpec(spec), body, callbacks);
+ _tests.add(testCase);
+
+ if (callbacks &lt; 1) {
+   testCase.error(
+       'Async tests must wait for at least one callback ', '');
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="test">
+<button class="show-code">Code</button>
+void <strong>test</strong>(String spec, <a href="unittest/TestFunction.html">TestFunction</a> body) <a class="anchor-link" href="#test"
+              title="Permalink to test">#</a></h4>
+<div class="doc">
+<p>Creates a new test case with the given description and body. The
+description will include the descriptions of any surrounding group()
+calls.</p>
+<pre class="source">
+void test(String spec, TestFunction body) {
+ ensureInitialized();
+ _tests.add(new TestCase(_tests.length + 1, _fullSpec(spec), body, 0));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="expectThrow">
+<button class="show-code">Code</button>
+void <strong>expectThrow</strong>(function, [bool callback(exception)]) <a class="anchor-link" href="#expectThrow"
+              title="Permalink to expectThrow">#</a></h4>
+<div class="doc">
+<p>(Deprecated) Evaluates the 
+<span class="param">function</span> and validates that it throws an
+exception. If 
+<span class="param">callback</span> is provided, then it will be invoked with the
+thrown exception. The callback may do any validation it wants. In addition,
+if it returns <code>false</code>, that also indicates an expectation failure.</p>
+<pre class="source">
+void expectThrow(function, [bool callback(exception)]) {
+ bool threw = false;
+ try {
+   function();
+ } catch (e) {
+   threw = true;
+
+   // Also let the callback look at it.
+   if (callback != null) {
+     var result = callback(e);
+
+     // If the callback explicitly returned false, treat that like an
+     // expectation too. (If it returns null, though, don't.)
+     if (result == false) {
+       fail('Exception:\n$e\ndid not match expectation.');
+     }
+   }
+ }
+
+ if (threw != true) fail('An expected exception was not thrown.');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="logMessage">
+<button class="show-code">Code</button>
+void <strong>logMessage</strong>(String message) <a class="anchor-link" href="#logMessage"
+              title="Permalink to logMessage">#</a></h4>
+<div class="doc">
+<pre class="source">
+void logMessage(String message) =&gt; _config.logMessage(message);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="configure">
+<button class="show-code">Code</button>
+<a href="unittest/Configuration.html">Configuration</a> <strong>configure</strong>(<a href="unittest/Configuration.html">Configuration</a> config) <a class="anchor-link" href="#configure"
+              title="Permalink to configure">#</a></h4>
+<div class="doc">
+<p>Set the <a class="crossref" href="unittest/Configuration.html">Configuration</a> used by the unittest library. Returns any
+previous configuration.
+TODO: consider deprecating in favor of a setter now we have a getter.</p>
+<pre class="source">
+Configuration configure(Configuration config) {
+ Configuration _oldConfig = _config;
+ _config = config;
+ return _oldConfig;
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="unittest/Configuration.html"><strong>Configuration</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="unittest/TestCase.html"><strong>TestCase</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Typedefs</h3>
+          <div class="type">
+          <h4>
+            <a href="unittest/TestFunction.html"><strong>TestFunction</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

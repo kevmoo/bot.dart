@@ -1,0 +1,342 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>mock Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="mock">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="mock.html">mock</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>mock</strong> library</h2>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="happenedAtLeastOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedAtLeastOnce</strong> <a class="anchor-link"
+            href="#happenedAtLeastOnce"
+            title="Permalink to happenedAtLeastOnce">#</a>
+        </h4>
+        <div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtLeastOnce">happenedAtLeastOnce</a> matches one or more calls.</p>
+<pre class="source">
+const Matcher happenedAtLeastOnce = const _TimesMatcher(1);
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="happenedAtMostOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedAtMostOnce</strong> <a class="anchor-link"
+            href="#happenedAtMostOnce"
+            title="Permalink to happenedAtMostOnce">#</a>
+        </h4>
+        <div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtMostOnce">happenedAtMostOnce</a> matches zero or one call.</p>
+<pre class="source">
+const Matcher happenedAtMostOnce = const _TimesMatcher(0, 1);
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="happenedOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedOnce</strong> <a class="anchor-link"
+            href="#happenedOnce"
+            title="Permalink to happenedOnce">#</a>
+        </h4>
+        <div class="doc">
+<p><a class="crossref" href="mock.html#happenedOnce">happenedOnce</a> matches exactly one call.</p>
+<pre class="source">
+const Matcher happenedOnce = const _TimesMatcher(1, 1);
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="neverHappened">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>neverHappened</strong> <a class="anchor-link"
+            href="#neverHappened"
+            title="Permalink to neverHappened">#</a>
+        </h4>
+        <div class="doc">
+<p><a class="crossref" href="mock.html#neverHappened">neverHappened</a> matches zero calls.</p>
+<pre class="source">
+const Matcher neverHappened = const _TimesMatcher(0, 0);
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sharedLog">
+<button class="show-code">Code</button>
+<a href="mock/LogEntryList.html">LogEntryList</a>         <strong>sharedLog</strong> <a class="anchor-link"
+            href="#sharedLog"
+            title="Permalink to sharedLog">#</a>
+        </h4>
+        <div class="doc">
+<p>The shared log used for named mocks.</p>
+<pre class="source">
+LogEntryList sharedLog = null;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="neverThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>neverThrew</strong>(value) <a class="anchor-link" href="#neverThrew"
+              title="Permalink to neverThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#neverThrew">neverThrew</a> asserts that no matching call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher neverThrew(value) =&gt;
+ new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.NONE);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sometimeThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>sometimeThrew</strong>(value) <a class="anchor-link" href="#sometimeThrew"
+              title="Permalink to sometimeThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#sometimeThrew">sometimeThrew</a> asserts that at least one matching call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher sometimeThrew(value) =&gt;
+ new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.SOME);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>alwaysThrew</strong>(value) <a class="anchor-link" href="#alwaysThrew"
+              title="Permalink to alwaysThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#alwaysThrew">alwaysThrew</a> asserts that all matching calls to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher alwaysThrew(value) =&gt;
+   new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.ALL);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="neverReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>neverReturned</strong>(value) <a class="anchor-link" href="#neverReturned"
+              title="Permalink to neverReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#neverReturned">neverReturned</a> asserts that no matching calls to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher neverReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.NONE);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sometimeReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>sometimeReturned</strong>(value) <a class="anchor-link" href="#sometimeReturned"
+              title="Permalink to sometimeReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#sometimeReturned">sometimeReturned</a> asserts that at least one matching call to a method
+returned a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher sometimeReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.SOME);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>alwaysReturned</strong>(value) <a class="anchor-link" href="#alwaysReturned"
+              title="Permalink to alwaysReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#alwaysReturned">alwaysReturned</a> asserts that all matching calls to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher alwaysReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.ALL);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="throwing">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>throwing</strong>(value) <a class="anchor-link" href="#throwing"
+              title="Permalink to throwing">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#throwing">throwing</a> matches log entrues where the call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher throwing(value) =&gt;
+   new _ResultMatcher(Action.THROW, wrapMatcher(value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="returning">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>returning</strong>(value) <a class="anchor-link" href="#returning"
+              title="Permalink to returning">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#returning">returning</a> matches log entries where the call to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher returning(value) =&gt;
+   new _ResultMatcher(Action.RETURN, wrapMatcher(value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedAtMost">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedAtMost</strong>(count) <a class="anchor-link" href="#happenedAtMost"
+              title="Permalink to happenedAtMost">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtMost">happenedAtMost</a> matches a maximum number of calls.</p>
+<pre class="source">
+Matcher happenedAtMost(count) {
+ return new _TimesMatcher(0, count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedAtLeast">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedAtLeast</strong>(count) <a class="anchor-link" href="#happenedAtLeast"
+              title="Permalink to happenedAtLeast">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtLeast">happenedAtLeast</a> matches a minimum number of calls.</p>
+<pre class="source">
+Matcher happenedAtLeast(count) {
+ return new _TimesMatcher(count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedExactly">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedExactly</strong>(count) <a class="anchor-link" href="#happenedExactly"
+              title="Permalink to happenedExactly">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedExactly">happenedExactly</a> matches an exact number of calls.</p>
+<pre class="source">
+Matcher happenedExactly(count) {
+ return new _TimesMatcher(count, count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="callsTo">
+<button class="show-code">Code</button>
+<a href="mock/CallMatcher.html">CallMatcher</a> <strong>callsTo</strong>([method, arg0 = _noArg, arg1 = _noArg, arg2 = _noArg, arg3 = _noArg, arg4 = _noArg, arg5 = _noArg, arg6 = _noArg, arg7 = _noArg, arg8 = _noArg, arg9 = _noArg]) <a class="anchor-link" href="#callsTo"
+              title="Permalink to callsTo">#</a></h4>
+<div class="doc">
+<p>Returns a <a class="crossref" href="mock/CallMatcher.html">CallMatcher</a> for the specified signature. 
+<span class="param">method</span> can be
+null to match anything, or a literal <code>String</code>, a predicate <code>Function</code>,
+or a <code>Matcher</code>. The various arguments can be scalar values or <code>Matcher</code>s.</p>
+<pre class="source">
+CallMatcher callsTo([method,
+                    arg0 = _noArg,
+                    arg1 = _noArg,
+                    arg2 = _noArg,
+                    arg3 = _noArg,
+                    arg4 = _noArg,
+                    arg5 = _noArg,
+                    arg6 = _noArg,
+                    arg7 = _noArg,
+                    arg8 = _noArg,
+                    arg9 = _noArg]) {
+ return new CallMatcher(method, arg0, arg1, arg2, arg3, arg4,
+     arg5, arg6, arg7, arg8, arg9);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="mock/Action.html"><strong>Action</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Behavior.html"><strong>Behavior</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/CallMatcher.html"><strong>CallMatcher</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/LogEntry.html"><strong>LogEntry</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/LogEntryList.html"><strong>LogEntryList</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Mock.html"><strong>Mock</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Responder.html"><strong>Responder</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Typedefs</h3>
+          <div class="type">
+          <h4>
+            <a href="mock/StepValidator.html"><strong>StepValidator</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

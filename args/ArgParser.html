@@ -1,0 +1,511 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>ArgParser class / args Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="args" data-type="ArgParser">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../args.html">args</a> &rsaquo; <a href="../args/ArgParser.html">ArgParser</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>ArgParser</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A class for taking a list of raw command line arguments and parsing out
+options and flags from them.</p>
+<pre class="source">
+class ArgParser {
+ static final _SOLO_OPT = new RegExp(r'^-([a-zA-Z0-9])$');
+ static final _ABBR_OPT = new RegExp(r'^-([a-zA-Z0-9]+)(.*)$');
+ static final _LONG_OPT = new RegExp(r'^--([a-zA-Z\-_0-9]+)(=(.*))?$');
+
+ final Map&lt;String, _Option&gt; _options;
+
+ /**
+  * The names of the options, in the order that they were added. This way we
+  * can generate usage information in the same order.
+  */
+ // TODO(rnystrom): Use an ordered map type, if one appears.
+ final List&lt;String&gt; _optionNames;
+
+ /** The current argument list being parsed. Set by [parse()]. */
+ List&lt;String&gt; _args;
+
+ /** Index of the current argument being parsed in [_args]. */
+ int _current;
+
+ /** Creates a new ArgParser. */
+ ArgParser()
+   : _options = &lt;String, _Option&gt;{},
+     _optionNames = &lt;String&gt;[];
+
+ /**
+  * Defines a flag. Throws an [ArgumentError] if:
+  *
+  * * There is already an option named [name].
+  * * There is already an option using abbreviation [abbr].
+  */
+ void addFlag(String name, {String abbr, String help, bool defaultsTo: false,
+     bool negatable: true, void callback(bool value)}) {
+   _addOption(name, abbr, help, null, null, defaultsTo, callback,
+       isFlag: true, negatable: negatable);
+ }
+
+ /**
+  * Defines a value-taking option. Throws an [ArgumentError] if:
+  *
+  * * There is already an option with name [name].
+  * * There is already an option using abbreviation [abbr].
+  */
+ void addOption(String name, {String abbr, String help, List&lt;String&gt; allowed,
+     Map&lt;String, String&gt; allowedHelp, String defaultsTo,
+     void callback(value), bool allowMultiple: false}) {
+   _addOption(name, abbr, help, allowed, allowedHelp, defaultsTo,
+       callback, isFlag: false, allowMultiple: allowMultiple);
+ }
+
+ void _addOption(String name, String abbr, String help, List&lt;String&gt; allowed,
+     Map&lt;String, String&gt; allowedHelp, defaultsTo,
+     void callback(value), {bool isFlag, bool negatable: false,
+     bool allowMultiple: false}) {
+   // Make sure the name isn't in use.
+   if (_options.containsKey(name)) {
+     throw new ArgumentError('Duplicate option "$name".');
+   }
+
+   // Make sure the abbreviation isn't too long or in use.
+   if (abbr != null) {
+     if (abbr.length &gt; 1) {
+       throw new ArgumentError(
+           'Abbreviation "$abbr" is longer than one character.');
+     }
+
+     var existing = _findByAbbr(abbr);
+     if (existing != null) {
+       throw new ArgumentError(
+           'Abbreviation "$abbr" is already used by "${existing.name}".');
+     }
+   }
+
+   _options[name] = new _Option(name, abbr, help, allowed, allowedHelp,
+       defaultsTo, callback, isFlag: isFlag, negatable: negatable,
+       allowMultiple: allowMultiple);
+   _optionNames.add(name);
+ }
+
+ /**
+  * Parses [args], a list of command-line arguments, matches them against the
+  * flags and options defined by this parser, and returns the result.
+  */
+ ArgResults parse(List&lt;String&gt; args) {
+   _args = args;
+   _current = 0;
+   var results = {};
+
+   // Initialize flags to their defaults.
+   _options.forEach((name, option) {
+     if (option.allowMultiple) {
+       results[name] = [];
+     } else {
+       results[name] = option.defaultValue;
+     }
+   });
+
+   // Parse the args.
+   for (_current = 0; _current &lt; args.length; _current++) {
+     var arg = args[_current];
+
+     if (arg == '--') {
+       // Reached the argument terminator, so stop here.
+       _current++;
+       break;
+     }
+
+     // Try to parse the current argument as an option. Note that the order
+     // here matters.
+     if (_parseSoloOption(results)) continue;
+     if (_parseAbbreviation(results)) continue;
+     if (_parseLongOption(results)) continue;
+
+     // If we got here, the argument doesn't look like an option, so stop.
+     break;
+   }
+
+   // Set unspecified multivalued arguments to their default value,
+   // if any, and invoke the callbacks.
+   for (var name in _optionNames) {
+     var option = _options[name];
+     if (option.allowMultiple &amp;&amp;
+         results[name].length == 0 &amp;&amp;
+         option.defaultValue != null) {
+       results[name].add(option.defaultValue);
+     }
+     if (option.callback != null) option.callback(results[name]);
+   }
+
+   // Add in the leftover arguments we didn't parse.
+   return new ArgResults(results,
+       _args.getRange(_current, _args.length - _current));
+ }
+
+ /**
+  * Generates a string displaying usage information for the defined options.
+  * This is basically the help text shown on the command line.
+  */
+ String getUsage() {
+   return new _Usage(this).generate();
+ }
+
+ /**
+  * Called during parsing to validate the arguments. Throws a
+  * [FormatException] if [condition] is `false`.
+  */
+ _validate(bool condition, String message) {
+   if (!condition) throw new FormatException(message);
+ }
+
+ /** Validates and stores [value] as the value for [option]. */
+ _setOption(Map results, _Option option, value) {
+   // See if it's one of the allowed values.
+   if (option.allowed != null) {
+     _validate(option.allowed.some((allow) =&gt; allow == value),
+         '"$value" is not an allowed value for option "${option.name}".');
+   }
+
+   if (option.allowMultiple) {
+     results[option.name].add(value);
+   } else {
+     results[option.name] = value;
+   }
+ }
+
+ /**
+  * Pulls the value for [option] from the next argument in [_args] (where the
+  * current option is at index [_current]. Validates that there is a valid
+  * value there.
+  */
+ void _readNextArgAsValue(Map results, _Option option) {
+   _current++;
+   // Take the option argument from the next command line arg.
+   _validate(_current &lt; _args.length,
+       'Missing argument for "${option.name}".');
+
+   // Make sure it isn't an option itself.
+   _validate(!_ABBR_OPT.hasMatch(_args[_current]) &amp;&amp;
+             !_LONG_OPT.hasMatch(_args[_current]),
+       'Missing argument for "${option.name}".');
+
+   _setOption(results, option, _args[_current]);
+ }
+
+ /**
+  * Tries to parse the current argument as a "solo" option, which is a single
+  * hyphen followed by a single letter. We treat this differently than
+  * collapsed abbreviations (like "-abc") to handle the possible value that
+  * may follow it.
+  */
+ bool _parseSoloOption(Map results) {
+   var soloOpt = _SOLO_OPT.firstMatch(_args[_current]);
+   if (soloOpt == null) return false;
+
+   var option = _findByAbbr(soloOpt[1]);
+   _validate(option != null,
+       'Could not find an option or flag "-${soloOpt[1]}".');
+
+   if (option.isFlag) {
+     _setOption(results, option, true);
+   } else {
+     _readNextArgAsValue(results, option);
+   }
+
+   return true;
+ }
+
+ /**
+  * Tries to parse the current argument as a series of collapsed abbreviations
+  * (like "-abc") or a single abbreviation with the value directly attached
+  * to it (like "-mrelease").
+  */
+ bool _parseAbbreviation(Map results) {
+   var abbrOpt = _ABBR_OPT.firstMatch(_args[_current]);
+   if (abbrOpt == null) return false;
+
+   // If the first character is the abbreviation for a non-flag option, then
+   // the rest is the value.
+   var c = abbrOpt[1].substring(0, 1);
+   var first = _findByAbbr(c);
+   if (first == null) {
+     _validate(false, 'Could not find an option with short name "-$c".');
+   } else if (!first.isFlag) {
+     // The first character is a non-flag option, so the rest must be the
+     // value.
+     var value = '${abbrOpt[1].substring(1)}${abbrOpt[2]}';
+     _setOption(results, first, value);
+   } else {
+     // If we got some non-flag characters, then it must be a value, but
+     // if we got here, it's a flag, which is wrong.
+     _validate(abbrOpt[2] == '',
+       'Option "-$c" is a flag and cannot handle value '
+       '"${abbrOpt[1].substring(1)}${abbrOpt[2]}".');
+
+     // Not an option, so all characters should be flags.
+     for (var i = 0; i &lt; abbrOpt[1].length; i++) {
+       var c = abbrOpt[1].substring(i, i + 1);
+       var option = _findByAbbr(c);
+       _validate(option != null,
+           'Could not find an option with short name "-$c".');
+
+       // In a list of short options, only the first can be a non-flag. If
+       // we get here we've checked that already.
+       _validate(option.isFlag,
+           'Option "-$c" must be a flag to be in a collapsed "-".');
+
+       _setOption(results, option, true);
+     }
+   }
+
+   return true;
+ }
+
+ /**
+  * Tries to parse the current argument as a long-form named option, which
+  * may include a value like "--mode=release" or "--mode release".
+  */
+ bool _parseLongOption(Map results) {
+   var longOpt = _LONG_OPT.firstMatch(_args[_current]);
+   if (longOpt == null) return false;
+
+   var name = longOpt[1];
+   var option = _options[name];
+   if (option != null) {
+     if (option.isFlag) {
+       _validate(longOpt[3] == null,
+           'Flag option "$name" should not be given a value.');
+
+       _setOption(results, option, true);
+     } else if (longOpt[3] != null) {
+       // We have a value like --foo=bar.
+       _setOption(results, option, longOpt[3]);
+     } else {
+       // Option like --foo, so look for the value as the next arg.
+       _readNextArgAsValue(results, option);
+     }
+   } else if (name.startsWith('no-')) {
+     // See if it's a negated flag.
+     name = name.substring('no-'.length);
+     option = _options[name];
+     _validate(option != null, 'Could not find an option named "$name".');
+     _validate(option.isFlag, 'Cannot negate non-flag option "$name".');
+     _validate(option.negatable, 'Cannot negate option "$name".');
+
+     _setOption(results, option, false);
+   } else {
+     _validate(option != null, 'Could not find an option named "$name".');
+   }
+
+   return true;
+ }
+
+ /**
+  * Finds the option whose abbreviation is [abbr], or `null` if no option has
+  * that abbreviation.
+  */
+ _Option _findByAbbr(String abbr) {
+   for (var option in _options.values) {
+     if (option.abbreviation == abbr) return option;
+   }
+
+   return null;
+ }
+
+ /**
+  * Get the default value for an option. Useful after parsing to test
+  * if the user specified something other than the default.
+  */
+ getDefault(String option) {
+   if (!_options.containsKey(option)) {
+     throw new ArgumentError('No option named $option');
+   }
+   return _options[option].defaultValue;
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="ArgParser">
+<button class="show-code">Code</button>
+new <strong>ArgParser</strong>() <a class="anchor-link" href="#ArgParser"
+              title="Permalink to ArgParser.ArgParser">#</a></h4>
+<div class="doc">
+<p>Creates a new ArgParser.</p>
+<pre class="source">
+ArgParser()
+ : _options = &lt;String, _Option&gt;{},
+   _optionNames = &lt;String&gt;[];
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="addFlag">
+<button class="show-code">Code</button>
+void <strong>addFlag</strong>(String name, {String abbr, String help, bool defaultsTo: false, bool negatable: true, void callback(bool value)}) <a class="anchor-link" href="#addFlag"
+              title="Permalink to ArgParser.addFlag">#</a></h4>
+<div class="doc">
+<p>Defines a flag. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option named 
+<span class="param">name</span>.</li><li>There is already an option using abbreviation 
+<span class="param">abbr</span>.</li></ul>
+<pre class="source">
+void addFlag(String name, {String abbr, String help, bool defaultsTo: false,
+   bool negatable: true, void callback(bool value)}) {
+ _addOption(name, abbr, help, null, null, defaultsTo, callback,
+     isFlag: true, negatable: negatable);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addOption">
+<button class="show-code">Code</button>
+void <strong>addOption</strong>(String name, {String abbr, String help, List&lt;String&gt; allowed, Map&lt;String, String&gt; allowedHelp, String defaultsTo, void callback(value), bool allowMultiple: false}) <a class="anchor-link" href="#addOption"
+              title="Permalink to ArgParser.addOption">#</a></h4>
+<div class="doc">
+<p>Defines a value-taking option. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option with name 
+<span class="param">name</span>.</li><li>There is already an option using abbreviation 
+<span class="param">abbr</span>.</li></ul>
+<pre class="source">
+void addOption(String name, {String abbr, String help, List&lt;String&gt; allowed,
+   Map&lt;String, String&gt; allowedHelp, String defaultsTo,
+   void callback(value), bool allowMultiple: false}) {
+ _addOption(name, abbr, help, allowed, allowedHelp, defaultsTo,
+     callback, isFlag: false, allowMultiple: allowMultiple);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getDefault">
+<button class="show-code">Code</button>
+<strong>getDefault</strong>(String option) <a class="anchor-link" href="#getDefault"
+              title="Permalink to ArgParser.getDefault">#</a></h4>
+<div class="doc">
+<p>Get the default value for an option. Useful after parsing to test
+if the user specified something other than the default.</p>
+<pre class="source">
+getDefault(String option) {
+ if (!_options.containsKey(option)) {
+   throw new ArgumentError('No option named $option');
+ }
+ return _options[option].defaultValue;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getUsage">
+<button class="show-code">Code</button>
+String <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+              title="Permalink to ArgParser.getUsage">#</a></h4>
+<div class="doc">
+<p>Generates a string displaying usage information for the defined options.
+This is basically the help text shown on the command line.</p>
+<pre class="source">
+String getUsage() {
+ return new _Usage(this).generate();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="parse">
+<button class="show-code">Code</button>
+<a href="../args/ArgResults.html">ArgResults</a> <strong>parse</strong>(List&lt;String&gt; args) <a class="anchor-link" href="#parse"
+              title="Permalink to ArgParser.parse">#</a></h4>
+<div class="doc">
+<p>Parses 
+<span class="param">args</span>, a list of command-line arguments, matches them against the
+flags and options defined by this parser, and returns the result.</p>
+<pre class="source">
+ArgResults parse(List&lt;String&gt; args) {
+ _args = args;
+ _current = 0;
+ var results = {};
+
+ // Initialize flags to their defaults.
+ _options.forEach((name, option) {
+   if (option.allowMultiple) {
+     results[name] = [];
+   } else {
+     results[name] = option.defaultValue;
+   }
+ });
+
+ // Parse the args.
+ for (_current = 0; _current &lt; args.length; _current++) {
+   var arg = args[_current];
+
+   if (arg == '--') {
+     // Reached the argument terminator, so stop here.
+     _current++;
+     break;
+   }
+
+   // Try to parse the current argument as an option. Note that the order
+   // here matters.
+   if (_parseSoloOption(results)) continue;
+   if (_parseAbbreviation(results)) continue;
+   if (_parseLongOption(results)) continue;
+
+   // If we got here, the argument doesn't look like an option, so stop.
+   break;
+ }
+
+ // Set unspecified multivalued arguments to their default value,
+ // if any, and invoke the callbacks.
+ for (var name in _optionNames) {
+   var option = _options[name];
+   if (option.allowMultiple &amp;&amp;
+       results[name].length == 0 &amp;&amp;
+       option.defaultValue != null) {
+     results[name].add(option.defaultValue);
+   }
+   if (option.callback != null) option.callback(results[name]);
+ }
+
+ // Add in the leftover arguments we didn't parse.
+ return new ArgResults(results,
+     _args.getRange(_current, _args.length - _current));
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

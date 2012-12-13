@@ -44,8 +44,8 @@ class ImageThing extends Thing {
    return new ImageThing(w, h, img);
  }
 
- ImageThing(num width, num height, this._image, [bool cacheEnabled = false]) :
-   super(width, height, cacheEnabled);
+ ImageThing(num width, num height, this._image) :
+   super(width, height);
 
  void drawOverride(CanvasRenderingContext2D ctx) {
    if(_image.complete) {
@@ -79,12 +79,12 @@ class ImageThing extends Thing {
 <h3>Constructors</h3>
 <div class="method"><h4 id="ImageThing">
 <button class="show-code">Code</button>
-new <strong>ImageThing</strong>(num width, num height, ImageElement _image, [bool cacheEnabled = false]) <a class="anchor-link" href="#ImageThing"
+new <strong>ImageThing</strong>(num width, num height, ImageElement _image) <a class="anchor-link" href="#ImageThing"
               title="Permalink to ImageThing.ImageThing">#</a></h4>
 <div class="doc">
 <pre class="source">
-ImageThing(num width, num height, this._image, [bool cacheEnabled = false]) :
- super(width, height, cacheEnabled);
+ImageThing(num width, num height, this._image) :
+ super(width, height);
 </pre>
 </div>
 </div>
@@ -120,32 +120,33 @@ void set alpha(num value) {
  requireArgument(isValidNumber(value), 'value');
  requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
  _alpha = value;
- invalidateDraw();
+ if(parent != null) {
+   _invalidateParent();
+ }
 }
 </pre>
 </div>
 </div>
 <div class="field inherited"><h4 id="cacheEnabled">
 <button class="show-code">Code</button>
-final bool         <strong>cacheEnabled</strong> <a class="anchor-link"
+bool         <strong>cacheEnabled</strong> <a class="anchor-link"
             href="#cacheEnabled"
             title="Permalink to ImageThing.cacheEnabled">#</a>
         </h4>
         <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-final bool cacheEnabled;
+bool get cacheEnabled =&gt; _cacheEnabled;
 </pre>
-</div>
-</div>
-<div class="field inherited"><h4 id="clip">
-<button class="show-code">Code</button>
-bool         <strong>clip</strong> <a class="anchor-link"
-            href="#clip"
-            title="Permalink to ImageThing.clip">#</a>
-        </h4>
-        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
-bool clip = false;
+void set cacheEnabled(bool value) {
+ requireArgumentNotNull(value, 'value');
+ if(value != _cacheEnabled) {
+   _cacheEnabled = value;
+   if(!_cacheEnabled) {
+     _cacheCanvas = null;
+   }
+ }
+}
 </pre>
 </div>
 </div>
@@ -301,11 +302,21 @@ void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-li
 <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
 void drawCore(CanvasRenderingContext2D ctx){
- if(cacheEnabled) {
+ ctx.save();
+ final tx = this.getTransform();
+ CanvasUtil.transform(ctx, tx);
+ assert(_alpha != null);
+ assert(_alpha &gt;= 0);
+ assert(_alpha &lt;= 1);
+ ctx.globalAlpha = ctx.globalAlpha * _alpha;
+
+ if(_cacheEnabled) {
    _drawCached(ctx);
  } else {
    _drawNormal(ctx);
  }
+
+ ctx.restore();
 }
 </pre>
 </div>
@@ -368,8 +379,8 @@ void <strong>invalidateDraw</strong>() <a class="anchor-link" href="#invalidateD
 <pre class="source">
 void invalidateDraw(){
  validateNotDisposed();
- if(_lastDrawSize != null){
-   _lastDrawSize = null;
+ if(_lastDrawTime != null) {
+   _lastDrawTime = null;
    _invalidateParent();
  }
 }

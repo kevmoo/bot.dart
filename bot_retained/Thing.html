@@ -35,16 +35,15 @@
 <pre class="source">
 abstract class Thing extends AttachableObject {
  final List&lt;AffineTransform&gt; _transforms = new List&lt;AffineTransform&gt;();
- final bool cacheEnabled;
  final EventHandle&lt;EventArgs&gt; _invalidatedEventHandle = new EventHandle&lt;EventArgs&gt;();
  CanvasElement _cacheCanvas;
 
  num _width, _height, _alpha = 1;
- Size _lastDrawSize;
- bool clip = false;
+ bool _cacheEnabled = false;
+ num _lastDrawTime;
  ThingParent _parent;
 
- Thing(this._width, this._height, [this.cacheEnabled = false]);
+ Thing(this._width, this._height);
 
  num get width =&gt; _width;
 
@@ -77,10 +76,24 @@ abstract class Thing extends AttachableObject {
    requireArgument(isValidNumber(value), 'value');
    requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
    _alpha = value;
-   invalidateDraw();
+   if(parent != null) {
+     _invalidateParent();
+   }
  }
 
  ThingParent get parent =&gt; _parent;
+
+ bool get cacheEnabled =&gt; _cacheEnabled;
+
+ void set cacheEnabled(bool value) {
+   requireArgumentNotNull(value, 'value');
+   if(value != _cacheEnabled) {
+     _cacheEnabled = value;
+     if(!_cacheEnabled) {
+       _cacheCanvas = null;
+     }
+   }
+ }
 
  EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
 
@@ -104,12 +117,25 @@ abstract class Thing extends AttachableObject {
 
  @protected
  void drawCore(CanvasRenderingContext2D ctx){
-   if(cacheEnabled) {
+   ctx.save();
+   final tx = this.getTransform();
+   CanvasUtil.transform(ctx, tx);
+   assert(_alpha != null);
+   assert(_alpha &gt;= 0);
+   assert(_alpha &lt;= 1);
+   ctx.globalAlpha = ctx.globalAlpha * _alpha;
+
+   if(_cacheEnabled) {
      _drawCached(ctx);
    } else {
      _drawNormal(ctx);
    }
+
+   ctx.restore();
  }
+
+ @protected
+ void drawOverride(CanvasRenderingContext2D ctx);
 
  AffineTransform addTransform(){
    validateNotDisposed();
@@ -129,13 +155,10 @@ abstract class Thing extends AttachableObject {
    }
  }
 
- @protected
- void drawOverride(CanvasRenderingContext2D ctx);
-
  void invalidateDraw(){
    validateNotDisposed();
-   if(_lastDrawSize != null){
-     _lastDrawSize = null;
+   if(_lastDrawTime != null) {
+     _lastDrawTime = null;
      _invalidateParent();
    }
  }
@@ -164,78 +187,41 @@ abstract class Thing extends AttachableObject {
 
  bool _stageDraw(CanvasRenderingContext2D ctx){
    update();
-   var dirty = (_lastDrawSize == null);
+   var dirty = (_lastDrawTime == null);
    drawCore(ctx);
    return dirty;
  }
 
  void _drawCached(CanvasRenderingContext2D ctx) {
-   if (this._cacheCanvas == null) {
-     this._cacheCanvas = new CanvasElement();
-   }
+   if (_lastDrawTime == null) {
+     if (this._cacheCanvas == null) {
+       this._cacheCanvas = new CanvasElement();
+     }
 
-   final intLastDrawSize = (_lastDrawSize == null) ?
-       null : new Size(_lastDrawSize.width.toInt(), _lastDrawSize.height.toInt());
-
-   if (CanvasUtil.getCanvasSize(this._cacheCanvas) != intLastDrawSize) {
      this._cacheCanvas.width = this.width.toInt();
      this._cacheCanvas.height = this.height.toInt();
 
-     var cacheCtx = _cacheCanvas.context2d;
+     final cacheCtx = _cacheCanvas.context2d;
 
-     _drawInternal(cacheCtx);
+     _drawNormal(cacheCtx);
    }
-
-   ctx.save();
-   var tx = this.getTransform();
-   CanvasUtil.transform(ctx, tx);
 
    ctx.drawImage(this._cacheCanvas, 0, 0);
-   ctx.restore();
  }
 
- void _drawNormal(CanvasRenderingContext2D ctx){
-   var tx = this.getTransform();
-   if (this._isClipped(tx, ctx)) {
-     return;
-   }
-
-   ctx.save();
-
-   // Translate to the starting position
-   CanvasUtil.transform(ctx, tx);
-
-   // clip to the bounds of the object
-   if (this.clip) {
-     ctx.beginPath();
-     ctx.rect(0, 0, width, height);
-     ctx.clip();
-   }
-
-   _drawInternal(ctx);
-   ctx.restore();
- }
-
- void _drawInternal(CanvasRenderingContext2D ctx){
-   assert(_alpha != null);
-   assert(_alpha &gt;= 0);
-   assert(_alpha &lt;= 1);
-   ctx.globalAlpha = _alpha;
-
+ void _drawNormal(CanvasRenderingContext2D ctx) {
    // possible for invalidateParent to be called during draw
    // which signals that another frame is wanted for animating content
-   // so we're setting _lastDrawSize here
-   _lastDrawSize = this.size;
+   // so we're setting _lastDrawTime here
+
+   // DARTBUG: http://code.google.com/p/dart/issues/detail?id=7322
+   // performance.now is not correctly polyfilled for Chrome 23
+   //_lastDrawTime = window.performance.now();
+
+   _lastDrawTime = new Date.now().millisecondsSinceEpoch;
 
    // call the abstract draw method
    drawOverride(ctx);
- }
-
- bool _isClipped(AffineTransform tx, CanvasRenderingContext2D ctx){
-   if(clip){
-     // a lot more impl to do here...
-   }
-   return false;
  }
 
  void _invalidateParent(){
@@ -256,11 +242,11 @@ abstract class Thing extends AttachableObject {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Thing">
 <button class="show-code">Code</button>
-new <strong>Thing</strong>(num _width, num _height, [bool cacheEnabled = false]) <a class="anchor-link" href="#Thing"
+new <strong>Thing</strong>(num _width, num _height) <a class="anchor-link" href="#Thing"
               title="Permalink to Thing.Thing">#</a></h4>
 <div class="doc">
 <pre class="source">
-Thing(this._width, this._height, [this.cacheEnabled = false]);
+Thing(this._width, this._height);
 </pre>
 </div>
 </div>
@@ -282,32 +268,33 @@ void set alpha(num value) {
  requireArgument(isValidNumber(value), 'value');
  requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
  _alpha = value;
- invalidateDraw();
+ if(parent != null) {
+   _invalidateParent();
+ }
 }
 </pre>
 </div>
 </div>
 <div class="field"><h4 id="cacheEnabled">
 <button class="show-code">Code</button>
-final bool         <strong>cacheEnabled</strong> <a class="anchor-link"
+bool         <strong>cacheEnabled</strong> <a class="anchor-link"
             href="#cacheEnabled"
             title="Permalink to Thing.cacheEnabled">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-final bool cacheEnabled;
+bool get cacheEnabled =&gt; _cacheEnabled;
 </pre>
-</div>
-</div>
-<div class="field"><h4 id="clip">
-<button class="show-code">Code</button>
-bool         <strong>clip</strong> <a class="anchor-link"
-            href="#clip"
-            title="Permalink to Thing.clip">#</a>
-        </h4>
-        <div class="doc">
 <pre class="source">
-bool clip = false;
+void set cacheEnabled(bool value) {
+ requireArgumentNotNull(value, 'value');
+ if(value != _cacheEnabled) {
+   _cacheEnabled = value;
+   if(!_cacheEnabled) {
+     _cacheCanvas = null;
+   }
+ }
+}
 </pre>
 </div>
 </div>
@@ -463,11 +450,21 @@ void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-li
 <div class="doc">
 <pre class="source">
 void drawCore(CanvasRenderingContext2D ctx){
- if(cacheEnabled) {
+ ctx.save();
+ final tx = this.getTransform();
+ CanvasUtil.transform(ctx, tx);
+ assert(_alpha != null);
+ assert(_alpha &gt;= 0);
+ assert(_alpha &lt;= 1);
+ ctx.globalAlpha = ctx.globalAlpha * _alpha;
+
+ if(_cacheEnabled) {
    _drawCached(ctx);
  } else {
    _drawNormal(ctx);
  }
+
+ ctx.restore();
 }
 </pre>
 </div>
@@ -517,8 +514,8 @@ void <strong>invalidateDraw</strong>() <a class="anchor-link" href="#invalidateD
 <pre class="source">
 void invalidateDraw(){
  validateNotDisposed();
- if(_lastDrawSize != null){
-   _lastDrawSize = null;
+ if(_lastDrawTime != null) {
+   _lastDrawTime = null;
    _invalidateParent();
  }
 }
