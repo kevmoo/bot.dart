@@ -24,4 +24,7 @@ class CollectionUtil {
 
     return seed;
   }
+
+  /** True if target list is null OR empty */
+  static bool isNullOrEmpty(Collection c) => c == null || c.isEmpty;
 }
