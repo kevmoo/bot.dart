@@ -1217,6 +1217,16 @@
             "id": "normal0()"
           },
           {
+            "returnType": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "method",
+            "comment": "\nReturns the angle between the positive x-axis and the [Vector].\nAngle zero points in the +X direction, 90 degrees points in the +Y\ndirection (down) and from there we grow clockwise.\n\n",
+            "name": "angle",
+            "id": "angle0()"
+          },
+          {
             "isOperator": true,
             "returnType": {
               "name": "Vector",
@@ -1329,7 +1339,7 @@
               "refId": "num"
             },
             "kind": "method",
-            "comment": "\nComputes the angle between this and another [Vector].\n\n",
+            "comment": "\nComputes the angle between this and another [Vector].\nAngle zero points in the +X direction, 90 degrees points in the +Y\ndirection (down) and from there we grow clockwise.\n\n",
             "name": "getAngle",
             "children": [
               {
@@ -1411,6 +1421,16 @@
             "kind": "property",
             "name": "normal",
             "id": "normal"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "comment": "\nReturns the angle between the positive x-axis and the [Vector].\nAngle zero points in the +X direction, 90 degrees points in the +Y\ndirection (down) and from there we grow clockwise.\n\n",
+            "name": "angle",
+            "id": "angle"
           },
           {
             "returnType": {
@@ -1905,404 +1925,6 @@
         "id": "Size"
       },
       {
-        "interfaces": [
-          {
-            "name": "Hashable",
-            "refId": "Hashable"
-          }
-        ],
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "Box",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "Box",
-            "children": [
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "left",
-                "id": "left"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "top",
-                "id": "top"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "width",
-                "id": "width"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "height",
-                "id": "height"
-              }
-            ],
-            "id": "Box4()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "Box.fromCoordSize",
-            "children": [
-              {
-                "ref": {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                },
-                "kind": "param",
-                "name": "topLeft",
-                "id": "topLeft"
-              },
-              {
-                "ref": {
-                  "name": "Size",
-                  "refId": "Size"
-                },
-                "kind": "param",
-                "name": "size",
-                "id": "size"
-              }
-            ],
-            "id": "Box.fromCoordSize2()"
-          },
-          {
-            "returnType": {
-              "name": "Coordinate",
-              "refId": "Coordinate"
-            },
-            "kind": "method",
-            "name": "topLeft",
-            "id": "topLeft0()"
-          },
-          {
-            "returnType": {
-              "name": "Size",
-              "refId": "Size"
-            },
-            "kind": "method",
-            "name": "size",
-            "id": "size0()"
-          },
-          {
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
-            "name": "isValid",
-            "id": "isValid0()"
-          },
-          {
-            "returnType": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "method",
-            "name": "right",
-            "id": "right0()"
-          },
-          {
-            "returnType": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "method",
-            "name": "bottom",
-            "id": "bottom0()"
-          },
-          {
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
-            "name": "contains",
-            "children": [
-              {
-                "ref": {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                },
-                "kind": "param",
-                "name": "point",
-                "id": "point"
-              }
-            ],
-            "id": "contains1()"
-          },
-          {
-            "returnType": {
-              "name": "Coordinate",
-              "refId": "Coordinate"
-            },
-            "kind": "method",
-            "name": "constrain",
-            "children": [
-              {
-                "ref": {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                },
-                "kind": "param",
-                "name": "value",
-                "id": "value"
-              }
-            ],
-            "id": "constrain1()"
-          },
-          {
-            "returnType": {
-              "name": "List",
-              "refId": "List",
-              "arguments": [
-                {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "getCorners",
-            "id": "getCorners0()"
-          },
-          {
-            "isOperator": true,
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
-            "name": "==",
-            "children": [
-              {
-                "ref": {
-                  "name": "Box",
-                  "refId": "Box"
-                },
-                "kind": "param",
-                "name": "other",
-                "id": "other"
-              }
-            ],
-            "id": "==1()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "toString",
-            "id": "toString0()"
-          },
-          {
-            "returnType": {
-              "name": "int",
-              "refId": "int"
-            },
-            "kind": "method",
-            "name": "hashCode",
-            "id": "hashCode0()"
-          },
-          {
-            "ref": {
-              "name": "Coordinate",
-              "refId": "Coordinate"
-            },
-            "kind": "property",
-            "name": "topLeft",
-            "id": "topLeft"
-          },
-          {
-            "ref": {
-              "name": "Size",
-              "refId": "Size"
-            },
-            "kind": "property",
-            "name": "size",
-            "id": "size"
-          },
-          {
-            "ref": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "property",
-            "name": "isValid",
-            "id": "isValid"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "right",
-            "id": "right"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "bottom",
-            "id": "bottom"
-          },
-          {
-            "ref": {
-              "name": "int",
-              "refId": "int"
-            },
-            "kind": "property",
-            "name": "hashCode",
-            "id": "hashCode"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "left",
-            "id": "left"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "top",
-            "id": "top"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "width",
-            "id": "width"
-          },
-          {
-            "ref": {
-              "name": "num",
-              "refId": "num"
-            },
-            "kind": "property",
-            "name": "height",
-            "id": "height"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "Box",
-            "children": [
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "left",
-                "id": "left"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "top",
-                "id": "top"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "width",
-                "id": "width"
-              },
-              {
-                "ref": {
-                  "name": "num",
-                  "refId": "num"
-                },
-                "kind": "param",
-                "name": "height",
-                "id": "height"
-              }
-            ],
-            "id": "Box4()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "Box.fromCoordSize",
-            "children": [
-              {
-                "ref": {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                },
-                "kind": "param",
-                "name": "topLeft",
-                "id": "topLeft"
-              },
-              {
-                "ref": {
-                  "name": "Size",
-                  "refId": "Size"
-                },
-                "kind": "param",
-                "name": "size",
-                "id": "size"
-              }
-            ],
-            "id": "Box.fromCoordSize2()"
-          }
-        ],
-        "id": "Box"
-      },
-      {
         "superclass": {
           "name": "Object",
           "refId": "Object"
@@ -2746,6 +2368,404 @@
           }
         ],
         "id": "BungeeNum"
+      },
+      {
+        "interfaces": [
+          {
+            "name": "Hashable",
+            "refId": "Hashable"
+          }
+        ],
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "Box",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "Box",
+            "children": [
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "left",
+                "id": "left"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "top",
+                "id": "top"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "width",
+                "id": "width"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "height",
+                "id": "height"
+              }
+            ],
+            "id": "Box4()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "Box.fromCoordSize",
+            "children": [
+              {
+                "ref": {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                },
+                "kind": "param",
+                "name": "topLeft",
+                "id": "topLeft"
+              },
+              {
+                "ref": {
+                  "name": "Size",
+                  "refId": "Size"
+                },
+                "kind": "param",
+                "name": "size",
+                "id": "size"
+              }
+            ],
+            "id": "Box.fromCoordSize2()"
+          },
+          {
+            "returnType": {
+              "name": "Coordinate",
+              "refId": "Coordinate"
+            },
+            "kind": "method",
+            "name": "topLeft",
+            "id": "topLeft0()"
+          },
+          {
+            "returnType": {
+              "name": "Size",
+              "refId": "Size"
+            },
+            "kind": "method",
+            "name": "size",
+            "id": "size0()"
+          },
+          {
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "isValid",
+            "id": "isValid0()"
+          },
+          {
+            "returnType": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "method",
+            "name": "right",
+            "id": "right0()"
+          },
+          {
+            "returnType": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "method",
+            "name": "bottom",
+            "id": "bottom0()"
+          },
+          {
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "contains",
+            "children": [
+              {
+                "ref": {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                },
+                "kind": "param",
+                "name": "point",
+                "id": "point"
+              }
+            ],
+            "id": "contains1()"
+          },
+          {
+            "returnType": {
+              "name": "Coordinate",
+              "refId": "Coordinate"
+            },
+            "kind": "method",
+            "name": "constrain",
+            "children": [
+              {
+                "ref": {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "constrain1()"
+          },
+          {
+            "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getCorners",
+            "id": "getCorners0()"
+          },
+          {
+            "isOperator": true,
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "==",
+            "children": [
+              {
+                "ref": {
+                  "name": "Box",
+                  "refId": "Box"
+                },
+                "kind": "param",
+                "name": "other",
+                "id": "other"
+              }
+            ],
+            "id": "==1()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
+          },
+          {
+            "returnType": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "method",
+            "name": "hashCode",
+            "id": "hashCode0()"
+          },
+          {
+            "ref": {
+              "name": "Coordinate",
+              "refId": "Coordinate"
+            },
+            "kind": "property",
+            "name": "topLeft",
+            "id": "topLeft"
+          },
+          {
+            "ref": {
+              "name": "Size",
+              "refId": "Size"
+            },
+            "kind": "property",
+            "name": "size",
+            "id": "size"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "isValid",
+            "id": "isValid"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "right",
+            "id": "right"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "bottom",
+            "id": "bottom"
+          },
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "property",
+            "name": "hashCode",
+            "id": "hashCode"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "left",
+            "id": "left"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "top",
+            "id": "top"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "width",
+            "id": "width"
+          },
+          {
+            "ref": {
+              "name": "num",
+              "refId": "num"
+            },
+            "kind": "property",
+            "name": "height",
+            "id": "height"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "Box",
+            "children": [
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "left",
+                "id": "left"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "top",
+                "id": "top"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "width",
+                "id": "width"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "kind": "param",
+                "name": "height",
+                "id": "height"
+              }
+            ],
+            "id": "Box4()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "Box.fromCoordSize",
+            "children": [
+              {
+                "ref": {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                },
+                "kind": "param",
+                "name": "topLeft",
+                "id": "topLeft"
+              },
+              {
+                "ref": {
+                  "name": "Size",
+                  "refId": "Size"
+                },
+                "kind": "param",
+                "name": "size",
+                "id": "size"
+              }
+            ],
+            "id": "Box.fromCoordSize2()"
+          }
+        ],
+        "id": "Box"
       },
       {
         "interfaces": [
@@ -3497,8 +3517,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m00",
-            "id": "_m00"
+            "name": "_scX",
+            "id": "_scX"
           },
           {
             "ref": {
@@ -3506,8 +3526,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m10",
-            "id": "_m10"
+            "name": "_shY",
+            "id": "_shY"
           },
           {
             "ref": {
@@ -3515,8 +3535,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m01",
-            "id": "_m01"
+            "name": "_shX",
+            "id": "_shX"
           },
           {
             "ref": {
@@ -3524,8 +3544,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m11",
-            "id": "_m11"
+            "name": "_scY",
+            "id": "_scY"
           },
           {
             "ref": {
@@ -3533,8 +3553,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m02",
-            "id": "_m02"
+            "name": "_tX",
+            "id": "_tX"
           },
           {
             "ref": {
@@ -3542,8 +3562,8 @@
               "refId": "num"
             },
             "kind": "property",
-            "name": "_m12",
-            "id": "_m12"
+            "name": "_tY",
+            "id": "_tY"
           },
           {
             "returnType": {
@@ -16350,7 +16370,7 @@
           "refId": "Object"
         },
         "kind": "class",
-        "name": "ClickManager",
+        "name": "MouseManager",
         "children": [
           {
             "returnType": {
@@ -16358,7 +16378,7 @@
               "refId": "dynamic"
             },
             "kind": "method",
-            "name": "ClickManager",
+            "name": "MouseManager",
             "children": [
               {
                 "ref": {
@@ -16370,7 +16390,7 @@
                 "id": "stage"
               }
             ],
-            "id": "ClickManager1()"
+            "id": "MouseManager1()"
           },
           {
             "returnType": {
@@ -16378,7 +16398,7 @@
               "refId": "dynamic"
             },
             "kind": "method",
-            "name": "ClickManager._internal",
+            "name": "MouseManager._internal",
             "children": [
               {
                 "ref": {
@@ -16390,7 +16410,58 @@
                 "id": "_stage"
               }
             ],
-            "id": "ClickManager._internal1()"
+            "id": "MouseManager._internal1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "setCursor",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "setCursor2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "getCursor",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              }
+            ],
+            "id": "getCursor1()"
           },
           {
             "isStatic": true,
@@ -16442,6 +16513,422 @@
               }
             ],
             "id": "getClickable1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "setDraggable",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "setDraggable2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "getDraggable",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              }
+            ],
+            "id": "getDraggable1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_setBoolProp",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "Property",
+                  "refId": "Property",
+                  "arguments": [
+                    {
+                      "name": "bool",
+                      "refId": "bool"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "prop",
+                "id": "prop"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "_setBoolProp3()"
+          },
+          {
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "_isDragging",
+            "id": "_isDragging0()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_mouseMove",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_mouseMove1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_mouseOut",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_mouseOut1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_mouseUp",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_mouseUp1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_mouseDown",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_mouseDown1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_updateCursor",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "cursor",
+                "id": "cursor"
+              }
+            ],
+            "id": "_updateCursor1()"
+          },
+          {
+            "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "Thing",
+                  "refId": "Thing"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_updateMouseLocation",
+            "children": [
+              {
+                "ref": {
+                  "name": "Coordinate",
+                  "refId": "Coordinate"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "_updateMouseLocation1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_doMouseDown",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_doMouseDown2()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_doMouseUp",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_doMouseUp2()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_doClick",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_doClick2()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_doDrag",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_doDrag2()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_windowMouseMove",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_windowMouseMove1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_windowMouseUp",
+            "children": [
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_windowMouseUp1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_windowBlur",
+            "children": [
+              {
+                "ref": {
+                  "name": "Event",
+                  "refId": "Event"
+                },
+                "kind": "param",
+                "name": "e",
+                "id": "e"
+              }
+            ],
+            "id": "_windowBlur1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_endDrag",
+            "id": "_endDrag0()"
           },
           {
             "isStatic": true,
@@ -16744,118 +17231,13 @@
             "id": "removeMouseOutHandler2()"
           },
           {
+            "isStatic": true,
             "returnType": {
-              "name": "void",
-              "refId": "void"
+              "name": "GlobalId",
+              "refId": "GlobalId"
             },
             "kind": "method",
-            "name": "_mouseMove",
-            "children": [
-              {
-                "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
-                },
-                "kind": "param",
-                "name": "e",
-                "id": "e"
-              }
-            ],
-            "id": "_mouseMove1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "_mouseOut",
-            "children": [
-              {
-                "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
-                },
-                "kind": "param",
-                "name": "e",
-                "id": "e"
-              }
-            ],
-            "id": "_mouseOut1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "_mouseUp",
-            "children": [
-              {
-                "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
-                },
-                "kind": "param",
-                "name": "e",
-                "id": "e"
-              }
-            ],
-            "id": "_mouseUp1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "_mouseDown",
-            "children": [
-              {
-                "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
-                },
-                "kind": "param",
-                "name": "e",
-                "id": "e"
-              }
-            ],
-            "id": "_mouseDown1()"
-          },
-          {
-            "returnType": {
-              "name": "List",
-              "refId": "List",
-              "arguments": [
-                {
-                  "name": "Thing",
-                  "refId": "Thing"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_updateMouseLocation",
-            "children": [
-              {
-                "ref": {
-                  "name": "Coordinate",
-                  "refId": "Coordinate"
-                },
-                "kind": "param",
-                "name": "value",
-                "id": "value"
-              }
-            ],
-            "id": "_updateMouseLocation1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "_doMouseDown",
+            "name": "addDragHandler",
             "children": [
               {
                 "ref": {
@@ -16868,23 +17250,24 @@
               },
               {
                 "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
+                  "name": "Action1",
+                  "refId": "Action1"
                 },
                 "kind": "param",
-                "name": "e",
-                "id": "e"
+                "name": "handler",
+                "id": "handler"
               }
             ],
-            "id": "_doMouseDown2()"
+            "id": "addDragHandler2()"
           },
           {
+            "isStatic": true,
             "returnType": {
-              "name": "void",
-              "refId": "void"
+              "name": "bool",
+              "refId": "bool"
             },
             "kind": "method",
-            "name": "_doMouseUp",
+            "name": "removeDragHandler",
             "children": [
               {
                 "ref": {
@@ -16897,44 +17280,34 @@
               },
               {
                 "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
+                  "name": "GlobalId",
+                  "refId": "GlobalId"
                 },
                 "kind": "param",
-                "name": "e",
-                "id": "e"
+                "name": "handlerId",
+                "id": "handlerId"
               }
             ],
-            "id": "_doMouseUp2()"
+            "id": "removeDragHandler2()"
           },
           {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
             },
-            "kind": "method",
-            "name": "_doClick",
-            "children": [
-              {
-                "ref": {
-                  "name": "Thing",
-                  "refId": "Thing"
-                },
-                "kind": "param",
-                "name": "thing",
-                "id": "thing"
-              },
-              {
-                "ref": {
-                  "name": "MouseEvent",
-                  "refId": "MouseEvent"
-                },
-                "kind": "param",
-                "name": "e",
-                "id": "e"
-              }
-            ],
-            "id": "_doClick2()"
+            "kind": "property",
+            "name": "_isDragging",
+            "id": "_isDragging"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_autoCursor",
+            "id": "_autoCursor"
           },
           {
             "ref": {
@@ -16942,8 +17315,8 @@
               "refId": "Property",
               "arguments": [
                 {
-                  "name": "ClickManager",
-                  "refId": "ClickManager"
+                  "name": "MouseManager",
+                  "refId": "MouseManager"
                 }
               ]
             },
@@ -16967,6 +17340,38 @@
             "kind": "property",
             "name": "_isClickableProperty",
             "id": "_isClickableProperty"
+          },
+          {
+            "ref": {
+              "name": "Property",
+              "refId": "Property",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_isDraggableProperty",
+            "id": "_isDraggableProperty"
+          },
+          {
+            "ref": {
+              "name": "Property",
+              "refId": "Property",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_cursorProperty",
+            "id": "_cursorProperty"
           },
           {
             "ref": {
@@ -17044,6 +17449,22 @@
           },
           {
             "ref": {
+              "name": "AttachedEvent",
+              "refId": "AttachedEvent",
+              "arguments": [
+                {
+                  "name": "Vector",
+                  "refId": "Vector"
+                }
+              ]
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_dragEvent",
+            "id": "_dragEvent"
+          },
+          {
+            "ref": {
               "name": "Stage",
               "refId": "Stage"
             },
@@ -17061,12 +17482,30 @@
             "id": "_mouseDownThing"
           },
           {
+            "ref": {
+              "name": "Thing",
+              "refId": "Thing"
+            },
+            "kind": "property",
+            "name": "_draggingThing",
+            "id": "_draggingThing"
+          },
+          {
+            "ref": {
+              "name": "Coordinate",
+              "refId": "Coordinate"
+            },
+            "kind": "property",
+            "name": "_dragCoordinate",
+            "id": "_dragCoordinate"
+          },
+          {
             "returnType": {
               "name": "dynamic",
               "refId": "dynamic"
             },
             "kind": "constructor",
-            "name": "ClickManager",
+            "name": "MouseManager",
             "children": [
               {
                 "ref": {
@@ -17078,7 +17517,7 @@
                 "id": "stage"
               }
             ],
-            "id": "ClickManager1()"
+            "id": "MouseManager1()"
           },
           {
             "returnType": {
@@ -17086,7 +17525,7 @@
               "refId": "dynamic"
             },
             "kind": "constructor",
-            "name": "ClickManager._internal",
+            "name": "MouseManager._internal",
             "children": [
               {
                 "ref": {
@@ -17098,10 +17537,10 @@
                 "id": "_stage"
               }
             ],
-            "id": "ClickManager._internal1()"
+            "id": "MouseManager._internal1()"
           }
         ],
-        "id": "ClickManager"
+        "id": "MouseManager"
       },
       {
         "superclass": {

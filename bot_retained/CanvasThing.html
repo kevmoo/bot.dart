@@ -41,6 +41,7 @@ class CanvasThing extends PanelThing {
  void setTopLeft(Thing thing, Coordinate value){
    var tx = getChildTransform(thing);
    tx.setToTranslation(value.x, value.y);
+   thing.invalidateDraw();
  }
 
  Coordinate getTopLeft(Thing thing){
@@ -595,6 +596,7 @@ void <strong>setTopLeft</strong>(<a href="../bot_retained/Thing.html">Thing</a> 
 void setTopLeft(Thing thing, Coordinate value){
  var tx = getChildTransform(thing);
  tx.setToTranslation(value.x, value.y);
+ thing.invalidateDraw();
 }
 </pre>
 </div>

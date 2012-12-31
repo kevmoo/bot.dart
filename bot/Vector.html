@@ -45,6 +45,13 @@ class Vector extends Coordinate {
  Vector get normal =&gt; this.scale(1 / this.length);
 
  /**
+  * Returns the angle between the positive x-axis and the [Vector].
+  * Angle zero points in the +X direction, 90 degrees points in the +Y
+  * direction (down) and from there we grow clockwise.
+  **/
+ num get angle =&gt; math.atan2(y, x);
+
+ /**
   * Adds a [Coordinate] and returns the result as new [Vector].
   **/
  Vector operator +(Coordinate other) =&gt; new Vector(x + other.x, y + other.y);
@@ -71,8 +78,10 @@ class Vector extends Coordinate {
 
  /**
   * Computes the angle between this and another [Vector].
+  * Angle zero points in the +X direction, 90 degrees points in the +Y
+  * direction (down) and from there we grow clockwise.
   **/
- num getAngle (Vector other) =&gt; math.acos(dot(other));
+ num getAngle (Vector other) =&gt; other.angle - angle;
 
  Vector rotate(num angle) {
    var cos = math.cos(angle);
@@ -106,6 +115,21 @@ const Vector([num x = 0, num y = 0]) : super(x,y);
 </div>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="angle">
+<button class="show-code">Code</button>
+final num         <strong>angle</strong> <a class="anchor-link"
+            href="#angle"
+            title="Permalink to Vector.angle">#</a>
+        </h4>
+        <div class="doc">
+<p>Returns the angle between the positive x-axis and the <a class="crossref" href="../bot/Vector.html#Vector">Vector</a>.
+Angle zero points in the +X direction, 90 degrees points in the +Y
+direction (down) and from there we grow clockwise.</p>
+<pre class="source">
+num get angle =&gt; math.atan2(y, x);
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="isValid">
 <button class="show-code">Code</button>
 final bool         <strong>isValid</strong> <a class="anchor-link"
@@ -253,9 +277,11 @@ num dot(Vector other) =&gt; x * other.x + y * other.y;
 num <strong>getAngle</strong>(<a href="../bot/Vector.html">Vector</a> other) <a class="anchor-link" href="#getAngle"
               title="Permalink to Vector.getAngle">#</a></h4>
 <div class="doc">
-<p>Computes the angle between this and another <a class="crossref" href="../bot/Vector.html#Vector">Vector</a>.</p>
+<p>Computes the angle between this and another <a class="crossref" href="../bot/Vector.html#Vector">Vector</a>.
+Angle zero points in the +X direction, 90 degrees points in the +Y
+direction (down) and from there we grow clockwise.</p>
 <pre class="source">
-num getAngle (Vector other) =&gt; math.acos(dot(other));
+num getAngle (Vector other) =&gt; other.angle - angle;
 </pre>
 </div>
 </div>
