@@ -71,6 +71,33 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
 
  num get determinant =&gt; _scX * _scY - _shX * _shY;
 
+ AffineTransform updateValues({num translateX: null, num translateY: null,
+   num scaleX: null, num scaleY: null, num shearX: null, num shearY: null}) {
+   if(translateX != null) {
+     _tX = translateX;
+   }
+
+   if(translateY != null) {
+     _tY = translateY;
+   }
+
+   if(scaleX != null) {
+     _scX = scaleX;
+   }
+
+   if(scaleY != null) {
+     _scY = scaleY;
+   }
+
+   if(shearX != null) {
+     _shX = shearX;
+   }
+
+   if(shearY != null) {
+     _shY = shearY;
+   }
+ }
+
  bool get isIdentity {
    return _scX == 1 &amp;&amp; _shY == 0 &amp;&amp;
        _shX == 0 &amp;&amp; _scY == 1 &amp;&amp;
@@ -607,6 +634,41 @@ AffineTransform translate(num dx, num dy) {
  _tX += dx * _scX + dy * _shX;
  _tY += dx * _shY + dy * _scY;
  return this;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="updateValues">
+<button class="show-code">Code</button>
+<a href="../bot/AffineTransform.html">AffineTransform</a> <strong>updateValues</strong>({num translateX: null, num translateY: null, num scaleX: null, num scaleY: null, num shearX: null, num shearY: null}) <a class="anchor-link" href="#updateValues"
+              title="Permalink to AffineTransform.updateValues">#</a></h4>
+<div class="doc">
+<pre class="source">
+AffineTransform updateValues({num translateX: null, num translateY: null,
+ num scaleX: null, num scaleY: null, num shearX: null, num shearY: null}) {
+ if(translateX != null) {
+   _tX = translateX;
+ }
+
+ if(translateY != null) {
+   _tY = translateY;
+ }
+
+ if(scaleX != null) {
+   _scX = scaleX;
+ }
+
+ if(scaleY != null) {
+   _scY = scaleY;
+ }
+
+ if(shearX != null) {
+   _shX = shearX;
+ }
+
+ if(shearY != null) {
+   _shY = shearY;
+ }
 }
 </pre>
 </div>

@@ -3028,6 +3028,77 @@
           },
           {
             "returnType": {
+              "name": "AffineTransform",
+              "refId": "AffineTransform"
+            },
+            "kind": "method",
+            "name": "updateValues",
+            "children": [
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "translateX",
+                "id": "translateX"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "translateY",
+                "id": "translateY"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "scaleX",
+                "id": "scaleX"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "scaleY",
+                "id": "scaleY"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "shearX",
+                "id": "shearX"
+              },
+              {
+                "ref": {
+                  "name": "num",
+                  "refId": "num"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "shearY",
+                "id": "shearY"
+              }
+            ],
+            "id": "updateValues6()"
+          },
+          {
+            "returnType": {
               "name": "bool",
               "refId": "bool"
             },
@@ -7929,6 +8000,26 @@
               "refId": "dynamic"
             },
             "kind": "method",
+            "name": "Array2d._skinny",
+            "children": [
+              {
+                "ref": {
+                  "name": "int",
+                  "refId": "int"
+                },
+                "kind": "param",
+                "name": "height",
+                "id": "height"
+              }
+            ],
+            "id": "Array2d._skinny1()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
             "name": "Array2d.wrap",
             "children": [
               {
@@ -8371,6 +8462,26 @@
               }
             ],
             "id": "Array2d3()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "Array2d._skinny",
+            "children": [
+              {
+                "ref": {
+                  "name": "int",
+                  "refId": "int"
+                },
+                "kind": "param",
+                "name": "height",
+                "id": "height"
+              }
+            ],
+            "id": "Array2d._skinny1()"
           },
           {
             "returnType": {
@@ -16250,40 +16361,29 @@
                   "refId": "MouseEvent"
                 },
                 "kind": "param",
-                "name": "mouseEvent",
-                "id": "mouseEvent"
+                "name": "sourceEvent",
+                "id": "sourceEvent"
               }
             ],
             "id": "ThingMouseEventArgs2()"
           },
           {
             "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
+              "name": "bool",
+              "refId": "bool"
             },
             "kind": "method",
-            "name": "ThingMouseEventArgs._internal",
-            "children": [
-              {
-                "ref": {
-                  "name": "Thing",
-                  "refId": "Thing"
-                },
-                "kind": "param",
-                "name": "thing",
-                "id": "thing"
-              },
-              {
-                "ref": {
-                  "name": "bool",
-                  "refId": "bool"
-                },
-                "kind": "param",
-                "name": "shiftKey",
-                "id": "shiftKey"
-              }
-            ],
-            "id": "ThingMouseEventArgs._internal2()"
+            "name": "shiftKey",
+            "id": "shiftKey0()"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "shiftKey",
+            "id": "shiftKey"
           },
           {
             "ref": {
@@ -16296,12 +16396,12 @@
           },
           {
             "ref": {
-              "name": "bool",
-              "refId": "bool"
+              "name": "MouseEvent",
+              "refId": "MouseEvent"
             },
             "kind": "property",
-            "name": "shiftKey",
-            "id": "shiftKey"
+            "name": "sourceEvent",
+            "id": "sourceEvent"
           },
           {
             "returnType": {
@@ -16326,19 +16426,30 @@
                   "refId": "MouseEvent"
                 },
                 "kind": "param",
-                "name": "mouseEvent",
-                "id": "mouseEvent"
+                "name": "sourceEvent",
+                "id": "sourceEvent"
               }
             ],
             "id": "ThingMouseEventArgs2()"
-          },
+          }
+        ],
+        "id": "ThingMouseEventArgs"
+      },
+      {
+        "superclass": {
+          "name": "ThingMouseEventArgs",
+          "refId": "ThingMouseEventArgs"
+        },
+        "kind": "class",
+        "name": "ThingDragEventArgs",
+        "children": [
           {
             "returnType": {
               "name": "dynamic",
               "refId": "dynamic"
             },
-            "kind": "constructor",
-            "name": "ThingMouseEventArgs._internal",
+            "kind": "method",
+            "name": "ThingDragEventArgs",
             "children": [
               {
                 "ref": {
@@ -16351,18 +16462,185 @@
               },
               {
                 "ref": {
-                  "name": "bool",
-                  "refId": "bool"
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
                 },
                 "kind": "param",
-                "name": "shiftKey",
-                "id": "shiftKey"
+                "name": "source",
+                "id": "source"
+              },
+              {
+                "ref": {
+                  "name": "Vector",
+                  "refId": "Vector"
+                },
+                "kind": "param",
+                "name": "delta",
+                "id": "delta"
               }
             ],
-            "id": "ThingMouseEventArgs._internal2()"
+            "id": "ThingDragEventArgs3()"
+          },
+          {
+            "ref": {
+              "name": "Vector",
+              "refId": "Vector"
+            },
+            "kind": "property",
+            "name": "delta",
+            "id": "delta"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "ThingDragEventArgs",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              },
+              {
+                "ref": {
+                  "name": "Vector",
+                  "refId": "Vector"
+                },
+                "kind": "param",
+                "name": "delta",
+                "id": "delta"
+              }
+            ],
+            "id": "ThingDragEventArgs3()"
           }
         ],
-        "id": "ThingMouseEventArgs"
+        "id": "ThingDragEventArgs"
+      },
+      {
+        "interfaces": [
+          {
+            "name": "CancelableEventArgs",
+            "refId": "CancelableEventArgs"
+          }
+        ],
+        "superclass": {
+          "name": "ThingMouseEventArgs",
+          "refId": "ThingMouseEventArgs"
+        },
+        "kind": "class",
+        "name": "ThingDragStartingEventArgs",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "ThingDragStartingEventArgs",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "ThingDragStartingEventArgs2()"
+          },
+          {
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "isCanceled",
+            "id": "isCanceled0()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "cancel",
+            "id": "cancel0()"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "isCanceled",
+            "id": "isCanceled"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "_canceled",
+            "id": "_canceled"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "ThingDragStartingEventArgs",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "MouseEvent",
+                  "refId": "MouseEvent"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "ThingDragStartingEventArgs2()"
+          }
+        ],
+        "id": "ThingDragStartingEventArgs"
       },
       {
         "superclass": {
@@ -16838,7 +17116,7 @@
               "refId": "void"
             },
             "kind": "method",
-            "name": "_doDrag",
+            "name": "_startDrag",
             "children": [
               {
                 "ref": {
@@ -16859,7 +17137,7 @@
                 "id": "e"
               }
             ],
-            "id": "_doDrag2()"
+            "id": "_startDrag2()"
           },
           {
             "returnType": {
@@ -17237,6 +17515,66 @@
               "refId": "GlobalId"
             },
             "kind": "method",
+            "name": "addDragStartingHandler",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "Action1",
+                  "refId": "Action1"
+                },
+                "kind": "param",
+                "name": "handler",
+                "id": "handler"
+              }
+            ],
+            "id": "addDragStartingHandler2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "removeDragStartingHandler",
+            "children": [
+              {
+                "ref": {
+                  "name": "Thing",
+                  "refId": "Thing"
+                },
+                "kind": "param",
+                "name": "thing",
+                "id": "thing"
+              },
+              {
+                "ref": {
+                  "name": "GlobalId",
+                  "refId": "GlobalId"
+                },
+                "kind": "param",
+                "name": "handlerId",
+                "id": "handlerId"
+              }
+            ],
+            "id": "removeDragStartingHandler2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "GlobalId",
+              "refId": "GlobalId"
+            },
+            "kind": "method",
             "name": "addDragHandler",
             "children": [
               {
@@ -17453,8 +17791,24 @@
               "refId": "AttachedEvent",
               "arguments": [
                 {
-                  "name": "Vector",
-                  "refId": "Vector"
+                  "name": "ThingDragStartingEventArgs",
+                  "refId": "ThingDragStartingEventArgs"
+                }
+              ]
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_dragStartingEvent",
+            "id": "_dragStartingEvent"
+          },
+          {
+            "ref": {
+              "name": "AttachedEvent",
+              "refId": "AttachedEvent",
+              "arguments": [
+                {
+                  "name": "ThingDragEventArgs",
+                  "refId": "ThingDragEventArgs"
                 }
               ]
             },

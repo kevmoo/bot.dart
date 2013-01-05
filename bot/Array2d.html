@@ -49,12 +49,20 @@ class Array2d&lt;T&gt; extends ListBase&lt;T&gt; {
  factory Array2d(int width, int height, [T initialValue]) {
    requireArgumentNotNull(width, 'width');
    requireArgumentNotNull(height, 'height');
-   requireArgument(width &gt; 0, 'width');
-   requireArgument(height &gt; 0, 'height');
+   requireArgument(width &gt;= 0, 'width');
+   requireArgument(height &gt;= 0, 'height');
    final s = new List&lt;T&gt;();
    s.insertRange(0, width * height, initialValue);
    assert(s.length == width * height);
+   if(width == 0) {
+     return new Array2d._skinny(height);
+   }
    return new Array2d.wrap(width, s);
+ }
+
+ Array2d._skinny(this.height) : width = 0, _source = [] {
+   assert(isValidNumber(height));
+   assert(height &gt;= 0);
  }
 
  Array2d.wrap(int width, List&lt;T&gt; source):
@@ -66,7 +74,7 @@ class Array2d&lt;T&gt; extends ListBase&lt;T&gt; {
    requireArgumentNotNull(source, 'source');
    requireArgument(width &gt;= 0, 'width', 'width must be non-zero');
 
-   if(width == 0) {
+   if(width * height == 0) {
      requireArgument(_source.length == 0, 'width',
        'width must be greater than zero if the source is non-empty');
    } else {
@@ -147,11 +155,14 @@ factory <strong>Array2d</strong>(int width, int height, [<a href="../bot/Array2d
 factory Array2d(int width, int height, [T initialValue]) {
  requireArgumentNotNull(width, 'width');
  requireArgumentNotNull(height, 'height');
- requireArgument(width &gt; 0, 'width');
- requireArgument(height &gt; 0, 'height');
+ requireArgument(width &gt;= 0, 'width');
+ requireArgument(height &gt;= 0, 'height');
  final s = new List&lt;T&gt;();
  s.insertRange(0, width * height, initialValue);
  assert(s.length == width * height);
+ if(width == 0) {
+   return new Array2d._skinny(height);
+ }
  return new Array2d.wrap(width, s);
 }
 </pre>
@@ -188,7 +199,7 @@ Array2d.wrap(int width, List&lt;T&gt; source):
  requireArgumentNotNull(source, 'source');
  requireArgument(width &gt;= 0, 'width', 'width must be non-zero');
 
- if(width == 0) {
+ if(width * height == 0) {
    requireArgument(_source.length == 0, 'width',
      'width must be greater than zero if the source is non-empty');
  } else {

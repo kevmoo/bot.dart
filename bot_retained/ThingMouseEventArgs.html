@@ -35,35 +35,34 @@
 <pre class="source">
 class ThingMouseEventArgs extends EventArgs {
  final Thing thing;
- final bool shiftKey;
+ final MouseEvent sourceEvent;
 
- factory ThingMouseEventArgs(Thing thing, MouseEvent mouseEvent) {
+ ThingMouseEventArgs(this.thing, this.sourceEvent) {
    assert(thing != null);
-   assert(mouseEvent != null);
-
-   return new ThingMouseEventArgs._internal(thing, mouseEvent.shiftKey);
+   assert(sourceEvent != null);
  }
 
- ThingMouseEventArgs._internal(this.thing, this.shiftKey);
+ bool get shiftKey =&gt; sourceEvent.shiftKey;
 }
 </pre>
 </div>
 <h3>Extends</h3>
 <p>
 <span class="type-box"><span class="icon-class"></span><a href="../bot/EventArgs.html">EventArgs</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>ThingMouseEventArgs</strong></span></p>
+<h3>Subclasses</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ThingDragEventArgs.html">ThingDragEventArgs</a></span>, <span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ThingDragStartingEventArgs.html">ThingDragStartingEventArgs</a></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="ThingMouseEventArgs">
 <button class="show-code">Code</button>
-factory <strong>ThingMouseEventArgs</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, MouseEvent mouseEvent) <a class="anchor-link" href="#ThingMouseEventArgs"
+new <strong>ThingMouseEventArgs</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, MouseEvent sourceEvent) <a class="anchor-link" href="#ThingMouseEventArgs"
               title="Permalink to ThingMouseEventArgs.ThingMouseEventArgs">#</a></h4>
 <div class="doc">
 <pre class="source">
-factory ThingMouseEventArgs(Thing thing, MouseEvent mouseEvent) {
+ThingMouseEventArgs(this.thing, this.sourceEvent) {
  assert(thing != null);
- assert(mouseEvent != null);
-
- return new ThingMouseEventArgs._internal(thing, mouseEvent.shiftKey);
+ assert(sourceEvent != null);
 }
 </pre>
 </div>
@@ -79,7 +78,19 @@ final bool         <strong>shiftKey</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-final bool shiftKey;
+bool get shiftKey =&gt; sourceEvent.shiftKey;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sourceEvent">
+<button class="show-code">Code</button>
+final MouseEvent         <strong>sourceEvent</strong> <a class="anchor-link"
+            href="#sourceEvent"
+            title="Permalink to ThingMouseEventArgs.sourceEvent">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+final MouseEvent sourceEvent;
 </pre>
 </div>
 </div>
