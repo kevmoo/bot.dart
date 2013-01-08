@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>IoHelpers class / bot_io_test Library / Dart Documentation</title>
+        <title>IoHelpers class / bot_io Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_io_test" data-type="IoHelpers">
+        <body data-library="bot_io" data-type="IoHelpers">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_io_test.html">bot_io_test</a> &rsaquo; <a href="../bot_io_test/IoHelpers.html">IoHelpers</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/IoHelpers.html">IoHelpers</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -34,6 +34,8 @@
 <div class="doc">
 <pre class="source">
 class IoHelpers {
+ static final Object _dirPlaceHolder = new Object();
+
  static Future&lt;bool&gt; verifyContents(Directory dir, Map&lt;String, dynamic&gt; content) {
    assert(dir != null);
    assert(content != null);
@@ -61,7 +63,7 @@ class IoHelpers {
    lister.onDir = (String dirPath) {
      final name = new Path(dirPath).filename;
      assert(!map.containsKey(name));
-     map[name] = {};
+     map[name] = _dirPlaceHolder;
    };
 
    lister.onDone = (bool completed) {
@@ -122,6 +124,7 @@ class IoHelpers {
        });
  }
 
+
  static Future&lt;bool&gt; _verifyChildContent(Directory parentDir, String name,
      dynamic expectedContent, dynamic foundContent) {
    assert(parentDir != null);
@@ -132,8 +135,7 @@ class IoHelpers {
      final subDirPath = new Path(parentDir.path).append(name);
      final subDir = new Directory.fromPath(subDirPath);
 
-     final Map&lt;String, dynamic&gt; foundMap = foundContent;
-     assert(foundMap.isEmpty);
+     assert(foundContent == _dirPlaceHolder);
 
      return _verifyContents(subDir, expectedContent);
    } else {

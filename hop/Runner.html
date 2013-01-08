@@ -200,7 +200,7 @@ const String         <strong>RAW_TASK_LIST_CMD</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-static const String RAW_TASK_LIST_CMD = 'print_raw_task_list';
+RAW_TASK_LIST_CMD = 'print_raw_task_list'
 </pre>
 </div>
 </div>
@@ -230,6 +230,7 @@ Runner(this._state, List&lt;String&gt; arguments) :
               title="Permalink to Runner.getContext">#</a></h4>
 <div class="doc">
 <pre class="source">
+@protected
 RootTaskContext getContext() {
  final bool colorEnabled = _args['color'];
  return new RootTaskContext(colorEnabled);

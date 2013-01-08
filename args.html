@@ -27,6 +27,131 @@
 </div>
 <div class="content">
 <h2><strong>args</strong> library</h2>
+<div class="doc"><p>This library lets you define parsers for parsing raw command-line arguments
+into a set of options and values using <a href="http://www.gnu.org/prep/standards/standards.html#Command_002dLine-Interfaces">GNU</a> and <a href="http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_02">POSIX</a> style options.</p>
+<h2>Defining options</h2>
+<p>To use this library, you create an <a class="crossref" href="args/ArgParser.html">ArgParser</a> object which will contain
+the set of options you support:</p>
+<pre><span class="k ">var</span> <span class="i ">parser</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">ArgParser</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Then you define a set of options on that parser using <code>addOption()</code> and
+<code>addFlag()</code>. The minimal way to create an option is:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'name'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>This creates an option named "name". Options must be given a value on the
+command line. If you have a simple on/off flag, you can instead use:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'name'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Flag options will, by default, accept a 'no-' prefix to negate the option.
+This can be disabled like so:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'name'</span><span class="p ">,</span> <span class="i ">negatable</span><span class="p ">:</span> <span class="k ">false</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>(From here on out "option" will refer to both "regular" options and flags.
+In cases where the distinction matters, we'll use "non-flag option".)</p>
+<p>Options may have an optional single-character abbreviation:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'m'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'v'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>They may also specify a default value. The default value will be used if the
+option isn't provided:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">defaultsTo</span><span class="p ">:</span> <span class="s si">'debug'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">defaultsTo</span><span class="p ">:</span> <span class="k ">false</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>The default value for non-flag options can be any <code>String</code>. For flags, it
+must be a <code>bool</code>.</p>
+<p>To validate non-flag options, you may provide an allowed set of values. When
+you do, it will throw a <code>FormatException</code> when you parse the arguments if
+the value for an option is not in the allowed set:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">allowed</span><span class="p ">:</span> <span class="p ">[</span><span class="s si">'debug'</span><span class="p ">,</span> <span class="s si">'release'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>You can provide a callback when you define an option. When you later parse
+a set of arguments, the callback for that option will be invoked with the
+value provided for it:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">:</span> <span class="p ">(</span><span class="i ">mode</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">print</span><span class="p ">(</span><span class="s si">'Got mode </span>$<span class="i ">mode</span>unterminated string literal);
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">:</span> <span class="p ">(</span><span class="i ">verbose</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="k ">if</span> <span class="p ">(</span><span class="i ">verbose</span><span class="p ">)</span> <span class="i ">print</span><span class="p ">(</span><span class="s si">'Verbose'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>The callback for each option will <em>always</em> be called when you parse a set of
+arguments. If the option isn't provided in the args, the callback will be
+passed the default value, or <code>null</code> if there is none set.</p>
+<h2>Parsing arguments</h2>
+<p>Once you have an <a class="crossref" href="args/ArgParser.html">ArgParser</a> set up with some options and flags, you use it
+by calling <a class="crossref" href="args/ArgParser.html#parse">ArgParser.parse()</a> with a set of arguments:</p>
+<pre><span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="p ">[</span><span class="s si">'some'</span><span class="p ">,</span> <span class="s si">'command'</span><span class="p ">,</span> <span class="s si">'line'</span><span class="p ">,</span> <span class="s si">'args'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>These will usually come from <code>new Options().arguments</code>, but you can pass in
+any list of strings. It returns an instance of <a class="crossref" href="args/ArgResults.html">ArgResults</a>. This is a
+map-like object that will return the value of any parsed option.</p>
+<pre><span class="k ">var</span> <span class="i ">parser</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">ArgParser</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">defaultsTo</span><span class="p ">:</span> <span class="k ">true</span><span class="p ">)</span><span class="p ">;</span>
+<span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="s si">'['</span><span class="o ">--</span><span class="i ">mode</span><span class="s si">', '</span><span class="i ">debug</span><span class="s si">', '</span><span class="i ">something</span><span class="s si">', '</span><span class="k ">else</span>unterminated string literal]);
+
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">[</span><span class="s si">'mode'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// debug</span>
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">[</span><span class="s si">'verbose'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// true</span></pre>
+<p>The <code>parse()</code> method will stop as soon as it reaches <code>--</code> or anything that
+it doesn't recognize as an option, flag, or option value. If there are still
+arguments left, they will be provided to you in
+<a class="crossref" href="args/ArgResults.html#rest">ArgResults.rest</a>.</p>
+<pre><span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">.</span><span class="i ">rest</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// ['something', 'else']</span></pre>
+<h2>Specifying options</h2>
+<p>To actually pass in options and flags on the command line, use GNU or POSIX
+style. If you define an option like:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'name'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'n'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Then a value for it can be specified on the command line using any of:</p>
+<pre><span class="o ">--</span><span class="i ">name</span><span class="o ">=</span><span class="i ">somevalue</span>
+<span class="o ">--</span><span class="i ">name</span> <span class="i ">somevalue</span>
+<span class="o ">-</span><span class="i ">nsomevalue</span>
+<span class="o ">-</span><span class="i ">n</span> <span class="i ">somevalue</span></pre>
+<p>Given this flag:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'name'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'n'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>You can set it on using one of:</p>
+<pre><span class="o ">--</span><span class="i ">name</span>
+<span class="o ">-</span><span class="i ">n</span></pre>
+<p>Or set it off using:</p>
+<pre><span class="o ">--</span><span class="i ">no</span><span class="o ">-</span><span class="i ">name</span></pre>
+<p>Multiple flag abbreviation can also be collapsed into a single argument. If
+you define:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'v'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'french'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'f'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'iambic-pentameter'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'i'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Then all three flags could be set using:</p>
+<pre><span class="o ">-</span><span class="i ">vfi</span></pre>
+<p>By default, an option has only a single value, with later option values
+overriding earlier ones; for example:</p>
+<pre><span class="k ">var</span> <span class="i ">parser</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">ArgParser</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="p ">[</span><span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'on'</span><span class="p ">,</span> <span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'off'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">[</span><span class="s si">'mode'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// prints 'off'</span></pre>
+<p>If you need multiple values, set the <code>allowMultiple</code> flag. In that
+case the option can occur multiple times and when parsing arguments a
+List of values will be returned:</p>
+<pre><span class="k ">var</span> <span class="i ">parser</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">ArgParser</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">allowMultiple</span><span class="p ">:</span> <span class="k ">true</span><span class="p ">)</span><span class="p ">;</span>
+<span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="p ">[</span><span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'on'</span><span class="p ">,</span> <span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'off'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">[</span><span class="s si">'mode'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// prints '[on, off]'</span></pre>
+<h2>Usage</h2>
+<p>This library can also be used to automatically generate nice usage help
+text like you get when you run a program with <code>--help</code>. To use this, you
+will also want to provide some help text when you create your options. To
+define help text for the entire option, do:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">help</span><span class="p ">:</span> <span class="s si">'The compiler configuration'</span><span class="p ">,</span>
+    <span class="i ">allowed</span><span class="p ">:</span> <span class="p ">[</span><span class="s si">'debug'</span><span class="p ">,</span> <span class="s si">'release'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">parser</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'verbose'</span><span class="p ">,</span> <span class="i ">help</span><span class="p ">:</span> <span class="s si">'Show additional diagnostic info'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>For non-flag options, you can also provide detailed help for each expected
+value using a map:</p>
+<pre><span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'arch'</span><span class="p ">,</span> <span class="i ">help</span><span class="p ">:</span> <span class="s si">'The architecture to compile for'</span><span class="p ">,</span>
+    <span class="i ">allowedHelp</span><span class="p ">:</span> <span class="p ">{</span>
+      <span class="s si">'ia32'</span><span class="p ">:</span> <span class="s si">'Intel x86'</span><span class="p ">,</span>
+      <span class="s si">'arm'</span><span class="p ">:</span> <span class="s si">'ARM Holding 32-bit chip'</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>If you define a set of options like the above, then calling this:</p>
+<pre><span class="i ">print</span><span class="p ">(</span><span class="i ">parser</span><span class="p ">.</span><span class="i ">getUsage</span><span class="p ">(</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Will display something like:</p>
+<pre><span class="o ">--</span><span class="i ">mode</span>            <span class="t ">The</span> <span class="i ">compiler</span> <span class="i ">configuration</span>
+                  <span class="p ">[</span><span class="i ">debug</span><span class="p ">,</span> <span class="i ">release</span><span class="p ">]</span>
+
+<span class="o ">--</span><span class="p ">[</span><span class="i ">no</span><span class="o ">-</span><span class="p ">]</span><span class="i ">verbose</span>    <span class="t ">Show</span> <span class="i ">additional</span> <span class="i ">diagnostic</span> <span class="i ">info</span>
+<span class="o ">--</span><span class="i ">arch</span>            <span class="t ">The</span> <span class="i ">architecture</span> <span class="i ">to</span> <span class="i ">compile</span> <span class="k ">for</span>
+
+      <span class="p ">[</span><span class="i ">arm</span><span class="p ">]</span>       <span class="i ">ARM</span> <span class="t ">Holding</span> <span class="n ">32</span><span class="o ">-</span><span class="i ">bit</span> <span class="i ">chip</span>
+      <span class="p ">[</span><span class="i ">ia32</span><span class="p ">]</span>      <span class="t ">Intel</span> <span class="i ">x86</span></pre>
+<p>To assist the formatting of the usage help, single line help text will
+be followed by a single new line. Options with multi-line help text
+will be followed by two new lines. This provides spatial diversity between
+options.</p></div>
 <div>
 <h3>Classes</h3>
           <div class="type">

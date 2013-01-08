@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>MapDirectoryPopulater class / bot_io_test Library / Dart Documentation</title>
+        <title>MapDirectoryPopulater class / bot_io Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_io_test" data-type="MapDirectoryPopulater">
+        <body data-library="bot_io" data-type="MapDirectoryPopulater">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_io_test.html">bot_io_test</a> &rsaquo; <a href="../bot_io_test/MapDirectoryPopulater.html">MapDirectoryPopulater</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/MapDirectoryPopulater.html">MapDirectoryPopulater</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -38,7 +38,7 @@ class MapDirectoryPopulater extends DirectoryPopulater {
 
  MapDirectoryPopulater(this._contents);
 
- Future populate(Directory dir) {
+ Future&lt;Directory&gt; populate(Directory dir) {
    assert(dir != null);
    return IoHelpers.isEmpty(dir)
        .chain((bool isEmpty) {
@@ -66,6 +66,8 @@ class MapDirectoryPopulater extends DirectoryPopulater {
      } else {
        throw 'value for $key was $v - expected Map or String';
      }
+   }).transform((obj) {
+     return dir;
    });
  }
 
@@ -76,7 +78,7 @@ class MapDirectoryPopulater extends DirectoryPopulater {
    return file.writeAsString(content);
  }
 
- static Future _createDirAndPopulate(Directory parent, String name, Map&lt;String, dynamic&gt; content) {
+ static Future&lt;Directory&gt; _createDirAndPopulate(Directory parent, String name, Map&lt;String, dynamic&gt; content) {
    final subDirPath = new Path(parent.path).append(name);
    final subDir = new Directory.fromPath(subDirPath);
    assert(!subDir.existsSync());
@@ -91,7 +93,7 @@ class MapDirectoryPopulater extends DirectoryPopulater {
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot_io_test/DirectoryPopulater.html">DirectoryPopulater</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>MapDirectoryPopulater</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot_io/DirectoryPopulater.html">DirectoryPopulater</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>MapDirectoryPopulater</strong></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="MapDirectoryPopulater">
@@ -109,11 +111,11 @@ MapDirectoryPopulater(this._contents);
 <h3>Methods</h3>
 <div class="method"><h4 id="populate">
 <button class="show-code">Code</button>
-Future <strong>populate</strong>(Directory dir) <a class="anchor-link" href="#populate"
+Future&lt;Directory&gt; <strong>populate</strong>(Directory dir) <a class="anchor-link" href="#populate"
               title="Permalink to MapDirectoryPopulater.populate">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future populate(Directory dir) {
+Future&lt;Directory&gt; populate(Directory dir) {
  assert(dir != null);
  return IoHelpers.isEmpty(dir)
      .chain((bool isEmpty) {

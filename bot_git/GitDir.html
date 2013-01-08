@@ -1,0 +1,245 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>GitDir class / bot_git Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_git" data-type="GitDir">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_git.html">bot_git</a> &rsaquo; <a href="../bot_git/GitDir.html">GitDir</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>GitDir</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class GitDir {
+ static final RegExp _shaRegExp = new RegExp(r'^[a-f0-9]{40}$');
+
+ final Path _path;
+
+ factory GitDir(String path) {
+   return new GitDir.fromPath(new Path(path));
+ }
+
+ GitDir.fromPath(Path path) :
+   this._path = path.canonicalize() {
+   assert(new Directory.fromPath(_path).existsSync());
+ }
+
+ Path get path =&gt; _path;
+
+ Future&lt;List&lt;String&gt;&gt; getBranches() {
+   return _runGit(['ls-remote', _path.toNativePath()])
+       .transform((ProcessResult pr) {
+     assert(pr.exitCode == 0);
+     return [];
+   });
+ }
+
+ Future&lt;Map&lt;String, String&gt;&gt; writeObject(List&lt;String&gt; paths) {
+   final args = ['hash-object', '-t', 'blob', '-w', '--no-filters', '--'];
+   args.addAll(paths);
+   return _doGit(args)
+       .transform((ProcessResult pr) {
+         final val = pr.stdout.trim();
+         final shas = val.split(new RegExp(r'\s+'));
+         assert(shas.length == paths.length);
+         assert(shas.every((sha) =&gt; _shaRegExp.hasMatch(sha)));
+         final map = new Map&lt;String, String&gt;();
+         for(var i = 0; i &lt; shas.length; i++) {
+           map[paths[i]] = shas[i];
+         }
+         return map;
+       });
+ }
+
+ Future&lt;ProcessResult&gt; _doGit(List&lt;String&gt; args, [bool throwOnError = true]) {
+   var allArgs = ['--git-dir', _gitDirPath]
+     ..addAll(args);
+   return _runGit(allArgs, throwOnError);
+ }
+
+ String get _gitDirPath =&gt; _path.append('.git').toNativePath();
+
+ static Future&lt;GitDir&gt; init(Directory source) {
+   assert(source.existsSync());
+
+   // first, verify it's empty
+   return IoHelpers.isEmpty(source)
+       .chain((bool isEmpty) {
+         if(!isEmpty) {
+           throw 'source Directory is not empty';
+         }
+         return _init(source);
+       });
+ }
+
+ static Future&lt;GitDir&gt; _init(Directory source) {
+   return _runGit(['init', source.path])
+       .transform((ProcessResult pr) {
+         return new GitDir(source.path);
+       });
+ }
+
+ static Future&lt;ProcessResult&gt; _runGit(List&lt;String&gt; args, [bool throwOnError = true]) {
+   return Process.run('git', args)
+       .transform((ProcessResult pr) {
+         if(throwOnError) {
+           _throwIfProcessFailed(pr, 'git', args);
+         }
+         return pr;
+       });
+ }
+
+ static void _throwIfProcessFailed(ProcessResult pr, String process, List&lt;String&gt; args) {
+   assert(pr != null);
+   if(pr.exitCode != 0) {
+     throw new ProcessException('git', ['unknown'], pr.stderr.trim(), pr.exitCode);
+   }
+ }
+
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="init">
+<button class="show-code">Code</button>
+Future&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>init</strong>(Directory source) <a class="anchor-link" href="#init"
+              title="Permalink to GitDir.init">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Future&lt;GitDir&gt; init(Directory source) {
+ assert(source.existsSync());
+
+ // first, verify it's empty
+ return IoHelpers.isEmpty(source)
+     .chain((bool isEmpty) {
+       if(!isEmpty) {
+         throw 'source Directory is not empty';
+       }
+       return _init(source);
+     });
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="GitDir">
+<button class="show-code">Code</button>
+factory <strong>GitDir</strong>(String path) <a class="anchor-link" href="#GitDir"
+              title="Permalink to GitDir.GitDir">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory GitDir(String path) {
+ return new GitDir.fromPath(new Path(path));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="GitDir.fromPath">
+<button class="show-code">Code</button>
+new <strong>GitDir.fromPath</strong>(Path path) <a class="anchor-link" href="#GitDir.fromPath"
+              title="Permalink to GitDir.GitDir.fromPath">#</a></h4>
+<div class="doc">
+<pre class="source">
+GitDir.fromPath(Path path) :
+ this._path = path.canonicalize() {
+ assert(new Directory.fromPath(_path).existsSync());
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="path">
+<button class="show-code">Code</button>
+final Path         <strong>path</strong> <a class="anchor-link"
+            href="#path"
+            title="Permalink to GitDir.path">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Path get path =&gt; _path;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="getBranches">
+<button class="show-code">Code</button>
+Future&lt;List&lt;String&gt;&gt; <strong>getBranches</strong>() <a class="anchor-link" href="#getBranches"
+              title="Permalink to GitDir.getBranches">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;String&gt;&gt; getBranches() {
+ return _runGit(['ls-remote', _path.toNativePath()])
+     .transform((ProcessResult pr) {
+   assert(pr.exitCode == 0);
+   return [];
+ });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="writeObject">
+<button class="show-code">Code</button>
+Future&lt;Map&lt;String, String&gt;&gt; <strong>writeObject</strong>(List&lt;String&gt; paths) <a class="anchor-link" href="#writeObject"
+              title="Permalink to GitDir.writeObject">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;Map&lt;String, String&gt;&gt; writeObject(List&lt;String&gt; paths) {
+ final args = ['hash-object', '-t', 'blob', '-w', '--no-filters', '--'];
+ args.addAll(paths);
+ return _doGit(args)
+     .transform((ProcessResult pr) {
+       final val = pr.stdout.trim();
+       final shas = val.split(new RegExp(r'\s+'));
+       assert(shas.length == paths.length);
+       assert(shas.every((sha) =&gt; _shaRegExp.hasMatch(sha)));
+       final map = new Map&lt;String, String&gt;();
+       for(var i = 0; i &lt; shas.length; i++) {
+         map[paths[i]] = shas[i];
+       }
+       return map;
+     });
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

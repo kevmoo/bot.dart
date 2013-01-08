@@ -2,19 +2,19 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>TempDir class / bot_io_test Library / Dart Documentation</title>
+        <title>TempDir class / bot_io Library / Dart Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
-        <body data-library="bot_io_test" data-type="TempDir">
+        <body data-library="bot_io" data-type="TempDir">
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
           <a href="../index.html">Dart Documentation</a>
-         &rsaquo; <a href="../bot_io_test.html">bot_io_test</a> &rsaquo; <a href="../bot_io_test/TempDir.html">TempDir</a>        <div id="search-box">
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/TempDir.html">TempDir</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
         </div>
@@ -34,37 +34,44 @@
 <div class="doc">
 <pre class="source">
 class TempDir extends DisposableImpl {
- final Directory _dir;
+ final Directory dir;
 
- factory TempDir() {
-
+ static Future&lt;TempDir&gt; create() {
    final startDir = new Directory('');
-   return new TempDir._internal(startDir.createTempSync());
+   return startDir.createTemp()
+       .transform((newDir) =&gt; new TempDir._internal(newDir));
  }
 
- TempDir._internal(this._dir);
+ TempDir._internal(this.dir) {
+   assert(this.dir != null);
+   assert(this.dir.existsSync());
+ }
 
- String get path =&gt; _dir.path;
+ String get path =&gt; dir.path;
 
- Future populate(DirectoryPopulater populater) {
-   return populater.populate(_dir);
+ Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
+   return populater.populate(dir)
+       .transform((Directory outputDir) {
+         assert(dir == outputDir);
+         return this;
+       });
  }
 
  Future&lt;bool&gt; verifyContents(Map&lt;String, dynamic&gt; content) {
-   return IoHelpers.verifyContents(_dir, content);
+   return IoHelpers.verifyContents(dir, content);
  }
 
  Future&lt;bool&gt; isEmpty() {
-   return IoHelpers.isEmpty(_dir);
+   return IoHelpers.isEmpty(dir);
  }
 
  String toString() =&gt; "TempDir: $path";
 
  @protected
  void disposeInternal() {
-   assert(_dir.existsSync());
-   _dir.deleteSync(recursive: true);
-   assert(!_dir.existsSync());
+   assert(dir.existsSync());
+   dir.deleteSync(recursive: true);
+   assert(!dir.existsSync());
  }
 }
 </pre>
@@ -73,17 +80,17 @@ class TempDir extends DisposableImpl {
 <p>
 <span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>TempDir</strong></span></p>
 <div>
-<h3>Constructors</h3>
-<div class="method"><h4 id="TempDir">
+<h3>Static Methods</h3>
+<div class="method"><h4 id="create">
 <button class="show-code">Code</button>
-factory <strong>TempDir</strong>() <a class="anchor-link" href="#TempDir"
-              title="Permalink to TempDir.TempDir">#</a></h4>
+Future&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>create</strong>() <a class="anchor-link" href="#create"
+              title="Permalink to TempDir.create">#</a></h4>
 <div class="doc">
 <pre class="source">
-factory TempDir() {
-
+static Future&lt;TempDir&gt; create() {
  final startDir = new Directory('');
- return new TempDir._internal(startDir.createTempSync());
+ return startDir.createTemp()
+     .transform((newDir) =&gt; new TempDir._internal(newDir));
 }
 </pre>
 </div>
@@ -91,6 +98,18 @@ factory TempDir() {
 </div>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="dir">
+<button class="show-code">Code</button>
+final Directory         <strong>dir</strong> <a class="anchor-link"
+            href="#dir"
+            title="Permalink to TempDir.dir">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+dir
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="isDisposed">
 <button class="show-code">Code</button>
 final bool         <strong>isDisposed</strong> <a class="anchor-link"
@@ -111,7 +130,7 @@ final String         <strong>path</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-String get path =&gt; _dir.path;
+String get path =&gt; dir.path;
 </pre>
 </div>
 </div>
@@ -139,15 +158,12 @@ void dispose(){
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
               title="Permalink to TempDir.disposeInternal">#</a></h4>
 <div class="doc">
-<div class="inherited">
-<p>Do not call this method directly. Call <code>dispose</code> instead.
-Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
-<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
+@protected
 void disposeInternal() {
- assert(_dir.existsSync());
- _dir.deleteSync(recursive: true);
- assert(!_dir.existsSync());
+ assert(dir.existsSync());
+ dir.deleteSync(recursive: true);
+ assert(!dir.existsSync());
 }
 </pre>
 </div>
@@ -159,19 +175,23 @@ Future&lt;bool&gt; <strong>isEmpty</strong>() <a class="anchor-link" href="#isEm
 <div class="doc">
 <pre class="source">
 Future&lt;bool&gt; isEmpty() {
- return IoHelpers.isEmpty(_dir);
+ return IoHelpers.isEmpty(dir);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="populate">
 <button class="show-code">Code</button>
-Future <strong>populate</strong>(<a href="../bot_io_test/DirectoryPopulater.html">DirectoryPopulater</a> populater) <a class="anchor-link" href="#populate"
+Future&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>populate</strong>(<a href="../bot_io/DirectoryPopulater.html">DirectoryPopulater</a> populater) <a class="anchor-link" href="#populate"
               title="Permalink to TempDir.populate">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future populate(DirectoryPopulater populater) {
- return populater.populate(_dir);
+Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
+ return populater.populate(dir)
+     .transform((Directory outputDir) {
+       assert(dir == outputDir);
+       return this;
+     });
 }
 </pre>
 </div>
@@ -210,7 +230,7 @@ Future&lt;bool&gt; <strong>verifyContents</strong>(Map&lt;String, Dynamic&gt; co
 <div class="doc">
 <pre class="source">
 Future&lt;bool&gt; verifyContents(Map&lt;String, dynamic&gt; content) {
- return IoHelpers.verifyContents(_dir, content);
+ return IoHelpers.verifyContents(dir, content);
 }
 </pre>
 </div>

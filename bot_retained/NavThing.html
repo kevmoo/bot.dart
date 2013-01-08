@@ -242,7 +242,7 @@ final <a href="../bot_retained/HorizontalAlignment.html">HorizontalAlignment</a>
         </h4>
         <div class="doc">
 <pre class="source">
-final HorizontalAlignment horizontalAlignment = HorizontalAlignment.CENTER;
+horizontalAlignment = HorizontalAlignment.CENTER
 </pre>
 </div>
 </div>
@@ -310,7 +310,7 @@ final <a href="../bot_retained/VerticalAlignment.html">VerticalAlignment</a>    
         </h4>
         <div class="doc">
 <pre class="source">
-final VerticalAlignment verticalAlignment = VerticalAlignment.MIDDLE;
+verticalAlignment = VerticalAlignment.MIDDLE
 </pre>
 </div>
 </div>
@@ -405,11 +405,8 @@ void dispose(){
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
               title="Permalink to NavThing.disposeInternal">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
-<div class="inherited">
-<p>Do not call this method directly. Call <code>dispose</code> instead.
-Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
-<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
+@protected
 void disposeInternal(){
  super.disposeInternal();
  _invalidatedEventHandle.dispose();
@@ -423,6 +420,7 @@ void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-li
               title="Permalink to NavThing.drawCore">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
 <pre class="source">
+@protected
 void drawCore(CanvasRenderingContext2D ctx){
  ctx.save();
  final tx = this.getTransform();

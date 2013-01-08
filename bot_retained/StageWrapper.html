@@ -107,7 +107,8 @@ final CanvasElement         <strong>canvas</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-final CanvasElement canvas;
+@protected
+final CanvasElement canvas
 </pre>
 </div>
 </div>
@@ -131,7 +132,8 @@ final <a href="../bot_retained/StageWrapper.html">T</a>         <strong>rootThin
         </h4>
         <div class="doc">
 <pre class="source">
-final T rootThing;
+@protected
+final T rootThing
 </pre>
 </div>
 </div>
@@ -143,7 +145,8 @@ final <a href="../bot_retained/Stage.html">Stage</a>         <strong>stage</stro
         </h4>
         <div class="doc">
 <pre class="source">
-final Stage stage;
+@protected
+final Stage stage
 </pre>
 </div>
 </div>
@@ -171,10 +174,6 @@ void dispose(){
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
               title="Permalink to StageWrapper&lt;T&gt;.disposeInternal">#</a></h4>
 <div class="doc">
-<div class="inherited">
-<p>Do not call this method directly. Call <code>dispose</code> instead.
-Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
-<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
 void disposeInternal() {
  stage.invalidated.remove(_invalidatedEventId);
@@ -189,6 +188,7 @@ void <strong>drawFrame</strong>(double highResTime) <a class="anchor-link" href=
               title="Permalink to StageWrapper&lt;T&gt;.drawFrame">#</a></h4>
 <div class="doc">
 <pre class="source">
+@protected
 void drawFrame(double highResTime) {
  assert(_frameRequested);
  _frameRequested = false;

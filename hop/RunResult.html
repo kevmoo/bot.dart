@@ -69,9 +69,8 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>BAD_USAGE</s
             title="Permalink to RunResult.BAD_USAGE">#</a>
         </h4>
         <div class="doc">
-<p>C/C++ standard for bad usage. Hop was called incorrectly</p>
 <pre class="source">
-static final RunResult BAD_USAGE = const RunResult._internal(64);
+BAD_USAGE = const RunResult._internal(64)
 </pre>
 </div>
 </div>
@@ -82,9 +81,8 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>ERROR</stron
             title="Permalink to RunResult.ERROR">#</a>
         </h4>
         <div class="doc">
-<p>Task misbehaved. Returned null, used TaskContext incorrectly, etc.</p>
 <pre class="source">
-static final RunResult ERROR = const RunResult._internal(82);
+ERROR = const RunResult._internal(82)
 </pre>
 </div>
 </div>
@@ -95,9 +93,8 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>EXCEPTION</s
             title="Permalink to RunResult.EXCEPTION">#</a>
         </h4>
         <div class="doc">
-<p>Task was was started, but threw an exception</p>
 <pre class="source">
-static final RunResult EXCEPTION = const RunResult._internal(81);
+EXCEPTION = const RunResult._internal(81)
 </pre>
 </div>
 </div>
@@ -108,9 +105,8 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>FAIL</strong
             title="Permalink to RunResult.FAIL">#</a>
         </h4>
         <div class="doc">
-<p>Task was was started and failed gracefully</p>
 <pre class="source">
-static final RunResult FAIL = const RunResult._internal(80);
+FAIL = const RunResult._internal(80)
 </pre>
 </div>
 </div>
@@ -121,9 +117,8 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>SUCCESS</str
             title="Permalink to RunResult.SUCCESS">#</a>
         </h4>
         <div class="doc">
-<p>Ran successfully</p>
 <pre class="source">
-static final RunResult SUCCESS = const RunResult._internal(0);
+SUCCESS = const RunResult._internal(0)
 </pre>
 </div>
 </div>
@@ -138,7 +133,7 @@ final int         <strong>exitCode</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-final int exitCode;
+exitCode
 </pre>
 </div>
 </div>

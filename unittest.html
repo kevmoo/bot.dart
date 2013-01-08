@@ -27,6 +27,126 @@
 </div>
 <div class="content">
 <h2><strong>unittest</strong> library</h2>
+<div class="doc"><p>A library for writing dart unit tests.</p>
+<p>To import this library, use the pub package manager.
+Create a pubspec.yaml file in your project and add
+a dependency on unittest with the following lines:</p>
+<pre><span class="i ">dependencies</span><span class="p ">:</span>
+  <span class="i ">unittest</span><span class="p ">:</span>
+    <span class="i ">sdk</span><span class="p ">:</span> <span class="i ">unittest</span></pre>
+<p>Then run 'pub install' from your project directory or using
+the DartEditor.</p>
+<p>Please see <a href="http://pub.dartlang.org/doc">Pub Getting Started</a>
+for more details about the pub package manager.</p>
+<h2>Concepts</h2><ul><li>
+<p>Tests: Tests are specified via the top-level function <a class="crossref" href="unittest.html#test">test</a>, they can be
+   organized together using <a class="crossref" href="unittest.html#group">group</a>.</p></li><li>Checks: Test expectations can be specified via <code>expect</code></li><li>Matchers: <code>expect</code> assertions are written declaratively using <code>Matcher</code>s</li><li>
+<p>Configuration: The framework can be adapted by calling <a class="crossref" href="unittest.html#configure">configure</a> with a
+   <a class="crossref" href="unittest/Configuration.html">Configuration</a>.  Common configurations can be found in this package
+   under: 'dom\<em>config.dart' (deprecated), 'html\</em>config.dart' (for running
+   tests compiled to Javascript in a browser), and 'vm\_config.dart' (for
+   running native Dart tests on the VM).</p></li></ul>
+<h2>Examples</h2>
+<p>A trivial test:</p>
+<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
+<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is a test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span></pre>
+<p>Multiple tests:</p>
+<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
+<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is a test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is another test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span></pre>
+<p>Multiple tests, grouped by category:</p>
+<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
+<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="i ">group</span><span class="p ">(</span><span class="s si">'group A'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="i ">test</span><span class="p ">(</span><span class="s si">'test A.1'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="i ">test</span><span class="p ">(</span><span class="s si">'test A.2'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="i ">group</span><span class="p ">(</span><span class="s si">'group B'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="i ">test</span><span class="p ">(</span><span class="s si">'this B.1'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span></pre>
+<p>Asynchronous tests: if callbacks expect between 0 and 2 positional arguments,
+depending on the suffix of expectAsyncX(). expectAsyncX() will wrap a
+function into a new callback and will not consider the test complete until
+that callback is run. A count argument can be provided to specify the number
+of times the callback should be called (the default is 1).</p>
+<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
+<span class="k ">import</span> <span class="s si">'dart:isolate'</span><span class="p ">;</span>
+<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed once'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="c ">// wrap the callback of an asynchronous call with [expectAsync0] if</span>
+    <span class="c ">// the callback takes 0 arguments...</span>
+    <span class="k ">var</span> <span class="i ">timer</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed twice'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="k ">var</span> <span class="i ">callback</span> <span class="o ">=</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">,</span> <span class="i ">count</span><span class="p ">:</span> <span class="n ">2</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// &lt;-- we can indicate multiplicity to [expectAsync0]</span>
+    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span></pre>
+<p>expectAsyncX() will wrap the callback code in a try/catch handler to handle
+exceptions (treated as test failures). There may be times when the number of
+times a callback should be called is non-deterministic. In this case a dummy
+callback can be created with expectAsync0((){}) and this can be called from
+the real callback when it is finally complete. In this case the body of the
+callback should be protected within a call to guardAsync(); this will ensure
+that exceptions are properly handled.</p>
+<p>Note: due to some language limitations we have to use different functions
+depending on the number of positional arguments of the callback. In the
+future, we plan to expose a single <code>expectAsync</code> function that can be used
+regardless of the number of positional arguments. This requires new langauge
+features or fixes to the current spec (e.g. see
+<a href="http://dartbug.com/2706">Issue 2706</a>).</p>
+<p>Meanwhile, we plan to add this alternative API for callbacks of more than 2
+arguments or that take named parameters. (this is not implemented yet,
+but will be coming here soon).</p>
+<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
+<span class="k ">import</span> <span class="s si">'dart:isolate'</span><span class="p ">;</span>
+<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="c ">// indicate ahead of time that an async callback is expected.</span>
+    <span class="k ">var</span> <span class="i ">async</span> <span class="o ">=</span> <span class="i ">startAsync</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="p ">{</span>
+      <span class="c ">// Guard the body of the callback, so errors are propagated</span>
+      <span class="c ">// correctly.</span>
+      <span class="i ">guardAsync</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+        <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
+        <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+      <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+      <span class="c ">// indicate that the asynchronous callback was invoked.</span>
+      <span class="i ">async</span><span class="p ">.</span><span class="i ">complete</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<span class="p ">}</span></pre></div>
 <div>
 <h3>Properties</h3>
 <div class="field"><h4 id="config">
@@ -49,7 +169,7 @@ const         <strong>ERROR</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-const ERROR = 'error';
+ERROR = 'error'
 </pre>
 </div>
 </div>
@@ -61,7 +181,7 @@ const         <strong>FAIL</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-const FAIL  = 'fail';
+FAIL  = 'fail'
 </pre>
 </div>
 </div>
@@ -72,9 +192,8 @@ String         <strong>groupSep</strong> <a class="anchor-link"
             title="Permalink to groupSep">#</a>
         </h4>
         <div class="doc">
-<p>Separator used between group names and test names.</p>
 <pre class="source">
-String groupSep = ' ';
+groupSep = ' '
 </pre>
 </div>
 </div>
@@ -85,9 +204,8 @@ const         <strong>PASS</strong> <a class="anchor-link"
             title="Permalink to PASS">#</a>
         </h4>
         <div class="doc">
-<p>Test case result strings.</p>
 <pre class="source">
-const PASS  = 'pass';
+PASS  = 'pass'
 </pre>
 </div>
 </div>
@@ -111,13 +229,8 @@ Map         <strong>testState</strong> <a class="anchor-link"
             title="Permalink to testState">#</a>
         </h4>
         <div class="doc">
-<p>A map that can be used to communicate state between a test driver
-or main() function and the tests, particularly when these two
-are otherwise independent. For example, a test driver that starts
-an HTTP server and then runs tests that access that server could use
-this as a way of communicating the server port to the tests.</p>
 <pre class="source">
-Map testState = {};
+testState = {}
 </pre>
 </div>
 </div>

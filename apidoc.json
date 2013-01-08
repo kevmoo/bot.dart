@@ -2,6 +2,7 @@
 [
   {
     "kind": "library",
+    "comment": "\nThis library lets you define parsers for parsing raw command-line arguments\ninto a set of options and values using [GNU][] and [POSIX][] style options.\n\n## Defining options ##\n\nTo use this library, you create an [ArgParser] object which will contain\nthe set of options you support:\n\n    var parser = new ArgParser();\n\nThen you define a set of options on that parser using [addOption()] and\n[addFlag()]. The minimal way to create an option is:\n\n    parser.addOption('name');\n\nThis creates an option named \"name\". Options must be given a value on the\ncommand line. If you have a simple on/off flag, you can instead use:\n\n    parser.addFlag('name');\n\nFlag options will, by default, accept a 'no-' prefix to negate the option.\nThis can be disabled like so:\n\n    parser.addFlag('name', negatable: false);\n\n(From here on out \"option\" will refer to both \"regular\" options and flags.\nIn cases where the distinction matters, we'll use \"non-flag option\".)\n\nOptions may have an optional single-character abbreviation:\n\n    parser.addOption('mode', abbr: 'm');\n    parser.addFlag('verbose', abbr: 'v');\n\nThey may also specify a default value. The default value will be used if the\noption isn't provided:\n\n    parser.addOption('mode', defaultsTo: 'debug');\n    parser.addFlag('verbose', defaultsTo: false);\n\nThe default value for non-flag options can be any [String]. For flags, it\nmust be a [bool].\n\nTo validate non-flag options, you may provide an allowed set of values. When\nyou do, it will throw a [FormatException] when you parse the arguments if\nthe value for an option is not in the allowed set:\n\n    parser.addOption('mode', allowed: ['debug', 'release']);\n\nYou can provide a callback when you define an option. When you later parse\na set of arguments, the callback for that option will be invoked with the\nvalue provided for it:\n\n    parser.addOption('mode', callback: (mode) => print('Got mode $mode));\n    parser.addFlag('verbose', callback: (verbose) {\n      if (verbose) print('Verbose');\n    });\n\nThe callback for each option will *always* be called when you parse a set of\narguments. If the option isn't provided in the args, the callback will be\npassed the default value, or `null` if there is none set.\n\n## Parsing arguments ##\n\nOnce you have an [ArgParser] set up with some options and flags, you use it\nby calling [ArgParser.parse()] with a set of arguments:\n\n    var results = parser.parse(['some', 'command', 'line', 'args']);\n\nThese will usually come from `new Options().arguments`, but you can pass in\nany list of strings. It returns an instance of [ArgResults]. This is a\nmap-like object that will return the value of any parsed option.\n\n    var parser = new ArgParser();\n    parser.addOption('mode');\n    parser.addFlag('verbose', defaultsTo: true);\n    var results = parser.parse('['--mode', 'debug', 'something', 'else']);\n\n    print(results['mode']); // debug\n    print(results['verbose']); // true\n\nThe [parse()] method will stop as soon as it reaches `--` or anything that\nit doesn't recognize as an option, flag, or option value. If there are still\narguments left, they will be provided to you in\n[ArgResults.rest].\n\n    print(results.rest); // ['something', 'else']\n\n## Specifying options ##\n\nTo actually pass in options and flags on the command line, use GNU or POSIX\nstyle. If you define an option like:\n\n    parser.addOption('name', abbr: 'n');\n\nThen a value for it can be specified on the command line using any of:\n\n    --name=somevalue\n    --name somevalue\n    -nsomevalue\n    -n somevalue\n\nGiven this flag:\n\n    parser.addFlag('name', abbr: 'n');\n\nYou can set it on using one of:\n\n    --name\n    -n\n\nOr set it off using:\n\n    --no-name\n\nMultiple flag abbreviation can also be collapsed into a single argument. If\nyou define:\n\n    parser.addFlag('verbose', abbr: 'v');\n    parser.addFlag('french', abbr: 'f');\n    parser.addFlag('iambic-pentameter', abbr: 'i');\n\nThen all three flags could be set using:\n\n    -vfi\n\nBy default, an option has only a single value, with later option values\noverriding earlier ones; for example:\n\n    var parser = new ArgParser();\n    parser.addOption('mode');\n    var results = parser.parse(['--mode', 'on', '--mode', 'off']);\n    print(results['mode']); // prints 'off'\n\nIf you need multiple values, set the [allowMultiple] flag. In that\ncase the option can occur multiple times and when parsing arguments a\nList of values will be returned:\n\n    var parser = new ArgParser();\n    parser.addOption('mode', allowMultiple: true);\n    var results = parser.parse(['--mode', 'on', '--mode', 'off']);\n    print(results['mode']); // prints '[on, off]'\n\n## Usage ##\n\nThis library can also be used to automatically generate nice usage help\ntext like you get when you run a program with `--help`. To use this, you\nwill also want to provide some help text when you create your options. To\ndefine help text for the entire option, do:\n\n    parser.addOption('mode', help: 'The compiler configuration',\n        allowed: ['debug', 'release']);\n    parser.addFlag('verbose', help: 'Show additional diagnostic info');\n\nFor non-flag options, you can also provide detailed help for each expected\nvalue using a map:\n\n    parser.addOption('arch', help: 'The architecture to compile for',\n        allowedHelp: {\n          'ia32': 'Intel x86',\n          'arm': 'ARM Holding 32-bit chip'\n        });\n\nIf you define a set of options like the above, then calling this:\n\n    print(parser.getUsage());\n\nWill display something like:\n\n    --mode            The compiler configuration\n                      [debug, release]\n\n    --[no-]verbose    Show additional diagnostic info\n    --arch            The architecture to compile for\n\n          [arm]       ARM Holding 32-bit chip\n          [ia32]      Intel x86\n\nTo assist the formatting of the usage help, single line help text will\nbe followed by a single new line. Options with multi-line help text\nwill be followed by two new lines. This provides spatial diversity between\noptions.\n\n[posix]: http://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_02\n[gnu]: http://www.gnu.org/prep/standards/standards.html#Command_002dLine-Interfaces\n\n",
     "name": "args",
     "children": [
       {
@@ -830,6 +831,7 @@
   },
   {
     "kind": "library",
+    "comment": "Generic utility functions. Stuff that should possibly be in core.\n",
     "name": "args_utils",
     "children": [
       {
@@ -4525,7 +4527,6 @@
               "refId": "void"
             },
             "kind": "method",
-            "comment": "\nDo not call this method directly. Call [dispose] instead.\nSubclasses should override this method to implement [Disposable] behavior.\n\n",
             "name": "disposeInternal",
             "id": "disposeInternal0()"
           },
@@ -10781,6 +10782,406 @@
   },
   {
     "kind": "library",
+    "name": "bot_git",
+    "children": [
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "GitDir",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "GitDir",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "GitDir1()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "GitDir.fromPath",
+            "children": [
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "GitDir.fromPath1()"
+          },
+          {
+            "returnType": {
+              "name": "Path",
+              "refId": "Path"
+            },
+            "kind": "method",
+            "name": "path",
+            "id": "path0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getBranches",
+            "id": "getBranches0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "writeObject",
+            "children": [
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "paths",
+                "id": "paths"
+              }
+            ],
+            "id": "writeObject1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "ProcessResult",
+                  "refId": "ProcessResult"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_doGit",
+            "children": [
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "args",
+                "id": "args"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "throwOnError",
+                "id": "throwOnError"
+              }
+            ],
+            "id": "_doGit2()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "_gitDirPath",
+            "id": "_gitDirPath0()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "GitDir",
+                  "refId": "GitDir"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "init",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "init1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "GitDir",
+                  "refId": "GitDir"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_init",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "_init1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "ProcessResult",
+                  "refId": "ProcessResult"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_runGit",
+            "children": [
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "args",
+                "id": "args"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "throwOnError",
+                "id": "throwOnError"
+              }
+            ],
+            "id": "_runGit2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_throwIfProcessFailed",
+            "children": [
+              {
+                "ref": {
+                  "name": "ProcessResult",
+                  "refId": "ProcessResult"
+                },
+                "kind": "param",
+                "name": "pr",
+                "id": "pr"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "process",
+                "id": "process"
+              },
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "args",
+                "id": "args"
+              }
+            ],
+            "id": "_throwIfProcessFailed3()"
+          },
+          {
+            "ref": {
+              "name": "Path",
+              "refId": "Path"
+            },
+            "kind": "property",
+            "name": "path",
+            "id": "path"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "_gitDirPath",
+            "id": "_gitDirPath"
+          },
+          {
+            "ref": {
+              "name": "RegExp",
+              "refId": "RegExp"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_shaRegExp",
+            "id": "_shaRegExp"
+          },
+          {
+            "ref": {
+              "name": "Path",
+              "refId": "Path"
+            },
+            "kind": "property",
+            "name": "_path",
+            "id": "_path"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "GitDir",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "GitDir1()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "GitDir.fromPath",
+            "children": [
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "GitDir.fromPath1()"
+          }
+        ],
+        "id": "GitDir"
+      }
+    ],
+    "id": "file:///Users/kevin/source/github/bot.dart/lib/bot_git.dart"
+  },
+  {
+    "kind": "library",
     "name": "bot_html",
     "children": [
       {
@@ -12305,6 +12706,715 @@
     "children": [
       {
         "superclass": {
+          "name": "DirectoryPopulater",
+          "refId": "DirectoryPopulater"
+        },
+        "kind": "class",
+        "name": "MapDirectoryPopulater",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "MapDirectoryPopulater",
+            "children": [
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "_contents",
+                "id": "_contents"
+              }
+            ],
+            "id": "MapDirectoryPopulater1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Directory",
+                  "refId": "Directory"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "populate",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "populate1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Directory",
+                  "refId": "Directory"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_populate",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              },
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "_populate2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "File",
+                  "refId": "File"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_createFile",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "parent",
+                "id": "parent"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "_createFile3()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Directory",
+                  "refId": "Directory"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_createDirAndPopulate",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "parent",
+                "id": "parent"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              },
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "_createDirAndPopulate3()"
+          },
+          {
+            "ref": {
+              "name": "Map",
+              "refId": "Map",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                },
+                {
+                  "name": "dynamic",
+                  "refId": "dynamic"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "_contents",
+            "id": "_contents"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "MapDirectoryPopulater",
+            "children": [
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "_contents",
+                "id": "_contents"
+              }
+            ],
+            "id": "MapDirectoryPopulater1()"
+          }
+        ],
+        "id": "MapDirectoryPopulater"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "DirectoryPopulater",
+        "children": [
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Directory",
+                  "refId": "Directory"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "populate",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "populate1()"
+          }
+        ],
+        "id": "DirectoryPopulater"
+      },
+      {
+        "superclass": {
+          "name": "DisposableImpl",
+          "refId": "DisposableImpl"
+        },
+        "kind": "class",
+        "name": "TempDir",
+        "children": [
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "TempDir",
+                  "refId": "TempDir"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "create",
+            "id": "create0()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "TempDir._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "TempDir._internal1()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "path",
+            "id": "path0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "TempDir",
+                  "refId": "TempDir"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "populate",
+            "children": [
+              {
+                "ref": {
+                  "name": "DirectoryPopulater",
+                  "refId": "DirectoryPopulater"
+                },
+                "kind": "param",
+                "name": "populater",
+                "id": "populater"
+              }
+            ],
+            "id": "populate1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "verifyContents",
+            "children": [
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "verifyContents1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "isEmpty",
+            "id": "isEmpty0()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "disposeInternal",
+            "id": "disposeInternal0()"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "path",
+            "id": "path"
+          },
+          {
+            "ref": {
+              "name": "Directory",
+              "refId": "Directory"
+            },
+            "kind": "property",
+            "name": "dir",
+            "id": "dir"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "TempDir._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "TempDir._internal1()"
+          }
+        ],
+        "id": "TempDir"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "IoHelpers",
+        "children": [
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "verifyContents",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              },
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "verifyContents2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "isEmpty",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "isEmpty1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Map",
+                  "refId": "Map"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_mapContents",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "_mapContents1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_verifyContents",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              },
+              {
+                "ref": {
+                  "name": "Map",
+                  "refId": "Map",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    },
+                    {
+                      "name": "dynamic",
+                      "refId": "dynamic"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "_verifyContents2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_verifyChildContent",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "parentDir",
+                "id": "parentDir"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              },
+              {
+                "ref": {
+                  "name": "dynamic",
+                  "refId": "dynamic"
+                },
+                "kind": "param",
+                "name": "expectedContent",
+                "id": "expectedContent"
+              },
+              {
+                "ref": {
+                  "name": "dynamic",
+                  "refId": "dynamic"
+                },
+                "kind": "param",
+                "name": "foundContent",
+                "id": "foundContent"
+              }
+            ],
+            "id": "_verifyChildContent4()"
+          },
+          {
+            "ref": {
+              "name": "Object",
+              "refId": "Object"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_dirPlaceHolder",
+            "id": "_dirPlaceHolder"
+          }
+        ],
+        "id": "IoHelpers"
+      },
+      {
+        "superclass": {
           "name": "Object",
           "refId": "Object"
         },
@@ -12721,690 +13831,6 @@
       }
     ],
     "id": "file:///Users/kevin/source/github/bot.dart/lib/bot_io.dart"
-  },
-  {
-    "kind": "library",
-    "name": "bot_io_test",
-    "children": [
-      {
-        "superclass": {
-          "name": "DirectoryPopulater",
-          "refId": "DirectoryPopulater"
-        },
-        "kind": "class",
-        "name": "MapDirectoryPopulater",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "MapDirectoryPopulater",
-            "children": [
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "_contents",
-                "id": "_contents"
-              }
-            ],
-            "id": "MapDirectoryPopulater1()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future"
-            },
-            "kind": "method",
-            "name": "populate",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              }
-            ],
-            "id": "populate1()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "Directory",
-                  "refId": "Directory"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_populate",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              },
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "_populate2()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "File",
-                  "refId": "File"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_createFile",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "parent",
-                "id": "parent"
-              },
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "name",
-                "id": "name"
-              },
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "_createFile3()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future"
-            },
-            "kind": "method",
-            "name": "_createDirAndPopulate",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "parent",
-                "id": "parent"
-              },
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "name",
-                "id": "name"
-              },
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "_createDirAndPopulate3()"
-          },
-          {
-            "ref": {
-              "name": "Map",
-              "refId": "Map",
-              "arguments": [
-                {
-                  "name": "String",
-                  "refId": "String"
-                },
-                {
-                  "name": "dynamic",
-                  "refId": "dynamic"
-                }
-              ]
-            },
-            "kind": "property",
-            "name": "_contents",
-            "id": "_contents"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "MapDirectoryPopulater",
-            "children": [
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "_contents",
-                "id": "_contents"
-              }
-            ],
-            "id": "MapDirectoryPopulater1()"
-          }
-        ],
-        "id": "MapDirectoryPopulater"
-      },
-      {
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "DirectoryPopulater",
-        "children": [
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future"
-            },
-            "kind": "method",
-            "name": "populate",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              }
-            ],
-            "id": "populate1()"
-          }
-        ],
-        "id": "DirectoryPopulater"
-      },
-      {
-        "superclass": {
-          "name": "DisposableImpl",
-          "refId": "DisposableImpl"
-        },
-        "kind": "class",
-        "name": "TempDir",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "TempDir",
-            "id": "TempDir0()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "TempDir._internal",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "_dir",
-                "id": "_dir"
-              }
-            ],
-            "id": "TempDir._internal1()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "path",
-            "id": "path0()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future"
-            },
-            "kind": "method",
-            "name": "populate",
-            "children": [
-              {
-                "ref": {
-                  "name": "DirectoryPopulater",
-                  "refId": "DirectoryPopulater"
-                },
-                "kind": "param",
-                "name": "populater",
-                "id": "populater"
-              }
-            ],
-            "id": "populate1()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "verifyContents",
-            "children": [
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "verifyContents1()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "isEmpty",
-            "id": "isEmpty0()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "toString",
-            "id": "toString0()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "disposeInternal",
-            "id": "disposeInternal0()"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "property",
-            "name": "path",
-            "id": "path"
-          },
-          {
-            "ref": {
-              "name": "Directory",
-              "refId": "Directory"
-            },
-            "kind": "property",
-            "name": "_dir",
-            "id": "_dir"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "TempDir",
-            "id": "TempDir0()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "TempDir._internal",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "_dir",
-                "id": "_dir"
-              }
-            ],
-            "id": "TempDir._internal1()"
-          }
-        ],
-        "id": "TempDir"
-      },
-      {
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "IoHelpers",
-        "children": [
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "verifyContents",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              },
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "verifyContents2()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "isEmpty",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              }
-            ],
-            "id": "isEmpty1()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "Map",
-                  "refId": "Map"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_mapContents",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              }
-            ],
-            "id": "_mapContents1()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_verifyContents",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "dir",
-                "id": "dir"
-              },
-              {
-                "ref": {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "dynamic",
-                      "refId": "dynamic"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "content",
-                "id": "content"
-              }
-            ],
-            "id": "_verifyContents2()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "bool",
-                  "refId": "bool"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_verifyChildContent",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "parentDir",
-                "id": "parentDir"
-              },
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "name",
-                "id": "name"
-              },
-              {
-                "ref": {
-                  "name": "dynamic",
-                  "refId": "dynamic"
-                },
-                "kind": "param",
-                "name": "expectedContent",
-                "id": "expectedContent"
-              },
-              {
-                "ref": {
-                  "name": "dynamic",
-                  "refId": "dynamic"
-                },
-                "kind": "param",
-                "name": "foundContent",
-                "id": "foundContent"
-              }
-            ],
-            "id": "_verifyChildContent4()"
-          }
-        ],
-        "id": "IoHelpers"
-      }
-    ],
-    "id": "file:///Users/kevin/source/github/bot.dart/lib/bot_io_test.dart"
   },
   {
     "kind": "library",
@@ -21412,6 +21838,7 @@
   },
   {
     "kind": "library",
+    "comment": "\nProvides APIs for debugging and error logging. This library introduces\nabstractions similar to those used in other languages, such as the Closure JS\nLogger and java.util.logging.Logger.\n\n",
     "name": "logging",
     "children": [
       {
@@ -22789,6 +23216,7 @@
   },
   {
     "kind": "library",
+    "comment": "\nThe matcher library provides a 3rd generation assertion mechanism, drawing\ninspiration from [Hamcrest] and Ladislav Thon's [dart-matchers]\nlibrary.\n\nSee [Hamcrest] http://en.wikipedia.org/wiki/Hamcrest\n    [Hamcrest] http://code.google.com/p/hamcrest/\n    [dart-matchers] https://github.com/Ladicek/dart-matchers\n\n",
     "name": "matcher",
     "children": [
       {
@@ -25666,6 +26094,7 @@
   },
   {
     "kind": "library",
+    "comment": "\nThis library contains the definitions of annotations that provide additional\nsemantic information about the program being annotated. These annotations are\nintended to be used by tools to provide a better user experience.\n\n",
     "name": "meta",
     "children": [
       {
@@ -25691,6 +26120,7 @@
   },
   {
     "kind": "library",
+    "comment": "\nA simple mocking/spy library.\n\nTo create a mock objects for some class T, create a new class using:\n\n    class MockT extends Mock implements T {};\n\nThen specify the [Behavior] of the Mock for different methods using\n[when] (to select the method and parameters) and then the [Action]s\nfor the [Behavior] by calling [thenReturn], [alwaysReturn], [thenThrow],\n[alwaysThrow], [thenCall] or [alwaysCall].\n\n[thenReturn], [thenThrow] and [thenCall] are one-shot so you would\ntypically call these more than once to specify a sequence of actions;\nthis can be done with chained calls, e.g.:\n\n     m.when(callsTo('foo')).\n         thenReturn(0).thenReturn(1).thenReturn(2);\n\n[thenCall] and [alwaysCall] allow you to proxy mocked methods, chaining\nto some other implementation. This provides a way to implement 'spies'.\n\nYou can disable logging for a particular [Behavior] easily:\n\n    m.when(callsTo('bar')).logging = false;\n\nYou can then use the mock object. Once you are done, to verify the\nbehavior, use [getLogs] to extract a relevant subset of method call\nlogs and apply [Matchers] to these through calling [verify].\n\nA Mock can be given a name when constructed. In this case instead of\nkeeping its own log, it uses a shared log. This can be useful to get an\naudit trail of interleaved behavior. It is the responsibility of the user\nto ensure that mock names, if used, are unique.\n\nLimitations:\n\n* only positional parameters are supported (up to 10);\n* to mock getters you will need to include parentheses in the call\n      (e.g. m.length() will work but not m.length).\n\nHere is a simple example:\n\n    class MockList extends Mock implements List {};\n\n    List m = new MockList();\n    m.when(callsTo('add', anything)).alwaysReturn(0);\n\n    m.add('foo');\n    m.add('bar');\n\n    getLogs(m, callsTo('add', anything)).verify(happenedExactly(2));\n    getLogs(m, callsTo('add', 'foo')).verify(happenedOnce);\n    getLogs(m, callsTo('add', 'isNull)).verify(neverHappened);\n\nNote that we don't need to provide argument matchers for all arguments,\nbut we do need to provide arguments for all matchers. So this is allowed:\n\n    m.when(callsTo('add')).alwaysReturn(0);\n    m.add(1, 2);\n\nBut this is not allowed and will throw an exception:\n\n    m.when(callsTo('add', anything, anything)).alwaysReturn(0);\n    m.add(1);\n\nHere is a way to implement a 'spy', which is where we log the call\nbut then hand it off to some other function, which is the same\nmethod in a real instance of the class being mocked:\n\n    class Foo {\n      bar(a, b, c) => a + b + c;\n    }\n\n    class MockFoo extends Mock implements Foo {\n      Foo real;\n      MockFoo() {\n        real = new Foo();\n        this.when(callsTo('bar')).alwaysCall(real.bar);\n      }\n    }\n\n\n",
     "name": "mock",
     "children": [
       {
@@ -28841,6 +29271,7 @@
   },
   {
     "kind": "library",
+    "comment": "\nA library for writing dart unit tests.\n\nTo import this library, use the pub package manager.\nCreate a pubspec.yaml file in your project and add\na dependency on unittest with the following lines:\n    dependencies:\n      unittest:\n        sdk: unittest\n\nThen run 'pub install' from your project directory or using\nthe DartEditor.\n\nPlease see [Pub Getting Started](http://pub.dartlang.org/doc)\nfor more details about the pub package manager.\n\n##Concepts##\n\n * Tests: Tests are specified via the top-level function [test], they can be\n   organized together using [group].\n * Checks: Test expectations can be specified via [expect]\n * Matchers: [expect] assertions are written declaratively using [Matcher]s\n * Configuration: The framework can be adapted by calling [configure] with a\n   [Configuration].  Common configurations can be found in this package\n   under: 'dom\\_config.dart' (deprecated), 'html\\_config.dart' (for running\n   tests compiled to Javascript in a browser), and 'vm\\_config.dart' (for\n   running native Dart tests on the VM).\n\n##Examples##\n\nA trivial test:\n\n    import 'package:unittest/unittest.dart';\n    main() {\n      test('this is a test', () {\n        int x = 2 + 3;\n        expect(x, equals(5));\n      });\n    }\n\nMultiple tests:\n\n    import 'package:unittest/unittest.dart';\n    main() {\n      test('this is a test', () {\n        int x = 2 + 3;\n        expect(x, equals(5));\n      });\n      test('this is another test', () {\n        int x = 2 + 3;\n        expect(x, equals(5));\n      });\n    }\n\nMultiple tests, grouped by category:\n\n    import 'package:unittest/unittest.dart';\n    main() {\n      group('group A', () {\n        test('test A.1', () {\n          int x = 2 + 3;\n          expect(x, equals(5));\n        });\n        test('test A.2', () {\n          int x = 2 + 3;\n          expect(x, equals(5));\n        });\n      });\n      group('group B', () {\n        test('this B.1', () {\n          int x = 2 + 3;\n          expect(x, equals(5));\n        });\n      });\n    }\n\nAsynchronous tests: if callbacks expect between 0 and 2 positional arguments,\ndepending on the suffix of expectAsyncX(). expectAsyncX() will wrap a\nfunction into a new callback and will not consider the test complete until\nthat callback is run. A count argument can be provided to specify the number\nof times the callback should be called (the default is 1).\n\n    import 'package:unittest/unittest.dart';\n    import 'dart:isolate';\n    main() {\n      test('callback is executed once', () {\n        // wrap the callback of an asynchronous call with [expectAsync0] if\n        // the callback takes 0 arguments...\n        var timer = new Timer(0, (_) => expectAsync0(() {\n          int x = 2 + 3;\n          expect(x, equals(5));\n        }));\n      });\n\n      test('callback is executed twice', () {\n        var callback = (_) => expectAsync0(() {\n          int x = 2 + 3;\n          expect(x, equals(5));\n        }, count: 2); // <-- we can indicate multiplicity to [expectAsync0]\n        new Timer(0, callback);\n        new Timer(0, callback);\n      });\n    }\n\nexpectAsyncX() will wrap the callback code in a try/catch handler to handle\nexceptions (treated as test failures). There may be times when the number of\ntimes a callback should be called is non-deterministic. In this case a dummy\ncallback can be created with expectAsync0((){}) and this can be called from\nthe real callback when it is finally complete. In this case the body of the\ncallback should be protected within a call to guardAsync(); this will ensure\nthat exceptions are properly handled.\n\nNote: due to some language limitations we have to use different functions\ndepending on the number of positional arguments of the callback. In the\nfuture, we plan to expose a single `expectAsync` function that can be used\nregardless of the number of positional arguments. This requires new langauge\nfeatures or fixes to the current spec (e.g. see\n[Issue 2706](http://dartbug.com/2706)).\n\nMeanwhile, we plan to add this alternative API for callbacks of more than 2\narguments or that take named parameters. (this is not implemented yet,\nbut will be coming here soon).\n\n    import 'package:unittest/unittest.dart';\n    import 'dart:isolate';\n    main() {\n      test('callback is executed', () {\n        // indicate ahead of time that an async callback is expected.\n        var async = startAsync();\n        new Timer(0, (_) {\n          // Guard the body of the callback, so errors are propagated\n          // correctly.\n          guardAsync(() {\n            int x = 2 + 3;\n            expect(x, equals(5));\n          });\n          // indicate that the asynchronous callback was invoked.\n          async.complete();\n        });\n      });\n    }\n\n\n",
     "name": "unittest",
     "children": [
       {

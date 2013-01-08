@@ -431,11 +431,8 @@ void dispose(){
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
               title="Permalink to Thing.disposeInternal">#</a></h4>
 <div class="doc">
-<div class="inherited">
-<p>Do not call this method directly. Call <code>dispose</code> instead.
-Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
-<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
+@protected
 void disposeInternal(){
  super.disposeInternal();
  _invalidatedEventHandle.dispose();
@@ -449,6 +446,7 @@ void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-li
               title="Permalink to Thing.drawCore">#</a></h4>
 <div class="doc">
 <pre class="source">
+@protected
 void drawCore(CanvasRenderingContext2D ctx){
  ctx.save();
  final tx = this.getTransform();
@@ -575,6 +573,7 @@ void <strong>update</strong>() <a class="anchor-link" href="#update"
               title="Permalink to Thing.update">#</a></h4>
 <div class="doc">
 <pre class="source">
+@protected
 void update(){ }
 </pre>
 </div>
