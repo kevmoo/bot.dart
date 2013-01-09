@@ -10782,408 +10782,34 @@
   },
   {
     "kind": "library",
-    "name": "bot_git",
-    "children": [
-      {
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "GitDir",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "GitDir",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir1()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "GitDir.fromPath",
-            "children": [
-              {
-                "ref": {
-                  "name": "Path",
-                  "refId": "Path"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir.fromPath1()"
-          },
-          {
-            "returnType": {
-              "name": "Path",
-              "refId": "Path"
-            },
-            "kind": "method",
-            "name": "path",
-            "id": "path0()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "getBranches",
-            "id": "getBranches0()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "Map",
-                  "refId": "Map",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    },
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "writeObject",
-            "children": [
-              {
-                "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "paths",
-                "id": "paths"
-              }
-            ],
-            "id": "writeObject1()"
-          },
-          {
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "ProcessResult",
-                  "refId": "ProcessResult"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_doGit",
-            "children": [
-              {
-                "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "args",
-                "id": "args"
-              },
-              {
-                "ref": {
-                  "name": "bool",
-                  "refId": "bool"
-                },
-                "isOptional": true,
-                "kind": "param",
-                "name": "throwOnError",
-                "id": "throwOnError"
-              }
-            ],
-            "id": "_doGit2()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "_gitDirPath",
-            "id": "_gitDirPath0()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "GitDir",
-                  "refId": "GitDir"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "init",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "source",
-                "id": "source"
-              }
-            ],
-            "id": "init1()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "GitDir",
-                  "refId": "GitDir"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_init",
-            "children": [
-              {
-                "ref": {
-                  "name": "Directory",
-                  "refId": "Directory"
-                },
-                "kind": "param",
-                "name": "source",
-                "id": "source"
-              }
-            ],
-            "id": "_init1()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "Future",
-              "refId": "Future",
-              "arguments": [
-                {
-                  "name": "ProcessResult",
-                  "refId": "ProcessResult"
-                }
-              ]
-            },
-            "kind": "method",
-            "name": "_runGit",
-            "children": [
-              {
-                "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "args",
-                "id": "args"
-              },
-              {
-                "ref": {
-                  "name": "bool",
-                  "refId": "bool"
-                },
-                "isOptional": true,
-                "kind": "param",
-                "name": "throwOnError",
-                "id": "throwOnError"
-              }
-            ],
-            "id": "_runGit2()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "_throwIfProcessFailed",
-            "children": [
-              {
-                "ref": {
-                  "name": "ProcessResult",
-                  "refId": "ProcessResult"
-                },
-                "kind": "param",
-                "name": "pr",
-                "id": "pr"
-              },
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "process",
-                "id": "process"
-              },
-              {
-                "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
-                },
-                "kind": "param",
-                "name": "args",
-                "id": "args"
-              }
-            ],
-            "id": "_throwIfProcessFailed3()"
-          },
-          {
-            "ref": {
-              "name": "Path",
-              "refId": "Path"
-            },
-            "kind": "property",
-            "name": "path",
-            "id": "path"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "property",
-            "name": "_gitDirPath",
-            "id": "_gitDirPath"
-          },
-          {
-            "ref": {
-              "name": "RegExp",
-              "refId": "RegExp"
-            },
-            "isStatic": true,
-            "kind": "property",
-            "name": "_shaRegExp",
-            "id": "_shaRegExp"
-          },
-          {
-            "ref": {
-              "name": "Path",
-              "refId": "Path"
-            },
-            "kind": "property",
-            "name": "_path",
-            "id": "_path"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "GitDir",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir1()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "GitDir.fromPath",
-            "children": [
-              {
-                "ref": {
-                  "name": "Path",
-                  "refId": "Path"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir.fromPath1()"
-          }
-        ],
-        "id": "GitDir"
-      }
-    ],
-    "id": "file:///Users/kevin/source/github/bot.dart/lib/bot_git.dart"
-  },
-  {
-    "kind": "library",
     "name": "bot_html",
     "children": [
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "int",
+              "refId": "int"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "getTimeoutFuture",
+        "children": [
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "param",
+            "name": "milliseconds",
+            "id": "milliseconds"
+          }
+        ],
+        "id": "getTimeoutFuture1()"
+      },
       {
         "returnType": {
           "name": "Coordinate",
@@ -19243,6 +18869,15 @@
         "kind": "method",
         "name": "pending",
         "id": "pending0()"
+      },
+      {
+        "ref": {
+          "name": "Matcher",
+          "refId": "Matcher"
+        },
+        "kind": "property",
+        "name": "throwsAssertionError",
+        "id": "throwsAssertionError"
       },
       {
         "ref": {
@@ -31139,6 +30774,15 @@
             "comment": "\nIf true, then tests are started automatically (otherwise [runTests]\nmust be called explicitly after the tests are set up.\n\n",
             "name": "autoStart",
             "id": "autoStart"
+          },
+          {
+            "ref": {
+              "name": "ReceivePort",
+              "refId": "ReceivePort"
+            },
+            "kind": "property",
+            "name": "_receivePort",
+            "id": "_receivePort"
           },
           {
             "ref": {

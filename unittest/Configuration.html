@@ -38,6 +38,9 @@ advantage of the platform can create a subclass and override methods from
 this class.</p>
 <pre class="source">
 class Configuration {
+ // The VM won't shut down if a receive port is open. Use this to make sure
+ // we correctly wait for asynchronous tests.
+ ReceivePort _receivePort;
  TestCase currentTestCase = null;
 
  /**
@@ -65,6 +68,7 @@ class Configuration {
   * wait until they are done.
   */
  void onStart() {
+   _receivePort = new ReceivePort();
    _postMessage('unittest-suite-wait-for-done');
  }
 
@@ -122,7 +126,8 @@ class Configuration {
      String uncaughtError) {
    // Print each test's result.
    for (final t in _tests) {
-     print('${t.result.toUpperCase()}: ${t.description}');
+     var resultString = "${t.result}".toUpperCase();
+     print('$resultString: ${t.description}');
 
      if (t.message != '') {
        print(_indent(t.message));
@@ -150,6 +155,7 @@ class Configuration {
      print('$passed PASSED, $failed FAILED, $errors ERRORS');
    }
 
+   _receivePort.close();
    if (success) {
      _postMessage('unittest-suite-success');
    } else {
@@ -290,7 +296,8 @@ void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
    String uncaughtError) {
  // Print each test's result.
  for (final t in _tests) {
-   print('${t.result.toUpperCase()}: ${t.description}');
+   var resultString = "${t.result}".toUpperCase();
+   print('$resultString: ${t.description}');
 
    if (t.message != '') {
      print(_indent(t.message));
@@ -318,6 +325,7 @@ void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
    print('$passed PASSED, $failed FAILED, $errors ERRORS');
  }
 
+ _receivePort.close();
  if (success) {
    _postMessage('unittest-suite-success');
  } else {
@@ -350,6 +358,7 @@ tell the vm or browser that tests are still running and the process should
 wait until they are done.</p>
 <pre class="source">
 void onStart() {
+ _receivePort = new ReceivePort();
  _postMessage('unittest-suite-wait-for-done');
 }
 </pre>

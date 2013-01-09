@@ -358,14 +358,14 @@ $$.IllegalJSRegExpException = {"":"Object;_pattern,_errmsg",
 
 $$._HashMapImpl = {"":"Object;_keys>,_values,_loadLimit,_numberOfEntries,_numberOfDeleted",
  _probeForAdding$1: function(key) {
-  var t1, hash, insertionIndex, numberOfProbes, existingKey, numberOfProbes0;
+  var t1, hash, numberOfProbes, insertionIndex, existingKey, numberOfProbes0;
   if (key == null)
     throw $.$$throw($.ArgumentError$(null));
   t1 = $.getInterceptor(key).get$hashCode(key);
   if (t1 !== (t1 | 0))
     return this._probeForAdding$1$bailout(1, key, t1);
   hash = (t1 & this._keys.length - 1) >>> 0;
-  for (insertionIndex = -1, numberOfProbes = 1; true; numberOfProbes = numberOfProbes0) {
+  for (numberOfProbes = 1, insertionIndex = -1; true; numberOfProbes = numberOfProbes0) {
     t1 = this._keys;
     if (hash < 0 || hash >= t1.length)
       throw $.ioore(hash);
@@ -405,10 +405,10 @@ $$._HashMapImpl = {"":"Object;_keys>,_values,_loadLimit,_numberOfEntries,_number
     case 1:
       state0 = 0;
       hash = $.and(t1, this._keys.length - 1);
-      insertionIndex = -1;
       numberOfProbes = 1;
+      insertionIndex = -1;
     case 2:
-      var t1, key, hash, insertionIndex, numberOfProbes, existingKey, numberOfProbes0;
+      var t1, key, hash, numberOfProbes, insertionIndex, existingKey, numberOfProbes0;
       L0:
         while (true)
           switch (state0) {
@@ -5318,9 +5318,9 @@ $.Primitives_newList = function(length$) {
 };
 
 $.Primitives__fromCharCodeApply = function(array) {
-  var end, t1, result, i, subarray, t2;
+  var end, t1, i, result, subarray, t2;
   end = array.length;
-  for (t1 = end <= 500, result = "", i = 0; i < end; i += 500) {
+  for (t1 = end <= 500, i = 0, result = ""; i < end; i += 500) {
     if (t1)
       subarray = array;
     else {
@@ -6113,15 +6113,15 @@ $.KeywordState_KEYWORD_STATE = function() {
 };
 
 $.KeywordState_computeKeywordStateTable = function(start, strings, offset, length$) {
-  var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, c, t4;
+  var result, t1, t2, i, isLeaf, chunk, chunkStart, t3, c, t4;
   result = $.List_List(26);
-  for (t1 = start + 1, t2 = strings.length, i = offset, chunk = 0, chunkStart = -1, isLeaf = false; t3 = offset + length$, i < t3; ++i) {
+  for (t1 = start + 1, t2 = strings.length, i = offset, isLeaf = false, chunk = 0, chunkStart = -1; t3 = offset + length$, i < t3; ++i) {
     if (i < 0)
       throw $.ioore(i);
     t3 = strings[i];
     t3 = $.getInterceptor$JSStringJSArray(t3).get$length(t3);
     if (typeof t3 !== 'number')
-      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, i, chunk, chunkStart, isLeaf, t2);
+      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, length$, t3, result, t1, isLeaf, i, chunk, chunkStart, t2);
     if (t3 === start)
       isLeaf = true;
     t3 = strings[i];
@@ -6132,7 +6132,7 @@ $.KeywordState_computeKeywordStateTable = function(start, strings, offset, lengt
       t3 = strings[i];
       c = $.getInterceptor$JSString(t3).charCodeAt$1(t3, start);
       if (c !== (c | 0))
-        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, i, chunk, chunkStart, c, t2);
+        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, offset, length$, result, isLeaf, t1, i, chunk, c, chunkStart, t2);
       if (chunk !== c) {
         if (chunkStart !== -1) {
           t3 = chunk - 97;
@@ -6169,10 +6169,10 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
   switch (state0) {
     case 1:
       t2 = env11;
-      isLeaf = env10;
-      chunkStart = env9;
-      chunk = env8;
-      i = env7;
+      chunkStart = env10;
+      chunk = env9;
+      i = env8;
+      isLeaf = env7;
       t1 = env6;
       result = env5;
       t3 = env4;
@@ -6197,8 +6197,8 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       break;
     case 3:
       t2 = env11;
-      c = env10;
-      chunkStart = env9;
+      chunkStart = env10;
+      c = env9;
       chunk = env8;
       i = env7;
       t1 = env6;
@@ -6216,11 +6216,11 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       t1 = start + 1;
       t2 = strings.length;
       i = offset;
+      isLeaf = false;
       chunk = 0;
       chunkStart = -1;
-      isLeaf = false;
     default:
-      var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, length$, offset, strings, start, c, t4;
+      var result, t1, t2, i, isLeaf, chunk, chunkStart, t3, length$, offset, strings, start, c, t4;
       L0:
         while (true)
           switch (state0) {
@@ -7490,9 +7490,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el1 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
-    t0 = el5;
-    el5 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el1, el3), 0)) {
     t0 = el3;
@@ -7515,9 +7515,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el3 = t0;
   }
   if ($.gtB(compare.call$2(el2, el5), 0)) {
-    t0 = el5;
-    el5 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -7525,9 +7525,9 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
-    t0 = el5;
-    el5 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el5;
+    el5 = t0;
   }
   t1 = a.length;
   if (index1 >= t1)
@@ -7739,8 +7739,8 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
             if (great >= a.length)
               throw $.ioore(great);
             t1 = $.ltB(compare.call$2(a[great], el2), 0);
-            great0 = great - 1;
             t2 = a.length;
+            great0 = great - 1;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -7803,9 +7803,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el1 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
-    t0 = el5;
-    el5 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el1, el3), 0)) {
     t0 = el3;
@@ -7828,9 +7828,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el3 = t0;
   }
   if ($.gtB(compare.call$2(el2, el5), 0)) {
-    t0 = el5;
-    el5 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -7838,9 +7838,9 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el4, el5), 0)) {
-    t0 = el5;
-    el5 = el4;
-    el4 = t0;
+    t0 = el4;
+    el4 = el5;
+    el5 = t0;
   }
   $.indexSet(a, index1, el1);
   $.indexSet(a, index3, el3);
@@ -8009,8 +8009,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
             if (great >= a.length)
               throw $.ioore(great);
             t1 = $.ltB(compare.call$2(a[great], el2), 0);
-            great0 = great - 1;
             t2 = a.length;
+            great0 = great - 1;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -8614,48 +8614,20 @@ $.CONSTANT70 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolatePro
 $.CONSTANT24 = new Isolate.$isolateProperties.StringWrapper("digit expected");
 $.CONSTANT25 = new Isolate.$isolateProperties.StringWrapper("hex digit expected");
 $.CONSTANT65 = new Isolate.$isolateProperties.PrecedenceInfo(Isolate.$isolateProperties.CONSTANT146, 0, 130);
-$.BAR_BAR_TOKEN = 146;
-$.$$CARET = 94;
-$.BAR_EQ_TOKEN = 147;
-$.STAR_EQ_TOKEN = 148;
-$.PERCENT_TOKEN = 37;
-$.PLUS_PLUS_TOKEN = 149;
-$.CARET_TOKEN = 94;
-$.PLUS_EQ_TOKEN = 150;
-$.INDEX_EQ_TOKEN = 140;
-$.MINUS_MINUS_TOKEN = 151;
-$.$$r = 114;
-$.MINUS_EQ_TOKEN = 152;
-$.STAR_TOKEN = 42;
-$.TILDE_SLASH_EQ_TOKEN = 153;
-$.TILDE_SLASH_TOKEN = 154;
-$.$$x = 120;
-$.PERCENT_EQ_TOKEN = 155;
-$.PERIOD_PERIOD_TOKEN = 133;
-$.GT_GT_TOKEN = 156;
-$.KeyCode_ENTER = 13;
-$.CARET_EQ_TOKEN = 157;
-$.$$OPEN_CURLY_BRACKET = 123;
-$.COMMENT_TOKEN = 158;
-$.SLASH_EQ_TOKEN = 131;
-$.$$BAR = 124;
-$.$$CLOSE_CURLY_BRACKET = 125;
-$.UNKNOWN_TOKEN = 1024;
-$.$$TILDE = 126;
 $.$$c = 99;
-$.$$z = 122;
-$.$$i = 105;
-$.$$_ = 95;
+$.$$CARET = 94;
+$.AMPERSAND_AMPERSAND_TOKEN = 144;
+$.$$r = 114;
 $.$$NBSP = 160;
 $.$$BACKPING = 96;
-$.$$k = 107;
+$.$$z = 122;
 $.$$BACKSLASH = 92;
 $.BACKPING_INFO = Isolate.$isolateProperties.CONSTANT16;
 $.BACKSLASH_INFO = Isolate.$isolateProperties.CONSTANT8;
 $.$$n = 110;
 $.PERIOD_PERIOD_PERIOD_INFO = Isolate.$isolateProperties.CONSTANT20;
 $.$$9 = 57;
-$.$$e = 101;
+$.$$_ = 95;
 $.CASCADE_PRECEDENCE = 2;
 $.KeyCode_UP = 38;
 $.PERIOD_PERIOD_INFO = Isolate.$isolateProperties.CONSTANT21;
@@ -8665,6 +8637,7 @@ $.COLON_INFO = Isolate.$isolateProperties.CONSTANT12;
 $.INDEX_INFO = Isolate.$isolateProperties.CONSTANT40;
 $.STRING_INTERPOLATION_IDENTIFIER_TOKEN = 159;
 $.MINUS_MINUS_INFO = Isolate.$isolateProperties.CONSTANT54;
+$.$$e = 101;
 $.PLUS_PLUS_INFO = Isolate.$isolateProperties.CONSTANT57;
 $.$$f = 102;
 $.TILDE_INFO = Isolate.$isolateProperties.CONSTANT38;
@@ -8799,18 +8772,19 @@ $.$$SQ = 39;
 $._JsonParser_CHAR_F = 102;
 $.$$OPEN_PAREN = 40;
 $._JsonParser_CHAR_N = 110;
+$.$$CLOSE_PAREN = 41;
 $._JsonParser_CHAR_R = 114;
 $._Sort__INSERTION_SORT_THRESHOLD = 32;
 $._JsonParser_CHAR_T = 116;
 $.$$PLUS = 43;
 $._JsonParser_CHAR_U = 117;
-$.$$CLOSE_PAREN = 41;
+$.$$COMMA = 44;
 $._JsonParser_LBRACE = 123;
 $.$$MINUS = 45;
 $._JsonParser_RBRACE = 125;
 $.$$PERIOD = 46;
 $._JsonParser_STRING_LITERAL = 34;
-$.$$COMMA = 44;
+$.$$STAR = 42;
 $._JsonParser_NUMBER_LITERAL = 45;
 $.$$0 = 48;
 $._JsonParser_NULL_LITERAL = 110;
@@ -8827,7 +8801,7 @@ $.$$$ = 36;
 $._JsonParser_TRUE_STRING = "true";
 $.$$4 = 52;
 $._JsonParser_FALSE_STRING = "false";
-$.$$STAR = 42;
+$.$$5 = 53;
 $._JsonParser_tokens = null;
 $.$$6 = 54;
 $.EOF_TOKEN = 0;
@@ -8848,7 +8822,6 @@ $.$$A = 65;
 $.AMPERSAND_TOKEN = 38;
 $.$$QUESTION = 63;
 $.BACKPING_TOKEN = 96;
-$.$$5 = 53;
 $.libraryList = null;
 $.searchInput = null;
 $.BANG_TOKEN = 33;
@@ -8895,39 +8868,66 @@ $.$$OPEN_SQUARE_BRACKET = 91;
 $.CLASS = "class";
 $.INTERFACE = "interface";
 $.$$CLOSE_SQUARE_BRACKET = 93;
-$.STRING_INTERPOLATION_TOKEN = 128;
 $.TYPEDEF = "typedef";
+$.STRING_INTERPOLATION_TOKEN = 128;
 $.LT_EQ_TOKEN = 129;
 $.MEMBERS = "members";
 $.TYPES = "types";
-$.ARGS = "args";
 $.FUNCTION_TOKEN = 130;
-$.PERIOD_PERIOD_PERIOD_TOKEN = 132;
 $.NAME = "name";
+$.ARGS = "args";
 $.KIND = "kind";
-$.EQ_EQ_EQ_TOKEN = 134;
-$.EQ_EQ_TOKEN = 135;
-$.CONSTRUCTOR = "constructor";
-$.LT_LT_EQ_TOKEN = 136;
-$.METHOD = "method";
-$.LT_LT_TOKEN = 137;
-$.NO_PARAMS = "noparams";
-$.GT_EQ_TOKEN = 138;
-$.GETTER = "getter";
-$.GT_GT_EQ_TOKEN = 139;
-$.$$d = 100;
-$.LINK_NAME = "link_name";
-$.SETTER = "setter";
-$.INDEX_TOKEN = 141;
 $.FIELD = "field";
-$.BANG_EQ_EQ_TOKEN = 142;
-$.currentLibrary = null;
-$.BANG_EQ_TOKEN = 143;
-$.currentType = null;
-$.AMPERSAND_AMPERSAND_TOKEN = 144;
-$.prefix = "";
-$.AMPERSAND_EQ_TOKEN = 145;
+$.$$d = 100;
+$.CONSTRUCTOR = "constructor";
+$.EQ_EQ_EQ_TOKEN = 134;
+$.METHOD = "method";
 $.$$a = 97;
+$.NO_PARAMS = "noparams";
+$.LT_LT_EQ_TOKEN = 136;
+$.GETTER = "getter";
+$.SETTER = "setter";
+$.$$i = 105;
+$.LINK_NAME = "link_name";
+$.PERIOD_PERIOD_TOKEN = 133;
+$.GT_EQ_TOKEN = 138;
+$.SLASH_EQ_TOKEN = 131;
+$.currentLibrary = null;
+$.EQ_EQ_TOKEN = 135;
+$.currentType = null;
+$.BANG_EQ_EQ_TOKEN = 142;
+$.prefix = "";
+$.LT_LT_TOKEN = 137;
+$.INDEX_EQ_TOKEN = 140;
+$.AMPERSAND_EQ_TOKEN = 145;
+$.PERIOD_PERIOD_PERIOD_TOKEN = 132;
+$.GT_GT_EQ_TOKEN = 139;
+$.BAR_BAR_TOKEN = 146;
+$.STAR_EQ_TOKEN = 148;
+$.BAR_EQ_TOKEN = 147;
+$.PLUS_PLUS_TOKEN = 149;
+$.CARET_TOKEN = 94;
+$.PLUS_EQ_TOKEN = 150;
+$.BANG_EQ_TOKEN = 143;
+$.MINUS_MINUS_TOKEN = 151;
+$.INDEX_TOKEN = 141;
+$.MINUS_EQ_TOKEN = 152;
+$.STAR_TOKEN = 42;
+$.TILDE_SLASH_EQ_TOKEN = 153;
+$.TILDE_SLASH_TOKEN = 154;
+$.$$x = 120;
+$.PERCENT_EQ_TOKEN = 155;
+$.$$k = 107;
+$.GT_GT_TOKEN = 156;
+$.KeyCode_ENTER = 13;
+$.CARET_EQ_TOKEN = 157;
+$.$$OPEN_CURLY_BRACKET = 123;
+$.COMMENT_TOKEN = 158;
+$.$$BAR = 124;
+$.PERCENT_TOKEN = 37;
+$.$$CLOSE_CURLY_BRACKET = 125;
+$.UNKNOWN_TOKEN = 1024;
+$.$$TILDE = 126;
 $.getInterceptor$JSStringJSArray = function(receiver) {
   if (typeof receiver == 'string')
     return $.JSString.prototype;

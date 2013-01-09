@@ -29,6 +29,26 @@
 <h2><strong>bot_html</strong> library</h2>
 <div>
 <h3>Functions</h3>
+<div class="method"><h4 id="getTimeoutFuture">
+<button class="show-code">Code</button>
+Future&lt;int&gt; <strong>getTimeoutFuture</strong>(int milliseconds) <a class="anchor-link" href="#getTimeoutFuture"
+              title="Permalink to getTimeoutFuture">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;int&gt; getTimeoutFuture(int milliseconds) {
+ if(milliseconds &lt; 0) {
+   return new Future.immediate(0);
+ } else {
+   final completer = new Completer();
+
+   window.setTimeout(() =&gt; completer.complete(milliseconds), milliseconds);
+
+   return completer.future;
+ }
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="getMouseEventCoordinate">
 <button class="show-code">Code</button>
 <a href="bot/Coordinate.html">Coordinate</a> <strong>getMouseEventCoordinate</strong>(MouseEvent event) <a class="anchor-link" href="#getMouseEventCoordinate"
