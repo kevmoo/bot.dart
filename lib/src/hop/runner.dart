@@ -26,7 +26,7 @@ class Runner {
         if(_state.hasTask(taskName)) {
           var subCtx = ctx.getSubContext(taskName);
           return _runTask(subCtx, taskName)
-              .transform((RunResult result) => _logExitCode(ctx, result));
+              .then((RunResult result) => _logExitCode(ctx, result));
         } else if(taskName == RAW_TASK_LIST_CMD) {
           _printRawTasks(ctx);
           return new Future.immediate(RunResult.SUCCESS);
@@ -60,43 +60,40 @@ class Runner {
 
     final future = task.run(context);
 
-    future.onComplete((f) {
-      if(f.hasValue) {
-        if(f.value == true) {
-          completer.complete(RunResult.SUCCESS);
-        } else {
-          context.severe('Failed');
-          if(f.value == false) {
-            completer.complete(RunResult.FAIL);
-          } else {
-            context.severe('${f.value} returned from task');
-            context.severe('Return value from task must be true or false');
-            completer.complete(RunResult.ERROR);
-          }
-        }
+    future.then((bool didComplete) {
+      if(didComplete == null) {
+        context.severe('${didComplete} returned from task');
+        context.severe('Return value from task must be true or false');
+        completer.complete(RunResult.ERROR);
+      } else if(didComplete) {
+        completer.complete(RunResult.SUCCESS);
       } else {
+        context.severe('Failed');
+        completer.complete(RunResult.FAIL);
+      }
+    }, onError: (AsyncError asyncError) {
         // special-case on exception type that represents null returned
         // from the provided future.
         // Hopefully will not be needed with fix of
         // DARTBUG: http://code.google.com/p/dart/issues/detail?id=6405
-        if(f.exception == Task._nullFutureResultEx) {
+        if(asyncError.error == Task._nullFutureResultEx) {
           context.severe('The provided task returned null instead of a future');
           completer.complete(RunResult.ERROR);
-        } else if(f.exception is TaskFailError) {
-          final TaskFailError e = f.exception;
+        } else if(asyncError.error is TaskFailError) {
+          final TaskFailError e = asyncError.error;
           context.severe(e.message);
           completer.complete(RunResult.FAIL);
         }
         else {
           // has as exception, need to test this
           context.severe('Exception thrown by task');
-          context.severe(f.exception.toString());
-          context.severe(f.stackTrace.toString());
+          context.severe(asyncError.error.toString());
+          if(asyncError.stackTrace != null) {
+            context.severe(asyncError.stackTrace.toString());
+          }
           completer.complete(RunResult.EXCEPTION);
         }
-      }
-      context.dispose();
-    });
+      }).whenComplete(() => context.dispose());
 
     return completer.future;
   }

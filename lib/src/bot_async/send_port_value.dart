@@ -61,7 +61,7 @@ class SendPortValue<TInput, TOutput> extends FutureValue<TInput, TOutput> {
   void _completeException(exception) {
     final c = _completer;
     _completer = null;
-    c.completeException(exception);
+    c.completeError(exception);
   }
 
   TOutput _deserializer(dynamic input) {

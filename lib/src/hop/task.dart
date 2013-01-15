@@ -24,7 +24,7 @@ class Task {
     // Chaning an immediate task here to ensure we capture a call stack on
     // exception.
     return (new Future.immediate(ctx))
-        .chain((s) {
+        .then((s) {
           final f = _exec(s);
 
           if(f == null) {
