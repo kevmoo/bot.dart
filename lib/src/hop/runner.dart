@@ -56,33 +56,27 @@ class Runner {
     final task = _state._getTask(taskName);
     assert(task != null);
 
-    final completer = new Completer<RunResult>();
-
-    final future = task.run(context);
-
-    future.then((bool didComplete) {
-      if(didComplete == null) {
-        context.severe('${didComplete} returned from task');
-        context.severe('Return value from task must be true or false');
-        completer.complete(RunResult.ERROR);
-      } else if(didComplete) {
-        completer.complete(RunResult.SUCCESS);
-      } else {
-        context.severe('Failed');
-        completer.complete(RunResult.FAIL);
-      }
-    }, onError: (AsyncError asyncError) {
-        // special-case on exception type that represents null returned
-        // from the provided future.
-        // Hopefully will not be needed with fix of
-        // DARTBUG: http://code.google.com/p/dart/issues/detail?id=6405
+    return task.run(context)
+        .then((bool didComplete) {
+          if(didComplete == null) {
+            context.severe('${didComplete} returned from task');
+            context.severe('Return value from task must be true or false');
+            return RunResult.ERROR;
+          } else if(didComplete) {
+            return RunResult.SUCCESS;
+          } else {
+            context.severe('Failed');
+            return RunResult.FAIL;
+          }
+        })
+        .catchError((AsyncError asyncError) {
         if(asyncError.error == Task._nullFutureResultEx) {
           context.severe('The provided task returned null instead of a future');
-          completer.complete(RunResult.ERROR);
+          return RunResult.ERROR;
         } else if(asyncError.error is TaskFailError) {
           final TaskFailError e = asyncError.error;
           context.severe(e.message);
-          completer.complete(RunResult.FAIL);
+          return RunResult.FAIL;
         }
         else {
           // has as exception, need to test this
@@ -91,11 +85,9 @@ class Runner {
           if(asyncError.stackTrace != null) {
             context.severe(asyncError.stackTrace.toString());
           }
-          completer.complete(RunResult.EXCEPTION);
+          return RunResult.EXCEPTION;
         }
       }).whenComplete(() => context.dispose());
-
-    return completer.future;
   }
 
   void _printHelp(RootTaskContext ctx) {
