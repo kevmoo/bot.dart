@@ -46,12 +46,13 @@ class SendValuePort&lt;TInput, TOutput&gt; {
      try {
        final TOutput output = _func(value);
        _message = new FutureValueResult&lt;TOutput&gt;(output, outputSerializer);
-     } catch (ex) {
+     } catch (ex, stack) {
        // TODO: I'd love to use real exceptions here
        // but they blow up over the wire
        // so: to string!
        final String exString = ex.toString();
-       _message = new FutureValueResult&lt;TOutput&gt;.fromException(exString);
+       final String stackString = stack.toString();
+       _message = new FutureValueResult&lt;TOutput&gt;.fromException(exString, stackString);
      }
 
      final map = _message.toMap();
@@ -85,12 +86,13 @@ SendValuePort(this._func, {this.inputDeserializer, this.outputSerializer}) {
    try {
      final TOutput output = _func(value);
      _message = new FutureValueResult&lt;TOutput&gt;(output, outputSerializer);
-   } catch (ex) {
+   } catch (ex, stack) {
      // TODO: I'd love to use real exceptions here
      // but they blow up over the wire
      // so: to string!
      final String exString = ex.toString();
-     _message = new FutureValueResult&lt;TOutput&gt;.fromException(exString);
+     final String stackString = stack.toString();
+     _message = new FutureValueResult&lt;TOutput&gt;.fromException(exString, stackString);
    }
 
    final map = _message.toMap();

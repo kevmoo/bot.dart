@@ -48,8 +48,7 @@ abstract class ResourceLoader&lt;T&gt; {
  String _state = StateUnloaded;
 
  ResourceLoader(Iterable&lt;String&gt; urlList) :
-   _entries = $(urlList).map((url) =&gt; new _ResourceEntry(url))
-       .toReadOnlyCollection();
+   _entries = new ReadOnlyCollection(urlList.mappedBy((url) =&gt; new _ResourceEntry(url)));
 
  int get completedCount =&gt; _entries.count((e) =&gt; e.completed);
 
@@ -112,12 +111,12 @@ abstract class ResourceLoader&lt;T&gt; {
 
  _ResourceEntry&lt;T&gt; _getByUrl(String url) {
    assert(url != null);
-   return _entries.single((e) =&gt; e.url == url);
+   return _entries.singleMatching((e) =&gt; e.url == url);
  }
 
  _ResourceEntry&lt;T&gt; _getByBlobUrl(String blobUrl) {
    assert(blobUrl != null);
-   return _entries.single((e) =&gt; e.matchesBlobUrl(blobUrl));
+   return _entries.singleMatching((e) =&gt; e.matchesBlobUrl(blobUrl));
  }
 
  void _httpLoad(String url) {
@@ -237,8 +236,7 @@ new <strong>ResourceLoader</strong>(Iterable&lt;String&gt; urlList) <a class="an
 <div class="doc">
 <pre class="source">
 ResourceLoader(Iterable&lt;String&gt; urlList) :
- _entries = $(urlList).map((url) =&gt; new _ResourceEntry(url))
-     .toReadOnlyCollection();
+ _entries = new ReadOnlyCollection(urlList.mappedBy((url) =&gt; new _ResourceEntry(url)));
 </pre>
 </div>
 </div>

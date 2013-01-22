@@ -122,7 +122,22 @@ List of values will be returned:</p>
 <span class="i ">parser</span><span class="p ">.</span><span class="i ">addOption</span><span class="p ">(</span><span class="s si">'mode'</span><span class="p ">,</span> <span class="i ">allowMultiple</span><span class="p ">:</span> <span class="k ">true</span><span class="p ">)</span><span class="p ">;</span>
 <span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="p ">[</span><span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'on'</span><span class="p ">,</span> <span class="s si">'--mode'</span><span class="p ">,</span> <span class="s si">'off'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span>
 <span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">[</span><span class="s si">'mode'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// prints '[on, off]'</span></pre>
-<h2>Usage</h2>
+<h2>Defining commands</h2>
+<p>In addition to <em>options</em>, you can also define <em>commands</em>. A command is a
+named argument that has its own set of options. For example, when you run:</p>
+<pre><span class="i ">$</span> <span class="i ">git</span> <span class="i ">commit</span> <span class="o ">-</span><span class="i ">a</span></pre>
+<p>The executable is <code>git</code>, the command is <code>commit</code>, and the <code>-a</code> option is an
+option passed to the command. You can add a command like so:</p>
+<pre><span class="k ">var</span> <span class="i ">parser</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">ArgParser</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+<span class="k ">var</span> <span class="i ">command</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">addCommand</span><span class="p ">(</span><span class="s si">"commit"</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">command</span><span class="p ">.</span><span class="i ">addFlag</span><span class="p ">(</span><span class="s si">'all'</span><span class="p ">,</span> <span class="i ">abbr</span><span class="p ">:</span> <span class="s si">'a'</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>It returns another <a class="crossref" href="args/ArgParser.html">ArgParser</a> which you can use to define options and
+subcommands on that command. When an argument list is parsed, you can then
+determine which command was entered and what options were provided for it.</p>
+<pre><span class="k ">var</span> <span class="i ">results</span> <span class="o ">=</span> <span class="i ">parser</span><span class="p ">.</span><span class="i ">parse</span><span class="p ">(</span><span class="p ">[</span><span class="s si">'commit'</span><span class="p ">,</span> <span class="s si">'-a'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">.</span><span class="i ">command</span><span class="p ">.</span><span class="i ">name</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// "commit"</span>
+<span class="i ">print</span><span class="p ">(</span><span class="i ">results</span><span class="p ">.</span><span class="i ">command</span><span class="p ">[</span><span class="s si">'a'</span><span class="p ">]</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// true</span></pre>
+<h2>Displaying usage</h2>
 <p>This library can also be used to automatically generate nice usage help
 text like you get when you run a program with <code>--help</code>. To use this, you
 will also want to provide some help text when you create your options. To
@@ -163,6 +178,12 @@ options.</p></div>
           <div class="type">
           <h4>
             <a href="args/ArgResults.html"><strong>ArgResults</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="args/Option.html"><strong>Option</strong></a>
           </h4>
           </div>
           

@@ -43,7 +43,7 @@ class BaseConfig {
 
  /// Can only be accessed when frozen
  /// Always sorted
- SequenceCollection&lt;String&gt; get taskNames {
+ List&lt;String&gt; get taskNames {
    requireFrozen();
    return _sortedTaskNames;
  }
@@ -125,7 +125,7 @@ bool get isFrozen =&gt; _sortedTaskNames != null;
 </div>
 <div class="field"><h4 id="taskNames">
 <button class="show-code">Code</button>
-final SequenceCollection&lt;String&gt;         <strong>taskNames</strong> <a class="anchor-link"
+final List&lt;String&gt;         <strong>taskNames</strong> <a class="anchor-link"
             href="#taskNames"
             title="Permalink to BaseConfig.taskNames">#</a>
         </h4>
@@ -133,7 +133,7 @@ final SequenceCollection&lt;String&gt;         <strong>taskNames</strong> <a cla
 <p>Can only be accessed when frozen
 Always sorted</p>
 <pre class="source">
-SequenceCollection&lt;String&gt; get taskNames {
+List&lt;String&gt; get taskNames {
  requireFrozen();
  return _sortedTaskNames;
 }

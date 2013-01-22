@@ -167,7 +167,7 @@ matcher
 <a href="../mock/Behavior.html">Behavior</a> <strong>alwaysCall</strong>(value) <a class="anchor-link" href="#alwaysCall"
               title="Permalink to Behavior.alwaysCall">#</a></h4>
 <div class="doc">
-<p>Creates a repeating proxy call.</p>
+<p>Creates a repeating proxy call. </p>
 <pre class="source">
 Behavior alwaysCall(value) {
  return thenCall(value, 0);
@@ -181,7 +181,7 @@ Behavior alwaysCall(value) {
               title="Permalink to Behavior.alwaysReturn">#</a></h4>
 <div class="doc">
 <p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that repeatedly returns a 
-<span class="param">value</span>.</p>
+<span class="param">value</span>. </p>
 <pre class="source">
 Behavior alwaysReturn(value) {
  return thenReturn(value, 0);
@@ -195,7 +195,7 @@ Behavior alwaysReturn(value) {
               title="Permalink to Behavior.alwaysThrow">#</a></h4>
 <div class="doc">
 <p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that throws 
-<span class="param">value</span> endlessly.</p>
+<span class="param">value</span> endlessly. </p>
 <pre class="source">
 Behavior alwaysThrow(value) {
  return thenThrow(value, 0);
@@ -208,7 +208,7 @@ Behavior alwaysThrow(value) {
 bool <strong>matches</strong>(String method, List args) <a class="anchor-link" href="#matches"
               title="Permalink to Behavior.matches">#</a></h4>
 <div class="doc">
-<p>Returns true if a method call matches the <a class="crossref" href="../mock/Behavior.html#Behavior">Behavior</a>.</p>
+<p>Returns true if a method call matches the <a class="crossref" href="../mock/Behavior.html#Behavior">Behavior</a>. </p>
 <pre class="source">
 bool matches(String method, List args) =&gt; matcher.matches(method, args);
 </pre>
@@ -277,7 +277,7 @@ Behavior thenThrow(value, [count = 1]) {
 String <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to Behavior.toString">#</a></h4>
 <div class="doc">
-<p>Returns the <a class="crossref" href="../mock/Behavior.html#matcher">matcher</a>'s representation.</p>
+<p>Returns the <a class="crossref" href="../mock/Behavior.html#matcher">matcher</a>'s representation. </p>
 <pre class="source">
 String toString() =&gt; matcher.toString();
 </pre>

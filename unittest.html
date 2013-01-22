@@ -216,7 +216,7 @@ final         <strong>testCases</strong> <a class="anchor-link"
             title="Permalink to testCases">#</a>
         </h4>
         <div class="doc">
-<p>Get the list of tests.</p>
+<p>Get the list of tests. </p>
 <pre class="source">
 get testCases =&gt; _tests;
 </pre>
@@ -242,7 +242,7 @@ testState = {}
 void <strong>disableTest</strong>(int testId) <a class="anchor-link" href="#disableTest"
               title="Permalink to disableTest">#</a></h4>
 <div class="doc">
-<p>Disable a test by ID.</p>
+<p>Disable a test by ID. </p>
 <pre class="source">
 void disableTest(int testId) =&gt; _setTestEnabledState(testId, false);
 </pre>
@@ -253,7 +253,7 @@ void disableTest(int testId) =&gt; _setTestEnabledState(testId, false);
 void <strong>enableTest</strong>(int testId) <a class="anchor-link" href="#enableTest"
               title="Permalink to enableTest">#</a></h4>
 <div class="doc">
-<p>Enable a test by ID.</p>
+<p>Enable a test by ID. </p>
 <pre class="source">
 void enableTest(int testId) =&gt; _setTestEnabledState(testId, true);
 </pre>
@@ -264,7 +264,7 @@ void enableTest(int testId) =&gt; _setTestEnabledState(testId, true);
 void <strong>setSoloTest</strong>(int id) <a class="anchor-link" href="#setSoloTest"
               title="Permalink to setSoloTest">#</a></h4>
 <div class="doc">
-<p>Select a solo test by ID.</p>
+<p>Select a solo test by ID. </p>
 <pre class="source">
 void setSoloTest(int id) {
  for (var i = 0; i &lt; _tests.length; i++) {
@@ -362,7 +362,7 @@ guardAsync(tryBody, [finallyBody, testNum = -1]) {
 <strong>runTests</strong>() <a class="anchor-link" href="#runTests"
               title="Permalink to runTests">#</a></h4>
 <div class="doc">
-<p>Runs all queued tests, one at a time.</p>
+<p>Runs all queued tests, one at a time. </p>
 <pre class="source">
 runTests() {
  _currentTest = 0;
@@ -402,7 +402,7 @@ void filterTests(testFilter) {
  } else if (testFilter is Function) {
    filterFunction = testFilter;
  }
- _tests = _tests.filter(filterFunction);
+ _tests = _tests.where(filterFunction).toList();
 }
 </pre>
 </div>
@@ -616,7 +616,7 @@ Function <strong>expectAsync2</strong>(Function callback, [int count = 1]) <a cl
               title="Permalink to expectAsync2">#</a></h4>
 <div class="doc">
 <p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
-<span class="param">callback</span> should take 2 positional arguments.</p>
+<span class="param">callback</span> should take 2 positional arguments. </p>
 <pre class="source">
 Function expectAsync2(Function callback, [int count = 1]) {
  return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke2;
@@ -630,7 +630,7 @@ Function <strong>expectAsync1</strong>(Function callback, {int count: 1}) <a cla
               title="Permalink to expectAsync1">#</a></h4>
 <div class="doc">
 <p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
-<span class="param">callback</span> should take 1 positional argument.</p>
+<span class="param">callback</span> should take 1 positional argument. </p>
 <pre class="source">
 Function expectAsync1(Function callback, {int count: 1}) {
  return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke1;

@@ -33,7 +33,7 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt; {
+abstract class NumberEnumerable&lt;T extends num&gt; extends Iterable&lt;T&gt; {
 
  const NumberEnumerable() : super();
 
@@ -69,34 +69,12 @@ abstract class NumberEnumerable&lt;T extends num&gt; extends Enumerable&lt;T&gt;
    }
    return theSum / theCount;
  }
-
- num max() {
-   num theMax = null;
-   for(final n in this) {
-     if(n == null) {
-       throw const InvalidOperationError('Input contained a null item');
-     }
-     theMax = theMax == null ? n : math.max(theMax, n);
-   }
-   return theMax;
- }
-
- num min() {
-   num theMin = null;
-   for(final n in this) {
-     if(n == null) {
-       throw const InvalidOperationError('Input contained a null item');
-     }
-     theMin = theMin == null ? n : math.min(theMin, n);
-   }
-   return theMin;
- }
 }
 </pre>
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../bot/Enumerable.html">Enumerable&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>NumberEnumerable&lt;T&gt;</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_core/Iterable.html">Iterable&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>NumberEnumerable&lt;T&gt;</strong></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="NumberEnumerable">
@@ -137,30 +115,136 @@ factory NumberEnumerable.fromRange(int start, int count) {
 </div>
 <div class="inherited">
 <h3>Properties</h3>
+<div class="field inherited"><h4 id="first">
+<button class="show-code">Code</button>
+final <a href="../bot/NumberEnumerable.html">E</a>         <strong>first</strong> <a class="anchor-link"
+            href="#first"
+            title="Permalink to NumberEnumerable&lt;T&gt;.first">#</a>
+        </h4>
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the first element.</p>
+<p>If <code>this</code> is empty throws a <code>StateError</code>. Otherwise this method is
+equivalent to <code>this.elementAt(0)</code></p>
+<pre class="source">
+E get first {
+ Iterator it = iterator;
+ if (!it.moveNext()) {
+   throw new StateError("No elements");
+ }
+ return it.current;
+}
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="isEmpty">
 <button class="show-code">Code</button>
 final bool         <strong>isEmpty</strong> <a class="anchor-link"
             href="#isEmpty"
             title="Permalink to NumberEnumerable&lt;T&gt;.isEmpty">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns true if there is no element in this collection.</p>
 <pre class="source">
-bool get isEmpty =&gt; !some((e) =&gt; true);
+bool get isEmpty =&gt; !iterator.moveNext();
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="iterator">
+<button class="show-code">Code</button>
+final Iterator&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt;         <strong>iterator</strong> <a class="anchor-link"
+            href="#iterator"
+            title="Permalink to NumberEnumerable&lt;T&gt;.iterator">#</a>
+        </h4>
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns an <code>Iterator</code> that iterates over this <code>Iterable</code> object.</p>
+<pre class="source">
+Iterator&lt;E&gt; get iterator;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="last">
+<button class="show-code">Code</button>
+final <a href="../bot/NumberEnumerable.html">E</a>         <strong>last</strong> <a class="anchor-link"
+            href="#last"
+            title="Permalink to NumberEnumerable&lt;T&gt;.last">#</a>
+        </h4>
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the last element.</p>
+<p>If <code>this</code> is empty throws a <code>StateError</code>.</p>
+<pre class="source">
+E get last {
+ Iterator it = iterator;
+ if (!it.moveNext()) {
+   throw new StateError("No elements");
+ }
+ E result;
+ do {
+   result = it.current;
+ } while(it.moveNext());
+ return result;
+}
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="length">
+<button class="show-code">Code</button>
+final int         <strong>length</strong> <a class="anchor-link"
+            href="#length"
+            title="Permalink to NumberEnumerable&lt;T&gt;.length">#</a>
+        </h4>
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the number of elements in <code>this</code>.</p>
+<p>Counting all elements may be involve running through all elements and can
+therefore be slow.</p>
+<pre class="source">
+int get length {
+ int count = 0;
+ Iterator it = iterator;
+ while (it.moveNext()) {
+   count++;
+ }
+ return count;
+}
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="single">
+<button class="show-code">Code</button>
+final <a href="../bot/NumberEnumerable.html">E</a>         <strong>single</strong> <a class="anchor-link"
+            href="#single"
+            title="Permalink to NumberEnumerable&lt;T&gt;.single">#</a>
+        </h4>
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the single element in <code>this</code>.</p>
+<p>If <code>this</code> is empty or has more than one element throws a <code>StateError</code>.</p>
+<pre class="source">
+E get single {
+ Iterator it = iterator;
+ if (!it.moveNext()) throw new StateError("No elements");
+ E result = it.current;
+ if (it.moveNext()) throw new StateError("More than one element");
+ return result;
+}
 </pre>
 </div>
 </div>
 </div>
 <div>
 <h3>Methods</h3>
-<div class="method inherited"><h4 id="aggregate">
+<div class="method inherited"><h4 id="any">
 <button class="show-code">Code</button>
-Object <strong>aggregate</strong>(Object seed, <a href="../bot/Func2.html">Func2</a> f) <a class="anchor-link" href="#aggregate"
-              title="Permalink to NumberEnumerable&lt;T&gt;.aggregate">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+bool <strong>any</strong>(bool f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#any"
+              title="Permalink to NumberEnumerable&lt;T&gt;.any">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns true if one element of this collection satisfies the
+predicate 
+<span class="param">f</span>. Returns false otherwise.</p>
 <pre class="source">
-Object aggregate(Object seed, Func2&lt;Object, T, Object&gt; f) {
- requireArgumentNotNull(f, 'f');
- return CollectionUtil.aggregate(this, seed, f);
+bool any(bool f(E element)) {
+ for (E element in this) {
+   if (f(element)) return true;
+ }
+ return false;
 }
 </pre>
 </div>
@@ -188,274 +272,245 @@ num average() {
 </div>
 <div class="method inherited"><h4 id="contains">
 <button class="show-code">Code</button>
-bool <strong>contains</strong>(<a href="../bot/NumberEnumerable.html">T</a> item) <a class="anchor-link" href="#contains"
+bool <strong>contains</strong>(<a href="../bot/NumberEnumerable.html">E</a> element) <a class="anchor-link" href="#contains"
               title="Permalink to NumberEnumerable&lt;T&gt;.contains">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Check whether the collection contains an element equal to 
+<span class="param">element</span>.</p>
 <pre class="source">
-bool contains(T item) {
- for (final e in this) {
-   if(e == item) {
-     return true;
-   }
+bool contains(E element) {
+ for (E e in this) {
+   if (e == element) return true;
  }
  return false;
 }
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="count">
+<div class="method inherited"><h4 id="elementAt">
 <button class="show-code">Code</button>
-int <strong>count</strong>([<a href="../bot/Func1.html">Func1</a> f = null]) <a class="anchor-link" href="#count"
-              title="Permalink to NumberEnumerable&lt;T&gt;.count">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<a href="../bot/NumberEnumerable.html">E</a> <strong>elementAt</strong>(int index) <a class="anchor-link" href="#elementAt"
+              title="Permalink to NumberEnumerable&lt;T&gt;.elementAt">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the 
+<span class="param">index</span>th element.</p>
+<p>If [this] [Iterable] has fewer than 
+<span class="param">index</span> elements throws a
+<code>RangeError</code>.</p>
+<p>Note: if <code>this</code> does not have a deterministic iteration order then the
+function may simply return any element without any iteration if there are
+at least 
+<span class="param">index</span> elements in <code>this</code>.</p>
 <pre class="source">
-int count([Func1&lt;T, bool&gt; f = null]) {
- if(f == null) {
-   f = (a) =&gt; true;
+E elementAt(int index) {
+ if (index is! int || index &lt; 0) throw new RangeError.value(index);
+ int remaining = index;
+ for (E element in this) {
+   if (remaining == 0) return element;
+   remaining--;
  }
- int c = 0;
- for(final e in this) {
-   if(f(e)) {
-     c++;
-   }
- }
- return c;
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="distinct">
-<button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>distinct</strong>([<a href="../bot/Func2.html">Func2</a> comparer = null]) <a class="anchor-link" href="#distinct"
-              title="Permalink to NumberEnumerable&lt;T&gt;.distinct">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-Enumerable&lt;T&gt; distinct([Func2&lt;T, T, bool&gt; comparer = null]) {
- if(comparer == null) {
-   comparer = (a,b) =&gt; a == b;
- }
- return new _FuncEnumerable(this, (s) =&gt; new _DistinctIterator(s, comparer));
+ throw new RangeError.value(index);
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="every">
 <button class="show-code">Code</button>
-bool <strong>every</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#every"
+bool <strong>every</strong>(bool f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#every"
               title="Permalink to NumberEnumerable&lt;T&gt;.every">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Returns true if every elements of this collection satisify the
 predicate 
 <span class="param">f</span>. Returns false otherwise.</p>
 <pre class="source">
-bool every(Func1&lt;T, bool&gt; f) {
- requireArgumentNotNull(f, 'f');
- for (final e in this) {
-   if(!f(e)) {
-     return false;
-   }
+bool every(bool f(E element)) {
+ for (E element in this) {
+   if (!f(element)) return false;
  }
  return true;
 }
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="exclude">
+<div class="method inherited"><h4 id="firstMatching">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>exclude</strong>(Iterable&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; items) <a class="anchor-link" href="#exclude"
-              title="Permalink to NumberEnumerable&lt;T&gt;.exclude">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<a href="../bot/NumberEnumerable.html">E</a> <strong>firstMatching</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value), {<a href="../bot/NumberEnumerable.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
+              title="Permalink to NumberEnumerable&lt;T&gt;.firstMatching">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the first element that satisfies the given predicate <code>f</code>.</p>
+<p>If none matches, the result of invoking the 
+<span class="param">orElse</span> function is
+returned. By default, when 
+<span class="param">orElse</span> is <code>null</code>, a <code>StateError</code> is
+thrown.</p>
 <pre class="source">
-Enumerable&lt;T&gt; exclude(Iterable&lt;T&gt; items) {
- requireArgumentNotNull(items, 'items');
- final iEnum = $(items);
- Func1&lt;T, bool&gt; f = (e) =&gt; !iEnum.contains(e);
- return new _FuncEnumerable(this, (s) =&gt; new _WhereIterator&lt;T&gt;(s, f));
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="filter">
-<button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>filter</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#filter"
-              title="Permalink to NumberEnumerable&lt;T&gt;.filter">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-Enumerable&lt;T&gt; filter(Func1&lt;T, bool&gt; f) {
- requireArgumentNotNull(f, 'f');
- return new _FuncEnumerable(this, (s) =&gt; new _WhereIterator&lt;T&gt;(s, f));
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="first">
-<button class="show-code">Code</button>
-<a href="../bot/NumberEnumerable.html">T</a> <strong>first</strong>([<a href="../bot/Func1.html">Func1</a> f = null]) <a class="anchor-link" href="#first"
-              title="Permalink to NumberEnumerable&lt;T&gt;.first">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-T first([Func1&lt;T, bool&gt; f = null]) {
- if(f == null) {
-   f = (e) =&gt; true;
+E firstMatching(bool test(E value), { E orElse() }) {
+ // TODO(floitsch): check that arguments are of correct type?
+ for (E element in this) {
+   if (test(element)) return element;
  }
- final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
- if(!iter.hasNext) {
-   throw const InvalidOperationError('The input sequence is empty.');
- }
- return iter.next();
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="firstOrDefault">
-<button class="show-code">Code</button>
-<a href="../bot/NumberEnumerable.html">T</a> <strong>firstOrDefault</strong>([<a href="../bot/Func1.html">Func1</a> f = null, <a href="../bot/NumberEnumerable.html">T</a> defaultValue = null]) <a class="anchor-link" href="#firstOrDefault"
-              title="Permalink to NumberEnumerable&lt;T&gt;.firstOrDefault">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-T firstOrDefault([Func1&lt;T, bool&gt; f = null, T defaultValue = null]) {
- if(f == null) {
-   f = (e) =&gt; true;
- }
- final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
- if(!iter.hasNext) {
-   return defaultValue;
- }
- return iter.next();
+ if (orElse != null) return orElse();
+ throw new StateError("No matching element");
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="forEach">
 <button class="show-code">Code</button>
-void <strong>forEach</strong>(<a href="../bot/Action1.html">Action1</a> f) <a class="anchor-link" href="#forEach"
+void <strong>forEach</strong>(void f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#forEach"
               title="Permalink to NumberEnumerable&lt;T&gt;.forEach">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Applies the function 
+<span class="param">f</span> to each element of this collection.</p>
 <pre class="source">
-void forEach(Action1&lt;T&gt; f) {
- for(final e in this) {
-   f(e);
- }
+void forEach(void f(E element)) {
+ for (E element in this) f(element);
 }
 </pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="forEachWithIndex">
-<button class="show-code">Code</button>
-void <strong>forEachWithIndex</strong>(<a href="../bot/Action2.html">Action2</a> f) <a class="anchor-link" href="#forEachWithIndex"
-              title="Permalink to NumberEnumerable&lt;T&gt;.forEachWithIndex">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-void forEachWithIndex(Action2&lt;T, int&gt; f) {
- int i = 0;
- for(final e in this) {
-   f(e, i++);
- }
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="group">
-<button class="show-code">Code</button>
-<a href="../bot/Grouping.html">Grouping</a>&lt;Dynamic, <a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>group</strong>([<a href="../bot/Func1.html">Func1</a> keyFunc = null]) <a class="anchor-link" href="#group"
-              title="Permalink to NumberEnumerable&lt;T&gt;.group">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-Grouping&lt;dynamic, T&gt; group([Func1&lt;T, Object&gt; keyFunc = null]) {
- return new Grouping(this, keyFunc);
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="iterator">
-abstract Iterator <strong>iterator</strong>() <a class="anchor-link" href="#iterator"
-              title="Permalink to NumberEnumerable&lt;T&gt;.iterator">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
-<p>Returns an <code>Iterator</code> that iterates over this <code>Iterable</code> object.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; </div></div>
 </div>
 </div>
 <div class="method inherited"><h4 id="join">
 <button class="show-code">Code</button>
-String <strong>join</strong>([String separator = ', ']) <a class="anchor-link" href="#join"
+String <strong>join</strong>([String separator]) <a class="anchor-link" href="#join"
               title="Permalink to NumberEnumerable&lt;T&gt;.join">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Convert each element to a <code>String</code> and concatenate the strings.</p>
+<p>Converts each element to a <code>String</code> by calling <code>Object.toString</code> on it.
+Then concatenates the strings, optionally separated by the 
+<span class="param">separator</span>
+string.</p>
 <pre class="source">
-String join([String separator = ', ']) {
- final StringBuffer sb = new StringBuffer();
- for(final e in this) {
-   if(sb.length &gt; 0) {
-     sb.add(separator);
+String join([String separator]) {
+ Iterator&lt;E&gt; iterator = this.iterator;
+ if (!iterator.moveNext()) return "";
+ StringBuffer buffer = new StringBuffer();
+ if (separator == null || separator == "") {
+   do {
+     buffer.add("${iterator.current}");
+   } while (iterator.moveNext());
+ } else {
+   buffer.add("${iterator.current}");
+   while (iterator.moveNext()) {
+     buffer.add(separator);
+     buffer.add("${iterator.current}");
    }
-   sb.add(e);
  }
- return sb.toString();
+ return buffer.toString();
 }
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="map">
+<div class="method inherited"><h4 id="lastMatching">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a> <strong>map</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#map"
-              title="Permalink to NumberEnumerable&lt;T&gt;.map">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<p>Returns a new collection with the elements <code> f(e) </code>
-for each element <code>e</code> of this collection.</p>
-<p>Note on typing: the return type of f() could be an arbitrary
-type and consequently the returned collection's
-typeis Collection.</p>
+<a href="../bot/NumberEnumerable.html">E</a> <strong>lastMatching</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value), {<a href="../bot/NumberEnumerable.html">E</a> orElse()}) <a class="anchor-link" href="#lastMatching"
+              title="Permalink to NumberEnumerable&lt;T&gt;.lastMatching">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the last element that satisfies the given predicate <code>f</code>.</p>
+<p>If none matches, the result of invoking the 
+<span class="param">orElse</span> function is
+returned. By default, when 
+<span class="param">orElse</span> is <code>null</code>, a <code>StateError</code> is
+thrown.</p>
 <pre class="source">
-Enumerable map(Func1&lt;T, Object&gt; f) {
- requireArgumentNotNull(f, 'f');
- return new _FuncEnumerable(this, (s) =&gt; new _SelectIterator&lt;T, Object&gt;(s, f));
+E lastMatching(bool test(E value), {E orElse()}) {
+ // TODO(floitsch): check that arguments are of correct type?
+ E result = null;
+ bool foundMatching = false;
+ for (E element in this) {
+   if (test(element)) {
+     result = element;
+     foundMatching = true;
+   }
+ }
+ if (foundMatching) return result;
+ if (orElse != null) return orElse();
+ throw new StateError("No matching element");
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="max">
+<div class="method inherited"><h4 id="mappedBy">
 <button class="show-code">Code</button>
-num <strong>max</strong>() <a class="anchor-link" href="#max"
+Iterable <strong>mappedBy</strong>(f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#mappedBy"
+              title="Permalink to NumberEnumerable&lt;T&gt;.mappedBy">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
+by the result of <code>f(e)</code>.</p>
+<p>This method returns a view of the mapped elements. As long as the
+returned <code>Iterable</code> is not iterated over, the supplied function 
+<span class="param">f</span> will
+not be invoked. The transformed elements will not be cached. Iterating
+multiple times over the the returned <code>Iterable</code> will invoke the supplied
+function 
+<span class="param">f</span> multiple times on the same element.</p>
+<pre class="source">
+Iterable mappedBy(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="max">
+<button class="show-code">Code</button>
+<a href="../bot/NumberEnumerable.html">E</a> <strong>max</strong>([int compare(<a href="../bot/NumberEnumerable.html">E</a> a, <a href="../bot/NumberEnumerable.html">E</a> b)]) <a class="anchor-link" href="#max"
               title="Permalink to NumberEnumerable&lt;T&gt;.max">#</a></h4>
-<div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Find the largest element in the iterable.</p>
+<p>Returns null if the iterable is empty.
+Otherwise returns an element <code>x</code> of this <code>Iterable</code> so that
+<code>x</code> is not smaller than <code>y</code> (that is, <code>compare(x, y) &gt;= 0</code>) for all
+other elements <code>y</code> in the iterable.</p>
+<p>The 
+<span class="param">compare</span> function must be a proper [Comparator<T>]. If a function is
+not provided, 
+<span class="param">compare</span> defaults to <code>Comparable.compare</code>.</p>
 <pre class="source">
-num max() {
- num theMax = null;
- for(final n in this) {
-   if(n == null) {
-     throw const InvalidOperationError('Input contained a null item');
-   }
-   theMax = theMax == null ? n : math.max(theMax, n);
+E max([int compare(E a, E b)]) {
+ if (compare == null) compare = Comparable.compare;
+ Iterator it = iterator;
+ if (!it.moveNext()) return null;
+ E max = it.current;
+ while (it.moveNext()) {
+   E current = it.current;
+   if (compare(max, current) &lt; 0) max = current;
  }
- return theMax;
+ return max;
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="min">
+<div class="method inherited"><h4 id="min">
 <button class="show-code">Code</button>
-num <strong>min</strong>() <a class="anchor-link" href="#min"
+<a href="../bot/NumberEnumerable.html">E</a> <strong>min</strong>([int compare(<a href="../bot/NumberEnumerable.html">E</a> a, <a href="../bot/NumberEnumerable.html">E</a> b)]) <a class="anchor-link" href="#min"
               title="Permalink to NumberEnumerable&lt;T&gt;.min">#</a></h4>
-<div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Find the least element in the iterable.</p>
+<p>Returns null if the iterable is empty.
+Otherwise returns an element <code>x</code> of this <code>Iterable</code> so that
+<code>x</code> is not greater than <code>y</code> (that is, <code>compare(x, y) &lt;= 0</code>) for all
+other elements <code>y</code> in the iterable.</p>
+<p>The 
+<span class="param">compare</span> function must be a proper [Comparator<T>]. If a function is
+not provided, 
+<span class="param">compare</span> defaults to <code>Comparable.compare</code>.</p>
 <pre class="source">
-num min() {
- num theMin = null;
- for(final n in this) {
-   if(n == null) {
-     throw const InvalidOperationError('Input contained a null item');
-   }
-   theMin = theMin == null ? n : math.min(theMin, n);
+E min([int compare(E a, E b)]) {
+ if (compare == null) compare = Comparable.compare;
+ Iterator it = iterator;
+ if (!it.moveNext()) return null;
+ E min = it.current;
+ while (it.moveNext()) {
+   E current = it.current;
+   if (compare(min, current) &gt; 0) min = current;
  }
- return theMin;
+ return min;
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="reduce">
 <button class="show-code">Code</button>
-<strong>reduce</strong>(initialValue, combine(previousValue, <a href="../bot/NumberEnumerable.html">T</a> element)) <a class="anchor-link" href="#reduce"
+<strong>reduce</strong>(initialValue, combine(previousValue, <a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#reduce"
               title="Permalink to NumberEnumerable&lt;T&gt;.reduce">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Reduce a collection to a single value by iteratively combining each element
 of the collection with an existing value using the provided function.
 Use 
@@ -465,103 +520,76 @@ create a new value from the previous one and an element.</p>
 <p>Example of calculating the sum of a collection:</p>
 <p>  collection.reduce(0, (prev, element) => prev + element);</p>
 <pre class="source">
-dynamic reduce(dynamic initialValue,
-              dynamic combine(dynamic previousValue, T element)) {
- return Collections.reduce(this, initialValue, combine);
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="selectMany">
-<button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a> <strong>selectMany</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#selectMany"
-              title="Permalink to NumberEnumerable&lt;T&gt;.selectMany">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-Enumerable selectMany(Func1&lt;T, Iterable&gt; f) {
- requireArgumentNotNull(f, 'f');
- return new _FuncEnumerable(this,
-   (s) =&gt; new _SelectManyIterator._internal(s, f));
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="selectNumbers">
-<button class="show-code">Code</button>
-<a href="../bot/NumberEnumerable.html">NumberEnumerable</a> <strong>selectNumbers</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#selectNumbers"
-              title="Permalink to NumberEnumerable&lt;T&gt;.selectNumbers">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-NumberEnumerable selectNumbers(Func1&lt;T, num&gt; f) {
- requireArgumentNotNull(f, 'f');
- return new _FuncNumEnumerable&lt;T&gt;(this, (s) =&gt; new _SelectIterator&lt;T, num&gt;(s, f));
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="single">
-<button class="show-code">Code</button>
-<a href="../bot/NumberEnumerable.html">T</a> <strong>single</strong>([<a href="../bot/Func1.html">Func1</a> f = null]) <a class="anchor-link" href="#single"
-              title="Permalink to NumberEnumerable&lt;T&gt;.single">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<pre class="source">
-T single([Func1&lt;T, bool&gt; f = null]) {
- if(f == null) {
-   f = (e) =&gt; true;
- }
- final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
- if(!iter.hasNext) {
-   throw const InvalidOperationError('The input sequence is empty.');
- }
- final value = iter.next();
- if(iter.hasNext) {
-   throw const InvalidOperationError('The input sequence contains more than one element.');
- }
+dynamic reduce(var initialValue,
+              dynamic combine(var previousValue, E element)) {
+ var value = initialValue;
+ for (E element in this) value = combine(value, element);
  return value;
 }
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="singleOrDefault">
+<div class="method inherited"><h4 id="singleMatching">
 <button class="show-code">Code</button>
-<a href="../bot/NumberEnumerable.html">T</a> <strong>singleOrDefault</strong>([<a href="../bot/Func1.html">Func1</a> f = null, <a href="../bot/NumberEnumerable.html">T</a> defaultValue = null]) <a class="anchor-link" href="#singleOrDefault"
-              title="Permalink to NumberEnumerable&lt;T&gt;.singleOrDefault">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<a href="../bot/NumberEnumerable.html">E</a> <strong>singleMatching</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value)) <a class="anchor-link" href="#singleMatching"
+              title="Permalink to NumberEnumerable&lt;T&gt;.singleMatching">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns the single element that satisfies <code>f</code>. If no or more than one
+element match then a <code>StateError</code> is thrown.</p>
 <pre class="source">
-T singleOrDefault([Func1&lt;T, bool&gt; f = null, T defaultValue = null]) {
- if(f == null) {
-   f = (e) =&gt; true;
- }
- final iter = new _WhereIterator&lt;T&gt;(this.iterator(), f);
- if(!iter.hasNext) {
-   return defaultValue;
- }
- final value = iter.next();
- if(iter.hasNext) {
-   throw const InvalidOperationError('The input sequence contains more than one element.');
- }
- return value;
-}
-</pre>
-</div>
-</div>
-<div class="method inherited"><h4 id="some">
-<button class="show-code">Code</button>
-bool <strong>some</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#some"
-              title="Permalink to NumberEnumerable&lt;T&gt;.some">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<p>Returns true if one element of this collection satisfies the
-predicate 
-<span class="param">f</span>. Returns false otherwise.</p>
-<pre class="source">
-bool some(Func1&lt;T, bool&gt; f) {
- requireArgumentNotNull(f, 'f');
- for (final e in this) {
-   if(f(e)) {
-     return true;
+E singleMatching(bool test(E value)) {
+ // TODO(floitsch): check that argument is of correct type?
+ E result = null;
+ bool foundMatching = false;
+ for (E element in this) {
+   if (test(element)) {
+     if (foundMatching) {
+       throw new StateError("More than one matching element");
+     }
+     result = element;
+     foundMatching = true;
    }
  }
- return false;
+ if (foundMatching) return result;
+ throw new StateError("No matching element");
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="skip">
+<button class="show-code">Code</button>
+Iterable&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>skip</strong>(int n) <a class="anchor-link" href="#skip"
+              title="Permalink to NumberEnumerable&lt;T&gt;.skip">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns an <code>Iterable</code> that skips the first 
+<span class="param">n</span> elements.</p>
+<p>If <code>this</code> has fewer than 
+<span class="param">n</span> elements, then the resulting <code>Iterable</code> will
+be empty.</p>
+<pre class="source">
+Iterable&lt;E&gt; skip(int n) {
+ return new SkipIterable&lt;E&gt;(this, n);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="skipWhile">
+<button class="show-code">Code</button>
+Iterable&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>skipWhile</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value)) <a class="anchor-link" href="#skipWhile"
+              title="Permalink to NumberEnumerable&lt;T&gt;.skipWhile">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns an <code>Iterable</code> that skips elements while 
+<span class="param">test</span> is satisfied.</p>
+<p>The filtering happens lazily. Every new <code>Iterator</code> of the returned
+<code>Iterable</code> will iterate over all elements of <code>this</code>.
+As long as the iterator's elements do not satisfy 
+<span class="param">test</span> they are
+discarded. Once an element satisfies the 
+<span class="param">test</span> the iterator stops testing
+and uses every element unconditionally.</p>
+<pre class="source">
+Iterable&lt;E&gt; skipWhile(bool test(E value)) {
+ return new SkipWhileIterable&lt;E&gt;(this, test);
 }
 </pre>
 </div>
@@ -585,76 +613,81 @@ num sum() {
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="toHashMap">
+<div class="method inherited"><h4 id="take">
 <button class="show-code">Code</button>
-HashMap <strong>toHashMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
-              title="Permalink to NumberEnumerable&lt;T&gt;.toHashMap">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+Iterable&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>take</strong>(int n) <a class="anchor-link" href="#take"
+              title="Permalink to NumberEnumerable&lt;T&gt;.take">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns an <code>Iterable</code> with at most 
+<span class="param">n</span> elements.</p>
+<p>The returned <code>Iterable</code> may contain fewer than 
+<span class="param">n</span> elements, if <code>this</code>
+contains fewer than 
+<span class="param">n</span> elements.</p>
 <pre class="source">
-HashMap toHashMap(Func1&lt;T, Object&gt; valueFunc, [Func1&lt;T, Hashable&gt; keyFunc]) {
- if(keyFunc == null) {
-   keyFunc = (a) =&gt; a;
- }
-
- final map = new HashMap();
- for(final e in this) {
-   final k = keyFunc(e);
-   if(map.containsKey(k)) {
-     throw new UnsupportedError("The key '$k' is duplicated");
-   }
-   map[k] = valueFunc(e);
- }
- return map;
+Iterable&lt;E&gt; take(int n) {
+ return new TakeIterable&lt;E&gt;(this, n);
 }
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="toHashSet">
+<div class="method inherited"><h4 id="takeWhile">
 <button class="show-code">Code</button>
-HashSet <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
-              title="Permalink to NumberEnumerable&lt;T&gt;.toHashSet">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+Iterable&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>takeWhile</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value)) <a class="anchor-link" href="#takeWhile"
+              title="Permalink to NumberEnumerable&lt;T&gt;.takeWhile">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns an <code>Iterable</code> that stops once 
+<span class="param">test</span> is not satisfied anymore.</p>
+<p>The filtering happens lazily. Every new <code>Iterator</code> of the returned
+<code>Iterable</code> will start iterating over the elements of <code>this</code>.
+When the iterator encounters an element <code>e</code> that does not satisfy 
+<span class="param">test</span>,
+it discards <code>e</code> and moves into the finished state. That is, it will not
+ask or provide any more elements.</p>
 <pre class="source">
-HashSet toHashSet([Func1&lt;T, Hashable&gt; f]) {
- if(f == null) {
-   return new HashSet.from(this);
- } else {
-   return new HashSet.from(this.map(f));
- }
+Iterable&lt;E&gt; takeWhile(bool test(E value)) {
+ return new TakeWhileIterable&lt;E&gt;(this, test);
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="toList">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
+List&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
               title="Permalink to NumberEnumerable&lt;T&gt;.toList">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <pre class="source">
-List&lt;T&gt; toList() =&gt; new List&lt;T&gt;.from(this);
+List&lt;E&gt; toList() =&gt; new List&lt;E&gt;.from(this);
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="toReadOnlyCollection">
+<div class="method inherited"><h4 id="toSet">
 <button class="show-code">Code</button>
-<a href="../bot/ReadOnlyCollection.html">ReadOnlyCollection</a>&lt;<a href="../bot/NumberEnumerable.html">T</a>&gt; <strong>toReadOnlyCollection</strong>() <a class="anchor-link" href="#toReadOnlyCollection"
-              title="Permalink to NumberEnumerable&lt;T&gt;.toReadOnlyCollection">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+Set&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>toSet</strong>() <a class="anchor-link" href="#toSet"
+              title="Permalink to NumberEnumerable&lt;T&gt;.toSet">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <pre class="source">
-ReadOnlyCollection&lt;T&gt; toReadOnlyCollection() =&gt; new ReadOnlyCollection&lt;T&gt;(this);
+Set&lt;E&gt; toSet() =&gt; new Set&lt;E&gt;.from(this);
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="toString">
+<div class="method inherited"><h4 id="where">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
-              title="Permalink to NumberEnumerable&lt;T&gt;.toString">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
-<p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+Iterable&lt;<a href="../bot/NumberEnumerable.html">E</a>&gt; <strong>where</strong>(bool f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#where"
+              title="Permalink to NumberEnumerable&lt;T&gt;.where">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns a lazy <code>Iterable</code> with all elements that satisfy the
+predicate 
+<span class="param">f</span>.</p>
+<p>This method returns a view of the mapped elements. As long as the
+returned <code>Iterable</code> is not iterated over, the supplied function 
+<span class="param">f</span> will
+not be invoked. Iterating will not cache results, and thus iterating
+multiple times over the the returned <code>Iterable</code> will invoke the supplied
+function 
+<span class="param">f</span> multiple times on the same element.</p>
 <pre class="source">
-String toString() =&gt; "[${this.join()}]";
+Iterable&lt;E&gt; where(bool f(E element)) =&gt; new WhereIterable&lt;E&gt;(this, f);
 </pre>
 </div>
 </div>

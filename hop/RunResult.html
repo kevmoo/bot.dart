@@ -57,6 +57,8 @@ class RunResult {
  const RunResult._internal(this.exitCode);
 
  bool get success =&gt; exitCode == SUCCESS.exitCode;
+
+ String toString() =&gt; 'RunResult - $exitCode';
 }
 </pre>
 </div>
@@ -146,6 +148,22 @@ final bool         <strong>success</strong> <a class="anchor-link"
         <div class="doc">
 <pre class="source">
 bool get success =&gt; exitCode == SUCCESS.exitCode;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to RunResult.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString() =&gt; 'RunResult - $exitCode';
 </pre>
 </div>
 </div>

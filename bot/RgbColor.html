@@ -33,7 +33,7 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class RgbColor implements Hashable {
+class RgbColor {
  final int r, g, b;
 
  const RgbColor._internal(this.r, this.g, this.b);
@@ -126,7 +126,7 @@ class RgbColor implements Hashable {
  }
 
  static final RegExp _validHexColorRe = new RegExp('^#(?:[0-9a-f]{6})\$',
-     multiLine: false, ignoreCase: true);
+     multiLine: false, caseSensitive: false);
 
  static bool _isValidHexColor(String str) {
    return _validHexColorRe.hasMatch(str);
@@ -134,9 +134,6 @@ class RgbColor implements Hashable {
 }
 </pre>
 </div>
-<h3>Implements</h3>
-<p>
-<span class="type-box"><span class="icon-class"></span><a href="../dart_core/Hashable.html">Hashable</a></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="RgbColor">

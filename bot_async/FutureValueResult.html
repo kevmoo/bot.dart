@@ -34,50 +34,57 @@
 <div class="doc">
 <pre class="source">
 class FutureValueResult&lt;TOutput&gt; {
- static final String _valueKey = 'value';
- static final String _exceptionKey = 'exception';
+ static const String _valueKey = 'value';
+ static const String _errorKey = 'error';
+ static const String _stackTraceKey = 'stackTrace';
 
  final TOutput value;
- final exception;
+ final error;
+ final stackTrace;
  final Func1&lt;dynamic, TOutput&gt; _outputSerializer;
 
  FutureValueResult(this.value, [this._outputSerializer]) :
-   exception = null;
+   error = null, stackTrace = null;
 
- FutureValueResult.fromException(this.exception)
+ FutureValueResult.fromException(this.error, this.stackTrace)
  : value = null, _outputSerializer = null {
-   requireArgumentNotNull(exception, 'exception');
+   requireArgumentNotNull(error, 'error');
  }
 
  factory FutureValueResult.fromMap(Map value) {
    requireArgumentNotNull(value, 'value');
    requireArgument(isMyMap(value), 'value');
 
-   final ex = value[_exceptionKey];
+   final ex = value[_errorKey];
    if(ex != null) {
-     return new FutureValueResult.fromException(ex);
+     final stack = value[_stackTraceKey];
+     return new FutureValueResult.fromException(ex, stack);
    } else {
      return new FutureValueResult(value[_valueKey]);
    }
  }
 
- bool get isException =&gt; exception != null;
+ bool get isException =&gt; error != null;
 
  Map toMap() {
    // would love to use consts here, but the analyzer doesn't like it
    // DARTBUG: http://code.google.com/p/dart/issues/detail?id=4207
    final rawValue = _serialize(value);
-   return { 'value' : rawValue, 'exception' : exception };
+   return { 'value' : rawValue, 'error' : error, 'stackTrace' : stackTrace };
  }
 
  static bool isMyMap(Map value) {
-   return value != null &amp;&amp; value.length == 2 &amp;&amp;
-       value.containsKey(_valueKey) &amp;&amp; value.containsKey(_exceptionKey);
+   return value != null &amp;&amp; value.length == 3 &amp;&amp;
+       value.containsKey(_valueKey) &amp;&amp;
+       value.containsKey(_errorKey) &amp;&amp;
+       value.containsKey(_stackTraceKey);
  }
 
  bool operator ==(FutureValueResult other) {
    return other != null &amp;&amp;
-       other.value == value &amp;&amp; other.exception == exception;
+       other.value == value &amp;&amp;
+       other.error == error &amp;&amp;
+       other.stackTrace == stackTrace;
  }
 
  dynamic _serialize(TOutput output) {
@@ -99,8 +106,10 @@ bool <strong>isMyMap</strong>(Map value) <a class="anchor-link" href="#isMyMap"
 <div class="doc">
 <pre class="source">
 static bool isMyMap(Map value) {
- return value != null &amp;&amp; value.length == 2 &amp;&amp;
-     value.containsKey(_valueKey) &amp;&amp; value.containsKey(_exceptionKey);
+ return value != null &amp;&amp; value.length == 3 &amp;&amp;
+     value.containsKey(_valueKey) &amp;&amp;
+     value.containsKey(_errorKey) &amp;&amp;
+     value.containsKey(_stackTraceKey);
 }
 </pre>
 </div>
@@ -115,19 +124,19 @@ new <strong>FutureValueResult</strong>(<a href="../bot_async/FutureValueResult.h
 <div class="doc">
 <pre class="source">
 FutureValueResult(this.value, [this._outputSerializer]) :
- exception = null;
+ error = null, stackTrace = null;
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="FutureValueResult.fromException">
 <button class="show-code">Code</button>
-new <strong>FutureValueResult.fromException</strong>(exception) <a class="anchor-link" href="#FutureValueResult.fromException"
+new <strong>FutureValueResult.fromException</strong>(error, stackTrace) <a class="anchor-link" href="#FutureValueResult.fromException"
               title="Permalink to FutureValueResult&lt;TOutput&gt;.FutureValueResult.fromException">#</a></h4>
 <div class="doc">
 <pre class="source">
-FutureValueResult.fromException(this.exception)
+FutureValueResult.fromException(this.error, this.stackTrace)
 : value = null, _outputSerializer = null {
- requireArgumentNotNull(exception, 'exception');
+ requireArgumentNotNull(error, 'error');
 }
 </pre>
 </div>
@@ -142,9 +151,10 @@ factory FutureValueResult.fromMap(Map value) {
  requireArgumentNotNull(value, 'value');
  requireArgument(isMyMap(value), 'value');
 
- final ex = value[_exceptionKey];
+ final ex = value[_errorKey];
  if(ex != null) {
-   return new FutureValueResult.fromException(ex);
+   final stack = value[_stackTraceKey];
+   return new FutureValueResult.fromException(ex, stack);
  } else {
    return new FutureValueResult(value[_valueKey]);
  }
@@ -155,15 +165,15 @@ factory FutureValueResult.fromMap(Map value) {
 </div>
 <div>
 <h3>Properties</h3>
-<div class="field"><h4 id="exception">
+<div class="field"><h4 id="error">
 <button class="show-code">Code</button>
-final         <strong>exception</strong> <a class="anchor-link"
-            href="#exception"
-            title="Permalink to FutureValueResult&lt;TOutput&gt;.exception">#</a>
+final         <strong>error</strong> <a class="anchor-link"
+            href="#error"
+            title="Permalink to FutureValueResult&lt;TOutput&gt;.error">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-exception
+error
 </pre>
 </div>
 </div>
@@ -175,7 +185,19 @@ final bool         <strong>isException</strong> <a class="anchor-link"
         </h4>
         <div class="doc">
 <pre class="source">
-bool get isException =&gt; exception != null;
+bool get isException =&gt; error != null;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="stackTrace">
+<button class="show-code">Code</button>
+final         <strong>stackTrace</strong> <a class="anchor-link"
+            href="#stackTrace"
+            title="Permalink to FutureValueResult&lt;TOutput&gt;.stackTrace">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+stackTrace
 </pre>
 </div>
 </div>
@@ -210,7 +232,9 @@ the <code>hashCode</code> method as well to maintain consistency.</p>
 <pre class="source">
 bool operator ==(FutureValueResult other) {
  return other != null &amp;&amp;
-     other.value == value &amp;&amp; other.exception == exception;
+     other.value == value &amp;&amp;
+     other.error == error &amp;&amp;
+     other.stackTrace == stackTrace;
 }
 </pre>
 </div>
@@ -228,7 +252,7 @@ Map toMap() {
  // would love to use consts here, but the analyzer doesn't like it
  // DARTBUG: http://code.google.com/p/dart/issues/detail?id=4207
  final rawValue = _serialize(value);
- return { 'value' : rawValue, 'exception' : exception };
+ return { 'value' : rawValue, 'error' : error, 'stackTrace' : stackTrace };
 }
 </pre>
 </div>

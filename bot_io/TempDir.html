@@ -39,7 +39,7 @@ class TempDir extends DisposableImpl {
  static Future&lt;TempDir&gt; create() {
    final startDir = new Directory('');
    return startDir.createTemp()
-       .transform((newDir) =&gt; new TempDir._internal(newDir));
+       .then((newDir) =&gt; new TempDir._internal(newDir));
  }
 
  TempDir._internal(this.dir) {
@@ -51,7 +51,7 @@ class TempDir extends DisposableImpl {
 
  Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
    return populater.populate(dir)
-       .transform((Directory outputDir) {
+       .then((Directory outputDir) {
          assert(dir == outputDir);
          return this;
        });
@@ -90,7 +90,7 @@ Future&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>create</stron
 static Future&lt;TempDir&gt; create() {
  final startDir = new Directory('');
  return startDir.createTemp()
-     .transform((newDir) =&gt; new TempDir._internal(newDir));
+     .then((newDir) =&gt; new TempDir._internal(newDir));
 }
 </pre>
 </div>
@@ -158,6 +158,10 @@ void dispose(){
 void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
               title="Permalink to TempDir.disposeInternal">#</a></h4>
 <div class="doc">
+<div class="inherited">
+<p>Do not call this method directly. Call <code>dispose</code> instead.
+Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
 @protected
 void disposeInternal() {
@@ -188,7 +192,7 @@ Future&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>populate</str
 <pre class="source">
 Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
  return populater.populate(dir)
-     .transform((Directory outputDir) {
+     .then((Directory outputDir) {
        assert(dir == outputDir);
        return this;
      });
@@ -225,7 +229,7 @@ void validateNotDisposed() {
 </div>
 <div class="method"><h4 id="verifyContents">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>verifyContents</strong>(Map&lt;String, Dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
+Future&lt;bool&gt; <strong>verifyContents</strong>(Map&lt;String, dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
               title="Permalink to TempDir.verifyContents">#</a></h4>
 <div class="doc">
 <pre class="source">

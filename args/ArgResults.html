@@ -40,6 +40,18 @@ class ArgResults {
  final Map _options;
 
  /**
+  * If these are the results for parsing a command's options, this will be
+  * the name of the command. For top-level results, this returns `null`.
+  */
+ final String name;
+
+ /**
+  * The command that was selected, or `null` if none was. This will contain
+  * the options that were selected for that command.
+  */
+ final ArgResults command;
+
+ /**
   * The remaining command-line arguments that were not parsed as options or
   * flags. If `--` was used to separate the options from the remaining
   * arguments, it will not be included in this list.
@@ -47,7 +59,7 @@ class ArgResults {
  final List&lt;String&gt; rest;
 
  /** Creates a new [ArgResults]. */
- ArgResults(this._options, this.rest);
+ ArgResults(this._options, this.name, this.command, this.rest);
 
  /** Gets the parsed command-line option named [name]. */
  operator [](String name) {
@@ -60,7 +72,7 @@ class ArgResults {
  }
 
  /** Get the names of the options as a [Collection]. */
- Collection&lt;String&gt; get options =&gt; _options.keys;
+ Collection&lt;String&gt; get options =&gt; _options.keys.toList();
 }
 </pre>
 </div>
@@ -68,18 +80,42 @@ class ArgResults {
 <h3>Constructors</h3>
 <div class="method"><h4 id="ArgResults">
 <button class="show-code">Code</button>
-new <strong>ArgResults</strong>(Map _options, List&lt;String&gt; rest) <a class="anchor-link" href="#ArgResults"
+new <strong>ArgResults</strong>(Map _options, String name, <a href="../args/ArgResults.html">ArgResults</a> command, List&lt;String&gt; rest) <a class="anchor-link" href="#ArgResults"
               title="Permalink to ArgResults.ArgResults">#</a></h4>
 <div class="doc">
-<p>Creates a new <a class="crossref" href="../args/ArgResults.html#ArgResults">ArgResults</a>.</p>
+<p>Creates a new <a class="crossref" href="../args/ArgResults.html#ArgResults">ArgResults</a>. </p>
 <pre class="source">
-ArgResults(this._options, this.rest);
+ArgResults(this._options, this.name, this.command, this.rest);
 </pre>
 </div>
 </div>
 </div>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="command">
+<button class="show-code">Code</button>
+final <a href="../args/ArgResults.html">ArgResults</a>         <strong>command</strong> <a class="anchor-link"
+            href="#command"
+            title="Permalink to ArgResults.command">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+command
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+final String         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to ArgResults.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="options">
 <button class="show-code">Code</button>
 final Collection&lt;String&gt;         <strong>options</strong> <a class="anchor-link"
@@ -87,9 +123,9 @@ final Collection&lt;String&gt;         <strong>options</strong> <a class="anchor
             title="Permalink to ArgResults.options">#</a>
         </h4>
         <div class="doc">
-<p>Get the names of the options as a <code>Collection</code>.</p>
+<p>Get the names of the options as a <code>Collection</code>. </p>
 <pre class="source">
-Collection&lt;String&gt; get options =&gt; _options.keys;
+Collection&lt;String&gt; get options =&gt; _options.keys.toList();
 </pre>
 </div>
 </div>
@@ -114,7 +150,7 @@ rest
               title="Permalink to ArgResults.operator []">#</a></h4>
 <div class="doc">
 <p>Gets the parsed command-line option named 
-<span class="param">name</span>.</p>
+<span class="param">name</span>. </p>
 <pre class="source">
 operator [](String name) {
  if (!_options.containsKey(name)) {

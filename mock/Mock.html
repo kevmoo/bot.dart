@@ -32,7 +32,7 @@
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
-<p>The base class for all mocked objects.</p>
+<p>The base class for all mocked objects. </p>
 <pre class="source">
 class Mock {
  /** The mock name. Needed if the log is shared; optional otherwise. */
@@ -293,7 +293,7 @@ class Mock {
      if (name == null) { // This log is not shared.
        log.logs.clear();
      } else { // This log may be shared.
-       log.logs = log.logs.filter((e) =&gt; e.mockName != name);
+       log.logs = log.logs.where((e) =&gt; e.mockName != name).toList();
      }
    }
  }
@@ -432,14 +432,14 @@ LogEntryList calls(method,
 void <strong>clearLogs</strong>() <a class="anchor-link" href="#clearLogs"
               title="Permalink to Mock.clearLogs">#</a></h4>
 <div class="doc">
-<p>Clear the logs for the Mock.</p>
+<p>Clear the logs for the Mock. </p>
 <pre class="source">
 void clearLogs() {
  if (log != null) {
    if (name == null) { // This log is not shared.
      log.logs.clear();
    } else { // This log may be shared.
-     log.logs = log.logs.filter((e) =&gt; e.mockName != name);
+     log.logs = log.logs.where((e) =&gt; e.mockName != name).toList();
    }
  }
 }
@@ -614,7 +614,7 @@ noSuchMethod(InvocationMirror invocation) {
 void <strong>reset</strong>() <a class="anchor-link" href="#reset"
               title="Permalink to Mock.reset">#</a></h4>
 <div class="doc">
-<p>Clear both logs and behavior.</p>
+<p>Clear both logs and behavior. </p>
 <pre class="source">
 void reset() {
  resetBehavior();
@@ -628,7 +628,7 @@ void reset() {
 void <strong>resetBehavior</strong>() <a class="anchor-link" href="#resetBehavior"
               title="Permalink to Mock.resetBehavior">#</a></h4>
 <div class="doc">
-<p>Clear the behaviors for the Mock.</p>
+<p>Clear the behaviors for the Mock. </p>
 <pre class="source">
 void resetBehavior() =&gt; _behaviors.clear();
 </pre>
@@ -639,7 +639,7 @@ void resetBehavior() =&gt; _behaviors.clear();
 bool <strong>verifyZeroInteractions</strong>() <a class="anchor-link" href="#verifyZeroInteractions"
               title="Permalink to Mock.verifyZeroInteractions">#</a></h4>
 <div class="doc">
-<p><a class="crossref" href="../mock/Mock.html#verifyZeroInteractions">verifyZeroInteractions</a> returns true if no calls were made</p>
+<p><a class="crossref" href="../mock/Mock.html#verifyZeroInteractions">verifyZeroInteractions</a> returns true if no calls were made </p>
 <pre class="source">
 bool verifyZeroInteractions() {
  if (log == null) {

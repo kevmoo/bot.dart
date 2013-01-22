@@ -26,14 +26,14 @@
         
 </div>
 <div class="content">
-        <h2><strong>Grouping&lt;K extends Hashable, V&gt;</strong>
+        <h2><strong>Grouping&lt;K, V&gt;</strong>
           class
         </h2>
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <pre class="source">
-class Grouping&lt;K extends Hashable, V&gt; {
+class Grouping&lt;K, V&gt; {
  final HashMap&lt;K, List&lt;V&gt;&gt; _values = new HashMap&lt;K, List&lt;V&gt;&gt;();
 
  Grouping(Iterable&lt;V&gt; source, [Func1&lt;V, K&gt; keyFunc = null]) {
@@ -69,9 +69,9 @@ class Grouping&lt;K extends Hashable, V&gt; {
  /**
   * Returns a collection containing all the keys in the map.
   */
- Collection&lt;K&gt; getKeys() =&gt; _values.keys;
+ Iterable&lt;K&gt; getKeys() =&gt; _values.keys;
 
- Enumerable&lt;V&gt; getValues() =&gt; $(_values.values).selectMany((a) =&gt; a);
+ Iterable&lt;V&gt; getValues() =&gt; CollectionUtil.selectMany(_values.values, (a) =&gt; a);
 
  /**
   * The number of {key, value} pairs in the map.
@@ -186,22 +186,22 @@ void forEach(void f(K key, List&lt;V&gt; value)) =&gt; _values.forEach(f);
 </div>
 <div class="method"><h4 id="getKeys">
 <button class="show-code">Code</button>
-Collection&lt;<a href="../bot/Grouping.html">K</a>&gt; <strong>getKeys</strong>() <a class="anchor-link" href="#getKeys"
+Iterable&lt;<a href="../bot/Grouping.html">K</a>&gt; <strong>getKeys</strong>() <a class="anchor-link" href="#getKeys"
               title="Permalink to Grouping&lt;K, V&gt;.getKeys">#</a></h4>
 <div class="doc">
 <p>Returns a collection containing all the keys in the map.</p>
 <pre class="source">
-Collection&lt;K&gt; getKeys() =&gt; _values.keys;
+Iterable&lt;K&gt; getKeys() =&gt; _values.keys;
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="getValues">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>getValues</strong>() <a class="anchor-link" href="#getValues"
+Iterable&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>getValues</strong>() <a class="anchor-link" href="#getValues"
               title="Permalink to Grouping&lt;K, V&gt;.getValues">#</a></h4>
 <div class="doc">
 <pre class="source">
-Enumerable&lt;V&gt; getValues() =&gt; $(_values.values).selectMany((a) =&gt; a);
+Iterable&lt;V&gt; getValues() =&gt; CollectionUtil.selectMany(_values.values, (a) =&gt; a);
 </pre>
 </div>
 </div>

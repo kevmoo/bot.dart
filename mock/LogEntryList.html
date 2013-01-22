@@ -436,8 +436,9 @@ class LogEntryList {
      remainingCount = logs.length;
    }
 
-   var keyIterator = keys.logs.iterator();
-   LogEntry keyEntry = keyIterator.next();
+   var keyIterator = keys.logs.iterator;
+   keyIterator.moveNext();
+   LogEntry keyEntry = keyIterator.current;
    MatchState matchState = new MatchState();
 
    for (LogEntry logEntry in logs) {
@@ -461,8 +462,8 @@ class LogEntryList {
        if (includeKeys) {
          rtn.logs.add(keyEntry);
        }
-       if (keyIterator.hasNext) {
-         keyEntry = keyIterator.next();
+       if (keyIterator.moveNext()) {
+         keyEntry = keyIterator.current;
        } else if (isPreceding) { // We're done.
          break;
        }
@@ -571,7 +572,7 @@ final         <strong>first</strong> <a class="anchor-link"
             title="Permalink to LogEntryList.first">#</a>
         </h4>
         <div class="doc">
-<p>Get the first entry, or null if no entries.</p>
+<p>Get the first entry, or null if no entries. </p>
 <pre class="source">
 get first =&gt; (logs == null || logs.length == 0) ? null : logs[0];
 </pre>
@@ -584,7 +585,7 @@ final         <strong>last</strong> <a class="anchor-link"
             title="Permalink to LogEntryList.last">#</a>
         </h4>
         <div class="doc">
-<p>Get the last entry, or null if no entries.</p>
+<p>Get the last entry, or null if no entries. </p>
 <pre class="source">
 get last =&gt; (logs == null || logs.length == 0) ? null : logs.last;
 </pre>
@@ -610,7 +611,7 @@ logs
 <strong>add</strong>(<a href="../mock/LogEntry.html">LogEntry</a> entry) <a class="anchor-link" href="#add"
               title="Permalink to LogEntryList.add">#</a></h4>
 <div class="doc">
-<p>Add a <a class="crossref" href="../mock/LogEntry.html">LogEntry</a> to the log.</p>
+<p>Add a <a class="crossref" href="../mock/LogEntry.html">LogEntry</a> to the log. </p>
 <pre class="source">
 add(LogEntry entry) =&gt; logs.add(entry);
 </pre>
@@ -1127,7 +1128,7 @@ LogEntryList untilLast(LogEntryList segment, [bool inPlace = false]) =&gt;
 <a href="../mock/LogEntryList.html">LogEntryList</a> <strong>verify</strong>(<a href="../matcher/Matcher.html">Matcher</a> matcher) <a class="anchor-link" href="#verify"
               title="Permalink to LogEntryList.verify">#</a></h4>
 <div class="doc">
-<p>Apply a unit test <code>Matcher</code> to the <a class="crossref" href="../mock/LogEntryList.html#LogEntryList">LogEntryList</a>.</p>
+<p>Apply a unit test <code>Matcher</code> to the <a class="crossref" href="../mock/LogEntryList.html#LogEntryList">LogEntryList</a>. </p>
 <pre class="source">
 LogEntryList verify(Matcher matcher) {
  if (_mockFailureHandler == null) {

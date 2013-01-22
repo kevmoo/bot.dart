@@ -77,7 +77,7 @@ class SendPortValue&lt;TInput, TOutput&gt; extends FutureValue&lt;TInput, TOutpu
 
  void _sendValueResultCompleted(FutureValueResult&lt;TOutput&gt; value) {
    if(value.isException) {
-     _completeException(value.exception);
+     _completeException(value.error, value.stackTrace);
    } else {
      _complete(value.value);
    }
@@ -91,10 +91,10 @@ class SendPortValue&lt;TInput, TOutput&gt; extends FutureValue&lt;TInput, TOutpu
    c.complete(value);
  }
 
- void _completeException(exception) {
+ void _completeException(exception, stack) {
    final c = _completer;
    _completer = null;
-   c.completeException(exception);
+   c.completeError(exception, stack);
  }
 
  TOutput _deserializer(dynamic input) {

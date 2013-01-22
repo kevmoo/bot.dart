@@ -40,7 +40,7 @@ class IoHelpers {
    assert(dir != null);
    assert(content != null);
    return dir.exists()
-       .chain((bool doesExist) {
+       .then((bool doesExist) {
          if(!doesExist) {
            return new Future.immediate(false);
          } else {
@@ -70,12 +70,12 @@ class IoHelpers {
      if(completed) {
        completer.complete(map);
      } else {
-       completer.completeException('done, but not completed...weird...');
+       completer.completeError('done, but not completed...weird...');
      }
    };
 
    lister.onError = (e) {
-     completer.completeException(e);
+     completer.completeError(e);
    };
 
    lister.onFile = (String filePath) {
@@ -90,7 +90,7 @@ class IoHelpers {
 
  static Future&lt;bool&gt; _verifyContents(Directory dir, Map&lt;String, dynamic&gt; content) {
    return _mapContents(dir)
-       .chain((Map&lt;String, dynamic&gt; map) {
+       .then((Map&lt;String, dynamic&gt; map) {
          if(map.length != content.length) {
            return new Future.immediate(false);
          }
@@ -113,12 +113,12 @@ class IoHelpers {
            return new Future.immediate(false);
          }
 
-         final futures = content.keys.map((name) {
+         final futures = content.keys.mappedBy((name) {
            return _verifyChildContent(dir, name, content[name], map[name]);
          });
 
-         return Futures.wait(futures)
-             .transform((List&lt;bool&gt; results){
+         return Future.wait(futures)
+             .then((List&lt;bool&gt; results){
                return results.every((v) =&gt; v);
              });
        });
@@ -149,7 +149,7 @@ class IoHelpers {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="verifyContents">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>verifyContents</strong>(Directory dir, Map&lt;String, Dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
+Future&lt;bool&gt; <strong>verifyContents</strong>(Directory dir, Map&lt;String, dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
               title="Permalink to IoHelpers.verifyContents">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -157,7 +157,7 @@ static Future&lt;bool&gt; verifyContents(Directory dir, Map&lt;String, dynamic&g
  assert(dir != null);
  assert(content != null);
  return dir.exists()
-     .chain((bool doesExist) {
+     .then((bool doesExist) {
        if(!doesExist) {
          return new Future.immediate(false);
        } else {

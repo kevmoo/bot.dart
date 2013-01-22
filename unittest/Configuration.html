@@ -59,18 +59,16 @@ class Configuration {
   * Called as soon as the unittest framework becomes initialized. This is done
   * even before tests are added to the test framework. It might be used to
   * determine/debug errors that occur before the test harness starts executing.
+  * It is also used to tell the vm or browser that tests are going to be run
+  * asynchronously and that the process should wait until they are done.
   */
- void onInit() {}
-
- /**
-  * Called as soon as the unittest framework starts running. Used commonly to
-  * tell the vm or browser that tests are still running and the process should
-  * wait until they are done.
-  */
- void onStart() {
+ void onInit() {
    _receivePort = new ReceivePort();
    _postMessage('unittest-suite-wait-for-done');
  }
+
+ /** Called as soon as the unittest framework starts running. */
+ void onStart() {}
 
  /**
   * Called when each test starts. Useful to show intermediate progress on
@@ -122,7 +120,7 @@ class Configuration {
   * When [uncaughtError] is not null, it contains an error that occured outside
   * of tests (e.g. setting up the test).
   */
- void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
+ void onSummary(int passed, int failed, int errors, List&lt;TestCase&gt; results,
      String uncaughtError) {
    // Print each test's result.
    for (final t in _tests) {
@@ -142,7 +140,7 @@ class Configuration {
    print('');
 
    var success = false;
-   if (passed == 0 &amp;&amp; failed == 0 &amp;&amp; errors == 0) {
+   if (passed == 0 &amp;&amp; failed == 0 &amp;&amp; errors == 0 &amp;&amp; uncaughtError == null) {
      print('No tests found.');
      // This is considered a failure too.
    } else if (failed == 0 &amp;&amp; errors == 0 &amp;&amp; uncaughtError == null) {
@@ -154,11 +152,18 @@ class Configuration {
      }
      print('$passed PASSED, $failed FAILED, $errors ERRORS');
    }
+ }
 
-   _receivePort.close();
+ /**
+  * Called when the unittest framework is done running. [success] indicates
+  * whether all tests passed successfully.
+  */
+ void onDone(bool success) {
    if (success) {
      _postMessage('unittest-suite-success');
+     _receivePort.close();
    } else {
+     _receivePort.close();
      throw new Exception('Some tests failed.');
    }
  }
@@ -167,7 +172,7 @@ class Configuration {
    // TODO(nweiz): Use this simpler code once issue 2980 is fixed.
    // return str.replaceAll(new RegExp("^", multiLine: true), "  ");
 
-   return Strings.join(str.split("\n").map((line) =&gt; "  $line"), "\n");
+   return Strings.join(str.split("\n").mappedBy((line) =&gt; "  $line"), "\n");
  }
 
  /** Handle errors that happen outside the tests. */
@@ -175,6 +180,21 @@ class Configuration {
  // Currently e.message works in dartium, but not in dartc.
  handleExternalError(e, String message) =&gt;
      _reportTestError('$message\nCaught $e', '');
+
+ /**
+  * Send messages to the test controller code (see 'test_controller.js'). This
+  * is only needed to support browser tests with dart2js. Note: we could wrap
+  * tests and send the appropriate messages to the controller through the
+  * wrapper, but using wrappers has a noticeable overhead in the testing bots,
+  * so we use this approach instead.
+  *
+  * Configurations that will not run in DRT (such as vm_config and
+  * compact_vm_config), can safely override this method to avoid printing extra
+  * mesages in the console.
+  */
+ // TODO(sigmund): find a way to unify notifyController and _postMessage
+ void notifyController(String message) {
+ }
 
  _postMessage(String message) {
    // In dart2js browser tests, the JavaScript-based test controller
@@ -235,7 +255,7 @@ get name =&gt; 'Configuration';
 <strong>handleExternalError</strong>(e, String message) <a class="anchor-link" href="#handleExternalError"
               title="Permalink to Configuration.handleExternalError">#</a></h4>
 <div class="doc">
-<p>Handle errors that happen outside the tests.</p>
+<p>Handle errors that happen outside the tests. </p>
 <pre class="source">
 handleExternalError(e, String message) =&gt;
    _reportTestError('$message\nCaught $e', '');
@@ -280,10 +300,79 @@ void logTestCaseMessage(TestCase testCase, String message) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="notifyController">
+<button class="show-code">Code</button>
+void <strong>notifyController</strong>(String message) <a class="anchor-link" href="#notifyController"
+              title="Permalink to Configuration.notifyController">#</a></h4>
+<div class="doc">
+<p>Send messages to the test controller code (see 'test_controller.js'). This
+is only needed to support browser tests with dart2js. Note: we could wrap
+tests and send the appropriate messages to the controller through the
+wrapper, but using wrappers has a noticeable overhead in the testing bots,
+so we use this approach instead.</p>
+<p>Configurations that will not run in DRT (such as vm<em>config and
+compact</em>vm_config), can safely override this method to avoid printing extra
+mesages in the console.</p>
+<pre class="source">
+void notifyController(String message) {
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="onDone">
 <button class="show-code">Code</button>
-void <strong>onDone</strong>(int passed, int failed, int errors, List&lt;<a href="../unittest/TestCase.html">TestCase</a>&gt; results, String uncaughtError) <a class="anchor-link" href="#onDone"
+void <strong>onDone</strong>(bool success) <a class="anchor-link" href="#onDone"
               title="Permalink to Configuration.onDone">#</a></h4>
+<div class="doc">
+<p>Called when the unittest framework is done running. 
+<span class="param">success</span> indicates
+whether all tests passed successfully.</p>
+<pre class="source">
+void onDone(bool success) {
+ if (success) {
+   _postMessage('unittest-suite-success');
+   _receivePort.close();
+ } else {
+   _receivePort.close();
+   throw new Exception('Some tests failed.');
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="onInit">
+<button class="show-code">Code</button>
+void <strong>onInit</strong>() <a class="anchor-link" href="#onInit"
+              title="Permalink to Configuration.onInit">#</a></h4>
+<div class="doc">
+<p>Called as soon as the unittest framework becomes initialized. This is done
+even before tests are added to the test framework. It might be used to
+determine/debug errors that occur before the test harness starts executing.
+It is also used to tell the vm or browser that tests are going to be run
+asynchronously and that the process should wait until they are done.</p>
+<pre class="source">
+void onInit() {
+ _receivePort = new ReceivePort();
+ _postMessage('unittest-suite-wait-for-done');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="onStart">
+<button class="show-code">Code</button>
+void <strong>onStart</strong>() <a class="anchor-link" href="#onStart"
+              title="Permalink to Configuration.onStart">#</a></h4>
+<div class="doc">
+<p>Called as soon as the unittest framework starts running. </p>
+<pre class="source">
+void onStart() {}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="onSummary">
+<button class="show-code">Code</button>
+void <strong>onSummary</strong>(int passed, int failed, int errors, List&lt;<a href="../unittest/TestCase.html">TestCase</a>&gt; results, String uncaughtError) <a class="anchor-link" href="#onSummary"
+              title="Permalink to Configuration.onSummary">#</a></h4>
 <div class="doc">
 <p>Called with the result of all test cases. The default implementation prints
 the result summary using the built-in <code>print</code> command. Browser tests
@@ -292,7 +381,7 @@ commonly override this to reformat the output.</p>
 <span class="param">uncaughtError</span> is not null, it contains an error that occured outside
 of tests (e.g. setting up the test).</p>
 <pre class="source">
-void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
+void onSummary(int passed, int failed, int errors, List&lt;TestCase&gt; results,
    String uncaughtError) {
  // Print each test's result.
  for (final t in _tests) {
@@ -312,7 +401,7 @@ void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
  print('');
 
  var success = false;
- if (passed == 0 &amp;&amp; failed == 0 &amp;&amp; errors == 0) {
+ if (passed == 0 &amp;&amp; failed == 0 &amp;&amp; errors == 0 &amp;&amp; uncaughtError == null) {
    print('No tests found.');
    // This is considered a failure too.
  } else if (failed == 0 &amp;&amp; errors == 0 &amp;&amp; uncaughtError == null) {
@@ -324,42 +413,6 @@ void onDone(int passed, int failed, int errors, List&lt;TestCase&gt; results,
    }
    print('$passed PASSED, $failed FAILED, $errors ERRORS');
  }
-
- _receivePort.close();
- if (success) {
-   _postMessage('unittest-suite-success');
- } else {
-   throw new Exception('Some tests failed.');
- }
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="onInit">
-<button class="show-code">Code</button>
-void <strong>onInit</strong>() <a class="anchor-link" href="#onInit"
-              title="Permalink to Configuration.onInit">#</a></h4>
-<div class="doc">
-<p>Called as soon as the unittest framework becomes initialized. This is done
-even before tests are added to the test framework. It might be used to
-determine/debug errors that occur before the test harness starts executing.</p>
-<pre class="source">
-void onInit() {}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="onStart">
-<button class="show-code">Code</button>
-void <strong>onStart</strong>() <a class="anchor-link" href="#onStart"
-              title="Permalink to Configuration.onStart">#</a></h4>
-<div class="doc">
-<p>Called as soon as the unittest framework starts running. Used commonly to
-tell the vm or browser that tests are still running and the process should
-wait until they are done.</p>
-<pre class="source">
-void onStart() {
- _receivePort = new ReceivePort();
- _postMessage('unittest-suite-wait-for-done');
 }
 </pre>
 </div>
