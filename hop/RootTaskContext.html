@@ -38,8 +38,8 @@ class RootTaskContext {
 
  RootTaskContext([bool enableColor=true]) : _enableColor = enableColor;
 
- TaskContext getSubContext(String name) {
-   return new _SubTaskContext(this, name);
+ TaskContext getSubContext(String name, Iterable&lt;String&gt; arguments) {
+   return new _SubTaskContext(this, name, arguments);
  }
 
  void log(String message, [AnsiColor color = null]) {
@@ -144,12 +144,12 @@ RootTaskContext([bool enableColor=true]) : _enableColor = enableColor;
 <h3>Methods</h3>
 <div class="method"><h4 id="getSubContext">
 <button class="show-code">Code</button>
-<a href="../hop/TaskContext.html">TaskContext</a> <strong>getSubContext</strong>(String name) <a class="anchor-link" href="#getSubContext"
+<a href="../hop/TaskContext.html">TaskContext</a> <strong>getSubContext</strong>(String name, Iterable&lt;String&gt; arguments) <a class="anchor-link" href="#getSubContext"
               title="Permalink to RootTaskContext.getSubContext">#</a></h4>
 <div class="doc">
 <pre class="source">
-TaskContext getSubContext(String name) {
- return new _SubTaskContext(this, name);
+TaskContext getSubContext(String name, Iterable&lt;String&gt; arguments) {
+ return new _SubTaskContext(this, name, arguments);
 }
 </pre>
 </div>

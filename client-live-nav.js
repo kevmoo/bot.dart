@@ -3570,7 +3570,7 @@ $$.JsonParser = {"": "Object;source>,listener>",
     }
   },
   parseString$1: function(position) {
-    var t1, t2, t3, t4, position0, char$, firstEscape, chars, hexStart, i, value, t5, result;
+    var t1, t2, t3, t4, position0, char$, firstEscape, chars, hexStart, value, i, t5, result;
     t1 = this.source;
     t2 = $.getInterceptor$JSString(t1);
     t3 = $.getInterceptor$JSNumber(position);
@@ -3616,7 +3616,7 @@ $$.JsonParser = {"": "Object;source>,listener>",
           break;
         case 117:
           hexStart = $.getInterceptor$JSNumber(position0).operator$sub$1(position0, 1);
-          for (i = 0, value = 0; i < 4; ++i) {
+          for (value = 0, i = 0; i < 4; ++i) {
             position0 = $.getInterceptor$JSNumber(position0).operator$add$1(position0, 1);
             if ($.eqB(position0, t4.get$length(t1)))
               this.fail$2(t3.operator$sub$1(position, 1), "Unterminated string");
@@ -6999,18 +6999,18 @@ $.KeywordState_computeKeywordStateTable = function(start, strings, offset, lengt
     t3 = strings[i];
     t3 = $.getInterceptor$JSStringJSArray(t3).get$length(t3);
     if (typeof t3 !== "number")
-      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, offset, t3, length$, t2, result, chunk, chunkStart, t1, isLeaf, i);
+      return $.KeywordState_computeKeywordStateTable$bailout(1, start, strings, t3, t2, length$, offset, result, i, t1, chunk, chunkStart, isLeaf);
     if (t3 === start)
       isLeaf = true;
     t3 = strings[i];
     t3 = $.getInterceptor$JSStringJSArray(t3).get$length(t3);
     if (typeof t3 !== "number")
-      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, t2, offset, length$, result, isLeaf, t3, chunk, chunkStart, t1, i);
+      return $.KeywordState_computeKeywordStateTable$bailout(2, start, strings, offset, t2, length$, result, isLeaf, t3, i, t1, chunk, chunkStart);
     if (t3 > start) {
       t3 = strings[i];
       c = $.getInterceptor$JSString(t3).charCodeAt$1(t3, start);
       if (c !== (c | 0))
-        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, t2, offset, length$, result, isLeaf, chunk, chunkStart, t1, i, c);
+        return $.KeywordState_computeKeywordStateTable$bailout(3, start, strings, t2, offset, length$, result, isLeaf, i, t1, chunk, chunkStart, c);
       if (chunk !== c) {
         if (chunkStart !== -1) {
           t3 = chunk - 97;
@@ -7046,39 +7046,39 @@ $.KeywordState_computeKeywordStateTable = function(start, strings, offset, lengt
 $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, env2, env3, env4, env5, env6, env7, env8, env9, env10, env11) {
   switch (state0) {
     case 1:
-      i = env11;
-      isLeaf = env10;
-      t1 = env9;
-      chunkStart = env8;
-      chunk = env7;
+      isLeaf = env11;
+      chunkStart = env10;
+      chunk = env9;
+      t1 = env8;
+      i = env7;
       result = env6;
-      t2 = env5;
+      offset = env5;
       length$ = env4;
-      t3 = env3;
-      offset = env2;
+      t2 = env3;
+      t3 = env2;
       strings = env1;
       start = env0;
       break;
     case 2:
-      i = env11;
-      t1 = env10;
-      chunkStart = env9;
-      chunk = env8;
+      chunkStart = env11;
+      chunk = env10;
+      t1 = env9;
+      i = env8;
       t3 = env7;
       isLeaf = env6;
       result = env5;
       length$ = env4;
-      offset = env3;
-      t2 = env2;
+      t2 = env3;
+      offset = env2;
       strings = env1;
       start = env0;
       break;
     case 3:
       c = env11;
-      i = env10;
-      t1 = env9;
-      chunkStart = env8;
-      chunk = env7;
+      chunkStart = env10;
+      chunk = env9;
+      t1 = env8;
+      i = env7;
       isLeaf = env6;
       result = env5;
       length$ = env4;
@@ -7098,7 +7098,7 @@ $.KeywordState_computeKeywordStateTable$bailout = function(state0, env0, env1, e
       chunkStart = -1;
       isLeaf = false;
     default:
-      var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, length$, offset, strings, start, c, t4;
+      var result, t1, t2, i, chunk, chunkStart, isLeaf, t3, offset, length$, strings, start, c, t4;
       L0:
         while (true)
           switch (state0) {
@@ -8283,19 +8283,19 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el1, el4), 0)) {
-    t0 = el4;
-    el4 = el1;
-    el1 = t0;
+    t0 = el1;
+    el1 = el4;
+    el4 = t0;
   }
   if ($.gtB(compare.call$2(el3, el4), 0)) {
-    t0 = el4;
-    el4 = el3;
-    el3 = t0;
+    t0 = el3;
+    el3 = el4;
+    el4 = t0;
   }
   if ($.gtB(compare.call$2(el2, el5), 0)) {
-    t0 = el5;
-    el5 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -8362,8 +8362,8 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
             continue;
           } else {
             t1 = $.ltB(comp, 0);
-            t2 = a.length;
             great0 = great - 1;
+            t2 = a.length;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -8423,8 +8423,8 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
             if (great >= a.length)
               throw $.ioore(great);
             t1 = $.ltB(compare.call$2(a[great], el2), 0);
-            great0 = great - 1;
             t2 = a.length;
+            great0 = great - 1;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -8552,7 +8552,7 @@ $._Sort__dualPivotQuicksort = function(a, left, right, compare) {
 };
 
 $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) {
-  var sixth, index1, index5, index3, index2, index4, t1, el1, el2, el3, el4, el5, t0, less, great, pivots_are_equal, k, ak, comp, t2, great0, less0;
+  var sixth, index1, index5, index3, index2, index4, t1, el1, el2, el3, el4, el5, t0, less, great, pivots_are_equal, k, ak, comp, great0, t2, less0;
   sixth = $.CONSTANT3.operator$tdiv$1(right - left + 1, 6);
   index1 = left + sixth;
   index5 = right - sixth;
@@ -8596,19 +8596,19 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
     el2 = t0;
   }
   if ($.gtB(compare.call$2(el1, el4), 0)) {
-    t0 = el4;
-    el4 = el1;
-    el1 = t0;
+    t0 = el1;
+    el1 = el4;
+    el4 = t0;
   }
   if ($.gtB(compare.call$2(el3, el4), 0)) {
-    t0 = el4;
-    el4 = el3;
-    el3 = t0;
+    t0 = el3;
+    el3 = el4;
+    el4 = t0;
   }
   if ($.gtB(compare.call$2(el2, el5), 0)) {
-    t0 = el5;
-    el5 = el2;
-    el2 = t0;
+    t0 = el2;
+    el2 = el5;
+    el5 = t0;
   }
   if ($.gtB(compare.call$2(el2, el3), 0)) {
     t0 = el3;
@@ -8658,8 +8658,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
             continue;
           } else {
             t1 = $.ltB(comp, 0);
-            t2 = a.length;
             great0 = great - 1;
+            t2 = a.length;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -8709,8 +8709,8 @@ $._Sort__dualPivotQuicksort$bailout = function(state0, a, left, right, compare) 
             if (great >= a.length)
               throw $.ioore(great);
             t1 = $.ltB(compare.call$2(a[great], el2), 0);
-            great0 = great - 1;
             t2 = a.length;
+            great0 = great - 1;
             if (t1) {
               if (less >= t2)
                 throw $.ioore(less);
@@ -9305,6 +9305,10 @@ $._AttributeClassSet$ = function(_element) {
   return new $._AttributeClassSet(_element);
 };
 
+$.resultComparator.call$2 = $.resultComparator;
+$.resultComparator.$name = "resultComparator";
+$.Comparable_compare.call$2 = $.Comparable_compare;
+$.Comparable_compare.$name = "Comparable_compare";
 $.$$throw.call$1 = $.$$throw;
 $.$$throw.$name = "$$throw";
 $.Primitives__throwFormatException.call$1 = $.Primitives__throwFormatException;
@@ -9333,10 +9337,6 @@ $.typeNameInIE.call$1 = $.typeNameInIE;
 $.typeNameInIE.$name = "typeNameInIE";
 $.constructorNameFallback.call$1 = $.constructorNameFallback;
 $.constructorNameFallback.$name = "constructorNameFallback";
-$.resultComparator.call$2 = $.resultComparator;
-$.resultComparator.$name = "resultComparator";
-$.Comparable_compare.call$2 = $.Comparable_compare;
-$.Comparable_compare.$name = "Comparable_compare";
 Isolate.$finishClasses($$);
 $$ = {};
 $.String = {builtin$cls: 'String'};
@@ -9707,23 +9707,23 @@ $.NAME = "name";
 $.STRING_INTERPOLATION_TOKEN = 128;
 $.KIND = "kind";
 $.LT_EQ_TOKEN = 129;
-$.FIELD = "field";
 $.FUNCTION_TOKEN = 130;
+$.FIELD = "field";
 $.CONSTRUCTOR = "constructor";
 $._Sort__INSERTION_SORT_THRESHOLD = 32;
+$.PERIOD_PERIOD_PERIOD_TOKEN = 132;
 $.METHOD = "method";
-$.SLASH_EQ_TOKEN = 131;
-$.NO_PARAMS = "noparams";
 $.PERIOD_PERIOD_TOKEN = 133;
-$.GETTER = "getter";
+$.NO_PARAMS = "noparams";
 $.EQ_EQ_EQ_TOKEN = 134;
-$.EQ_EQ_TOKEN = 135;
+$.GETTER = "getter";
 $.SETTER = "setter";
-$.LT_LT_EQ_TOKEN = 136;
+$.EQ_EQ_TOKEN = 135;
 $.LINK_NAME = "link_name";
+$.LT_LT_EQ_TOKEN = 136;
 $.LT_LT_TOKEN = 137;
+$.currentLibrary = null;
 $.JsonParser_INSIDE_ARRAY = 1;
-$.GT_EQ_TOKEN = 138;
 $.currentType = null;
 $.JsonParser_INSIDE_OBJECT = 2;
 $.prefix = "";
@@ -9743,7 +9743,7 @@ $.GT_GT_EQ_TOKEN = 139;
 $.JsonParser_NON_EMPTY = 16;
 $.INDEX_EQ_TOKEN = 140;
 $.STAR_EQ_TOKEN = 148;
-$.currentLibrary = null;
+$.GT_EQ_TOKEN = 138;
 $.JsonParser_VALUE_READ_BITS = 28;
 $.PLUS_PLUS_TOKEN = 149;
 $.JsonParser_STATE_INITIAL = 0;
@@ -9753,22 +9753,23 @@ $.MINUS_MINUS_TOKEN = 151;
 $.JsonParser_STATE_ARRAY_EMPTY = 1;
 $.MINUS_EQ_TOKEN = 152;
 $.JsonParser_STATE_ARRAY_VALUE = 29;
-$.BAR_BAR_TOKEN = 146;
+$.SLASH_EQ_TOKEN = 131;
 $.JsonParser_STATE_ARRAY_COMMA = 17;
 $.BAR_EQ_TOKEN = 147;
 $.JsonParser_STATE_OBJECT_EMPTY = 6;
-$.TILDE_SLASH_TOKEN = 154;
-$.JsonParser_STATE_OBJECT_KEY = 30;
 $.PERCENT_EQ_TOKEN = 155;
+$.JsonParser_STATE_OBJECT_KEY = 30;
+$.BAR_BAR_TOKEN = 146;
 $.JsonParser_STATE_OBJECT_COLON = 19;
 $.CARET_EQ_TOKEN = 157;
 $.JsonParser_STATE_OBJECT_VALUE = 31;
 $.COMMENT_TOKEN = 158;
 $.JsonParser_STATE_OBJECT_COMMA = 22;
-$.PERIOD_PERIOD_PERIOD_TOKEN = 132;
+$.STRING_INTERPOLATION_IDENTIFIER_TOKEN = 159;
 $.JsonParser_BACKSPACE = 8;
 $.UNKNOWN_TOKEN = 1024;
 $.JsonParser_TAB = 9;
+$.TILDE_SLASH_TOKEN = 154;
 $.JsonParser_NEWLINE = 10;
 $.JsonParser_CARRIAGE_RETURN = 13;
 $.TILDE_SLASH_EQ_TOKEN = 153;
@@ -9812,11 +9813,11 @@ $.ASSIGNMENT_PRECEDENCE = 1;
 $.JsonParser_CHAR_r = 114;
 $.AMPERSAND_EQ_INFO = Isolate.$isolateProperties.CONSTANT48;
 $.JsonParser_CHAR_s = 115;
-$.STRING_INTERPOLATION_IDENTIFIER_TOKEN = 159;
+$.AT_INFO = Isolate.$isolateProperties.CONSTANT31;
 $.JsonParser_CHAR_t = 116;
 $.CARET_EQ_INFO = Isolate.$isolateProperties.CONSTANT42;
 $.JsonParser_CHAR_u = 117;
-$.AT_INFO = Isolate.$isolateProperties.CONSTANT31;
+$.EQ_INFO = Isolate.$isolateProperties.CONSTANT66;
 $.JsonParser_LBRACE = 123;
 $.BAR_EQ_INFO = Isolate.$isolateProperties.CONSTANT45;
 $.JsonParser_RBRACE = 125;
@@ -9828,7 +9829,6 @@ $.PERCENT_EQ_INFO = Isolate.$isolateProperties.CONSTANT50;
 $.PLUS_EQ_INFO = Isolate.$isolateProperties.CONSTANT58;
 $.SLASH_EQ_INFO = Isolate.$isolateProperties.CONSTANT32;
 $.STAR_EQ_INFO = Isolate.$isolateProperties.CONSTANT52;
-$.EQ_INFO = Isolate.$isolateProperties.CONSTANT66;
 $.TILDE_SLASH_EQ_INFO = Isolate.$isolateProperties.CONSTANT36;
 $.QUESTION_INFO = Isolate.$isolateProperties.CONSTANT14;
 $.BAR_BAR_INFO = Isolate.$isolateProperties.CONSTANT44;

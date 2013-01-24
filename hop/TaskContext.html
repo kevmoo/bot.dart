@@ -34,6 +34,7 @@
 <div class="doc">
 <pre class="source">
 abstract class TaskContext extends DisposableImpl {
+ List&lt;String&gt; get arguments;
 
  void fine(String message) {
    _logCore(message, Level.FINE);
@@ -59,8 +60,20 @@ abstract class TaskContext extends DisposableImpl {
 <h3>Extends</h3>
 <p>
 <span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>TaskContext</strong></span></p>
-<div class="inherited">
+<div>
 <h3>Properties</h3>
+<div class="field"><h4 id="arguments">
+<button class="show-code">Code</button>
+final List&lt;String&gt;         <strong>arguments</strong> <a class="anchor-link"
+            href="#arguments"
+            title="Permalink to TaskContext.arguments">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+List&lt;String&gt; get arguments;
+</pre>
+</div>
+</div>
 <div class="field inherited"><h4 id="isDisposed">
 <button class="show-code">Code</button>
 final bool         <strong>isDisposed</strong> <a class="anchor-link"

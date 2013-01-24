@@ -21704,6 +21704,21 @@
         "children": [
           {
             "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "arguments",
+            "id": "arguments0()"
+          },
+          {
+            "returnType": {
               "name": "void",
               "refId": "void"
             },
@@ -21810,6 +21825,21 @@
               }
             ],
             "id": "_logCore2()"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "arguments",
+            "id": "arguments"
           }
         ],
         "id": "TaskContext"
@@ -22190,9 +22220,24 @@
                 "kind": "param",
                 "name": "name",
                 "id": "name"
+              },
+              {
+                "ref": {
+                  "name": "Iterable",
+                  "refId": "Iterable",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "arguments",
+                "id": "arguments"
               }
             ],
-            "id": "getSubContext1()"
+            "id": "getSubContext2()"
           },
           {
             "returnType": {
@@ -22835,6 +22880,16 @@
             "kind": "method",
             "name": "_getParser",
             "id": "_getParser0()"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_colorParam",
+            "id": "_colorParam"
           },
           {
             "ref": {
@@ -27468,7 +27523,7 @@
         "id": "SupportedBrowser"
       }
     ],
-    "id": "file:///usr/local/Cellar/dart-editor/17328/dart-sdk/lib/html/html_common/metadata.dart"
+    "id": "file:///usr/local/Cellar/dart-editor/17463/dart-sdk/lib/html/html_common/metadata.dart"
   },
   {
     "kind": "library",
