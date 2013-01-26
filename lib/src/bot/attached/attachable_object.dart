@@ -15,13 +15,13 @@ class AttachableObject extends DisposableImpl {
     _eventHandlers.clear();
   }
 
-  GlobalId _addHandler(Attachable property, Action1 watcher) {
+  EventHandler _addHandler(Attachable property, Action1 watcher) {
     validateNotDisposed();
     var handle = _eventHandlers.putIfAbsent(property, () => new EventHandle());
     return handle.add(watcher);
   }
 
-  bool _removeHandler(Attachable property, GlobalId handlerId){
+  bool _removeHandler(Attachable property, EventHandler handlerId){
     validateNotDisposed();
     requireArgumentNotNull(handlerId, 'handlerId');
     var handle = _eventHandlers[property];

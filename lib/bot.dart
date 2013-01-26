@@ -42,7 +42,7 @@ part 'src/bot/exceptions/detailed_argument_error.dart';
 part 'src/bot/exceptions/invalid_operation_error.dart';
 part 'src/bot/exceptions/null_argument_error.dart';
 
-part 'src/bot/global_id.dart';
+part 'src/bot/event_handler.dart';
 
 part 'src/bot/math/affine_transform.dart';
 part 'src/bot/math/box.dart';

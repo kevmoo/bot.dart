@@ -11,7 +11,7 @@ class StageWrapper<T extends Thing> extends DisposableImpl {
   @protected
   final T rootThing;
 
-  GlobalId _invalidatedEventId;
+  EventHandler _invalidatedEventId;
 
   bool _frameRequested = false;
 

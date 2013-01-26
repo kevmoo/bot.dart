@@ -1,12 +1,12 @@
 part of bot;
 
 class EventHandle<T> extends DisposableImpl implements EventRoot<T> {
-  HashMap<GlobalId, Action1<T>> _handlers;
+  HashMap<int, Action1<T>> _handlers;
 
-  void fireEvent(T args){
+  void fireEvent(T args) {
     assert(!isDisposed);
-    if(_handlers != null){
-      _handlers.forEach((GlobalId id, Action1<T> handler){
+    if(_handlers != null) {
+      _handlers.forEach((int id, Action1<T> handler) {
         handler(args);
       });
     }
@@ -19,28 +19,36 @@ class EventHandle<T> extends DisposableImpl implements EventRoot<T> {
    *
    * Related dart bug [167](http://code.google.com/p/dart/issues/detail?id=167)
    */
-  GlobalId add(Action1<T> handler){
+  EventHandler add(Action1<T> handler) {
     assert(!isDisposed);
-    var id = new GlobalId();
-    if(_handlers == null){
-      _handlers = new HashMap<GlobalId, Action1<T>>();
+    var wrapped = new EventHandler(handler);
+    if(_handlers == null) {
+      _handlers = new HashMap<int, Action1<T>>();
     }
-    _handlers[id] = handler;
-    return id;
+    _handlers[wrapped.id] = handler; 
+    return wrapped;
+  }
+  
+  void addHandler(EventHandler handler) {
+    assert(!isDisposed);
+    if (_handlers == null) {
+      _handlers = new HashMap<int, Action1<T>>();
+    }
+    _handlers[handler.id] = handler._handler;
   }
 
-  bool remove(GlobalId id){
-    if(_handlers != null){
-      return _handlers.remove(id) != null;
+  bool remove(EventHandler handler) {
+    if(_handlers != null) {
+      return _handlers.remove(handler.id) != null;
     }
-    else{
+    else {
       return false;
     }
   }
 
-  void disposeInternal(){
+  void disposeInternal() {
     super.disposeInternal();
-    if(_handlers != null){
+    if(_handlers != null) {
       _handlers.clear();
       _handlers = null;
     }

@@ -30,11 +30,11 @@ class Property<T> extends Attachable {
 
   bool isSet(AttachableObject obj) => obj._isSet(this);
 
-  GlobalId addHandler(AttachableObject obj, Action1<Property> handler){
+  EventHandler addHandler(AttachableObject obj, Action1<Property> handler){
     return obj._addHandler(this, handler);
   }
 
-  bool removeHandler(AttachableObject obj, GlobalId handlerId){
+  bool removeHandler(AttachableObject obj, EventHandler handlerId){
     return obj._removeHandler(this, handlerId);
   }
 

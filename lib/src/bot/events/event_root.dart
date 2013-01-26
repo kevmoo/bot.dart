@@ -1,6 +1,7 @@
 part of bot;
 
 abstract class EventRoot<T> {
-  GlobalId add(Action1<T> handler);
-  bool remove(GlobalId id);
+  EventHandler add(Action1<T> handler);
+  void addHandler(EventHandler handler);
+  bool remove(EventHandler handler);
 }
