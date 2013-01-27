@@ -1,6 +1,6 @@
 part of bot;
 
-class EventHandler<T> implements Comparable {
+class EventHandler implements Comparable {
   static int _globalId = 0;
   final int id;
   final int _hashCode;
