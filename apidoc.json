@@ -13210,7 +13210,7 @@
         "id": "Git"
       }
     ],
-    "id": "file:///Users/kevin/source/github/bot.dart/lib/bot_git.dart"
+    "id": "package:bot/bot_git.dart"
   },
   {
     "kind": "library",
@@ -24029,7 +24029,1638 @@
         "id": "TaskDefinition"
       }
     ],
-    "id": "file:///Users/kevin/source/github/bot.dart/lib/hop.dart"
+    "id": "package:bot/hop.dart"
+  },
+  {
+    "kind": "library",
+    "name": "hop_tasks",
+    "children": [
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "createUnitTestTask",
+        "children": [
+          {
+            "ref": {
+              "name": "Action1",
+              "refId": "Action1"
+            },
+            "kind": "param",
+            "name": "unitTestAction",
+            "id": "unitTestAction"
+          }
+        ],
+        "id": "createUnitTestTask1()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_startProcess",
+        "children": [
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "param",
+            "name": "process",
+            "id": "process"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "param",
+            "name": "state",
+            "id": "state"
+          }
+        ],
+        "id": "_startProcess2()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "startProcess",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "command",
+            "id": "command"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "args",
+            "id": "args"
+          }
+        ],
+        "id": "startProcess3()"
+      },
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "createProcessTask",
+        "children": [
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "command",
+            "id": "command"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "args",
+            "id": "args"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "description",
+            "id": "description"
+          }
+        ],
+        "id": "createProcessTask3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_doCommit",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "verb",
+            "id": "verb"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "gitArgs",
+            "id": "gitArgs"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceBranch",
+            "id": "sourceBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceDir",
+            "id": "sourceDir"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "GitDir",
+              "refId": "GitDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          }
+        ],
+        "id": "_doCommit7()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_withExistingBranch",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "BranchReference",
+              "refId": "BranchReference"
+            },
+            "kind": "param",
+            "name": "targetBranchRef",
+            "id": "targetBranchRef"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "dirSha",
+            "id": "dirSha"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceDir",
+            "id": "sourceDir"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "gitArgs",
+            "id": "gitArgs"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceBranch",
+            "id": "sourceBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "GitDir",
+              "refId": "GitDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          }
+        ],
+        "id": "_withExistingBranch8()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "branchForDir",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceBranch",
+            "id": "sourceBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceDir",
+            "id": "sourceDir"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "workingDir",
+            "id": "workingDir"
+          }
+        ],
+        "id": "branchForDir5()"
+      },
+      {
+        "returnType": {
+          "name": "void",
+          "refId": "void"
+        },
+        "kind": "method",
+        "name": "_throwIfProcessFailed",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "ProcessResult",
+              "refId": "ProcessResult"
+            },
+            "kind": "param",
+            "name": "pr",
+            "id": "pr"
+          }
+        ],
+        "id": "_throwIfProcessFailed2()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_gitRemoteHasHead",
+        "children": [
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "remote",
+            "id": "remote"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "head",
+            "id": "head"
+          }
+        ],
+        "id": "_gitRemoteHasHead2()"
+      },
+      {
+        "returnType": {
+          "name": "List",
+          "refId": "List",
+          "arguments": [
+            {
+              "name": "String",
+              "refId": "String"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_getGitArgs",
+        "children": [
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "workTree",
+            "id": "workTree"
+          },
+          {
+            "ref": {
+              "name": "Collection",
+              "refId": "Collection",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "rest",
+            "id": "rest"
+          }
+        ],
+        "id": "_getGitArgs3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future"
+        },
+        "kind": "method",
+        "name": "_doCommitComplex",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "workTree",
+            "id": "workTree"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "commitMessage",
+            "id": "commitMessage"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          }
+        ],
+        "id": "_doCommitComplex5()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future"
+        },
+        "kind": "method",
+        "name": "_checkoutBare",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "workTree",
+            "id": "workTree"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "desiredBranch",
+            "id": "desiredBranch"
+          }
+        ],
+        "id": "_checkoutBare4()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future"
+        },
+        "kind": "method",
+        "name": "_ensureProperBranch",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "workTree",
+            "id": "workTree"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "desiredBranch",
+            "id": "desiredBranch"
+          }
+        ],
+        "id": "_ensureProperBranch4()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future"
+        },
+        "kind": "method",
+        "name": "_doGitClone",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceGitPath",
+            "id": "sourceGitPath"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "targetGitPath",
+            "id": "targetGitPath"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceGitBranch",
+            "id": "sourceGitBranch"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "doCheckout",
+            "id": "doCheckout"
+          }
+        ],
+        "id": "_doGitClone5()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "String",
+              "refId": "String"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_doGitCheckout",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceGitPath",
+            "id": "sourceGitPath"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "targetGitPath",
+            "id": "targetGitPath"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "sourceGitBranch",
+            "id": "sourceGitBranch"
+          }
+        ],
+        "id": "_doGitCheckout4()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_dartDoc",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "outputDir",
+            "id": "outputDir"
+          },
+          {
+            "ref": {
+              "name": "Collection",
+              "refId": "Collection",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "libs",
+            "id": "libs"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "packageDir",
+            "id": "packageDir"
+          }
+        ],
+        "id": "_dartDoc4()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "String",
+              "refId": "String"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_getCommitMessageFuture",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "allowDirty",
+            "id": "allowDirty"
+          }
+        ],
+        "id": "_getCommitMessageFuture2()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_compileDocs",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "gitDir",
+            "id": "gitDir"
+          },
+          {
+            "ref": {
+              "name": "TempDir",
+              "refId": "TempDir"
+            },
+            "kind": "param",
+            "name": "outputDir",
+            "id": "outputDir"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "commitMessage",
+            "id": "commitMessage"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "libs",
+            "id": "libs"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "packageDir",
+            "id": "packageDir"
+          }
+        ],
+        "id": "_compileDocs7()"
+      },
+      {
+        "returnType": {
+          "name": "ArgParser",
+          "refId": "ArgParser"
+        },
+        "kind": "method",
+        "name": "_getDartDocParser",
+        "id": "_getDartDocParser0()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "compileDocs",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "Func",
+              "refId": "Func"
+            },
+            "kind": "param",
+            "name": "libGetter",
+            "id": "libGetter"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "packageDir",
+            "id": "packageDir"
+          }
+        ],
+        "id": "compileDocs4()"
+      },
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "getCompileDocsFunc",
+        "children": [
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "targetBranch",
+            "id": "targetBranch"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "packageDir",
+            "id": "packageDir"
+          },
+          {
+            "ref": {
+              "name": "Func",
+              "refId": "Func"
+            },
+            "kind": "param",
+            "name": "libGetter",
+            "id": "libGetter"
+          }
+        ],
+        "id": "getCompileDocsFunc3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_chainTasks",
+        "children": [
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "Func",
+                  "refId": "Func"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "futures",
+            "id": "futures"
+          },
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "index",
+            "id": "index"
+          }
+        ],
+        "id": "_chainTasks2()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_dart2js",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "file",
+            "id": "file"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "output",
+            "id": "output"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "packageRoot",
+            "id": "packageRoot"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "minify",
+            "id": "minify"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "allowUnsafeEval",
+            "id": "allowUnsafeEval"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "liveTypeAnalysis",
+            "id": "liveTypeAnalysis"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "rejectDeprecatedFeatures",
+            "id": "rejectDeprecatedFeatures"
+          }
+        ],
+        "id": "_dart2js8()"
+      },
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "createDart2JsTask",
+        "children": [
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "inputs",
+            "id": "inputs"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "output",
+            "id": "output"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "packageRoot",
+            "id": "packageRoot"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "minify",
+            "id": "minify"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "allowUnsafeEval",
+            "id": "allowUnsafeEval"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "liveTypeAnalysis",
+            "id": "liveTypeAnalysis"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "rejectDeprecatedFeatures",
+            "id": "rejectDeprecatedFeatures"
+          }
+        ],
+        "id": "createDart2JsTask7()"
+      },
+      {
+        "returnType": {
+          "name": "bool",
+          "refId": "bool"
+        },
+        "kind": "method",
+        "name": "_processResults",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "context",
+            "id": "context"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "AnalyzerResult",
+                  "refId": "AnalyzerResult"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "analyzerResults",
+            "id": "analyzerResults"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "verbose",
+            "id": "verbose"
+          }
+        ],
+        "id": "_processResults3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "AnalyzerResult",
+              "refId": "AnalyzerResult"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_analyzer",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "context",
+            "id": "context"
+          },
+          {
+            "ref": {
+              "name": "Path",
+              "refId": "Path"
+            },
+            "kind": "param",
+            "name": "filePath",
+            "id": "filePath"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "enableTypeChecks",
+            "id": "enableTypeChecks"
+          }
+        ],
+        "id": "_analyzer3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "bool",
+              "refId": "bool"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_processAnalyzerFile",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "context",
+            "id": "context"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "Path",
+                  "refId": "Path"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "analyzerFilePaths",
+            "id": "analyzerFilePaths"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "enableTypeChecks",
+            "id": "enableTypeChecks"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "verbose",
+            "id": "verbose"
+          }
+        ],
+        "id": "_processAnalyzerFile4()"
+      },
+      {
+        "returnType": {
+          "name": "ArgParser",
+          "refId": "ArgParser"
+        },
+        "kind": "method",
+        "name": "_getDartAnalyzerParser",
+        "id": "_getDartAnalyzerParser0()"
+      },
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "createDartAnalyzerTask",
+        "children": [
+          {
+            "ref": {
+              "name": "Iterable",
+              "refId": "Iterable",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "files",
+            "id": "files"
+          }
+        ],
+        "id": "createDartAnalyzerTask1()"
+      },
+      {
+        "returnType": {
+          "name": "ArgResults",
+          "refId": "ArgResults"
+        },
+        "kind": "method",
+        "name": "_helpfulParseArgs",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskContext",
+              "refId": "TaskContext"
+            },
+            "kind": "param",
+            "name": "ctx",
+            "id": "ctx"
+          },
+          {
+            "ref": {
+              "name": "ArgParser",
+              "refId": "ArgParser"
+            },
+            "kind": "param",
+            "name": "parser",
+            "id": "parser"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "args",
+            "id": "args"
+          }
+        ],
+        "id": "_helpfulParseArgs3()"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "AnalyzerResult",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "AnalyzerResult",
+            "children": [
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              },
+              {
+                "ref": {
+                  "name": "ProcessResult",
+                  "refId": "ProcessResult"
+                },
+                "kind": "param",
+                "name": "processResult",
+                "id": "processResult"
+              }
+            ],
+            "id": "AnalyzerResult2()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toVerboseString",
+            "id": "toVerboseString0()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "_getPrefix",
+            "children": [
+              {
+                "ref": {
+                  "name": "int",
+                  "refId": "int"
+                },
+                "kind": "param",
+                "name": "exitCode",
+                "id": "exitCode"
+              }
+            ],
+            "id": "_getPrefix1()"
+          },
+          {
+            "ref": {
+              "name": "ProcessResult",
+              "refId": "ProcessResult"
+            },
+            "kind": "property",
+            "name": "processResult",
+            "id": "processResult"
+          },
+          {
+            "ref": {
+              "name": "Path",
+              "refId": "Path"
+            },
+            "kind": "property",
+            "name": "path",
+            "id": "path"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "AnalyzerResult",
+            "children": [
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              },
+              {
+                "ref": {
+                  "name": "ProcessResult",
+                  "refId": "ProcessResult"
+                },
+                "kind": "param",
+                "name": "processResult",
+                "id": "processResult"
+              }
+            ],
+            "id": "AnalyzerResult2()"
+          }
+        ],
+        "id": "AnalyzerResult"
+      }
+    ],
+    "id": "file:///Users/kevin/source/github/bot.dart/lib/hop_tasks.dart"
   },
   {
     "kind": "library",

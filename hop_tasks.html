@@ -1,0 +1,254 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>hop_tasks Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="hop_tasks">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="hop_tasks.html">hop_tasks</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>hop_tasks</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="createUnitTestTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createUnitTestTask</strong>(<a href="bot/Action1.html">Action1</a> unitTestAction) <a class="anchor-link" href="#createUnitTestTask"
+              title="Permalink to createUnitTestTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
+ return new Task.async((TaskContext ctx) {
+   final config = new _HopTestConfiguration(ctx);
+   unitTestAction(config);
+
+   unittest.filterTests((unittest.TestCase tc) {
+     return ctx.arguments.every((arg) =&gt; tc.description.contains(arg));
+   });
+
+   unittest.runTests();
+   return config.future;
+ }, 'Run unit tests in the console');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="startProcess">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
+              title="Permalink to startProcess">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; startProcess(TaskContext ctx,
+   String command,
+   [List&lt;String&gt; args = null]) {
+ requireArgumentNotNull(ctx, 'ctx');
+ requireArgumentNotNull(command, 'command');
+ if(args == null) {
+   args = [];
+ }
+
+ ctx.fine("Starting process:");
+ ctx.fine("$command ${Strings.join(args, ' ')}");
+ final processFuture = Process.start(command, args);
+ return processFuture.then((process) {
+   return _startProcess(process, ctx);
+ });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createProcessTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createProcessTask</strong>(String command, {List&lt;String&gt; args: null, String description: ''}) <a class="anchor-link" href="#createProcessTask"
+              title="Permalink to createProcessTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createProcessTask(String command, {List&lt;String&gt; args: null, String description: ''}) {
+ return new Task.async((ctx) =&gt; startProcess(ctx, command, args), description);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="branchForDir">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>branchForDir</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String sourceBranch, String sourceDir, String targetBranch, {String workingDir}) <a class="anchor-link" href="#branchForDir"
+              title="Permalink to branchForDir">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sourceDir,
+   String targetBranch, {String workingDir}) {
+
+ if(workingDir == null) {
+   workingDir = new Directory.current().path;
+ }
+
+ final gitDir = new GitDir(workingDir);
+
+ List&lt;String&gt; gitArgs;
+ String sourceDirTreeSha;
+
+ return gitDir.lsTree(sourceBranch, subTreesOnly: true, path: sourceDir)
+     .then((List&lt;TreeEntry&gt; entries) {
+       assert(entries.length &lt;= 1);
+       if(entries.isEmpty) {
+         throw 'Could not find a matching dir on the provided branch';
+       }
+
+       final tree = entries.single;
+
+       sourceDirTreeSha = tree.sha;
+
+       gitArgs = ['commit-tree', sourceDirTreeSha];
+
+       return gitDir.getBranchReference(targetBranch);
+     })
+     .then((BranchReference branchRef) {
+
+       if(branchRef == null) {
+         // branch does not exist. New branch!
+         return _doCommit(ctx, 'created', gitArgs, sourceBranch, sourceDir,
+             targetBranch, gitDir);
+       } else {
+         // existing branch, need to find the tree info so we can create
+         // a valid commit w/ the right parent
+         return _withExistingBranch(ctx, branchRef, sourceDirTreeSha, sourceDir,
+             gitArgs, sourceBranch, targetBranch, gitDir);
+       }
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="compileDocs">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String targetBranch, <a href="bot/Func.html">Func</a> libGetter, String packageDir) <a class="anchor-link" href="#compileDocs"
+              title="Permalink to compileDocs">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
+   Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter, String packageDir) {
+
+ final parser = _getDartDocParser();
+ final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
+ final bool allowDirty = parseResult['allow-dirty'];
+
+ final tempDocsDirFuture = TempDir.create();
+ final tempGitDirFuture = TempDir.create()
+     .then((TempDir dir) =&gt; _doGitCheckout(ctx, '.', dir, targetBranch));
+ final getLibsFuture = libGetter();
+ final commitMessageFuture = _getCommitMessageFuture(ctx, allowDirty);
+
+ return Future.wait([tempDocsDirFuture, getLibsFuture, tempGitDirFuture,
+                      commitMessageFuture])
+     .then((values) {
+       final outputDir = values[0];
+       final libs = values[1];
+       final gitDir = values[2];
+       final commitMessage = values[3];
+       return _compileDocs(ctx, gitDir, outputDir, targetBranch, commitMessage,
+           libs, packageDir);
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getCompileDocsFunc">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(String targetBranch, String packageDir, <a href="bot/Func.html">Func</a> libGetter) <a class="anchor-link" href="#getCompileDocsFunc"
+              title="Permalink to getCompileDocsFunc">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task getCompileDocsFunc(String targetBranch, String packageDir,
+                       Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter) {
+ return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, libGetter, packageDir),
+     'Generate documentation for the provided libraries.');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createDart2JsTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(List&lt;String&gt; inputs, {String output: null, String packageRoot: null, bool minify: false, bool allowUnsafeEval: true, bool liveTypeAnalysis: false, rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
+              title="Permalink to createDart2JsTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
+ String packageRoot: null, bool minify: false, bool allowUnsafeEval: true,
+ bool liveTypeAnalysis: false, rejectDeprecatedFeatures: false}) {
+ return new Task.async((context) {
+   final futureFuncs = inputs
+       .mappedBy((p) =&gt; () =&gt; _dart2js(context, p,
+           output: output,
+           minify: minify,
+           allowUnsafeEval: allowUnsafeEval,
+           packageRoot: packageRoot,
+           liveTypeAnalysis: liveTypeAnalysis,
+           rejectDeprecatedFeatures: rejectDeprecatedFeatures))
+       .toList();
+   return _chainTasks(futureFuncs);
+ }, 'Run Dart-to-Javascript compiler');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createDartAnalyzerTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(Iterable&lt;String&gt; files) <a class="anchor-link" href="#createDartAnalyzerTask"
+              title="Permalink to createDartAnalyzerTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
+ return new Task.async((context) {
+
+   final parser = _getDartAnalyzerParser();
+   final parseResult = _helpfulParseArgs(context, parser, context.arguments);
+
+   final bool enableTypeChecks = parseResult['enable_type_checks'];
+   final bool verbose = parseResult['verbose'];
+
+   final fileList = files.mappedBy((f) =&gt; new Path(f)).toList();
+
+   return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
+ }, 'Running dart analyzer');
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="hop_tasks/AnalyzerResult.html"><strong>AnalyzerResult</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        
