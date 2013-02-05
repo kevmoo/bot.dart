@@ -51,6 +51,43 @@ Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="pipeProcess">
+<button class="show-code">Code</button>
+Future&lt;int&gt; <strong>pipeProcess</strong>(Process process, {<a href="bot/Action1.html">Action1</a> stdOutWriter, <a href="bot/Action1.html">Action1</a> stdErrWriter}) <a class="anchor-link" href="#pipeProcess"
+              title="Permalink to pipeProcess">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;int&gt; pipeProcess(Process process,
+   {Action1&lt;String&gt; stdOutWriter, Action1&lt;String&gt; stdErrWriter}) {
+ final completer = new Completer&lt;int&gt;();
+
+ if(stdOutWriter != null) {
+   process.stdout.onData = () {
+     final data = process.stdout.read();
+     assert(data != null);
+     final str = new String.fromCharCodes(data).trim();
+     stdOutWriter(str);
+   };
+ }
+
+ if(stdErrWriter != null) {
+   process.stderr.onData = () {
+     final data = process.stderr.read();
+     assert(data != null);
+     final str = new String.fromCharCodes(data).trim();
+     stdErrWriter(str);
+   };
+ }
+
+ process.onExit = (int exitCode){
+   completer.complete(exitCode);
+ };
+
+ return completer.future;
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="startProcess">
 <button class="show-code">Code</button>
 Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
@@ -68,10 +105,15 @@ Future&lt;bool&gt; startProcess(TaskContext ctx,
 
  ctx.fine("Starting process:");
  ctx.fine("$command ${Strings.join(args, ' ')}");
- final processFuture = Process.start(command, args);
- return processFuture.then((process) {
-   return _startProcess(process, ctx);
- });
+ return Process.start(command, args)
+     .then((process) {
+       return pipeProcess(process,
+           stdOutWriter: ctx.fine,
+           stdErrWriter: ctx.severe);
+     })
+     .then((int exitCode) {
+       return exitCode == 0;
+     });
 }
 </pre>
 </div>

@@ -24061,13 +24061,13 @@
           "refId": "Future",
           "arguments": [
             {
-              "name": "bool",
-              "refId": "bool"
+              "name": "int",
+              "refId": "int"
             }
           ]
         },
         "kind": "method",
-        "name": "_startProcess",
+        "name": "pipeProcess",
         "children": [
           {
             "ref": {
@@ -24080,15 +24080,26 @@
           },
           {
             "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
+              "name": "Action1",
+              "refId": "Action1"
             },
+            "isOptional": true,
             "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
+            "name": "stdOutWriter",
+            "id": "stdOutWriter"
+          },
+          {
+            "ref": {
+              "name": "Action1",
+              "refId": "Action1"
+            },
+            "isOptional": true,
+            "kind": "param",
+            "name": "stdErrWriter",
+            "id": "stdErrWriter"
           }
         ],
-        "id": "_startProcess2()"
+        "id": "pipeProcess3()"
       },
       {
         "returnType": {
@@ -25309,56 +25320,12 @@
       },
       {
         "returnType": {
-          "name": "bool",
-          "refId": "bool"
-        },
-        "kind": "method",
-        "name": "_processResults",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "context",
-            "id": "context"
-          },
-          {
-            "ref": {
-              "name": "List",
-              "refId": "List",
-              "arguments": [
-                {
-                  "name": "_AnalyzerResult",
-                  "refId": "_AnalyzerResult"
-                }
-              ]
-            },
-            "kind": "param",
-            "name": "analyzerResults",
-            "id": "analyzerResults"
-          },
-          {
-            "ref": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "param",
-            "name": "verbose",
-            "id": "verbose"
-          }
-        ],
-        "id": "_processResults3()"
-      },
-      {
-        "returnType": {
           "name": "Future",
           "refId": "Future",
           "arguments": [
             {
-              "name": "_AnalyzerResult",
-              "refId": "_AnalyzerResult"
+              "name": "int",
+              "refId": "int"
             }
           ]
         },
@@ -25391,9 +25358,18 @@
             "kind": "param",
             "name": "enableTypeChecks",
             "id": "enableTypeChecks"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "param",
+            "name": "verbose",
+            "id": "verbose"
           }
         ],
-        "id": "_analyzer3()"
+        "id": "_analyzer4()"
       },
       {
         "returnType": {
