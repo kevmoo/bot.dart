@@ -49,6 +49,7 @@ class Util {
    return 0x1fffffff &amp; (hash + ((0x00003fff &amp; hash) &lt;&lt; 15));
  }
 
+ // TODO: handles windows new lines? Should test...
  static List&lt;String&gt; splitLines(String input) {
    requireArgumentNotNull(input, 'input');
    final split = '\n';
@@ -100,7 +101,6 @@ static List&lt;String&gt; splitLines(String input) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

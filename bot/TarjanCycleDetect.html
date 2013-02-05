@@ -45,7 +45,7 @@ class TarjanCycleDetect&lt;TNode&gt; {
    _stack = new List&lt;_TarjanNode&lt;TNode&gt;&gt;(),
    _scc = new List&lt;List&lt;TNode&gt;&gt;();
 
- static List&lt;List&gt; getStronglyConnectedComponents(HashMap graph) {
+ static List&lt;List&gt; getStronglyConnectedComponents(Map graph) {
    assert(graph != null);
 
    var nodes = new _TarjanList(graph);
@@ -95,11 +95,11 @@ class TarjanCycleDetect&lt;TNode&gt; {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="getStronglyConnectedComponents">
 <button class="show-code">Code</button>
-List&lt;List&gt; <strong>getStronglyConnectedComponents</strong>(HashMap graph) <a class="anchor-link" href="#getStronglyConnectedComponents"
+List&lt;List&gt; <strong>getStronglyConnectedComponents</strong>(Map graph) <a class="anchor-link" href="#getStronglyConnectedComponents"
               title="Permalink to TarjanCycleDetect&lt;TNode&gt;.getStronglyConnectedComponents">#</a></h4>
 <div class="doc">
 <pre class="source">
-static List&lt;List&gt; getStronglyConnectedComponents(HashMap graph) {
+static List&lt;List&gt; getStronglyConnectedComponents(Map graph) {
  assert(graph != null);
 
  var nodes = new _TarjanList(graph);
@@ -113,7 +113,6 @@ static List&lt;List&gt; getStronglyConnectedComponents(HashMap graph) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

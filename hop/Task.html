@@ -52,7 +52,14 @@ class Task {
 
  Future&lt;bool&gt; run(TaskContext ctx) {
    requireArgumentNotNull(ctx, 'ctx');
-   final f = _exec(ctx);
+
+   Future&lt;bool&gt; f;
+
+   try {
+     f = _exec(ctx);
+   } catch(error, stackTrace) {
+     return new Future.immediateError(error, stackTrace);
+   }
    if(f == null) {
      return new Future.immediateError(_nullFutureResultEx);
    } else {
@@ -120,7 +127,14 @@ Future&lt;bool&gt; <strong>run</strong>(<a href="../hop/TaskContext.html">TaskCo
 <pre class="source">
 Future&lt;bool&gt; run(TaskContext ctx) {
  requireArgumentNotNull(ctx, 'ctx');
- final f = _exec(ctx);
+
+ Future&lt;bool&gt; f;
+
+ try {
+   f = _exec(ctx);
+ } catch(error, stackTrace) {
+   return new Future.immediateError(error, stackTrace);
+ }
  if(f == null) {
    return new Future.immediateError(_nullFutureResultEx);
  } else {
@@ -148,7 +162,6 @@ String toString() =&gt; "Task: $description";
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

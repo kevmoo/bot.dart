@@ -131,6 +131,8 @@ abstract class ListBase&lt;E&gt; extends Enumerable&lt;E&gt; implements List&lt;
        "Cannot remove from an unmodifiable list");
  }
 
+ List&lt;E&gt; get reversed =&gt; new ReversedListView(this, 0, null);
+
  void setRange(int start, int length, List&lt;E&gt; from, [int startFrom]) {
    throw new UnsupportedError(
        "Cannot modify an unmodifiable list");
@@ -283,6 +285,24 @@ void set length(int newLength) {
  throw new UnsupportedError(
      "Cannot change the length of an unmodifiable list");
 }
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="reversed">
+<button class="show-code">Code</button>
+final List&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>reversed</strong> <a class="anchor-link"
+            href="#reversed"
+            title="Permalink to ListBase&lt;E&gt;.reversed">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Returns a reversed fixed-length view of this <code>List</code>.</p>
+<p>The reversed list has elements in the opposite order of this list.
+It is backed by this list, but will stop working if this list
+becomes shorter than its current length.</p>
+<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<pre class="source">
+List&lt;E&gt; get reversed =&gt; new ReversedListView(this, 0, null);
 </pre>
 </div>
 </div>
@@ -765,6 +785,25 @@ E lastMatching(bool test(E value), {E orElse()}) {
  if (orElse != null) return orElse();
  throw new StateError("No matching element");
 }
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="map">
+<button class="show-code">Code</button>
+Iterable <strong>map</strong>(f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#map"
+              title="Permalink to ListBase&lt;E&gt;.map">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
+by the result of <code>f(e)</code>.</p>
+<p>This method returns a view of the mapped elements. As long as the
+returned <code>Iterable</code> is not iterated over, the supplied function 
+<span class="param">f</span> will
+not be invoked. The transformed elements will not be cached. Iterating
+multiple times over the the returned <code>Iterable</code> will invoke the supplied
+function 
+<span class="param">f</span> multiple times on the same element.</p>
+<pre class="source">
+Iterable map(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
 </pre>
 </div>
 </div>
@@ -1326,7 +1365,6 @@ Enumerable&lt;T&gt; where(Func1&lt;T, bool&gt; f) =&gt;
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

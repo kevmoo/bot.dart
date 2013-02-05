@@ -40,9 +40,8 @@ class Runner {
  final ArgResults _args;
  final BaseConfig _state;
 
- Runner(this._state, List&lt;String&gt; arguments) :
-   // TODO: better error or output for invalid arguments
-   _args = _parser.parse(arguments) {
+ Runner(this._state, this._args) {
+   assert(_args != null);
    _state.requireFrozen();
  }
 
@@ -122,7 +121,7 @@ class Runner {
    ctx.log('Tasks:', AnsiColor.BLUE);
    _printTaskTable(ctx);
    ctx.log('');
-   ctx.log(_parser.getUsage());
+   ctx.log(getUsage());
  }
 
  void _printRawTasks(RootTaskContext ctx) {
@@ -144,6 +143,11 @@ class Runner {
      ctx.log(r);
    }
  }
+
+ static ArgResults parseArgs(List&lt;String&gt; args) =&gt;
+     _parser.parse(args);
+
+ static String getUsage() =&gt; _parser.getUsage();
 
  static RunResult _logExitCode(RootTaskContext ctx, RunResult result) {
    if(result.success) {
@@ -188,16 +192,39 @@ RAW_TASK_LIST_CMD = 'print_raw_task_list'
 </div>
 </div>
 <div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="parseArgs">
+<button class="show-code">Code</button>
+<a href="../args/ArgResults.html">ArgResults</a> <strong>parseArgs</strong>(List&lt;String&gt; args) <a class="anchor-link" href="#parseArgs"
+              title="Permalink to Runner.parseArgs">#</a></h4>
+<div class="doc">
+<pre class="source">
+static ArgResults parseArgs(List&lt;String&gt; args) =&gt;
+   _parser.parse(args);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getUsage">
+<button class="show-code">Code</button>
+String <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+              title="Permalink to Runner.getUsage">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String getUsage() =&gt; _parser.getUsage();
+</pre>
+</div>
+</div>
+</div>
+<div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="Runner">
 <button class="show-code">Code</button>
-new <strong>Runner</strong>(<a href="../hop/BaseConfig.html">BaseConfig</a> _state, List&lt;String&gt; arguments) <a class="anchor-link" href="#Runner"
+new <strong>Runner</strong>(<a href="../hop/BaseConfig.html">BaseConfig</a> _state, <a href="../args/ArgResults.html">ArgResults</a> _args) <a class="anchor-link" href="#Runner"
               title="Permalink to Runner.Runner">#</a></h4>
 <div class="doc">
 <pre class="source">
-Runner(this._state, List&lt;String&gt; arguments) :
- // TODO: better error or output for invalid arguments
- _args = _parser.parse(arguments) {
+Runner(this._state, this._args) {
+ assert(_args != null);
  _state.requireFrozen();
 }
 </pre>
@@ -258,7 +285,6 @@ Future&lt;RunResult&gt; run() {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

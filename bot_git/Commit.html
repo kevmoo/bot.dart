@@ -1,0 +1,111 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Commit class / bot_git Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_git" data-type="Commit">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_git.html">bot_git</a> &rsaquo; <a href="../bot_git/Commit.html">Commit</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Commit</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Commit {
+ static const _commitContentRegExpVal = '^tree (${Git._shaRegexPattern})\\s.*';
+ static final _commitContentRegExp = new RegExp(_commitContentRegExpVal);
+
+ final String treeSha;
+ final String content;
+
+ Commit._internal(this.treeSha, this.content) {
+   assert(Git.isValidSha(this.treeSha));
+ }
+
+ static Commit parse(String content) {
+   // TODO: should catch and re-throw a descriptive error
+   final match = _commitContentRegExp.allMatches(content).single;
+
+   assert(match.groupCount == 1);
+   return new Commit._internal(match[1], content);
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="parse">
+<button class="show-code">Code</button>
+<a href="../bot_git/Commit.html">Commit</a> <strong>parse</strong>(String content) <a class="anchor-link" href="#parse"
+              title="Permalink to Commit.parse">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Commit parse(String content) {
+ // TODO: should catch and re-throw a descriptive error
+ final match = _commitContentRegExp.allMatches(content).single;
+
+ assert(match.groupCount == 1);
+ return new Commit._internal(match[1], content);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="content">
+<button class="show-code">Code</button>
+final String         <strong>content</strong> <a class="anchor-link"
+            href="#content"
+            title="Permalink to Commit.content">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+content
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="treeSha">
+<button class="show-code">Code</button>
+final String         <strong>treeSha</strong> <a class="anchor-link"
+            href="#treeSha"
+            title="Permalink to Commit.treeSha">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+treeSha
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

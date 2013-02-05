@@ -43,7 +43,7 @@ class LogRecord {
  final String loggerName;
 
  /** Time when this record was created. */
- final Date time;
+ final DateTime time;
 
  /** Unique sequence number greater than all log records created before it. */
  final int sequenceNumber;
@@ -59,7 +59,7 @@ class LogRecord {
  LogRecord(
      this.level, this.message, this.loggerName,
      [time, this.exception, this.exceptionText]) :
-   this.time = (time == null) ? new Date.now() : time,
+   this.time = (time == null) ? new DateTime.now() : time,
    this.sequenceNumber = LogRecord._nextNumber++;
 }
 </pre>
@@ -75,7 +75,7 @@ new <strong>LogRecord</strong>(<a href="../logging/Level.html">Level</a> level, 
 LogRecord(
    this.level, this.message, this.loggerName,
    [time, this.exception, this.exceptionText]) :
- this.time = (time == null) ? new Date.now() : time,
+ this.time = (time == null) ? new DateTime.now() : time,
  this.sequenceNumber = LogRecord._nextNumber++;
 </pre>
 </div>
@@ -157,7 +157,7 @@ sequenceNumber
 </div>
 <div class="field"><h4 id="time">
 <button class="show-code">Code</button>
-final Date         <strong>time</strong> <a class="anchor-link"
+final DateTime         <strong>time</strong> <a class="anchor-link"
             href="#time"
             title="Permalink to LogRecord.time">#</a>
         </h4>
@@ -171,7 +171,6 @@ time
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

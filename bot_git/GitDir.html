@@ -49,20 +49,94 @@ class GitDir {
 
  Path get path =&gt; _path;
 
- Future&lt;List&lt;String&gt;&gt; getBranches() {
-   return Git.runGit(['ls-remote', _path.toNativePath()])
+ Future&lt;int&gt; getCommitCount([String branchName = 'HEAD']) {
+   return runCommand(['rev-list', '--count', branchName])
        .then((ProcessResult pr) {
-         assert(pr.exitCode == 0);
-
-         // TODO: not working *at all* yet.
-         return [];
+         return int.parse(pr.stdout);
        });
  }
 
- Future&lt;Map&lt;String, String&gt;&gt; writeObject(List&lt;String&gt; paths) {
+ Future&lt;List&lt;String&gt;&gt; getBranchNames() {
+   return getBranchReferences()
+       .then((list) {
+         return list
+             .mappedBy((br) =&gt; br.branchName)
+             .toList();
+       });
+ }
+
+ Future&lt;BranchReference&gt; getBranchReference(String branchName) {
+   return getBranchReferences()
+       .then((list) {
+         final matches = list.where((b) =&gt; b.branchName == branchName)
+             .toList();
+
+         assert(matches.length &lt;= 1);
+         if(matches.isEmpty) {
+           return null;
+         } else {
+           return matches.single;
+         }
+       });
+ }
+
+ Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
+   return runCommand(['show-ref', '--heads'], false)
+       .then((ProcessResult pr) {
+         if(pr.exitCode == 1) {
+           // no heads present, return empty collection
+           return [];
+         }
+
+         // otherwise, it should have worked fine...
+         assert(pr.exitCode == 0);
+
+         return CommitReference.fromShowRefOutput(pr.stdout)
+             .mappedBy((gr) =&gt; gr.toBranchReference())
+             .toList();
+       });
+ }
+
+ Future&lt;BranchReference&gt; getCurrentBranch() {
+   return runCommand(['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'])
+       .then((ProcessResult pr) {
+         return runCommand(['show-ref', '--verify', pr.stdout.trim()]);
+       })
+       .then((ProcessResult pr) {
+         return CommitReference.fromShowRefOutput(pr.stdout).single.toBranchReference();
+       });
+ }
+
+ Future&lt;List&lt;TreeEntry&gt;&gt; lsTree(String treeish,
+     {bool subTreesOnly: false, String path: null}) {
+   assert(treeish != null);
+   final args = ['ls-tree'];
+
+   if(subTreesOnly == true) {
+     args.add('-d');
+   }
+
+   args.add(treeish);
+
+   if(path != null) {
+     args.add(path);
+   }
+
+   return runCommand(args)
+       .then((ProcessResult pr) {
+         return TreeEntry.fromLsTreeOutput(pr.stdout);
+       });
+ }
+
+ /**
+  * Given a list of [paths], write those files to the object store
+  * and return a [Map] where the key is the input path and the value is
+  * the SHA of the newly written object.
+  */
+ Future&lt;Map&lt;String, String&gt;&gt; writeObjects(List&lt;String&gt; paths) {
    final args = ['hash-object', '-t', 'blob', '-w', '--no-filters', '--'];
    args.addAll(paths);
-   return _doGit(args)
+   return runCommand(args)
        .then((ProcessResult pr) {
          final val = pr.stdout.trim();
          final shas = val.split(new RegExp(r'\s+'));
@@ -76,18 +150,54 @@ class GitDir {
        });
  }
 
- Future&lt;ProcessResult&gt; _doGit(List&lt;String&gt; args, [bool throwOnError = true]) {
-   var allArgs = ['--git-dir', _gitDirPath]
-     ..addAll(args);
-   return Git.runGit(allArgs, throwOnError);
+ /**
+  * [rev] should probably be a sha1 to a commit.
+  * But GIT lets you do other things.
+  * See http://git-scm.com/docs/gitrevisions.html
+  */
+ Future&lt;Commit&gt; getCommit(String rev) {
+   return runCommand(['cat-file', '-p', rev])
+       .then((ProcessResult pr) {
+         return Commit.parse(pr.stdout);
+       });
  }
 
- String get _gitDirPath =&gt; _path.append('.git').toNativePath();
+ Future&lt;ProcessResult&gt; runCommand(List&lt;String&gt; args, [bool throwOnError = true]) {
+   return Git.runGit(args, throwOnError: throwOnError, processWorkingDir: _workingDir);
+ }
 
- static Future&lt;GitDir&gt; init(Directory source) {
+ Future&lt;bool&gt; isWorkingTreeClean() {
+   return runCommand(['status', '--porcelain'])
+       .then((ProcessResult pr) =&gt; pr.stdout.isEmpty);
+ }
+
+ String get _workingDir =&gt; _path.toString();
+
+ static Future&lt;bool&gt; isGitDir(String path) {
+   final dir = new Directory(path);
+   return dir.exists()
+       .then((bool exists) {
+         if(exists) {
+           return _isGitDir(dir);
+         } else {
+           return false;
+         }
+       });
+ }
+
+ /**
+  * [allowContent] if true, doesn't check to see if the directory is empty
+  *
+  * Will fail if the source is a git directory (either at the root or a sub directory)
+  */
+ static Future&lt;GitDir&gt; init(Directory source, {bool allowContent: false}) {
    assert(source.existsSync());
 
-   // first, verify it's empty
+   if(allowContent == true) {
+     return _init(source);
+   }
+
+   // else, verify it's empty
    return IoHelpers.isEmpty(source)
        .then((bool isEmpty) {
          if(!isEmpty) {
@@ -98,9 +208,27 @@ class GitDir {
  }
 
  static Future&lt;GitDir&gt; _init(Directory source) {
-   return Git.runGit(['init', source.path])
+   return _isGitDir(source)
+       .then((bool isGitDir) {
+         if(isGitDir) {
+           throw 'Cannot init a directory that is already a git directory';
+         }
+
+         return Git.runGit(['init', source.path]);
+       })
        .then((ProcessResult pr) {
          return new GitDir(source.path);
+       });
+ }
+
+ static Future&lt;bool&gt; _isGitDir(Directory dir) {
+   assert(dir.existsSync());
+
+   return Git.runGit(['status', '--porcelain'],
+       throwOnError: false, processWorkingDir: dir.path)
+       .then((ProcessResult pr) {
+         // if exitCode is 0, status worked...which means this is a git dir
+         return pr.exitCode == 0;
        });
  }
 }
@@ -108,16 +236,43 @@ class GitDir {
 </div>
 <div>
 <h3>Static Methods</h3>
-<div class="method"><h4 id="init">
+<div class="method"><h4 id="isGitDir">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>init</strong>(Directory source) <a class="anchor-link" href="#init"
-              title="Permalink to GitDir.init">#</a></h4>
+Future&lt;bool&gt; <strong>isGitDir</strong>(String path) <a class="anchor-link" href="#isGitDir"
+              title="Permalink to GitDir.isGitDir">#</a></h4>
 <div class="doc">
 <pre class="source">
-static Future&lt;GitDir&gt; init(Directory source) {
+static Future&lt;bool&gt; isGitDir(String path) {
+ final dir = new Directory(path);
+ return dir.exists()
+     .then((bool exists) {
+       if(exists) {
+         return _isGitDir(dir);
+       } else {
+         return false;
+       }
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="init">
+<button class="show-code">Code</button>
+Future&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>init</strong>(Directory source, {bool allowContent: false}) <a class="anchor-link" href="#init"
+              title="Permalink to GitDir.init">#</a></h4>
+<div class="doc">
+<p>
+<span class="param">allowContent</span> if true, doesn't check to see if the directory is empty</p>
+<p>Will fail if the source is a git directory (either at the root or a sub directory)</p>
+<pre class="source">
+static Future&lt;GitDir&gt; init(Directory source, {bool allowContent: false}) {
  assert(source.existsSync());
 
- // first, verify it's empty
+ if(allowContent == true) {
+   return _init(source);
+ }
+
+ // else, verify it's empty
  return IoHelpers.isEmpty(source)
      .then((bool isEmpty) {
        if(!isEmpty) {
@@ -175,34 +330,191 @@ Path get path =&gt; _path;
 </div>
 <div>
 <h3>Methods</h3>
-<div class="method"><h4 id="getBranches">
+<div class="method"><h4 id="getBranchNames">
 <button class="show-code">Code</button>
-Future&lt;List&lt;String&gt;&gt; <strong>getBranches</strong>() <a class="anchor-link" href="#getBranches"
-              title="Permalink to GitDir.getBranches">#</a></h4>
+Future&lt;List&lt;String&gt;&gt; <strong>getBranchNames</strong>() <a class="anchor-link" href="#getBranchNames"
+              title="Permalink to GitDir.getBranchNames">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future&lt;List&lt;String&gt;&gt; getBranches() {
- return Git.runGit(['ls-remote', _path.toNativePath()])
-     .then((ProcessResult pr) {
-       assert(pr.exitCode == 0);
-
-       // TODO: not working *at all* yet.
-       return [];
+Future&lt;List&lt;String&gt;&gt; getBranchNames() {
+ return getBranchReferences()
+     .then((list) {
+       return list
+           .mappedBy((br) =&gt; br.branchName)
+           .toList();
      });
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="writeObject">
+<div class="method"><h4 id="getBranchReference">
 <button class="show-code">Code</button>
-Future&lt;Map&lt;String, String&gt;&gt; <strong>writeObject</strong>(List&lt;String&gt; paths) <a class="anchor-link" href="#writeObject"
-              title="Permalink to GitDir.writeObject">#</a></h4>
+Future&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getBranchReference</strong>(String branchName) <a class="anchor-link" href="#getBranchReference"
+              title="Permalink to GitDir.getBranchReference">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future&lt;Map&lt;String, String&gt;&gt; writeObject(List&lt;String&gt; paths) {
+Future&lt;BranchReference&gt; getBranchReference(String branchName) {
+ return getBranchReferences()
+     .then((list) {
+       final matches = list.where((b) =&gt; b.branchName == branchName)
+           .toList();
+
+       assert(matches.length &lt;= 1);
+       if(matches.isEmpty) {
+         return null;
+       } else {
+         return matches.single;
+       }
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getBranchReferences">
+<button class="show-code">Code</button>
+Future&lt;List&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt;&gt; <strong>getBranchReferences</strong>() <a class="anchor-link" href="#getBranchReferences"
+              title="Permalink to GitDir.getBranchReferences">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
+ return runCommand(['show-ref', '--heads'], false)
+     .then((ProcessResult pr) {
+       if(pr.exitCode == 1) {
+         // no heads present, return empty collection
+         return [];
+       }
+
+       // otherwise, it should have worked fine...
+       assert(pr.exitCode == 0);
+
+       return CommitReference.fromShowRefOutput(pr.stdout)
+           .mappedBy((gr) =&gt; gr.toBranchReference())
+           .toList();
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getCommit">
+<button class="show-code">Code</button>
+Future&lt;<a href="../bot_git/Commit.html">Commit</a>&gt; <strong>getCommit</strong>(String rev) <a class="anchor-link" href="#getCommit"
+              title="Permalink to GitDir.getCommit">#</a></h4>
+<div class="doc">
+<p>
+<span class="param">rev</span> should probably be a sha1 to a commit.
+But GIT lets you do other things.
+See http://git-scm.com/docs/gitrevisions.html</p>
+<pre class="source">
+Future&lt;Commit&gt; getCommit(String rev) {
+ return runCommand(['cat-file', '-p', rev])
+     .then((ProcessResult pr) {
+       return Commit.parse(pr.stdout);
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getCommitCount">
+<button class="show-code">Code</button>
+Future&lt;int&gt; <strong>getCommitCount</strong>([String branchName = 'HEAD']) <a class="anchor-link" href="#getCommitCount"
+              title="Permalink to GitDir.getCommitCount">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;int&gt; getCommitCount([String branchName = 'HEAD']) {
+ return runCommand(['rev-list', '--count', branchName])
+     .then((ProcessResult pr) {
+       return int.parse(pr.stdout);
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getCurrentBranch">
+<button class="show-code">Code</button>
+Future&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getCurrentBranch</strong>() <a class="anchor-link" href="#getCurrentBranch"
+              title="Permalink to GitDir.getCurrentBranch">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;BranchReference&gt; getCurrentBranch() {
+ return runCommand(['rev-parse', '--verify', '--symbolic-full-name', 'HEAD'])
+     .then((ProcessResult pr) {
+       return runCommand(['show-ref', '--verify', pr.stdout.trim()]);
+     })
+     .then((ProcessResult pr) {
+       return CommitReference.fromShowRefOutput(pr.stdout).single.toBranchReference();
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isWorkingTreeClean">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>isWorkingTreeClean</strong>() <a class="anchor-link" href="#isWorkingTreeClean"
+              title="Permalink to GitDir.isWorkingTreeClean">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; isWorkingTreeClean() {
+ return runCommand(['status', '--porcelain'])
+     .then((ProcessResult pr) =&gt; pr.stdout.isEmpty);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lsTree">
+<button class="show-code">Code</button>
+Future&lt;List&lt;<a href="../bot_git/TreeEntry.html">TreeEntry</a>&gt;&gt; <strong>lsTree</strong>(String treeish, {bool subTreesOnly: false, String path: null}) <a class="anchor-link" href="#lsTree"
+              title="Permalink to GitDir.lsTree">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;TreeEntry&gt;&gt; lsTree(String treeish,
+   {bool subTreesOnly: false, String path: null}) {
+ assert(treeish != null);
+ final args = ['ls-tree'];
+
+ if(subTreesOnly == true) {
+   args.add('-d');
+ }
+
+ args.add(treeish);
+
+ if(path != null) {
+   args.add(path);
+ }
+
+ return runCommand(args)
+     .then((ProcessResult pr) {
+       return TreeEntry.fromLsTreeOutput(pr.stdout);
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="runCommand">
+<button class="show-code">Code</button>
+Future&lt;ProcessResult&gt; <strong>runCommand</strong>(List&lt;String&gt; args, [bool throwOnError = true]) <a class="anchor-link" href="#runCommand"
+              title="Permalink to GitDir.runCommand">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;ProcessResult&gt; runCommand(List&lt;String&gt; args, [bool throwOnError = true]) {
+ return Git.runGit(args, throwOnError: throwOnError, processWorkingDir: _workingDir);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="writeObjects">
+<button class="show-code">Code</button>
+Future&lt;Map&lt;String, String&gt;&gt; <strong>writeObjects</strong>(List&lt;String&gt; paths) <a class="anchor-link" href="#writeObjects"
+              title="Permalink to GitDir.writeObjects">#</a></h4>
+<div class="doc">
+<p>Given a list of 
+<span class="param">paths</span>, write those files to the object store
+and return a <code>Map</code> where the key is the input path and the value is
+the SHA of the newly written object.</p>
+<pre class="source">
+Future&lt;Map&lt;String, String&gt;&gt; writeObjects(List&lt;String&gt; paths) {
  final args = ['hash-object', '-t', 'blob', '-w', '--no-filters', '--'];
  args.addAll(paths);
- return _doGit(args)
+ return runCommand(args)
      .then((ProcessResult pr) {
        final val = pr.stdout.trim();
        final shas = val.split(new RegExp(r'\s+'));
@@ -222,7 +534,6 @@ Future&lt;Map&lt;String, String&gt;&gt; writeObject(List&lt;String&gt; paths) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

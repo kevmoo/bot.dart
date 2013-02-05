@@ -1,0 +1,185 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>TreeEntry class / bot_git Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_git" data-type="TreeEntry">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_git.html">bot_git</a> &rsaquo; <a href="../bot_git/TreeEntry.html">TreeEntry</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>TreeEntry</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class TreeEntry {
+ static final _lsTreeLine = r'^([0-9]{6}) (blob|tree) ('
+     .concat(Git._shaRegexPattern)
+     .concat(')\t(\\S.*\\S)\$');
+
+ static final _lsTreeRegEx = new RegExp(_lsTreeLine);
+
+ String mode;
+
+ // TODO: enum for type?
+ String type;
+ String sha;
+ String name;
+
+ TreeEntry(this.mode, this.type, this.sha, this.name) {
+   // TODO: asserts!
+ }
+
+ factory TreeEntry.fromLsTree(String value) {
+   // TODO: should catch and re-throw a descriptive error
+   final match = _lsTreeRegEx.allMatches(value).single;
+
+   return new TreeEntry(match[1], match[2], match[3], match[4]);
+ }
+
+ static List&lt;TreeEntry&gt; fromLsTreeOutput(String output) {
+   final lines = Util.splitLines(output);
+
+   // last line should be empty
+   assert(lines.last.length == 0);
+
+   return lines.getRange(0, lines.length-1)
+       .mappedBy((line) =&gt; new TreeEntry.fromLsTree(line))
+       .toList();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="fromLsTreeOutput">
+<button class="show-code">Code</button>
+List&lt;<a href="../bot_git/TreeEntry.html">TreeEntry</a>&gt; <strong>fromLsTreeOutput</strong>(String output) <a class="anchor-link" href="#fromLsTreeOutput"
+              title="Permalink to TreeEntry.fromLsTreeOutput">#</a></h4>
+<div class="doc">
+<pre class="source">
+static List&lt;TreeEntry&gt; fromLsTreeOutput(String output) {
+ final lines = Util.splitLines(output);
+
+ // last line should be empty
+ assert(lines.last.length == 0);
+
+ return lines.getRange(0, lines.length-1)
+     .mappedBy((line) =&gt; new TreeEntry.fromLsTree(line))
+     .toList();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="TreeEntry">
+<button class="show-code">Code</button>
+new <strong>TreeEntry</strong>(String mode, String type, String sha, String name) <a class="anchor-link" href="#TreeEntry"
+              title="Permalink to TreeEntry.TreeEntry">#</a></h4>
+<div class="doc">
+<pre class="source">
+TreeEntry(this.mode, this.type, this.sha, this.name) {
+ // TODO: asserts!
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="TreeEntry.fromLsTree">
+<button class="show-code">Code</button>
+factory <strong>TreeEntry.fromLsTree</strong>(String value) <a class="anchor-link" href="#TreeEntry.fromLsTree"
+              title="Permalink to TreeEntry.TreeEntry.fromLsTree">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory TreeEntry.fromLsTree(String value) {
+ // TODO: should catch and re-throw a descriptive error
+ final match = _lsTreeRegEx.allMatches(value).single;
+
+ return new TreeEntry(match[1], match[2], match[3], match[4]);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="mode">
+<button class="show-code">Code</button>
+String         <strong>mode</strong> <a class="anchor-link"
+            href="#mode"
+            title="Permalink to TreeEntry.mode">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+mode
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+String         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to TreeEntry.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sha">
+<button class="show-code">Code</button>
+String         <strong>sha</strong> <a class="anchor-link"
+            href="#sha"
+            title="Permalink to TreeEntry.sha">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+sha
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="type">
+<button class="show-code">Code</button>
+String         <strong>type</strong> <a class="anchor-link"
+            href="#type"
+            title="Permalink to TreeEntry.type">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+type
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -39,7 +39,7 @@ class ImageLoader extends ResourceLoader&lt;ImageElement&gt; {
  void _doLoad(String blobUrl) {
    final img = new ImageElement(src: blobUrl);
    assert(!img.complete);
-   img.on.load.add((args) {
+   img.onLoad.listen((args) {
      assert(args.type == 'load');
      _loadResourceSucceed(blobUrl, img);
    });
@@ -180,7 +180,6 @@ void load() {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

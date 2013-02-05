@@ -1,4 +1,3 @@
-
 [
   {
     "kind": "library",
@@ -2389,8 +2388,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "HashMap",
-                  "refId": "HashMap"
+                  "name": "Map",
+                  "refId": "Map"
                 },
                 "kind": "param",
                 "name": "graph",
@@ -7713,6 +7712,21 @@
           },
           {
             "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "E",
+                  "refId": "E"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "reversed",
+            "id": "reversed0()"
+          },
+          {
+            "returnType": {
               "name": "void",
               "refId": "void"
             },
@@ -7847,6 +7861,21 @@
             "kind": "property",
             "name": "iterator",
             "id": "iterator"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "E",
+                  "refId": "E"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "reversed",
+            "id": "reversed"
           },
           {
             "returnType": {
@@ -11867,6 +11896,33 @@
               "refId": "Future",
               "arguments": [
                 {
+                  "name": "int",
+                  "refId": "int"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getCommitCount",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "branchName",
+                "id": "branchName"
+              }
+            ],
+            "id": "getCommitCount1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
                   "name": "List",
                   "refId": "List",
                   "arguments": [
@@ -11879,8 +11935,122 @@
               ]
             },
             "kind": "method",
-            "name": "getBranches",
-            "id": "getBranches0()"
+            "name": "getBranchNames",
+            "id": "getBranchNames0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "BranchReference",
+                  "refId": "BranchReference"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getBranchReference",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "branchName",
+                "id": "branchName"
+              }
+            ],
+            "id": "getBranchReference1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "BranchReference",
+                      "refId": "BranchReference"
+                    }
+                  ]
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getBranchReferences",
+            "id": "getBranchReferences0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "BranchReference",
+                  "refId": "BranchReference"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "getCurrentBranch",
+            "id": "getCurrentBranch0()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "TreeEntry",
+                      "refId": "TreeEntry"
+                    }
+                  ]
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "lsTree",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "treeish",
+                "id": "treeish"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "subTreesOnly",
+                "id": "subTreesOnly"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "lsTree3()"
           },
           {
             "returnType": {
@@ -11904,7 +12074,8 @@
               ]
             },
             "kind": "method",
-            "name": "writeObject",
+            "comment": "\nGiven a list of [paths], write those files to the object store\nand return a [Map] where the key is the input path and the value is\nthe SHA of the newly written object.\n",
+            "name": "writeObjects",
             "children": [
               {
                 "ref": {
@@ -11922,7 +12093,34 @@
                 "id": "paths"
               }
             ],
-            "id": "writeObject1()"
+            "id": "writeObjects1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Commit",
+                  "refId": "Commit"
+                }
+              ]
+            },
+            "kind": "method",
+            "comment": "\n[rev] should probably be a sha1 to a commit.\nBut GIT lets you do other things.\nSee http://git-scm.com/docs/gitrevisions.html\n",
+            "name": "getCommit",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "rev",
+                "id": "rev"
+              }
+            ],
+            "id": "getCommit1()"
           },
           {
             "returnType": {
@@ -11936,7 +12134,7 @@
               ]
             },
             "kind": "method",
-            "name": "_doGit",
+            "name": "runCommand",
             "children": [
               {
                 "ref": {
@@ -11964,7 +12162,22 @@
                 "id": "throwOnError"
               }
             ],
-            "id": "_doGit2()"
+            "id": "runCommand2()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "isWorkingTreeClean",
+            "id": "isWorkingTreeClean0()"
           },
           {
             "returnType": {
@@ -11972,8 +12185,35 @@
               "refId": "String"
             },
             "kind": "method",
-            "name": "_gitDirPath",
-            "id": "_gitDirPath0()"
+            "name": "_workingDir",
+            "id": "_workingDir0()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "isGitDir",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "path",
+                "id": "path"
+              }
+            ],
+            "id": "isGitDir1()"
           },
           {
             "isStatic": true,
@@ -11988,6 +12228,7 @@
               ]
             },
             "kind": "method",
+            "comment": "\n[allowContent] if true, doesn't check to see if the directory is empty\n\nWill fail if the source is a git directory (either at the root or a sub directory)\n",
             "name": "init",
             "children": [
               {
@@ -11998,9 +12239,19 @@
                 "kind": "param",
                 "name": "source",
                 "id": "source"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "allowContent",
+                "id": "allowContent"
               }
             ],
-            "id": "init1()"
+            "id": "init2()"
           },
           {
             "isStatic": true,
@@ -12030,6 +12281,33 @@
             "id": "_init1()"
           },
           {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "bool",
+                  "refId": "bool"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_isGitDir",
+            "children": [
+              {
+                "ref": {
+                  "name": "Directory",
+                  "refId": "Directory"
+                },
+                "kind": "param",
+                "name": "dir",
+                "id": "dir"
+              }
+            ],
+            "id": "_isGitDir1()"
+          },
+          {
             "ref": {
               "name": "Path",
               "refId": "Path"
@@ -12044,8 +12322,8 @@
               "refId": "String"
             },
             "kind": "property",
-            "name": "_gitDirPath",
-            "id": "_gitDirPath"
+            "name": "_workingDir",
+            "id": "_workingDir"
           },
           {
             "ref": {
@@ -12115,8 +12393,701 @@
           "refId": "Object"
         },
         "kind": "class",
+        "name": "TreeEntry",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "TreeEntry",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "mode",
+                "id": "mode"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "type",
+                "id": "type"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              }
+            ],
+            "id": "TreeEntry4()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "TreeEntry.fromLsTree",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "TreeEntry.fromLsTree1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "TreeEntry",
+                  "refId": "TreeEntry"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "fromLsTreeOutput",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "output",
+                "id": "output"
+              }
+            ],
+            "id": "fromLsTreeOutput1()"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_lsTreeLine",
+            "id": "_lsTreeLine"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_lsTreeRegEx",
+            "id": "_lsTreeRegEx"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "mode",
+            "id": "mode"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "type",
+            "id": "type"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "sha",
+            "id": "sha"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "name",
+            "id": "name"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "TreeEntry",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "mode",
+                "id": "mode"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "type",
+                "id": "type"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              }
+            ],
+            "id": "TreeEntry4()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "TreeEntry.fromLsTree",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "TreeEntry.fromLsTree1()"
+          }
+        ],
+        "id": "TreeEntry"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "Commit",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "Commit._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "treeSha",
+                "id": "treeSha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "Commit._internal2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Commit",
+              "refId": "Commit"
+            },
+            "kind": "method",
+            "name": "parse",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "parse1()"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_commitContentRegExpVal",
+            "id": "_commitContentRegExpVal"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_commitContentRegExp",
+            "id": "_commitContentRegExp"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "treeSha",
+            "id": "treeSha"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "content",
+            "id": "content"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "Commit._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "treeSha",
+                "id": "treeSha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "content",
+                "id": "content"
+              }
+            ],
+            "id": "Commit._internal2()"
+          }
+        ],
+        "id": "Commit"
+      },
+      {
+        "superclass": {
+          "name": "CommitReference",
+          "refId": "CommitReference"
+        },
+        "kind": "class",
+        "name": "BranchReference",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "BranchReference",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              }
+            ],
+            "id": "BranchReference2()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "BranchReference._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "branchName",
+                "id": "branchName"
+              }
+            ],
+            "id": "BranchReference._internal3()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_localBranchPrefix",
+            "id": "_localBranchPrefix"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "branchName",
+            "id": "branchName"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "BranchReference",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              }
+            ],
+            "id": "BranchReference2()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "BranchReference._internal",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "branchName",
+                "id": "branchName"
+              }
+            ],
+            "id": "BranchReference._internal3()"
+          }
+        ],
+        "id": "BranchReference"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "comment": "\nRepresents the output from `git show-ref`\n",
+        "name": "CommitReference",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "CommitReference",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              }
+            ],
+            "id": "CommitReference2()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "CommitReference",
+                  "refId": "CommitReference"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "fromShowRefOutput",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "input",
+                "id": "input"
+              }
+            ],
+            "id": "fromShowRefOutput1()"
+          },
+          {
+            "returnType": {
+              "name": "BranchReference",
+              "refId": "BranchReference"
+            },
+            "kind": "method",
+            "name": "toBranchReference",
+            "id": "toBranchReference0()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
+          },
+          {
+            "ref": {
+              "name": "RegExp",
+              "refId": "RegExp"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_lsRemoteRegExp",
+            "id": "_lsRemoteRegExp"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "sha",
+            "id": "sha"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "reference",
+            "id": "reference"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "CommitReference",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "sha",
+                "id": "sha"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "reference",
+                "id": "reference"
+              }
+            ],
+            "id": "CommitReference2()"
+          }
+        ],
+        "id": "CommitReference"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
         "name": "Git",
         "children": [
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "isValidSha",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "value",
+                "id": "value"
+              }
+            ],
+            "id": "isValidSha1()"
+          },
           {
             "isStatic": true,
             "returnType": {
@@ -12156,9 +13127,19 @@
                 "kind": "param",
                 "name": "throwOnError",
                 "id": "throwOnError"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "processWorkingDir",
+                "id": "processWorkingDir"
               }
             ],
-            "id": "runGit2()"
+            "id": "runGit3()"
           },
           {
             "isStatic": true,
@@ -12204,6 +13185,26 @@
               }
             ],
             "id": "_throwIfProcessFailed3()"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_shaRegexPattern",
+            "id": "_shaRegexPattern"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_shaRegEx",
+            "id": "_shaRegEx"
           }
         ],
         "id": "Git"
@@ -13795,9 +14796,19 @@
                 "kind": "param",
                 "name": "_contents",
                 "id": "_contents"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "checkEmpty",
+                "id": "checkEmpty"
               }
             ],
-            "id": "MapDirectoryPopulater1()"
+            "id": "MapDirectoryPopulater2()"
           },
           {
             "returnType": {
@@ -13973,6 +14984,15 @@
           },
           {
             "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "checkEmpty",
+            "id": "checkEmpty"
+          },
+          {
+            "ref": {
               "name": "Map",
               "refId": "Map",
               "arguments": [
@@ -14016,9 +15036,19 @@
                 "kind": "param",
                 "name": "_contents",
                 "id": "_contents"
+              },
+              {
+                "ref": {
+                  "name": "bool",
+                  "refId": "bool"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "checkEmpty",
+                "id": "checkEmpty"
               }
             ],
-            "id": "MapDirectoryPopulater1()"
+            "id": "MapDirectoryPopulater2()"
           }
         ],
         "id": "MapDirectoryPopulater"
@@ -21613,6 +22643,7 @@
           "refId": "void"
         },
         "kind": "method",
+        "comment": "\n[runHopCore] should be the last method you call in an application.\n\nNOTE: [runHopCore] calls [io.exit] which terminates the application.\n",
         "name": "runHopCore",
         "id": "runHopCore0()"
       },
@@ -22706,18 +23737,12 @@
               },
               {
                 "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
+                  "name": "ArgResults",
+                  "refId": "ArgResults"
                 },
                 "kind": "param",
-                "name": "arguments",
-                "id": "arguments"
+                "name": "_args",
+                "id": "_args"
               }
             ],
             "id": "Runner2()"
@@ -22844,6 +23869,43 @@
           {
             "isStatic": true,
             "returnType": {
+              "name": "ArgResults",
+              "refId": "ArgResults"
+            },
+            "kind": "method",
+            "name": "parseArgs",
+            "children": [
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "args",
+                "id": "args"
+              }
+            ],
+            "id": "parseArgs1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "getUsage",
+            "id": "getUsage0()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
               "name": "RunResult",
               "refId": "RunResult"
             },
@@ -22948,18 +24010,12 @@
               },
               {
                 "ref": {
-                  "name": "List",
-                  "refId": "List",
-                  "arguments": [
-                    {
-                      "name": "String",
-                      "refId": "String"
-                    }
-                  ]
+                  "name": "ArgResults",
+                  "refId": "ArgResults"
                 },
                 "kind": "param",
-                "name": "arguments",
-                "id": "arguments"
+                "name": "_args",
+                "id": "_args"
               }
             ],
             "id": "Runner2()"
@@ -23104,8 +24160,8 @@
           },
           {
             "ref": {
-              "name": "Date",
-              "refId": "Date"
+              "name": "DateTime",
+              "refId": "DateTime"
             },
             "kind": "property",
             "name": "time",
@@ -27269,26 +28325,6 @@
         "kind": "class",
         "comment": "Metadata that specifies that that member is editable through generated\nfiles.",
         "name": "DocsEditable",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "DocsEditable",
-            "id": "DocsEditable0()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "DocsEditable",
-            "id": "DocsEditable0()"
-          }
-        ],
         "id": "DocsEditable"
       },
       {
@@ -27360,26 +28396,6 @@
         "kind": "class",
         "comment": "\nAn annotation used to mark an API as being experimental.\n\nAn API is considered to be experimental if it is still going through the\nprocess of stabilizing and is subject to change or removal.\n\nSee also:\n\n* [W3C recommendation](http://en.wikipedia.org/wiki/W3C_recommendation)\n",
         "name": "Experimental",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "Experimental",
-            "id": "Experimental0()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "Experimental",
-            "id": "Experimental0()"
-          }
-        ],
         "id": "Experimental"
       },
       {
@@ -27523,7 +28539,7 @@
         "id": "SupportedBrowser"
       }
     ],
-    "id": "file:///usr/local/Cellar/dart-editor/17463/dart-sdk/lib/html/html_common/metadata.dart"
+    "id": "file:///usr/local/Cellar/dart-editor/18016/dart-sdk/lib/html/html_common/metadata.dart"
   },
   {
     "kind": "library",
@@ -28715,8 +29731,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "isOptional": true,
                 "kind": "param",
@@ -28884,8 +29900,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "kind": "param",
                 "name": "when",
@@ -28915,8 +29931,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "kind": "param",
                 "name": "when",
@@ -28946,8 +29962,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "kind": "param",
                 "name": "when",
@@ -28977,8 +29993,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "kind": "param",
                 "name": "when",
@@ -29727,8 +30743,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "Date",
-                  "refId": "Date"
+                  "name": "DateTime",
+                  "refId": "DateTime"
                 },
                 "isOptional": true,
                 "kind": "param",
@@ -29740,8 +30756,8 @@
           },
           {
             "ref": {
-              "name": "Date",
-              "refId": "Date"
+              "name": "DateTime",
+              "refId": "DateTime"
             },
             "kind": "property",
             "name": "time",
@@ -32168,8 +33184,8 @@
           },
           {
             "ref": {
-              "name": "Date",
-              "refId": "Date"
+              "name": "DateTime",
+              "refId": "DateTime"
             },
             "kind": "property",
             "name": "startTime",

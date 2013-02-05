@@ -34,8 +34,22 @@
 <div class="doc">
 <pre class="source">
 class Git {
- static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args, [bool throwOnError = true]) {
-   return Process.run('git', args)
+ static const _shaRegexPattern = '[a-f0-9]{40}';
+ static final _shaRegEx = new RegExp(r'^'.concat(_shaRegexPattern).concat(r'$'));
+
+ static bool isValidSha(String value) {
+   return _shaRegEx.hasMatch(value);
+ }
+
+ static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args,
+     {bool throwOnError: true, String processWorkingDir}) {
+
+   final processOptions = new ProcessOptions();
+   if(processWorkingDir != null) {
+     processOptions.workingDirectory = processWorkingDir;
+   }
+
+   return Process.run('git', args, processOptions)
        .then((ProcessResult pr) {
          if(throwOnError) {
            _throwIfProcessFailed(pr, 'git', args);
@@ -47,7 +61,16 @@ class Git {
  static void _throwIfProcessFailed(ProcessResult pr, String process, List&lt;String&gt; args) {
    assert(pr != null);
    if(pr.exitCode != 0) {
-     throw new ProcessException('git', ['unknown'], pr.stderr.trim(), pr.exitCode);
+
+     final message =
+'''
+
+stdout:
+${pr.stdout}
+stderr:
+${pr.stderr}''';
+
+     throw new ProcessException('git', args, message, pr.exitCode);
    }
  }
 }
@@ -55,14 +78,33 @@ class Git {
 </div>
 <div>
 <h3>Static Methods</h3>
+<div class="method"><h4 id="isValidSha">
+<button class="show-code">Code</button>
+bool <strong>isValidSha</strong>(String value) <a class="anchor-link" href="#isValidSha"
+              title="Permalink to Git.isValidSha">#</a></h4>
+<div class="doc">
+<pre class="source">
+static bool isValidSha(String value) {
+ return _shaRegEx.hasMatch(value);
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="runGit">
 <button class="show-code">Code</button>
-Future&lt;ProcessResult&gt; <strong>runGit</strong>(List&lt;String&gt; args, [bool throwOnError = true]) <a class="anchor-link" href="#runGit"
+Future&lt;ProcessResult&gt; <strong>runGit</strong>(List&lt;String&gt; args, {bool throwOnError: true, String processWorkingDir}) <a class="anchor-link" href="#runGit"
               title="Permalink to Git.runGit">#</a></h4>
 <div class="doc">
 <pre class="source">
-static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args, [bool throwOnError = true]) {
- return Process.run('git', args)
+static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args,
+   {bool throwOnError: true, String processWorkingDir}) {
+
+ final processOptions = new ProcessOptions();
+ if(processWorkingDir != null) {
+   processOptions.workingDirectory = processWorkingDir;
+ }
+
+ return Process.run('git', args, processOptions)
      .then((ProcessResult pr) {
        if(throwOnError) {
          _throwIfProcessFailed(pr, 'git', args);
@@ -77,7 +119,6 @@ static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args, [bool throwOn
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

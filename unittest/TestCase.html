@@ -75,7 +75,7 @@ class TestCase {
  /** The group (or groups) under which this test is running. */
  final String currentGroup;
 
- Date startTime;
+ DateTime startTime;
 
  Duration runningTime;
 
@@ -100,7 +100,7 @@ class TestCase {
        _setUp();
      }
      _config.onTestStart(this);
-     startTime = new Date.now();
+     startTime = new DateTime.now();
      runningTime = null;
      test();
    }
@@ -110,7 +110,7 @@ class TestCase {
    if (runningTime == null) {
      // TODO(gram): currently the duration measurement code is blocked
      // by issue 4437. When that is fixed replace the line below with:
-     //    runningTime = new Date.now().difference(startTime);
+     //    runningTime = new DateTime.now().difference(startTime);
      runningTime = new Duration(milliseconds: 0);
    }
    if (!_doneTeardown) {
@@ -307,7 +307,7 @@ stackTrace
 </div>
 <div class="field"><h4 id="startTime">
 <button class="show-code">Code</button>
-Date         <strong>startTime</strong> <a class="anchor-link"
+DateTime         <strong>startTime</strong> <a class="anchor-link"
             href="#startTime"
             title="Permalink to TestCase.startTime">#</a>
         </h4>
@@ -413,7 +413,7 @@ void run() {
      _setUp();
    }
    _config.onTestStart(this);
-   startTime = new Date.now();
+   startTime = new DateTime.now();
    runningTime = null;
    test();
  }
@@ -425,7 +425,6 @@ void run() {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

@@ -37,7 +37,7 @@ kept in instances of <a class="crossref" href="../mock/LogEntry.html#LogEntry">L
 <pre class="source">
 class LogEntry {
  /** The time of the event. */
- Date time;
+ DateTime time;
 
  /** The mock object name, if any. */
  final String mockName;
@@ -56,12 +56,12 @@ class LogEntry {
 
  LogEntry(this.mockName, this.methodName,
      this.args, this.action, [this.value]) {
-   time = new Date.now();
+   time = new DateTime.now();
  }
 
  String _pad2(int val) =&gt; (val &gt;= 10 ? '$val' : '0$val');
 
- String toString([Date baseTime]) {
+ String toString([DateTime baseTime]) {
    Description d = new StringDescription();
    if (baseTime == null) {
      // Show absolute time.
@@ -98,7 +98,7 @@ new <strong>LogEntry</strong>(String mockName, String methodName, List args, <a 
 <pre class="source">
 LogEntry(this.mockName, this.methodName,
    this.args, this.action, [this.value]) {
- time = new Date.now();
+ time = new DateTime.now();
 }
 </pre>
 </div>
@@ -156,7 +156,7 @@ mockName
 </div>
 <div class="field"><h4 id="time">
 <button class="show-code">Code</button>
-Date         <strong>time</strong> <a class="anchor-link"
+DateTime         <strong>time</strong> <a class="anchor-link"
             href="#time"
             title="Permalink to LogEntry.time">#</a>
         </h4>
@@ -183,14 +183,14 @@ value
 <h3>Methods</h3>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>([Date baseTime]) <a class="anchor-link" href="#toString"
+String <strong>toString</strong>([DateTime baseTime]) <a class="anchor-link" href="#toString"
               title="Permalink to LogEntry.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
 <div class="docs-inherited-from">docs inherited from Object </div></div>
 <pre class="source">
-String toString([Date baseTime]) {
+String toString([DateTime baseTime]) {
  Description d = new StringDescription();
  if (baseTime == null) {
    // Show absolute time.
@@ -221,7 +221,6 @@ String toString([Date baseTime]) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

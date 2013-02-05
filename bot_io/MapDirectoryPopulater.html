@@ -34,19 +34,25 @@
 <div class="doc">
 <pre class="source">
 class MapDirectoryPopulater extends DirectoryPopulater {
+ final bool checkEmpty;
  final Map&lt;String, dynamic&gt; _contents;
 
- MapDirectoryPopulater(this._contents);
+ MapDirectoryPopulater(this._contents, {this.checkEmpty: false});
 
  Future&lt;Directory&gt; populate(Directory dir) {
    assert(dir != null);
-   return IoHelpers.isEmpty(dir)
-       .then((bool isEmpty) {
-         if(!isEmpty) {
-           throw 'target directory must be empty';
-         }
-         return _populate(dir, _contents);
-       });
+
+   if(checkEmpty) {
+     return IoHelpers.isEmpty(dir)
+         .then((bool isEmpty) {
+           if(!isEmpty &amp;&amp; !checkEmpty) {
+             throw 'target directory must be empty';
+           }
+           return _populate(dir, _contents);
+         });
+   } else {
+     return _populate(dir, _contents);
+   }
  }
 
  static Future&lt;Directory&gt; _populate(Directory dir, Map&lt;String, dynamic&gt; content) {
@@ -78,10 +84,10 @@ class MapDirectoryPopulater extends DirectoryPopulater {
    return file.writeAsString(content);
  }
 
+ // TODO: should pass in a flag to check for directory existing...and what to do
  static Future&lt;Directory&gt; _createDirAndPopulate(Directory parent, String name, Map&lt;String, dynamic&gt; content) {
    final subDirPath = new Path(parent.path).append(name);
    final subDir = new Directory.fromPath(subDirPath);
-   assert(!subDir.existsSync());
    return subDir.create()
        .then((theNewDir) {
          assert(theNewDir == subDir);
@@ -98,11 +104,26 @@ class MapDirectoryPopulater extends DirectoryPopulater {
 <h3>Constructors</h3>
 <div class="method"><h4 id="MapDirectoryPopulater">
 <button class="show-code">Code</button>
-new <strong>MapDirectoryPopulater</strong>(Map&lt;String, dynamic&gt; _contents) <a class="anchor-link" href="#MapDirectoryPopulater"
+new <strong>MapDirectoryPopulater</strong>(Map&lt;String, dynamic&gt; _contents, {bool checkEmpty: false}) <a class="anchor-link" href="#MapDirectoryPopulater"
               title="Permalink to MapDirectoryPopulater.MapDirectoryPopulater">#</a></h4>
 <div class="doc">
 <pre class="source">
-MapDirectoryPopulater(this._contents);
+MapDirectoryPopulater(this._contents, {this.checkEmpty: false});
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="checkEmpty">
+<button class="show-code">Code</button>
+final bool         <strong>checkEmpty</strong> <a class="anchor-link"
+            href="#checkEmpty"
+            title="Permalink to MapDirectoryPopulater.checkEmpty">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+checkEmpty
 </pre>
 </div>
 </div>
@@ -117,13 +138,18 @@ Future&lt;Directory&gt; <strong>populate</strong>(Directory dir) <a class="ancho
 <pre class="source">
 Future&lt;Directory&gt; populate(Directory dir) {
  assert(dir != null);
- return IoHelpers.isEmpty(dir)
-     .then((bool isEmpty) {
-       if(!isEmpty) {
-         throw 'target directory must be empty';
-       }
-       return _populate(dir, _contents);
-     });
+
+ if(checkEmpty) {
+   return IoHelpers.isEmpty(dir)
+       .then((bool isEmpty) {
+         if(!isEmpty &amp;&amp; !checkEmpty) {
+           throw 'target directory must be empty';
+         }
+         return _populate(dir, _contents);
+       });
+ } else {
+   return _populate(dir, _contents);
+ }
 }
 </pre>
 </div>
@@ -132,7 +158,6 @@ Future&lt;Directory&gt; populate(Directory dir) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

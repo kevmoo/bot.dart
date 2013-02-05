@@ -429,10 +429,10 @@ E lastMatching(bool test(E value), {E orElse()}) {
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="mappedBy">
+<div class="method inherited"><h4 id="map">
 <button class="show-code">Code</button>
-Iterable <strong>mappedBy</strong>(f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#mappedBy"
-              title="Permalink to NumberEnumerable&lt;T&gt;.mappedBy">#</a></h4>
+Iterable <strong>map</strong>(f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#map"
+              title="Permalink to NumberEnumerable&lt;T&gt;.map">#</a></h4>
 <div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
 by the result of <code>f(e)</code>.</p>
@@ -444,7 +444,19 @@ multiple times over the the returned <code>Iterable</code> will invoke the suppl
 function 
 <span class="param">f</span> multiple times on the same element.</p>
 <pre class="source">
-Iterable mappedBy(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
+Iterable map(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="mappedBy">
+<button class="show-code">Code</button>
+Iterable <strong>mappedBy</strong>(f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#mappedBy"
+              title="Permalink to NumberEnumerable&lt;T&gt;.mappedBy">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Deprecated alias for <code>map</code>.</p>
+<p>@deprecated</p>
+<pre class="source">
+Iterable mappedBy(f(E element)) =&gt; map(f);
 </pre>
 </div>
 </div>
@@ -695,7 +707,6 @@ Iterable&lt;E&gt; where(bool f(E element)) =&gt; new WhereIterable&lt;E&gt;(this
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

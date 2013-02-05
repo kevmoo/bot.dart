@@ -43,10 +43,10 @@ class Dragger {
  Dragger(this._element) :
    _dragDeltaHandle = new EventHandle&lt;Vector&gt;(),
    _dragStartHandle = new EventHandle&lt;CancelableEventArgs&gt;() {
-   _element.on.mouseDown.add(_onMouseDown);
-   window.on.mouseMove.add(_handleMove);
-   window.on.mouseUp.add(_endDrag);
-   window.on.blur.add(_endDrag);
+   _element.onMouseDown.listen(_onMouseDown);
+   window.onMouseMove.listen(_handleMove);
+   window.onMouseUp.listen(_endDrag);
+   window.onBlur.listen(_endDrag);
  }
 
  EventRoot&lt;Vector&gt; get dragDelta =&gt; _dragDeltaHandle;
@@ -96,10 +96,10 @@ new <strong>Dragger</strong>(Element _element) <a class="anchor-link" href="#Dra
 Dragger(this._element) :
  _dragDeltaHandle = new EventHandle&lt;Vector&gt;(),
  _dragStartHandle = new EventHandle&lt;CancelableEventArgs&gt;() {
- _element.on.mouseDown.add(_onMouseDown);
- window.on.mouseMove.add(_handleMove);
- window.on.mouseUp.add(_endDrag);
- window.on.blur.add(_endDrag);
+ _element.onMouseDown.listen(_onMouseDown);
+ window.onMouseMove.listen(_handleMove);
+ window.onMouseUp.listen(_endDrag);
+ window.onBlur.listen(_endDrag);
 }
 </pre>
 </div>
@@ -147,7 +147,6 @@ bool get isDragging =&gt; _clientLoc != null;
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

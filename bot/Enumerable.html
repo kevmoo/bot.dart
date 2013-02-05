@@ -545,6 +545,25 @@ E lastMatching(bool test(E value), {E orElse()}) {
 </pre>
 </div>
 </div>
+<div class="method inherited"><h4 id="map">
+<button class="show-code">Code</button>
+Iterable <strong>map</strong>(f(<a href="../bot/Enumerable.html">E</a> element)) <a class="anchor-link" href="#map"
+              title="Permalink to Enumerable&lt;T&gt;.map">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
+by the result of <code>f(e)</code>.</p>
+<p>This method returns a view of the mapped elements. As long as the
+returned <code>Iterable</code> is not iterated over, the supplied function 
+<span class="param">f</span> will
+not be invoked. The transformed elements will not be cached. Iterating
+multiple times over the the returned <code>Iterable</code> will invoke the supplied
+function 
+<span class="param">f</span> multiple times on the same element.</p>
+<pre class="source">
+Iterable map(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="mappedBy">
 <button class="show-code">Code</button>
 <a href="../bot/Enumerable.html">Enumerable</a> <strong>mappedBy</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#mappedBy"
@@ -880,7 +899,6 @@ Enumerable&lt;T&gt; where(Func1&lt;T, bool&gt; f) =&gt;
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>

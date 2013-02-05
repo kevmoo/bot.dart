@@ -157,7 +157,7 @@ class LogEntryList {
   * then each entry is prefixed with the offset from that time in
   * milliseconds; otherwise the time of day is used.
   */
- String toString([Date baseTime]) {
+ String toString([DateTime baseTime]) {
    String s = '';
    for (var e in logs) {
      s = '$s${e.toString(baseTime)}\n';
@@ -255,7 +255,7 @@ class LogEntryList {
   * the entries that happened up to [when]; otherwise a new
   * list is created.
   */
- LogEntryList after(Date when, [bool inPlace = false]) =&gt;
+ LogEntryList after(DateTime when, [bool inPlace = false]) =&gt;
      _tail((e) =&gt; e.time &gt; when, inPlace, 'after $when', logs.length);
 
  /**
@@ -264,7 +264,7 @@ class LogEntryList {
   * removing the entries that happened before [when]; otherwise
   * a new list is created.
   */
- LogEntryList from(Date when, [bool inPlace = false]) =&gt;
+ LogEntryList from(DateTime when, [bool inPlace = false]) =&gt;
      _tail((e) =&gt; e.time &gt;= when, inPlace, 'from $when', logs.length);
 
  /**
@@ -273,7 +273,7 @@ class LogEntryList {
   * the entries that happened after [when]; otherwise a new
   * list is created.
   */
- LogEntryList until(Date when, [bool inPlace = false]) =&gt;
+ LogEntryList until(DateTime when, [bool inPlace = false]) =&gt;
      _head((e) =&gt; e.time &gt; when, inPlace, 'until $when', logs.length);
 
  /**
@@ -282,7 +282,7 @@ class LogEntryList {
   * the entries that happened from [when] onwards; otherwise a new
   * list is created.
   */
- LogEntryList before(Date when, [bool inPlace = false]) =&gt;
+ LogEntryList before(DateTime when, [bool inPlace = false]) =&gt;
      _head((e) =&gt; e.time &gt;= when, inPlace, 'before $when', logs.length);
 
  /**
@@ -292,7 +292,7 @@ class LogEntryList {
   * list is created. If [logEntry] is null the current time is used.
   */
  LogEntryList afterEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
-     after(logEntry == null ? new Date.now() : logEntry.time);
+     after(logEntry == null ? new DateTime.now() : logEntry.time);
 
  /**
   * Returns log events that happened from [logEntry]'s time onwards.
@@ -301,7 +301,7 @@ class LogEntryList {
   * a new list is created. If [logEntry] is null the current time is used.
   */
  LogEntryList fromEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
-     from(logEntry == null ? new Date.now() : logEntry.time);
+     from(logEntry == null ? new DateTime.now() : logEntry.time);
 
  /**
   * Returns log events that happened until [logEntry]'s time. If
@@ -311,7 +311,7 @@ class LogEntryList {
   */
  LogEntryList untilEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
      until(logEntry == null ?
-         new Date.fromMillisecondsSinceEpoch(0) : logEntry.time);
+         new DateTime.fromMillisecondsSinceEpoch(0) : logEntry.time);
 
  /**
   * Returns log events that happened before [logEntry]'s time. If
@@ -321,7 +321,7 @@ class LogEntryList {
   */
  LogEntryList beforeEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
      before(logEntry == null ?
-         new Date.fromMillisecondsSinceEpoch(0) : logEntry.time);
+         new DateTime.fromMillisecondsSinceEpoch(0) : logEntry.time);
 
  /**
   * Returns log events that happened after the first event in [segment].
@@ -619,7 +619,7 @@ add(LogEntry entry) =&gt; logs.add(entry);
 </div>
 <div class="method"><h4 id="after">
 <button class="show-code">Code</button>
-<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>after</strong>(Date when, [bool inPlace = false]) <a class="anchor-link" href="#after"
+<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>after</strong>(DateTime when, [bool inPlace = false]) <a class="anchor-link" href="#after"
               title="Permalink to LogEntryList.after">#</a></h4>
 <div class="doc">
 <p>Returns log events that happened after 
@@ -630,7 +630,7 @@ the entries that happened up to
 <span class="param">when</span>; otherwise a new
 list is created.</p>
 <pre class="source">
-LogEntryList after(Date when, [bool inPlace = false]) =&gt;
+LogEntryList after(DateTime when, [bool inPlace = false]) =&gt;
    _tail((e) =&gt; e.time &gt; when, inPlace, 'after $when', logs.length);
 </pre>
 </div>
@@ -649,7 +649,7 @@ list is created. If
 <span class="param">logEntry</span> is null the current time is used.</p>
 <pre class="source">
 LogEntryList afterEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
-   after(logEntry == null ? new Date.now() : logEntry.time);
+   after(logEntry == null ? new DateTime.now() : logEntry.time);
 </pre>
 </div>
 </div>
@@ -687,7 +687,7 @@ LogEntryList afterLast(LogEntryList segment, [bool inPlace = false]) =&gt;
 </div>
 <div class="method"><h4 id="before">
 <button class="show-code">Code</button>
-<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>before</strong>(Date when, [bool inPlace = false]) <a class="anchor-link" href="#before"
+<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>before</strong>(DateTime when, [bool inPlace = false]) <a class="anchor-link" href="#before"
               title="Permalink to LogEntryList.before">#</a></h4>
 <div class="doc">
 <p>Returns log events that happened before 
@@ -698,7 +698,7 @@ the entries that happened from
 <span class="param">when</span> onwards; otherwise a new
 list is created.</p>
 <pre class="source">
-LogEntryList before(Date when, [bool inPlace = false]) =&gt;
+LogEntryList before(DateTime when, [bool inPlace = false]) =&gt;
    _head((e) =&gt; e.time &gt;= when, inPlace, 'before $when', logs.length);
 </pre>
 </div>
@@ -718,7 +718,7 @@ list is created. If
 <pre class="source">
 LogEntryList beforeEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
    before(logEntry == null ?
-       new Date.fromMillisecondsSinceEpoch(0) : logEntry.time);
+       new DateTime.fromMillisecondsSinceEpoch(0) : logEntry.time);
 </pre>
 </div>
 </div>
@@ -823,7 +823,7 @@ LogEntryList following(LogEntryList keys,
 </div>
 <div class="method"><h4 id="from">
 <button class="show-code">Code</button>
-<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>from</strong>(Date when, [bool inPlace = false]) <a class="anchor-link" href="#from"
+<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>from</strong>(DateTime when, [bool inPlace = false]) <a class="anchor-link" href="#from"
               title="Permalink to LogEntryList.from">#</a></h4>
 <div class="doc">
 <p>Returns log events that happened from 
@@ -834,7 +834,7 @@ removing the entries that happened before
 <span class="param">when</span>; otherwise
 a new list is created.</p>
 <pre class="source">
-LogEntryList from(Date when, [bool inPlace = false]) =&gt;
+LogEntryList from(DateTime when, [bool inPlace = false]) =&gt;
    _tail((e) =&gt; e.time &gt;= when, inPlace, 'from $when', logs.length);
 </pre>
 </div>
@@ -853,7 +853,7 @@ a new list is created. If
 <span class="param">logEntry</span> is null the current time is used.</p>
 <pre class="source">
 LogEntryList fromEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
-   from(logEntry == null ? new Date.now() : logEntry.time);
+   from(logEntry == null ? new DateTime.now() : logEntry.time);
 </pre>
 </div>
 </div>
@@ -1036,7 +1036,7 @@ bool stepwiseValidate(StepValidator validator, [String reason = '']) {
 </div>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>([Date baseTime]) <a class="anchor-link" href="#toString"
+String <strong>toString</strong>([DateTime baseTime]) <a class="anchor-link" href="#toString"
               title="Permalink to LogEntryList.toString">#</a></h4>
 <div class="doc">
 <p>Turn the logs into human-readable text. If 
@@ -1044,7 +1044,7 @@ String <strong>toString</strong>([Date baseTime]) <a class="anchor-link" href="#
 then each entry is prefixed with the offset from that time in
 milliseconds; otherwise the time of day is used.</p>
 <pre class="source">
-String toString([Date baseTime]) {
+String toString([DateTime baseTime]) {
  String s = '';
  for (var e in logs) {
    s = '$s${e.toString(baseTime)}\n';
@@ -1056,7 +1056,7 @@ String toString([Date baseTime]) {
 </div>
 <div class="method"><h4 id="until">
 <button class="show-code">Code</button>
-<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>until</strong>(Date when, [bool inPlace = false]) <a class="anchor-link" href="#until"
+<a href="../mock/LogEntryList.html">LogEntryList</a> <strong>until</strong>(DateTime when, [bool inPlace = false]) <a class="anchor-link" href="#until"
               title="Permalink to LogEntryList.until">#</a></h4>
 <div class="doc">
 <p>Returns log events that happened until 
@@ -1067,7 +1067,7 @@ the entries that happened after
 <span class="param">when</span>; otherwise a new
 list is created.</p>
 <pre class="source">
-LogEntryList until(Date when, [bool inPlace = false]) =&gt;
+LogEntryList until(DateTime when, [bool inPlace = false]) =&gt;
    _head((e) =&gt; e.time &gt; when, inPlace, 'until $when', logs.length);
 </pre>
 </div>
@@ -1087,7 +1087,7 @@ list is created. If
 <pre class="source">
 LogEntryList untilEntry(LogEntry logEntry, [bool inPlace = false]) =&gt;
    until(logEntry == null ?
-       new Date.fromMillisecondsSinceEpoch(0) : logEntry.time);
+       new DateTime.fromMillisecondsSinceEpoch(0) : logEntry.time);
 </pre>
 </div>
 </div>
@@ -1145,7 +1145,6 @@ LogEntryList verify(Matcher matcher) {
         </div>
         <div class="clear"></div>
         </div>
-        
         <div class="footer">
           
         </div>
