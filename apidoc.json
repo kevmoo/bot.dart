@@ -24071,8 +24071,8 @@
         "children": [
           {
             "ref": {
-              "name": "dynamic",
-              "refId": "dynamic"
+              "name": "Process",
+              "refId": "Process"
             },
             "kind": "param",
             "name": "process",
@@ -24080,12 +24080,12 @@
           },
           {
             "ref": {
-              "name": "dynamic",
-              "refId": "dynamic"
+              "name": "TaskContext",
+              "refId": "TaskContext"
             },
             "kind": "param",
-            "name": "state",
-            "id": "state"
+            "name": "ctx",
+            "id": "ctx"
           }
         ],
         "id": "_startProcess2()"
@@ -25330,8 +25330,8 @@
               "refId": "List",
               "arguments": [
                 {
-                  "name": "AnalyzerResult",
-                  "refId": "AnalyzerResult"
+                  "name": "_AnalyzerResult",
+                  "refId": "_AnalyzerResult"
                 }
               ]
             },
@@ -25357,8 +25357,8 @@
           "refId": "Future",
           "arguments": [
             {
-              "name": "AnalyzerResult",
-              "refId": "AnalyzerResult"
+              "name": "_AnalyzerResult",
+              "refId": "_AnalyzerResult"
             }
           ]
         },
@@ -25532,132 +25532,6 @@
           }
         ],
         "id": "_helpfulParseArgs3()"
-      },
-      {
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "AnalyzerResult",
-        "children": [
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "AnalyzerResult",
-            "children": [
-              {
-                "ref": {
-                  "name": "Path",
-                  "refId": "Path"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              },
-              {
-                "ref": {
-                  "name": "ProcessResult",
-                  "refId": "ProcessResult"
-                },
-                "kind": "param",
-                "name": "processResult",
-                "id": "processResult"
-              }
-            ],
-            "id": "AnalyzerResult2()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "toString",
-            "id": "toString0()"
-          },
-          {
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "toVerboseString",
-            "id": "toVerboseString0()"
-          },
-          {
-            "isStatic": true,
-            "returnType": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "method",
-            "name": "_getPrefix",
-            "children": [
-              {
-                "ref": {
-                  "name": "int",
-                  "refId": "int"
-                },
-                "kind": "param",
-                "name": "exitCode",
-                "id": "exitCode"
-              }
-            ],
-            "id": "_getPrefix1()"
-          },
-          {
-            "ref": {
-              "name": "ProcessResult",
-              "refId": "ProcessResult"
-            },
-            "kind": "property",
-            "name": "processResult",
-            "id": "processResult"
-          },
-          {
-            "ref": {
-              "name": "Path",
-              "refId": "Path"
-            },
-            "kind": "property",
-            "name": "path",
-            "id": "path"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "constructor",
-            "name": "AnalyzerResult",
-            "children": [
-              {
-                "ref": {
-                  "name": "Path",
-                  "refId": "Path"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              },
-              {
-                "ref": {
-                  "name": "ProcessResult",
-                  "refId": "ProcessResult"
-                },
-                "kind": "param",
-                "name": "processResult",
-                "id": "processResult"
-              }
-            ],
-            "id": "AnalyzerResult2()"
-          }
-        ],
-        "id": "AnalyzerResult"
       }
     ],
     "id": "file:///Users/kevin/source/github/bot.dart/lib/hop_tasks.dart"
