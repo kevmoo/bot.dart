@@ -21365,15 +21365,6 @@
           "refId": "Matcher"
         },
         "kind": "property",
-        "name": "throwsStateError",
-        "id": "throwsStateError"
-      },
-      {
-        "ref": {
-          "name": "Matcher",
-          "refId": "Matcher"
-        },
-        "kind": "property",
         "name": "throwsInvalidOperationError",
         "id": "throwsInvalidOperationError"
       },
@@ -27168,6 +27159,7 @@
           "refId": "Matcher"
         },
         "kind": "method",
+        "comment": "\nReturns a matcher which matches if the match argument is a string and\nis equal to [value] when compared case-insensitively.\n",
         "name": "equalsIgnoringCase",
         "children": [
           {
@@ -27604,6 +27596,7 @@
           "refId": "Matcher"
         },
         "kind": "method",
+        "comment": "\nReturns a matcher which matches if the match argument is greater\nthan the given [value].\n",
         "name": "greaterThan",
         "children": [
           {
@@ -27654,6 +27647,7 @@
           "refId": "Matcher"
         },
         "kind": "method",
+        "comment": "\nReturns a matcher which matches maps containing the given [value].\n",
         "name": "containsValue",
         "children": [
           {
@@ -28115,6 +28109,7 @@
           "refId": "Matcher"
         },
         "kind": "method",
+        "comment": "\nReturns a matcher which matches [Collection]s in which all elements\nmatch the given [matcher].\n",
         "name": "everyElement",
         "children": [
           {
@@ -28236,6 +28231,24 @@
         "kind": "property",
         "name": "isMap",
         "id": "isMap"
+      },
+      {
+        "ref": {
+          "name": "Matcher",
+          "refId": "Matcher"
+        },
+        "kind": "property",
+        "name": "throwsStateError",
+        "id": "throwsStateError"
+      },
+      {
+        "ref": {
+          "name": "dynamic",
+          "refId": "dynamic"
+        },
+        "kind": "property",
+        "name": "isStateError",
+        "id": "isStateError"
       },
       {
         "ref": {
@@ -28779,6 +28792,7 @@
       },
       {
         "kind": "typedef",
+        "comment": "\nThe ErrorFormatter type is used for functions that\ncan be used to build up error reports upon [expect] failures.\nThere is one built-in implementation ([defaultErrorFormatter])\nwhich is used by the default failure handler. If the failure handler\nis replaced it may be desirable to replace the [stringDescription]\nerror formatter with another.\n",
         "name": "ErrorFormatter",
         "id": "ErrorFormatter"
       },
@@ -28905,6 +28919,7 @@
           "refId": "Object"
         },
         "kind": "class",
+        "comment": "\nThe default implementation of IDescription. This should rarely need\nsubstitution, although conceivably it is a place where other languages\ncould be supported.\n",
         "name": "StringDescription",
         "children": [
           {
@@ -30165,7 +30180,7 @@
   },
   {
     "kind": "library",
-    "comment": "\nA simple mocking/spy library.\n\nTo create a mock objects for some class T, create a new class using:\n\n    class MockT extends Mock implements T {};\n\nThen specify the [Behavior] of the Mock for different methods using\n[when] (to select the method and parameters) and then the [Action]s\nfor the [Behavior] by calling [thenReturn], [alwaysReturn], [thenThrow],\n[alwaysThrow], [thenCall] or [alwaysCall].\n\n[thenReturn], [thenThrow] and [thenCall] are one-shot so you would\ntypically call these more than once to specify a sequence of actions;\nthis can be done with chained calls, e.g.:\n\n     m.when(callsTo('foo')).\n         thenReturn(0).thenReturn(1).thenReturn(2);\n\n[thenCall] and [alwaysCall] allow you to proxy mocked methods, chaining\nto some other implementation. This provides a way to implement 'spies'.\n\nYou can disable logging for a particular [Behavior] easily:\n\n    m.when(callsTo('bar')).logging = false;\n\nYou can then use the mock object. Once you are done, to verify the\nbehavior, use [getLogs] to extract a relevant subset of method call\nlogs and apply [Matchers] to these through calling [verify].\n\nA Mock can be given a name when constructed. In this case instead of\nkeeping its own log, it uses a shared log. This can be useful to get an\naudit trail of interleaved behavior. It is the responsibility of the user\nto ensure that mock names, if used, are unique.\n\nLimitations:\n\n* only positional parameters are supported (up to 10);\n* to mock getters you will need to include parentheses in the call\n      (e.g. m.length() will work but not m.length).\n\nHere is a simple example:\n\n    class MockList extends Mock implements List {};\n\n    List m = new MockList();\n    m.when(callsTo('add', anything)).alwaysReturn(0);\n\n    m.add('foo');\n    m.add('bar');\n\n    getLogs(m, callsTo('add', anything)).verify(happenedExactly(2));\n    getLogs(m, callsTo('add', 'foo')).verify(happenedOnce);\n    getLogs(m, callsTo('add', 'isNull)).verify(neverHappened);\n\nNote that we don't need to provide argument matchers for all arguments,\nbut we do need to provide arguments for all matchers. So this is allowed:\n\n    m.when(callsTo('add')).alwaysReturn(0);\n    m.add(1, 2);\n\nBut this is not allowed and will throw an exception:\n\n    m.when(callsTo('add', anything, anything)).alwaysReturn(0);\n    m.add(1);\n\nHere is a way to implement a 'spy', which is where we log the call\nbut then hand it off to some other function, which is the same\nmethod in a real instance of the class being mocked:\n\n    class Foo {\n      bar(a, b, c) => a + b + c;\n    }\n\n    class MockFoo extends Mock implements Foo {\n      Foo real;\n      MockFoo() {\n        real = new Foo();\n        this.when(callsTo('bar')).alwaysCall(real.bar);\n      }\n    }\n\n",
+    "comment": "\nA simple mocking/spy library.\n\nTo create a mock objects for some class T, create a new class using:\n\n    class MockT extends Mock implements T {};\n\nThen specify the [Behavior] of the Mock for different methods using\n[when] (to select the method and parameters) and then the [Action]s\nfor the [Behavior] by calling [thenReturn], [alwaysReturn], [thenThrow],\n[alwaysThrow], [thenCall] or [alwaysCall].\n\n[thenReturn], [thenThrow] and [thenCall] are one-shot so you would\ntypically call these more than once to specify a sequence of actions;\nthis can be done with chained calls, e.g.:\n\n     m.when(callsTo('foo')).\n         thenReturn(0).thenReturn(1).thenReturn(2);\n\n[thenCall] and [alwaysCall] allow you to proxy mocked methods, chaining\nto some other implementation. This provides a way to implement 'spies'.\n\nFor getters and setters, use \"get foo\" and \"set foo\"-style arguments\nto [callsTo].\n\nYou can disable logging for a particular [Behavior] easily:\n\n    m.when(callsTo('bar')).logging = false;\n\nYou can then use the mock object. Once you are done, to verify the\nbehavior, use [getLogs] to extract a relevant subset of method call\nlogs and apply [Matchers] to these through calling [verify].\n\nA Mock can be given a name when constructed. In this case instead of\nkeeping its own log, it uses a shared log. This can be useful to get an\naudit trail of interleaved behavior. It is the responsibility of the user\nto ensure that mock names, if used, are unique.\n\nLimitations:\n\n* only positional parameters are supported (up to 10);\n* to mock getters you will need to include parentheses in the call\n      (e.g. m.length() will work but not m.length).\n\nHere is a simple example:\n\n    class MockList extends Mock implements List {};\n\n    List m = new MockList();\n    m.when(callsTo('add', anything)).alwaysReturn(0);\n\n    m.add('foo');\n    m.add('bar');\n\n    getLogs(m, callsTo('add', anything)).verify(happenedExactly(2));\n    getLogs(m, callsTo('add', 'foo')).verify(happenedOnce);\n    getLogs(m, callsTo('add', 'isNull)).verify(neverHappened);\n\nNote that we don't need to provide argument matchers for all arguments,\nbut we do need to provide arguments for all matchers. So this is allowed:\n\n    m.when(callsTo('add')).alwaysReturn(0);\n    m.add(1, 2);\n\nBut this is not allowed and will throw an exception:\n\n    m.when(callsTo('add', anything, anything)).alwaysReturn(0);\n    m.add(1);\n\nHere is a way to implement a 'spy', which is where we log the call\nbut then hand it off to some other function, which is the same\nmethod in a real instance of the class being mocked:\n\n    class Foo {\n      bar(a, b, c) => a + b + c;\n    }\n\n    class MockFoo extends Mock implements Foo {\n      Foo real;\n      MockFoo() {\n        real = new Foo();\n        this.when(callsTo('bar')).alwaysCall(real.bar);\n      }\n    }\n\n",
     "name": "mock",
     "children": [
       {
@@ -30435,7 +30450,7 @@
           "refId": "CallMatcher"
         },
         "kind": "method",
-        "comment": "\nReturns a [CallMatcher] for the specified signature. [method] can be\nnull to match anything, or a literal [String], a predicate [Function],\nor a [Matcher]. The various arguments can be scalar values or [Matcher]s.\n",
+        "comment": "\nReturns a [CallMatcher] for the specified signature. [method] can be\nnull to match anything, or a literal [String], a predicate [Function],\nor a [Matcher]. The various arguments can be scalar values or [Matcher]s.\nTo match getters and setters, use \"get \" and \"set \" prefixes on the names.\nFor example, for a property \"foo\", you could use \"get foo\" and \"set foo\"\nas literal string arguments to callsTo to match the getter and setter\nof \"foo\".\n",
         "name": "callsTo",
         "children": [
           {
@@ -34482,6 +34497,7 @@
           "refId": "Object"
         },
         "kind": "class",
+        "comment": "\ntestcase.dart: this file is sourced by unittest.dart. It defines [TestCase]\nand assumes unittest defines the type [TestFunction].\n\nSummarizes information about a single test case. ",
         "name": "TestCase",
         "children": [
           {

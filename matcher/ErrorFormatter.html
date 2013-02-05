@@ -32,6 +32,12 @@
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
+<p>The ErrorFormatter type is used for functions that
+can be used to build up error reports upon <a class="crossref" href="../matcher.html#expect">expect</a> failures.
+There is one built-in implementation (<code>defaultErrorFormatter</code>)
+which is used by the default failure handler. If the failure handler
+is replaced it may be desirable to replace the <code>stringDescription</code>
+error formatter with another.</p>
 <pre class="source">
 typedef String ErrorFormatter(actual, Matcher matcher, String reason,
    MatchState matchState, bool verbose);

@@ -118,9 +118,12 @@ class Mock {
    var args = invocation.positionalArguments;
    if (invocation.isGetter) {
      method = 'get $method';
-   } else if (method.startsWith('get:')) {
-     // TODO(gram): Remove this when VM handles the isGetter version above.
-     method = 'get ${method.substring(4)}';
+   } else if (invocation.isSetter) {
+     method = 'set $method';
+     // Remove the trailing '='.
+     if (method[method.length-1] == '=') {
+       method = method.substring(0, method.length - 1);
+     }
    }
    bool matchedMethodName = false;
    MatchState matchState = new MatchState();
@@ -498,9 +501,12 @@ noSuchMethod(InvocationMirror invocation) {
  var args = invocation.positionalArguments;
  if (invocation.isGetter) {
    method = 'get $method';
- } else if (method.startsWith('get:')) {
-   // TODO(gram): Remove this when VM handles the isGetter version above.
-   method = 'get ${method.substring(4)}';
+ } else if (invocation.isSetter) {
+   method = 'set $method';
+   // Remove the trailing '='.
+   if (method[method.length-1] == '=') {
+     method = method.substring(0, method.length - 1);
+   }
  }
  bool matchedMethodName = false;
  MatchState matchState = new MatchState();

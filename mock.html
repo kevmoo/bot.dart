@@ -41,6 +41,8 @@ this can be done with chained calls, e.g.:</p>
      <span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">1</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">2</span><span class="p ">)</span><span class="p ">;</span></pre>
 <p><code>thenCall</code> and <code>alwaysCall</code> allow you to proxy mocked methods, chaining
 to some other implementation. This provides a way to implement 'spies'.</p>
+<p>For getters and setters, use "get foo" and "set foo"-style arguments
+to <a class="crossref" href="mock.html#callsTo">callsTo</a>.</p>
 <p>You can disable logging for a particular <a class="crossref" href="mock/Behavior.html">Behavior</a> easily:</p>
 <pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">logging</span> <span class="o ">=</span> <span class="k ">false</span><span class="p ">;</span></pre>
 <p>You can then use the mock object. Once you are done, to verify the
@@ -310,7 +312,11 @@ Matcher happenedExactly(count) {
 <p>Returns a <a class="crossref" href="mock/CallMatcher.html">CallMatcher</a> for the specified signature. 
 <span class="param">method</span> can be
 null to match anything, or a literal <code>String</code>, a predicate <code>Function</code>,
-or a <code>Matcher</code>. The various arguments can be scalar values or <code>Matcher</code>s.</p>
+or a <code>Matcher</code>. The various arguments can be scalar values or <code>Matcher</code>s.
+To match getters and setters, use "get " and "set " prefixes on the names.
+For example, for a property "foo", you could use "get foo" and "set foo"
+as literal string arguments to callsTo to match the getter and setter
+of "foo".</p>
 <pre class="source">
 CallMatcher callsTo([method,
                     arg0 = _noArg,

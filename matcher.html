@@ -270,6 +270,18 @@ isRangeError = const _RangeError()
 </pre>
 </div>
 </div>
+<div class="field"><h4 id="isStateError">
+<button class="show-code">Code</button>
+const         <strong>isStateError</strong> <a class="anchor-link"
+            href="#isStateError"
+            title="Permalink to isStateError">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+isStateError = const _StateError()
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="isTrue">
 <button class="show-code">Code</button>
 const <a href="matcher/Matcher.html">Matcher</a>         <strong>isTrue</strong> <a class="anchor-link"
@@ -417,6 +429,19 @@ const <a href="matcher/Matcher.html">Matcher</a>         <strong>throwsRangeErro
 <pre class="source">
 throwsRangeError =
 const Throws(isRangeError)
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="throwsStateError">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>throwsStateError</strong> <a class="anchor-link"
+            href="#throwsStateError"
+            title="Permalink to throwsStateError">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+throwsStateError =
+const Throws(isStateError)
 </pre>
 </div>
 </div>
@@ -568,6 +593,9 @@ Matcher equalsIgnoringWhitespace(_string) =&gt;
 <a href="matcher/Matcher.html">Matcher</a> <strong>equalsIgnoringCase</strong>(String value) <a class="anchor-link" href="#equalsIgnoringCase"
               title="Permalink to equalsIgnoringCase">#</a></h4>
 <div class="doc">
+<p>Returns a matcher which matches if the match argument is a string and
+is equal to 
+<span class="param">value</span> when compared case-insensitively.</p>
 <pre class="source">
 Matcher equalsIgnoringCase(String value) =&gt; new _IsEqualIgnoringCase(value);
 </pre>
@@ -827,6 +855,9 @@ Matcher greaterThanOrEqualTo(value) =&gt;
 <a href="matcher/Matcher.html">Matcher</a> <strong>greaterThan</strong>(value) <a class="anchor-link" href="#greaterThan"
               title="Permalink to greaterThan">#</a></h4>
 <div class="doc">
+<p>Returns a matcher which matches if the match argument is greater
+than the given 
+<span class="param">value</span>.</p>
 <pre class="source">
 Matcher greaterThan(value) =&gt;
  new _OrderingComparison(value, false, false, true, 'a value greater than');
@@ -853,6 +884,8 @@ Matcher containsPair(key, value) =&gt;
 <a href="matcher/Matcher.html">Matcher</a> <strong>containsValue</strong>(value) <a class="anchor-link" href="#containsValue"
               title="Permalink to containsValue">#</a></h4>
 <div class="doc">
+<p>Returns a matcher which matches maps containing the given 
+<span class="param">value</span>.</p>
 <pre class="source">
 Matcher containsValue(value) =&gt; new _ContainsValue(value);
 </pre>
@@ -1158,6 +1191,9 @@ Matcher someElement(matcher) =&gt; new _SomeElement(wrapMatcher(matcher));
 <a href="matcher/Matcher.html">Matcher</a> <strong>everyElement</strong>(matcher) <a class="anchor-link" href="#everyElement"
               title="Permalink to everyElement">#</a></h4>
 <div class="doc">
+<p>Returns a matcher which matches <code>Collection</code>s in which all elements
+match the given 
+<span class="param">matcher</span>.</p>
 <pre class="source">
 Matcher everyElement(matcher) =&gt; new _EveryElement(wrapMatcher(matcher));
 </pre>
