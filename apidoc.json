@@ -15868,6 +15868,16 @@
           },
           {
             "ref": {
+              "name": "AnsiColor",
+              "refId": "AnsiColor"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "LIGHT_RED",
+            "id": "LIGHT_RED"
+          },
+          {
+            "ref": {
               "name": "int",
               "refId": "int"
             },
@@ -22726,9 +22736,15 @@
         "id": "TaskFailError"
       },
       {
+        "interfaces": [
+          {
+            "name": "Disposable",
+            "refId": "Disposable"
+          }
+        ],
         "superclass": {
-          "name": "DisposableImpl",
-          "refId": "DisposableImpl"
+          "name": "TaskLogger",
+          "refId": "TaskLogger"
         },
         "kind": "class",
         "name": "TaskContext",
@@ -22754,6 +22770,102 @@
               "refId": "void"
             },
             "kind": "method",
+            "name": "log",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              },
+              {
+                "ref": {
+                  "name": "Level",
+                  "refId": "Level"
+                },
+                "kind": "param",
+                "name": "logLevel",
+                "id": "logLevel"
+              }
+            ],
+            "id": "log2()"
+          },
+          {
+            "returnType": {
+              "name": "TaskLogger",
+              "refId": "TaskLogger"
+            },
+            "kind": "method",
+            "name": "getSubLogger",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              }
+            ],
+            "id": "getSubLogger1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "comment": "\nTerminates the current [Task] with a [TaskFailError] including the provided\n[message].\n",
+            "name": "fail",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "fail1()"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "arguments",
+            "id": "arguments"
+          }
+        ],
+        "id": "TaskContext"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "TaskLogger",
+        "children": [
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
             "name": "fine",
             "children": [
               {
@@ -22767,26 +22879,6 @@
               }
             ],
             "id": "fine1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "severe",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              }
-            ],
-            "id": "severe1()"
           },
           {
             "returnType": {
@@ -22814,7 +22906,7 @@
               "refId": "void"
             },
             "kind": "method",
-            "name": "fail",
+            "name": "warning",
             "children": [
               {
                 "ref": {
@@ -22826,7 +22918,7 @@
                 "id": "message"
               }
             ],
-            "id": "fail1()"
+            "id": "warning1()"
           },
           {
             "returnType": {
@@ -22834,7 +22926,27 @@
               "refId": "void"
             },
             "kind": "method",
-            "name": "_logCore",
+            "name": "severe",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "severe1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "log",
             "children": [
               {
                 "ref": {
@@ -22855,25 +22967,10 @@
                 "id": "logLevel"
               }
             ],
-            "id": "_logCore2()"
-          },
-          {
-            "ref": {
-              "name": "List",
-              "refId": "List",
-              "arguments": [
-                {
-                  "name": "String",
-                  "refId": "String"
-                }
-              ]
-            },
-            "kind": "property",
-            "name": "arguments",
-            "id": "arguments"
+            "id": "log2()"
           }
         ],
-        "id": "TaskContext"
+        "id": "TaskLogger"
       },
       {
         "superclass": {
@@ -23306,7 +23403,7 @@
               "refId": "void"
             },
             "kind": "method",
-            "name": "_logCore",
+            "name": "_subTaskLog",
             "children": [
               {
                 "ref": {
@@ -23316,6 +23413,50 @@
                 "kind": "param",
                 "name": "subTask",
                 "id": "subTask"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              },
+              {
+                "ref": {
+                  "name": "Level",
+                  "refId": "Level"
+                },
+                "kind": "param",
+                "name": "logLevel",
+                "id": "logLevel"
+              }
+            ],
+            "id": "_subTaskLog3()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_logCore",
+            "children": [
+              {
+                "ref": {
+                  "name": "List",
+                  "refId": "List",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "titleSections",
+                "id": "titleSections"
               },
               {
                 "ref": {
@@ -25334,12 +25475,12 @@
         "children": [
           {
             "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
+              "name": "TaskLogger",
+              "refId": "TaskLogger"
             },
             "kind": "param",
-            "name": "context",
-            "id": "context"
+            "name": "logger",
+            "id": "logger"
           },
           {
             "ref": {
@@ -30020,7 +30161,7 @@
         "id": "SupportedBrowser"
       }
     ],
-    "id": "file:///usr/local/Cellar/dart-editor/18016/dart-sdk/lib/html/html_common/metadata.dart"
+    "id": "file:///usr/local/Cellar/dart-editor/18115/dart-sdk/lib/html/html_common/metadata.dart"
   },
   {
     "kind": "library",

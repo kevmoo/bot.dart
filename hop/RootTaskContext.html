@@ -54,14 +54,20 @@ class RootTaskContext {
    printCore(message);
  }
 
- void _logCore(_SubTaskContext subTask, String message, Level logLevel) {
+ void _subTaskLog(_SubTaskContext subTask, String message, Level logLevel) {
+   assert(subTask._parent == this);
+   _logCore([subTask._name], message, logLevel);
+ }
+
+ void _logCore(List&lt;String&gt; titleSections, String message, Level logLevel) {
    requireArgumentNotNull(message, 'message');
+   assert(!titleSections.isEmpty);
+   assert(titleSections.every((s) =&gt; s != null &amp;&amp; !s.isEmpty));
 
    final color = _getColor(logLevel);
 
    var indent = '';
-   var title = '';
-   title = "${subTask._name}: ";
+   var title = titleSections.join(' - ').concat(': ');
 
    while(indent.length &lt; title.length) {
      indent =  indent.concat(' ');
@@ -98,8 +104,10 @@ class RootTaskContext {
 
  static AnsiColor getLogColor(Level logLevel) {
    requireArgumentNotNull(logLevel, 'logLevel');
-   if(logLevel.value &gt; Level.INFO.value) {
+   if(logLevel.value &gt; Level.WARNING.value) {
      return AnsiColor.RED;
+   } else if(logLevel.value &gt; Level.INFO.value) {
+     return AnsiColor.LIGHT_RED;
    } else {
      return AnsiColor.BLUE;
    }
@@ -117,8 +125,10 @@ class RootTaskContext {
 <pre class="source">
 static AnsiColor getLogColor(Level logLevel) {
  requireArgumentNotNull(logLevel, 'logLevel');
- if(logLevel.value &gt; Level.INFO.value) {
+ if(logLevel.value &gt; Level.WARNING.value) {
    return AnsiColor.RED;
+ } else if(logLevel.value &gt; Level.INFO.value) {
+   return AnsiColor.LIGHT_RED;
  } else {
    return AnsiColor.BLUE;
  }
