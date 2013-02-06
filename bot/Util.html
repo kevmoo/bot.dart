@@ -55,6 +55,19 @@ class Util {
    final split = '\n';
    return input.split(split);
  }
+
+ /**
+  * Returns a [String] with a length that is at least [minWidth].
+  * If [text] has a length less than [minWidth], the return value
+  * will be a string with spaces inserted before [text].
+  */
+ static String padLeft(String text, int minWidth) {
+   requireArgumentNotNull(text, 'text');
+   while(text.length &lt; minWidth) {
+     text = ' '.concat(text);
+   }
+   return text;
+ }
 }
 </pre>
 </div>
@@ -93,6 +106,29 @@ static List&lt;String&gt; splitLines(String input) {
  requireArgumentNotNull(input, 'input');
  final split = '\n';
  return input.split(split);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="padLeft">
+<button class="show-code">Code</button>
+String <strong>padLeft</strong>(String text, int minWidth) <a class="anchor-link" href="#padLeft"
+              title="Permalink to Util.padLeft">#</a></h4>
+<div class="doc">
+<p>Returns a <code>String</code> with a length that is at least 
+<span class="param">minWidth</span>.
+If 
+<span class="param">text</span> has a length less than 
+<span class="param">minWidth</span>, the return value
+will be a string with spaces inserted before 
+<span class="param">text</span>.</p>
+<pre class="source">
+static String padLeft(String text, int minWidth) {
+ requireArgumentNotNull(text, 'text');
+ while(text.length &lt; minWidth) {
+   text = ' '.concat(text);
+ }
+ return text;
 }
 </pre>
 </div>

@@ -8315,7 +8315,7 @@
             },
             "kind": "method",
             "comment": "\nReturns a new collection with the elements [: f(e) :]\nfor each element [:e:] of this collection.\n\nNote on typing: the return type of f() could be an arbitrary\ntype and consequently the returned collection's\ntypeis Collection.\n",
-            "name": "mappedBy",
+            "name": "map",
             "children": [
               {
                 "ref": {
@@ -8327,7 +8327,7 @@
                 "id": "f"
               }
             ],
-            "id": "mappedBy1()"
+            "id": "map1()"
           },
           {
             "returnType": {
@@ -10362,6 +10362,37 @@
               }
             ],
             "id": "splitLines1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "comment": "\nReturns a [String] with a length that is at least [minWidth].\nIf [text] has a length less than [minWidth], the return value\nwill be a string with spaces inserted before [text].\n",
+            "name": "padLeft",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "text",
+                "id": "text"
+              },
+              {
+                "ref": {
+                  "name": "int",
+                  "refId": "int"
+                },
+                "kind": "param",
+                "name": "minWidth",
+                "id": "minWidth"
+              }
+            ],
+            "id": "padLeft2()"
           }
         ],
         "id": "Util"
@@ -15647,8 +15678,8 @@
               },
               {
                 "ref": {
-                  "name": "dynamic",
-                  "refId": "dynamic"
+                  "name": "bool",
+                  "refId": "bool"
                 },
                 "isOptional": true,
                 "kind": "param",
@@ -22670,6 +22701,126 @@
       },
       {
         "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "TaskLogger",
+        "children": [
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "fine",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "fine1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "info",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "info1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "warning",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "warning1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "severe",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "severe1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "log",
+            "children": [
+              {
+                "ref": {
+                  "name": "Level",
+                  "refId": "Level"
+                },
+                "kind": "param",
+                "name": "logLevel",
+                "id": "logLevel"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "log2()"
+          }
+        ],
+        "id": "TaskLogger"
+      },
+      {
+        "superclass": {
           "name": "Error",
           "refId": "Error"
         },
@@ -22768,35 +22919,6 @@
           },
           {
             "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "log",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              },
-              {
-                "ref": {
-                  "name": "Level",
-                  "refId": "Level"
-                },
-                "kind": "param",
-                "name": "logLevel",
-                "id": "logLevel"
-              }
-            ],
-            "id": "log2()"
-          },
-          {
-            "returnType": {
               "name": "TaskLogger",
               "refId": "TaskLogger"
             },
@@ -22853,126 +22975,6 @@
           }
         ],
         "id": "TaskContext"
-      },
-      {
-        "superclass": {
-          "name": "Object",
-          "refId": "Object"
-        },
-        "kind": "class",
-        "name": "TaskLogger",
-        "children": [
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "fine",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              }
-            ],
-            "id": "fine1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "info",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              }
-            ],
-            "id": "info1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "warning",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              }
-            ],
-            "id": "warning1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "severe",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              }
-            ],
-            "id": "severe1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
-            "name": "log",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              },
-              {
-                "ref": {
-                  "name": "Level",
-                  "refId": "Level"
-                },
-                "kind": "param",
-                "name": "logLevel",
-                "id": "logLevel"
-              }
-            ],
-            "id": "log2()"
-          }
-        ],
-        "id": "TaskLogger"
       },
       {
         "superclass": {
@@ -23418,21 +23420,21 @@
               },
               {
                 "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              },
-              {
-                "ref": {
                   "name": "Level",
                   "refId": "Level"
                 },
                 "kind": "param",
                 "name": "logLevel",
                 "id": "logLevel"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
               }
             ],
             "id": "_subTaskLog3()"
@@ -23462,21 +23464,21 @@
               },
               {
                 "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "message",
-                "id": "message"
-              },
-              {
-                "ref": {
                   "name": "Level",
                   "refId": "Level"
                 },
                 "kind": "param",
                 "name": "logLevel",
                 "id": "logLevel"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
               }
             ],
             "id": "_logCore3()"
@@ -23574,6 +23576,238 @@
           }
         ],
         "id": "RootTaskContext"
+      },
+      {
+        "superclass": {
+          "name": "TaskContext",
+          "refId": "TaskContext"
+        },
+        "kind": "class",
+        "name": "ConsoleContext",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "ConsoleContext.raw",
+            "children": [
+              {
+                "ref": {
+                  "name": "ReadOnlyCollection",
+                  "refId": "ReadOnlyCollection",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "arguments",
+                "id": "arguments"
+              }
+            ],
+            "id": "ConsoleContext.raw1()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "ConsoleContext",
+            "id": "ConsoleContext0()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "log",
+            "children": [
+              {
+                "ref": {
+                  "name": "Level",
+                  "refId": "Level"
+                },
+                "kind": "param",
+                "name": "logLevel",
+                "id": "logLevel"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "log2()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "fail",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              }
+            ],
+            "id": "fail1()"
+          },
+          {
+            "returnType": {
+              "name": "TaskLogger",
+              "refId": "TaskLogger"
+            },
+            "kind": "method",
+            "comment": "\nAt the moment [getSubLogger] returns [this].\n",
+            "name": "getSubLogger",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "name",
+                "id": "name"
+              }
+            ],
+            "id": "getSubLogger1()"
+          },
+          {
+            "returnType": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "method",
+            "name": "isDisposed",
+            "id": "isDisposed0()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "dispose",
+            "id": "dispose0()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "runTaskAsProcess",
+            "children": [
+              {
+                "ref": {
+                  "name": "Task",
+                  "refId": "Task"
+                },
+                "kind": "param",
+                "name": "task",
+                "id": "task"
+              }
+            ],
+            "id": "runTaskAsProcess1()"
+          },
+          {
+            "returnType": {
+              "name": "void",
+              "refId": "void"
+            },
+            "kind": "method",
+            "name": "_assertNotDisposed",
+            "id": "_assertNotDisposed0()"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "isDisposed",
+            "id": "isDisposed"
+          },
+          {
+            "ref": {
+              "name": "ReadOnlyCollection",
+              "refId": "ReadOnlyCollection",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "arguments",
+            "id": "arguments"
+          },
+          {
+            "ref": {
+              "name": "bool",
+              "refId": "bool"
+            },
+            "kind": "property",
+            "name": "_isDisposed",
+            "id": "_isDisposed"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "ConsoleContext.raw",
+            "children": [
+              {
+                "ref": {
+                  "name": "ReadOnlyCollection",
+                  "refId": "ReadOnlyCollection",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "arguments",
+                "id": "arguments"
+              }
+            ],
+            "id": "ConsoleContext.raw1()"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "ConsoleContext",
+            "id": "ConsoleContext0()"
+          }
+        ],
+        "id": "ConsoleContext"
       },
       {
         "superclass": {
@@ -25722,6 +25956,15 @@
           }
         ],
         "id": "_runMany4()"
+      },
+      {
+        "returnType": {
+          "name": "ArgParser",
+          "refId": "ArgParser"
+        },
+        "kind": "method",
+        "name": "_getBenchParser",
+        "id": "_getBenchParser0()"
       },
       {
         "returnType": {

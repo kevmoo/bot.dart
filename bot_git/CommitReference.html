@@ -56,7 +56,7 @@ class CommitReference {
    assert(lines.last.length == 0);
 
    return lines.getRange(0, lines.length-1)
-       .mappedBy((line) {
+       .map((line) {
          final match = _lsRemoteRegExp.allMatches(line).single;
          assert(match.groupCount == 2);
 
@@ -92,7 +92,7 @@ static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
  assert(lines.last.length == 0);
 
  return lines.getRange(0, lines.length-1)
-     .mappedBy((line) {
+     .map((line) {
        final match = _lsRemoteRegExp.allMatches(line).single;
        assert(match.groupCount == 2);
 

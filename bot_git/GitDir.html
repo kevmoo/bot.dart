@@ -60,7 +60,7 @@ class GitDir {
    return getBranchReferences()
        .then((list) {
          return list
-             .mappedBy((br) =&gt; br.branchName)
+             .map((br) =&gt; br.branchName)
              .toList();
        });
  }
@@ -92,7 +92,7 @@ class GitDir {
          assert(pr.exitCode == 0);
 
          return CommitReference.fromShowRefOutput(pr.stdout)
-             .mappedBy((gr) =&gt; gr.toBranchReference())
+             .map((gr) =&gt; gr.toBranchReference())
              .toList();
        });
  }
@@ -340,7 +340,7 @@ Future&lt;List&lt;String&gt;&gt; getBranchNames() {
  return getBranchReferences()
      .then((list) {
        return list
-           .mappedBy((br) =&gt; br.branchName)
+           .map((br) =&gt; br.branchName)
            .toList();
      });
 }
@@ -388,7 +388,7 @@ Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
        assert(pr.exitCode == 0);
 
        return CommitReference.fromShowRefOutput(pr.stdout)
-           .mappedBy((gr) =&gt; gr.toBranchReference())
+           .map((gr) =&gt; gr.toBranchReference())
            .toList();
      });
 }

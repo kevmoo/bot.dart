@@ -284,12 +284,19 @@ Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
 Task createBenchTask() {
  return new Task.async((ctx) {
 
-   assert(ctx.arguments.length &gt; 0);
+   final parser = _getBenchParser();
+   final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
 
-   final processName = ctx.arguments.first;
-   final args = ctx.arguments.getRange(1, ctx.arguments.length-1);
+   final count = int.parse(parseResult['run_count'], onError: (s) =&gt; _defaultRunCount);
 
-   return _runMany(ctx, _defaultRunCount, processName, args)
+   if(parseResult.rest.isEmpty) {
+     ctx.fail('No command provided.');
+   }
+
+   final processName = parseResult.rest.first;
+   final args = parseResult.rest.getRange(1, parseResult.rest.length-1);
+
+   return _runMany(ctx, count, processName, args)
        .then((list) {
          final values = list.map((brr) =&gt; brr.executionDuration.inMilliseconds);
          final stats = new _Stats(values);

@@ -36,7 +36,7 @@
 class Console {
 
  static Iterable&lt;String&gt; getTable(List source,
-     List&lt;ColumnDefinition&gt; columns, {includeHeader: false}) {
+     List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
    requireArgumentNotNull(source, 'source');
    requireArgumentNotNull(columns, 'columns');
    requireArgument(columns.length &gt; 0, 'columns',
@@ -72,7 +72,7 @@ class Console {
      }
    }
 
-   return cells.rows.mappedBy((r) =&gt; _getRow(r, maxWidths));
+   return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
  }
 
  static String _getRow(List&lt;String&gt; row, List&lt;int&gt; columnWidths) {
@@ -104,12 +104,12 @@ class Console {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="getTable">
 <button class="show-code">Code</button>
-Iterable&lt;String&gt; <strong>getTable</strong>(List source, List&lt;<a href="../bot_io/ColumnDefinition.html">ColumnDefinition</a>&gt; columns, {includeHeader: false}) <a class="anchor-link" href="#getTable"
+Iterable&lt;String&gt; <strong>getTable</strong>(List source, List&lt;<a href="../bot_io/ColumnDefinition.html">ColumnDefinition</a>&gt; columns, {bool includeHeader: false}) <a class="anchor-link" href="#getTable"
               title="Permalink to Console.getTable">#</a></h4>
 <div class="doc">
 <pre class="source">
 static Iterable&lt;String&gt; getTable(List source,
-   List&lt;ColumnDefinition&gt; columns, {includeHeader: false}) {
+   List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
  requireArgumentNotNull(source, 'source');
  requireArgumentNotNull(columns, 'columns');
  requireArgument(columns.length &gt; 0, 'columns',
@@ -145,7 +145,7 @@ static Iterable&lt;String&gt; getTable(List source,
    }
  }
 
- return cells.rows.mappedBy((r) =&gt; _getRow(r, maxWidths));
+ return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
 }
 </pre>
 </div>

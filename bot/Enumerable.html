@@ -102,8 +102,8 @@ abstract class Enumerable&lt;T&gt; extends Iterable&lt;T&gt; {
   * type and consequently the returned collection's
   * typeis Collection.
   */
- Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
-     $(super.mappedBy(f));
+ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
+     $(super.map(f));
 
  Enumerable&lt;T&gt; where(Func1&lt;T, bool&gt; f) =&gt;
      $(super.where(f));
@@ -145,7 +145,7 @@ abstract class Enumerable&lt;T&gt; extends Iterable&lt;T&gt; {
      CollectionUtil.toHashMap(this, valueFunc, keyFunc);
 
  NumberEnumerable selectNumbers(Func1&lt;T, num&gt; f) =&gt;
-     new NumberEnumerable.from(this.mappedBy(f));
+     new NumberEnumerable.from(this.map(f));
 
  String toString() =&gt; "[${this.join()}]";
 }
@@ -545,29 +545,10 @@ E lastMatching(bool test(E value), {E orElse()}) {
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="map">
+<div class="method"><h4 id="map">
 <button class="show-code">Code</button>
-Iterable <strong>map</strong>(f(<a href="../bot/Enumerable.html">E</a> element)) <a class="anchor-link" href="#map"
+<a href="../bot/Enumerable.html">Enumerable</a> <strong>map</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#map"
               title="Permalink to Enumerable&lt;T&gt;.map">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
-<p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
-by the result of <code>f(e)</code>.</p>
-<p>This method returns a view of the mapped elements. As long as the
-returned <code>Iterable</code> is not iterated over, the supplied function 
-<span class="param">f</span> will
-not be invoked. The transformed elements will not be cached. Iterating
-multiple times over the the returned <code>Iterable</code> will invoke the supplied
-function 
-<span class="param">f</span> multiple times on the same element.</p>
-<pre class="source">
-Iterable map(f(E element)) =&gt; new MappedIterable&lt;E, dynamic&gt;(this, f);
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="mappedBy">
-<button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a> <strong>mappedBy</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#mappedBy"
-              title="Permalink to Enumerable&lt;T&gt;.mappedBy">#</a></h4>
 <div class="doc">
 <p>Returns a new collection with the elements <code> f(e) </code>
 for each element <code>e</code> of this collection.</p>
@@ -575,8 +556,20 @@ for each element <code>e</code> of this collection.</p>
 type and consequently the returned collection's
 typeis Collection.</p>
 <pre class="source">
-Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
-   $(super.mappedBy(f));
+Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
+   $(super.map(f));
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="mappedBy">
+<button class="show-code">Code</button>
+Iterable <strong>mappedBy</strong>(f(<a href="../bot/Enumerable.html">E</a> element)) <a class="anchor-link" href="#mappedBy"
+              title="Permalink to Enumerable&lt;T&gt;.mappedBy">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Deprecated alias for <a class="crossref" href="../bot/Enumerable.html#map">map</a>.</p>
+<p>@deprecated</p>
+<pre class="source">
+Iterable mappedBy(f(E element)) =&gt; map(f);
 </pre>
 </div>
 </div>
@@ -679,7 +672,7 @@ Enumerable selectMany(Func1&lt;T, Iterable&gt; f) =&gt;
 <div class="doc">
 <pre class="source">
 NumberEnumerable selectNumbers(Func1&lt;T, num&gt; f) =&gt;
-   new NumberEnumerable.from(this.mappedBy(f));
+   new NumberEnumerable.from(this.map(f));
 </pre>
 </div>
 </div>

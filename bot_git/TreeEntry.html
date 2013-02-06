@@ -65,7 +65,7 @@ class TreeEntry {
    assert(lines.last.length == 0);
 
    return lines.getRange(0, lines.length-1)
-       .mappedBy((line) =&gt; new TreeEntry.fromLsTree(line))
+       .map((line) =&gt; new TreeEntry.fromLsTree(line))
        .toList();
  }
 }
@@ -86,7 +86,7 @@ static List&lt;TreeEntry&gt; fromLsTreeOutput(String output) {
  assert(lines.last.length == 0);
 
  return lines.getRange(0, lines.length-1)
-     .mappedBy((line) =&gt; new TreeEntry.fromLsTree(line))
+     .map((line) =&gt; new TreeEntry.fromLsTree(line))
      .toList();
 }
 </pre>

@@ -37,25 +37,25 @@ abstract class TaskLogger {
 
  // level 500
  void fine(String message) {
-   log(message, Level.FINE);
+   log(Level.FINE, message);
  }
 
  // level 800
  void info(String message) {
-   log(message, Level.INFO);
+   log(Level.INFO, message);
  }
 
  // level 900
  void warning(String message) {
-   log(message, Level.WARNING);
+   log(Level.WARNING, message);
  }
 
  // level 1000
  void severe(String message) {
-   log(message, Level.SEVERE);
+   log(Level.SEVERE, message);
  }
 
- void log(String message, Level logLevel);
+ void log(Level logLevel, String message);
 }
 </pre>
 </div>
@@ -71,7 +71,7 @@ void <strong>fine</strong>(String message) <a class="anchor-link" href="#fine"
 <div class="doc">
 <pre class="source">
 void fine(String message) {
- log(message, Level.FINE);
+ log(Level.FINE, message);
 }
 </pre>
 </div>
@@ -83,13 +83,13 @@ void <strong>info</strong>(String message) <a class="anchor-link" href="#info"
 <div class="doc">
 <pre class="source">
 void info(String message) {
- log(message, Level.INFO);
+ log(Level.INFO, message);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="log">
-abstract void <strong>log</strong>(String message, <a href="../logging/Level.html">Level</a> logLevel) <a class="anchor-link" href="#log"
+abstract void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, String message) <a class="anchor-link" href="#log"
               title="Permalink to TaskLogger.log">#</a></h4>
 <div class="doc">
 </div>
@@ -101,7 +101,7 @@ void <strong>severe</strong>(String message) <a class="anchor-link" href="#sever
 <div class="doc">
 <pre class="source">
 void severe(String message) {
- log(message, Level.SEVERE);
+ log(Level.SEVERE, message);
 }
 </pre>
 </div>
@@ -113,7 +113,7 @@ void <strong>warning</strong>(String message) <a class="anchor-link" href="#warn
 <div class="doc">
 <pre class="source">
 void warning(String message) {
- log(message, Level.WARNING);
+ log(Level.WARNING, message);
 }
 </pre>
 </div>

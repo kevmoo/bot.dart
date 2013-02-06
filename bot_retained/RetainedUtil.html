@@ -122,7 +122,7 @@ class RetainedUtil {
  static List&lt;Coordinate&gt; getCorners(Thing thing) {
    final rect = new Box(0,0,thing.width, thing.height);
    final points = rect.getCorners();
-   return points.mappedBy((p) {
+   return points.map((p) {
      return transformPointLocalToGlobal(thing, p);
    }).toList();
  }
@@ -232,7 +232,7 @@ List&lt;<a href="../bot/Coordinate.html">Coordinate</a>&gt; <strong>getCorners</
 static List&lt;Coordinate&gt; getCorners(Thing thing) {
  final rect = new Box(0,0,thing.width, thing.height);
  final points = rect.getCorners();
- return points.mappedBy((p) {
+ return points.map((p) {
    return transformPointLocalToGlobal(thing, p);
  }).toList();
 }

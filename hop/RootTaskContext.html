@@ -54,12 +54,12 @@ class RootTaskContext {
    printCore(message);
  }
 
- void _subTaskLog(_SubTaskContext subTask, String message, Level logLevel) {
+ void _subTaskLog(_SubTaskContext subTask, Level logLevel, String message) {
    assert(subTask._parent == this);
-   _logCore([subTask._name], message, logLevel);
+   _logCore([subTask._name], logLevel, message);
  }
 
- void _logCore(List&lt;String&gt; titleSections, String message, Level logLevel) {
+ void _logCore(List&lt;String&gt; titleSections, Level logLevel, String message) {
    requireArgumentNotNull(message, 'message');
    assert(!titleSections.isEmpty);
    assert(titleSections.every((s) =&gt; s != null &amp;&amp; !s.isEmpty));

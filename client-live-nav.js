@@ -8903,11 +8903,11 @@ $.Comparable_compare.call$2 = $.Comparable_compare;
 $.Comparable_compare.$name = "Comparable_compare";
 Isolate.$finishClasses($$);
 $$ = {};
-$.String = {builtin$cls: 'String'};
 $.Element = {builtin$cls: 'Element'};
 $.Match = {builtin$cls: 'Match'};
 $.Node = {builtin$cls: 'Node'};
 $.$int = {builtin$cls: '$int'};
+$.String = {builtin$cls: 'String'};
 Isolate.makeConstantList = function(list) {
   list.immutable$list = true;
   list.fixed$length = true;
