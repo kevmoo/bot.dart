@@ -13219,6 +13219,16 @@
       {
         "returnType": {
           "name": "Future",
+          "refId": "Future"
+        },
+        "kind": "method",
+        "comment": "\nGet a [Future] that completes after a call to [window.setImmediate].\n",
+        "name": "getImmediateFuture",
+        "id": "getImmediateFuture0()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
           "refId": "Future",
           "arguments": [
             {
@@ -13228,6 +13238,7 @@
           ]
         },
         "kind": "method",
+        "comment": "\nGet a [Future] that completes after a call to [window.setTimeout] with the\nprovided value. If [milliseconds] is less than or equal to zero, the value of\n[getImmediateFuture] is returned instead.\n",
         "name": "getTimeoutFuture",
         "children": [
           {

@@ -29,15 +29,36 @@
 <h2><strong>bot_html</strong> library</h2>
 <div>
 <h3>Functions</h3>
+<div class="method"><h4 id="getImmediateFuture">
+<button class="show-code">Code</button>
+Future <strong>getImmediateFuture</strong>() <a class="anchor-link" href="#getImmediateFuture"
+              title="Permalink to getImmediateFuture">#</a></h4>
+<div class="doc">
+<p>Get a <code>Future</code> that completes after a call to <code>window.setImmediate</code>.</p>
+<pre class="source">
+Future getImmediateFuture() {
+ final completer = new Completer();
+
+ window.setImmediate(() =&gt; completer.complete(null));
+
+ return completer.future;
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="getTimeoutFuture">
 <button class="show-code">Code</button>
 Future&lt;int&gt; <strong>getTimeoutFuture</strong>(int milliseconds) <a class="anchor-link" href="#getTimeoutFuture"
               title="Permalink to getTimeoutFuture">#</a></h4>
 <div class="doc">
+<p>Get a <code>Future</code> that completes after a call to <code>window.setTimeout</code> with the
+provided value. If 
+<span class="param">milliseconds</span> is less than or equal to zero, the value of
+<a class="crossref" href="bot_html.html#getImmediateFuture">getImmediateFuture</a> is returned instead.</p>
 <pre class="source">
 Future&lt;int&gt; getTimeoutFuture(int milliseconds) {
  if(milliseconds &lt; 0) {
-   return new Future.immediate(0);
+   return getImmediateFuture();
  } else {
    final completer = new Completer();
 
