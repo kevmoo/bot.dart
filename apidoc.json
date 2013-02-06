@@ -25610,6 +25610,130 @@
       },
       {
         "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "_BenchRunResult",
+              "refId": "_BenchRunResult"
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_runOnce",
+        "children": [
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "param",
+            "name": "runNumber",
+            "id": "runNumber"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "processName",
+            "id": "processName"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "args",
+            "id": "args"
+          }
+        ],
+        "id": "_runOnce3()"
+      },
+      {
+        "returnType": {
+          "name": "Future",
+          "refId": "Future",
+          "arguments": [
+            {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "_BenchRunResult",
+                  "refId": "_BenchRunResult"
+                }
+              ]
+            }
+          ]
+        },
+        "kind": "method",
+        "name": "_runMany",
+        "children": [
+          {
+            "ref": {
+              "name": "TaskLogger",
+              "refId": "TaskLogger"
+            },
+            "kind": "param",
+            "name": "logger",
+            "id": "logger"
+          },
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "param",
+            "name": "count",
+            "id": "count"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "param",
+            "name": "processName",
+            "id": "processName"
+          },
+          {
+            "ref": {
+              "name": "List",
+              "refId": "List",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "param",
+            "name": "args",
+            "id": "args"
+          }
+        ],
+        "id": "_runMany4()"
+      },
+      {
+        "returnType": {
+          "name": "Task",
+          "refId": "Task"
+        },
+        "kind": "method",
+        "name": "createBenchTask",
+        "id": "createBenchTask0()"
+      },
+      {
+        "returnType": {
           "name": "ArgResults",
           "refId": "ArgResults"
         },
@@ -25651,6 +25775,15 @@
           }
         ],
         "id": "_helpfulParseArgs3()"
+      },
+      {
+        "ref": {
+          "name": "dynamic",
+          "refId": "dynamic"
+        },
+        "kind": "property",
+        "name": "_defaultRunCount",
+        "id": "_defaultRunCount"
       }
     ],
     "id": "file:///Users/kevin/source/github/bot.dart/lib/hop_tasks.dart"

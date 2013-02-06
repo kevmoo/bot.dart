@@ -275,6 +275,33 @@ Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="createBenchTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createBenchTask</strong>() <a class="anchor-link" href="#createBenchTask"
+              title="Permalink to createBenchTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createBenchTask() {
+ return new Task.async((ctx) {
+
+   assert(ctx.arguments.length &gt; 0);
+
+   final processName = ctx.arguments.first;
+   final args = ctx.arguments.getRange(1, ctx.arguments.length-1);
+
+   return _runMany(ctx, _defaultRunCount, processName, args)
+       .then((list) {
+         final values = list.map((brr) =&gt; brr.executionDuration.inMilliseconds);
+         final stats = new _Stats(values);
+         ctx.info(stats.toString());
+         return true;
+       });
+
+ }, 'Run a benchmark against the provided task');
+}
+</pre>
+</div>
+</div>
 </div>
         </div>
         <div class="clear"></div>
