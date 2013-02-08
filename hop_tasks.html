@@ -61,12 +61,27 @@ Future&lt;int&gt; pipeProcess(Process process,
    {Action1&lt;String&gt; stdOutWriter, Action1&lt;String&gt; stdErrWriter}) {
  final completer = new Completer&lt;int&gt;();
 
+ bool finished = false;
+
+ bool validateNotFinished(String message) {
+   if(finished) {
+     print('Error in hop_tasks - pipeProcess');
+     print("Received signal from $process after exit signal");
+     print(message);
+     print("Tracked at http://code.google.com/p/dart/issues/detail?id=8422");
+     return false;
+   }
+   return true;
+ }
+
  if(stdOutWriter != null) {
    process.stdout.onData = () {
      final data = process.stdout.read();
-     assert(data != null);
      final str = new String.fromCharCodes(data).trim();
-     stdOutWriter(str);
+
+     if(validateNotFinished('stdout - $str')) {
+       stdOutWriter(str);
+     }
    };
  }
 
@@ -75,12 +90,19 @@ Future&lt;int&gt; pipeProcess(Process process,
      final data = process.stderr.read();
      assert(data != null);
      final str = new String.fromCharCodes(data).trim();
-     stdErrWriter(str);
+
+     if(validateNotFinished('stderr - $str')) {
+       stdErrWriter(str);
+     }
+
    };
  }
 
  process.onExit = (int exitCode){
-   completer.complete(exitCode);
+   if(validateNotFinished('onExit')) {
+     finished = true;
+     completer.complete(exitCode);
+   }
  };
 
  return completer.future;
