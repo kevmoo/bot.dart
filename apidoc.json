@@ -10339,8 +10339,8 @@
           {
             "isStatic": true,
             "returnType": {
-              "name": "List",
-              "refId": "List",
+              "name": "Iterable",
+              "refId": "Iterable",
               "arguments": [
                 {
                   "name": "String",
@@ -10753,6 +10753,111 @@
           }
         ],
         "id": "Tuple"
+      },
+      {
+        "superclass": {
+          "name": "Object",
+          "refId": "Object"
+        },
+        "kind": "class",
+        "name": "StringLineReader",
+        "children": [
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "method",
+            "name": "StringLineReader",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "StringLineReader1()"
+          },
+          {
+            "returnType": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "method",
+            "name": "position",
+            "id": "position0()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "readNextLine",
+            "id": "readNextLine0()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "readToEnd",
+            "id": "readToEnd0()"
+          },
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "property",
+            "name": "position",
+            "id": "position"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "source",
+            "id": "source"
+          },
+          {
+            "ref": {
+              "name": "int",
+              "refId": "int"
+            },
+            "kind": "property",
+            "name": "_position",
+            "id": "_position"
+          },
+          {
+            "returnType": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "constructor",
+            "name": "StringLineReader",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              }
+            ],
+            "id": "StringLineReader1()"
+          }
+        ],
+        "id": "StringLineReader"
       }
     ],
     "id": "file:///Users/kevin/source/github/bot.dart/lib/bot.dart"
@@ -11865,6 +11970,12 @@
     "name": "bot_git",
     "children": [
       {
+        "kind": "typedef",
+        "comment": "\nA method that populates a [TempDir] asynchronously.\n",
+        "name": "PopulateTempDir",
+        "id": "PopulateTempDir"
+      },
+      {
         "superclass": {
           "name": "Object",
           "refId": "Object"
@@ -11878,27 +11989,7 @@
               "refId": "dynamic"
             },
             "kind": "method",
-            "name": "GitDir",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir1()"
-          },
-          {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "kind": "method",
-            "name": "GitDir.fromPath",
+            "name": "GitDir._raw",
             "children": [
               {
                 "ref": {
@@ -11906,11 +11997,21 @@
                   "refId": "Path"
                 },
                 "kind": "param",
-                "name": "path",
-                "id": "path"
+                "name": "_path",
+                "id": "_path"
+              },
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "_gitWorkTree",
+                "id": "_gitWorkTree"
               }
             ],
-            "id": "GitDir.fromPath1()"
+            "id": "GitDir._raw2()"
           },
           {
             "returnType": {
@@ -12169,8 +12270,8 @@
             "children": [
               {
                 "ref": {
-                  "name": "List",
-                  "refId": "List",
+                  "name": "Iterable",
+                  "refId": "Iterable",
                   "arguments": [
                     {
                       "name": "String",
@@ -12212,12 +12313,109 @@
           },
           {
             "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "Commit",
+                  "refId": "Commit"
+                }
+              ]
+            },
+            "kind": "method",
+            "comment": "\nIf the content provided matches the content in the specificed [branchName], then\n`null` is returned.\n\nIf no content is added to the directory, an [Error] is thrown.\n",
+            "name": "populateBranch",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "branchName",
+                "id": "branchName"
+              },
+              {
+                "ref": {
+                  "name": "PopulateTempDir",
+                  "refId": "PopulateTempDir"
+                },
+                "kind": "param",
+                "name": "populator",
+                "id": "populator"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "commitMessage",
+                "id": "commitMessage"
+              }
+            ],
+            "id": "populateBranch3()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "_TempDirs",
+                  "refId": "_TempDirs"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_getTempDirPairForNewBranch",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "newBranchName",
+                "id": "newBranchName"
+              }
+            ],
+            "id": "_getTempDirPairForNewBranch1()"
+          },
+          {
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "_TempDirs",
+                  "refId": "_TempDirs"
+                }
+              ]
+            },
+            "kind": "method",
+            "name": "_getTempDirPair",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "existingBranchName",
+                "id": "existingBranchName"
+              }
+            ],
+            "id": "_getTempDirPair1()"
+          },
+          {
+            "returnType": {
               "name": "String",
               "refId": "String"
             },
             "kind": "method",
-            "name": "_workingDir",
-            "id": "_workingDir0()"
+            "name": "_processWorkingDir",
+            "id": "_processWorkingDir0()"
           },
           {
             "isStatic": true,
@@ -12297,6 +12495,33 @@
               ]
             },
             "kind": "method",
+            "name": "fromExisting",
+            "children": [
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "gitDirRoot",
+                "id": "gitDirRoot"
+              }
+            ],
+            "id": "fromExisting1()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Future",
+              "refId": "Future",
+              "arguments": [
+                {
+                  "name": "GitDir",
+                  "refId": "GitDir"
+                }
+              ]
+            },
+            "kind": "method",
             "name": "_init",
             "children": [
               {
@@ -12353,8 +12578,28 @@
               "refId": "String"
             },
             "kind": "property",
-            "name": "_workingDir",
-            "id": "_workingDir"
+            "name": "_processWorkingDir",
+            "id": "_processWorkingDir"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_workTreeArg",
+            "id": "_workTreeArg"
+          },
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "isStatic": true,
+            "kind": "property",
+            "name": "_gitDirArg",
+            "id": "_gitDirArg"
           },
           {
             "ref": {
@@ -12376,24 +12621,13 @@
             "id": "_path"
           },
           {
-            "returnType": {
-              "name": "dynamic",
-              "refId": "dynamic"
+            "ref": {
+              "name": "Path",
+              "refId": "Path"
             },
-            "kind": "constructor",
-            "name": "GitDir",
-            "children": [
-              {
-                "ref": {
-                  "name": "String",
-                  "refId": "String"
-                },
-                "kind": "param",
-                "name": "path",
-                "id": "path"
-              }
-            ],
-            "id": "GitDir1()"
+            "kind": "property",
+            "name": "_gitWorkTree",
+            "id": "_gitWorkTree"
           },
           {
             "returnType": {
@@ -12401,7 +12635,7 @@
               "refId": "dynamic"
             },
             "kind": "constructor",
-            "name": "GitDir.fromPath",
+            "name": "GitDir._raw",
             "children": [
               {
                 "ref": {
@@ -12409,11 +12643,21 @@
                   "refId": "Path"
                 },
                 "kind": "param",
-                "name": "path",
-                "id": "path"
+                "name": "_path",
+                "id": "_path"
+              },
+              {
+                "ref": {
+                  "name": "Path",
+                  "refId": "Path"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "_gitWorkTree",
+                "id": "_gitWorkTree"
               }
             ],
-            "id": "GitDir.fromPath1()"
+            "id": "GitDir._raw2()"
           }
         ],
         "id": "GitDir"
@@ -12492,6 +12736,15 @@
               }
             ],
             "id": "TreeEntry.fromLsTree1()"
+          },
+          {
+            "returnType": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "method",
+            "name": "toString",
+            "id": "toString0()"
           },
           {
             "isStatic": true,
@@ -12677,11 +12930,53 @@
                   "refId": "String"
                 },
                 "kind": "param",
+                "name": "author",
+                "id": "author"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "committer",
+                "id": "committer"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
                 "name": "content",
                 "id": "content"
+              },
+              {
+                "ref": {
+                  "name": "Iterable",
+                  "refId": "Iterable",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "parents",
+                "id": "parents"
               }
             ],
-            "id": "Commit._internal2()"
+            "id": "Commit._internal6()"
           },
           {
             "isStatic": true,
@@ -12711,18 +13006,8 @@
             },
             "isStatic": true,
             "kind": "property",
-            "name": "_commitContentRegExpVal",
-            "id": "_commitContentRegExpVal"
-          },
-          {
-            "ref": {
-              "name": "dynamic",
-              "refId": "dynamic"
-            },
-            "isStatic": true,
-            "kind": "property",
-            "name": "_commitContentRegExp",
-            "id": "_commitContentRegExp"
+            "name": "_headerRegExp",
+            "id": "_headerRegExp"
           },
           {
             "ref": {
@@ -12739,8 +13024,50 @@
               "refId": "String"
             },
             "kind": "property",
+            "name": "author",
+            "id": "author"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "committer",
+            "id": "committer"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
+            "name": "message",
+            "id": "message"
+          },
+          {
+            "ref": {
+              "name": "String",
+              "refId": "String"
+            },
+            "kind": "property",
             "name": "content",
             "id": "content"
+          },
+          {
+            "ref": {
+              "name": "ReadOnlyCollection",
+              "refId": "ReadOnlyCollection",
+              "arguments": [
+                {
+                  "name": "String",
+                  "refId": "String"
+                }
+              ]
+            },
+            "kind": "property",
+            "name": "parents",
+            "id": "parents"
           },
           {
             "returnType": {
@@ -12765,11 +13092,53 @@
                   "refId": "String"
                 },
                 "kind": "param",
+                "name": "author",
+                "id": "author"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "committer",
+                "id": "committer"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
+                "name": "message",
+                "id": "message"
+              },
+              {
+                "ref": {
+                  "name": "String",
+                  "refId": "String"
+                },
+                "kind": "param",
                 "name": "content",
                 "id": "content"
+              },
+              {
+                "ref": {
+                  "name": "Iterable",
+                  "refId": "Iterable",
+                  "arguments": [
+                    {
+                      "name": "String",
+                      "refId": "String"
+                    }
+                  ]
+                },
+                "kind": "param",
+                "name": "parents",
+                "id": "parents"
               }
             ],
-            "id": "Commit._internal2()"
+            "id": "Commit._internal6()"
           }
         ],
         "id": "Commit"
@@ -24494,8 +24863,8 @@
         "children": [
           {
             "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
+              "name": "TaskLogger",
+              "refId": "TaskLogger"
             },
             "kind": "param",
             "name": "ctx",
@@ -24821,379 +25190,6 @@
       },
       {
         "returnType": {
-          "name": "void",
-          "refId": "void"
-        },
-        "kind": "method",
-        "name": "_throwIfProcessFailed",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "ProcessResult",
-              "refId": "ProcessResult"
-            },
-            "kind": "param",
-            "name": "pr",
-            "id": "pr"
-          }
-        ],
-        "id": "_throwIfProcessFailed2()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future",
-          "arguments": [
-            {
-              "name": "bool",
-              "refId": "bool"
-            }
-          ]
-        },
-        "kind": "method",
-        "name": "_gitRemoteHasHead",
-        "children": [
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "remote",
-            "id": "remote"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "head",
-            "id": "head"
-          }
-        ],
-        "id": "_gitRemoteHasHead2()"
-      },
-      {
-        "returnType": {
-          "name": "List",
-          "refId": "List",
-          "arguments": [
-            {
-              "name": "String",
-              "refId": "String"
-            }
-          ]
-        },
-        "kind": "method",
-        "name": "_getGitArgs",
-        "children": [
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "gitDir",
-            "id": "gitDir"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "workTree",
-            "id": "workTree"
-          },
-          {
-            "ref": {
-              "name": "Collection",
-              "refId": "Collection",
-              "arguments": [
-                {
-                  "name": "String",
-                  "refId": "String"
-                }
-              ]
-            },
-            "kind": "param",
-            "name": "rest",
-            "id": "rest"
-          }
-        ],
-        "id": "_getGitArgs3()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future"
-        },
-        "kind": "method",
-        "name": "_doCommitComplex",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "workTree",
-            "id": "workTree"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "gitDir",
-            "id": "gitDir"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "commitMessage",
-            "id": "commitMessage"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "targetBranch",
-            "id": "targetBranch"
-          }
-        ],
-        "id": "_doCommitComplex5()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future"
-        },
-        "kind": "method",
-        "name": "_checkoutBare",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "gitDir",
-            "id": "gitDir"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "workTree",
-            "id": "workTree"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "desiredBranch",
-            "id": "desiredBranch"
-          }
-        ],
-        "id": "_checkoutBare4()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future"
-        },
-        "kind": "method",
-        "name": "_ensureProperBranch",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "gitDir",
-            "id": "gitDir"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "workTree",
-            "id": "workTree"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "desiredBranch",
-            "id": "desiredBranch"
-          }
-        ],
-        "id": "_ensureProperBranch4()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future"
-        },
-        "kind": "method",
-        "name": "_doGitClone",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "sourceGitPath",
-            "id": "sourceGitPath"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "targetGitPath",
-            "id": "targetGitPath"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "sourceGitBranch",
-            "id": "sourceGitBranch"
-          },
-          {
-            "ref": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "param",
-            "name": "doCheckout",
-            "id": "doCheckout"
-          }
-        ],
-        "id": "_doGitClone5()"
-      },
-      {
-        "returnType": {
-          "name": "Future",
-          "refId": "Future",
-          "arguments": [
-            {
-              "name": "String",
-              "refId": "String"
-            }
-          ]
-        },
-        "kind": "method",
-        "name": "_doGitCheckout",
-        "children": [
-          {
-            "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
-            },
-            "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "sourceGitPath",
-            "id": "sourceGitPath"
-          },
-          {
-            "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "targetGitPath",
-            "id": "targetGitPath"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "sourceGitBranch",
-            "id": "sourceGitBranch"
-          }
-        ],
-        "id": "_doGitCheckout4()"
-      },
-      {
-        "returnType": {
           "name": "Future",
           "refId": "Future",
           "arguments": [
@@ -25267,38 +25263,32 @@
         "children": [
           {
             "ref": {
-              "name": "TaskContext",
-              "refId": "TaskContext"
+              "name": "GitDir",
+              "refId": "GitDir"
             },
             "kind": "param",
-            "name": "ctx",
-            "id": "ctx"
-          },
-          {
-            "ref": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "param",
-            "name": "allowDirty",
-            "id": "allowDirty"
+            "name": "gitDir",
+            "id": "gitDir"
           }
         ],
-        "id": "_getCommitMessageFuture2()"
+        "id": "_getCommitMessageFuture1()"
+      },
+      {
+        "returnType": {
+          "name": "ArgParser",
+          "refId": "ArgParser"
+        },
+        "kind": "method",
+        "name": "_getDartDocParser",
+        "id": "_getDartDocParser0()"
       },
       {
         "returnType": {
           "name": "Future",
-          "refId": "Future",
-          "arguments": [
-            {
-              "name": "bool",
-              "refId": "bool"
-            }
-          ]
+          "refId": "Future"
         },
         "kind": "method",
-        "name": "_compileDocs",
+        "name": "_doDocsPopulate",
         "children": [
           {
             "ref": {
@@ -25315,40 +25305,13 @@
               "refId": "TempDir"
             },
             "kind": "param",
-            "name": "gitDir",
-            "id": "gitDir"
+            "name": "dir",
+            "id": "dir"
           },
           {
             "ref": {
-              "name": "TempDir",
-              "refId": "TempDir"
-            },
-            "kind": "param",
-            "name": "outputDir",
-            "id": "outputDir"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "targetBranch",
-            "id": "targetBranch"
-          },
-          {
-            "ref": {
-              "name": "String",
-              "refId": "String"
-            },
-            "kind": "param",
-            "name": "commitMessage",
-            "id": "commitMessage"
-          },
-          {
-            "ref": {
-              "name": "List",
-              "refId": "List",
+              "name": "Collection",
+              "refId": "Collection",
               "arguments": [
                 {
                   "name": "String",
@@ -25370,16 +25333,7 @@
             "id": "packageDir"
           }
         ],
-        "id": "_compileDocs7()"
-      },
-      {
-        "returnType": {
-          "name": "ArgParser",
-          "refId": "ArgParser"
-        },
-        "kind": "method",
-        "name": "_getDartDocParser",
-        "id": "_getDartDocParser0()"
+        "id": "_doDocsPopulate4()"
       },
       {
         "returnType": {

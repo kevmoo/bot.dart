@@ -48,7 +48,8 @@ class CollectionUtil {
  }
 
  static Iterable selectMany(Iterable source, Func1&lt;dynamic, Iterable&gt; func) {
-   return new _FuncEnumerable(source, (s) =&gt; new _SelectManyIterator(s, func));
+   return new _FuncEnumerable(source, (Iterable s) =&gt;
+       new _SelectManyIterator(s.iterator, func));
  }
 
  static int count(Iterable source, Func1&lt;dynamic, bool&gt; test) {
@@ -71,7 +72,8 @@ class CollectionUtil {
    if(comparer == null) {
      comparer = (a,b) =&gt; a == b;
    }
-   return new _FuncEnumerable(source, (s) =&gt; new _DistinctIterator(s, comparer));
+   return new _FuncEnumerable(source, (Iterable s) =&gt;
+       new _DistinctIterator(s.iterator, comparer));
  }
 
  static void forEachWithIndex(Iterable source, Action2&lt;dynamic, int&gt; f) {
@@ -138,7 +140,8 @@ Iterable <strong>selectMany</strong>(Iterable source, <a href="../bot/Func1.html
 <div class="doc">
 <pre class="source">
 static Iterable selectMany(Iterable source, Func1&lt;dynamic, Iterable&gt; func) {
- return new _FuncEnumerable(source, (s) =&gt; new _SelectManyIterator(s, func));
+ return new _FuncEnumerable(source, (Iterable s) =&gt;
+     new _SelectManyIterator(s.iterator, func));
 }
 </pre>
 </div>
@@ -185,7 +188,8 @@ static Iterable distinct(Iterable source, [Func2&lt;dynamic, dynamic, bool&gt; c
  if(comparer == null) {
    comparer = (a,b) =&gt; a == b;
  }
- return new _FuncEnumerable(source, (s) =&gt; new _DistinctIterator(s, comparer));
+ return new _FuncEnumerable(source, (Iterable s) =&gt;
+     new _DistinctIterator(s.iterator, comparer));
 }
 </pre>
 </div>

@@ -90,13 +90,13 @@ Future&lt;int&gt; pipeProcess(Process process,
 </div>
 <div class="method"><h4 id="startProcess">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
+Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskLogger.html">TaskLogger</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
               title="Permalink to startProcess">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future&lt;bool&gt; startProcess(TaskContext ctx,
-   String command,
+Future&lt;bool&gt; startProcess(TaskLogger ctx, String command,
    [List&lt;String&gt; args = null]) {
+
  requireArgumentNotNull(ctx, 'ctx');
  requireArgumentNotNull(command, 'command');
  if(args == null) {
@@ -143,12 +143,17 @@ Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sou
    workingDir = new Directory.current().path;
  }
 
- final gitDir = new GitDir(workingDir);
+ GitDir gitDir;
 
  List&lt;String&gt; gitArgs;
  String sourceDirTreeSha;
 
- return gitDir.lsTree(sourceBranch, subTreesOnly: true, path: sourceDir)
+ return GitDir.fromExisting(workingDir)
+     .then((GitDir value) {
+       gitDir = value;
+
+       return gitDir.lsTree(sourceBranch, subTreesOnly: true, path: sourceDir);
+     })
      .then((List&lt;TreeEntry&gt; entries) {
        assert(entries.length &lt;= 1);
        if(entries.isEmpty) {
@@ -193,21 +198,45 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
  final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
  final bool allowDirty = parseResult['allow-dirty'];
 
- final tempDocsDirFuture = TempDir.create();
- final tempGitDirFuture = TempDir.create()
-     .then((TempDir dir) =&gt; _doGitCheckout(ctx, '.', dir, targetBranch));
- final getLibsFuture = libGetter();
- final commitMessageFuture = _getCommitMessageFuture(ctx, allowDirty);
+ final currentWorkingDir = new Directory.current().path;
 
- return Future.wait([tempDocsDirFuture, getLibsFuture, tempGitDirFuture,
-                      commitMessageFuture])
-     .then((values) {
-       final outputDir = values[0];
-       final libs = values[1];
-       final gitDir = values[2];
-       final commitMessage = values[3];
-       return _compileDocs(ctx, gitDir, outputDir, targetBranch, commitMessage,
-           libs, packageDir);
+ GitDir gitDir;
+ List&lt;String&gt; libs;
+
+ return GitDir.fromExisting(currentWorkingDir)
+     .then((GitDir value) {
+       gitDir = value;
+
+       return gitDir.isWorkingTreeClean();
+     })
+     .then((bool isClean) {
+       if(!allowDirty &amp;&amp; !isClean) {
+         ctx.fail('Working tree is dirty. Cannot generate docs.');
+       }
+
+       return libGetter();
+     })
+     .then((List&lt;String&gt; value) {
+       assert(value != null);
+       libs = value;
+
+       return _getCommitMessageFuture(gitDir);
+     })
+     .then((String commitMessage) {
+
+       return gitDir.populateBranch(targetBranch,
+           (TempDir td) =&gt; _doDocsPopulate(ctx, td, libs, packageDir),
+           commitMessage);
+     })
+     .then((Commit value) {
+       if(value == null) {
+         ctx.info('No commit. Nothing changed.');
+       } else {
+         ctx.info('New commit created at branch $targetBranch');
+         ctx.info('Message: ${value.message}');
+       }
+
+       return true;
      });
 }
 </pre>

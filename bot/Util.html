@@ -50,10 +50,10 @@ class Util {
  }
 
  // TODO: handles windows new lines? Should test...
- static List&lt;String&gt; splitLines(String input) {
+ static Iterable&lt;String&gt; splitLines(String input) {
    requireArgumentNotNull(input, 'input');
-   final split = '\n';
-   return input.split(split);
+
+   return new _FuncEnumerable(input, (v) =&gt; new _StringLineIterator(v));
  }
 
  /**
@@ -98,14 +98,14 @@ static int getHashCode(Iterable source) {
 </div>
 <div class="method"><h4 id="splitLines">
 <button class="show-code">Code</button>
-List&lt;String&gt; <strong>splitLines</strong>(String input) <a class="anchor-link" href="#splitLines"
+Iterable&lt;String&gt; <strong>splitLines</strong>(String input) <a class="anchor-link" href="#splitLines"
               title="Permalink to Util.splitLines">#</a></h4>
 <div class="doc">
 <pre class="source">
-static List&lt;String&gt; splitLines(String input) {
+static Iterable&lt;String&gt; splitLines(String input) {
  requireArgumentNotNull(input, 'input');
- final split = '\n';
- return input.split(split);
+
+ return new _FuncEnumerable(input, (v) =&gt; new _StringLineIterator(v));
 }
 </pre>
 </div>

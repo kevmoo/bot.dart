@@ -50,7 +50,7 @@ class CommitReference {
 
  static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
    assert(input != null);
-   final lines = Util.splitLines(input);
+   final lines = Util.splitLines(input).toList();
 
    // last line should be empty
    assert(lines.last.length == 0);
@@ -86,7 +86,7 @@ List&lt;<a href="../bot_git/CommitReference.html">CommitReference</a>&gt; <stron
 <pre class="source">
 static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
  assert(input != null);
- final lines = Util.splitLines(input);
+ final lines = Util.splitLines(input).toList();
 
  // last line should be empty
  assert(lines.last.length == 0);

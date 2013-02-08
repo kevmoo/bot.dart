@@ -58,8 +58,10 @@ class TreeEntry {
    return new TreeEntry(match[1], match[2], match[3], match[4]);
  }
 
+ String toString() =&gt; "$mode $type $sha\t$name";
+
  static List&lt;TreeEntry&gt; fromLsTreeOutput(String output) {
-   final lines = Util.splitLines(output);
+   final lines = Util.splitLines(output).toList();
 
    // last line should be empty
    assert(lines.last.length == 0);
@@ -80,7 +82,7 @@ List&lt;<a href="../bot_git/TreeEntry.html">TreeEntry</a>&gt; <strong>fromLsTree
 <div class="doc">
 <pre class="source">
 static List&lt;TreeEntry&gt; fromLsTreeOutput(String output) {
- final lines = Util.splitLines(output);
+ final lines = Util.splitLines(output).toList();
 
  // last line should be empty
  assert(lines.last.length == 0);
@@ -170,6 +172,22 @@ String         <strong>type</strong> <a class="anchor-link"
         <div class="doc">
 <pre class="source">
 type
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to TreeEntry.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString() =&gt; "$mode $type $sha\t$name";
 </pre>
 </div>
 </div>
