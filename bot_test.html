@@ -29,6 +29,18 @@
 <h2><strong>bot_test</strong> library</h2>
 <div>
 <h3>Properties</h3>
+<div class="field"><h4 id="finishes">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a>         <strong>finishes</strong> <a class="anchor-link"
+            href="#finishes"
+            title="Permalink to finishes">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+finishes = const _Finishes(null)
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="throwsAssertionError">
 <button class="show-code">Code</button>
 final <a href="matcher/Matcher.html">Matcher</a>         <strong>throwsAssertionError</strong> <a class="anchor-link"
@@ -71,6 +83,23 @@ const Throws(const _NullArgumentError())
 </div>
 <div>
 <h3>Functions</h3>
+<div class="method"><h4 id="finishesWith">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>finishesWith</strong>(matcher) <a class="anchor-link" href="#finishesWith"
+              title="Permalink to finishesWith">#</a></h4>
+<div class="doc">
+<p>Matches a <code>Future</code> that completes succesfully with a value that matches
+
+<span class="param">matcher</span>. Note that this creates an asynchronous expectation. The call to
+<code>expect()</code> that includes this will return immediately and execution will
+continue. Later, when the future completes, the actual expectation will run.</p>
+<p>To test that a Future completes with an exception, you can use <code>throws</code> and
+<code>throwsA</code>.</p>
+<pre class="source">
+Matcher finishesWith(matcher) =&gt; new _Finishes(wrapMatcher(matcher));
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="expectFutureComplete">
 <button class="show-code">Code</button>
 void <strong>expectFutureComplete</strong>(Future future, [<a href="bot/Action1.html">Action1</a> onComplete]) <a class="anchor-link" href="#expectFutureComplete"

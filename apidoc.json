@@ -8202,56 +8202,6 @@
               "refId": "bool"
             },
             "kind": "method",
-            "comment": "\nReturns true if every elements of this collection satisify the\npredicate [f]. Returns false otherwise.\n",
-            "name": "every",
-            "children": [
-              {
-                "ref": {
-                  "name": "Func1",
-                  "refId": "Func1"
-                },
-                "kind": "param",
-                "name": "f",
-                "id": "f"
-              }
-            ],
-            "id": "every1()"
-          },
-          {
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
-            "name": "contains",
-            "children": [
-              {
-                "ref": {
-                  "name": "T",
-                  "refId": "T"
-                },
-                "kind": "param",
-                "name": "item",
-                "id": "item"
-              }
-            ],
-            "id": "contains1()"
-          },
-          {
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
-            "name": "isEmpty",
-            "id": "isEmpty0()"
-          },
-          {
-            "returnType": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "method",
             "comment": "\nReturns true if one element of this collection satisfies the\npredicate [f]. Returns false otherwise.\n",
             "name": "some",
             "children": [
@@ -8289,24 +8239,23 @@
           },
           {
             "returnType": {
-              "name": "String",
-              "refId": "String"
+              "name": "Enumerable",
+              "refId": "Enumerable"
             },
             "kind": "method",
-            "name": "join",
+            "name": "mappedBy",
             "children": [
               {
                 "ref": {
-                  "name": "String",
-                  "refId": "String"
+                  "name": "Func1",
+                  "refId": "Func1"
                 },
-                "isOptional": true,
                 "kind": "param",
-                "name": "separator",
-                "id": "separator"
+                "name": "f",
+                "id": "f"
               }
             ],
-            "id": "join1()"
+            "id": "mappedBy1()"
           },
           {
             "returnType": {
@@ -8314,7 +8263,6 @@
               "refId": "Enumerable"
             },
             "kind": "method",
-            "comment": "\nReturns a new collection with the elements [: f(e) :]\nfor each element [:e:] of this collection.\n\nNote on typing: the return type of f() could be an arbitrary\ntype and consequently the returned collection's\ntypeis Collection.\n",
             "name": "map",
             "children": [
               {
@@ -8486,26 +8434,6 @@
               "refId": "void"
             },
             "kind": "method",
-            "name": "forEach",
-            "children": [
-              {
-                "ref": {
-                  "name": "Action1",
-                  "refId": "Action1"
-                },
-                "kind": "param",
-                "name": "f",
-                "id": "f"
-              }
-            ],
-            "id": "forEach1()"
-          },
-          {
-            "returnType": {
-              "name": "void",
-              "refId": "void"
-            },
-            "kind": "method",
             "name": "forEachWithIndex",
             "children": [
               {
@@ -8522,25 +8450,11 @@
           },
           {
             "returnType": {
-              "name": "List",
-              "refId": "List",
-              "arguments": [
-                {
-                  "name": "T",
-                  "refId": "T"
-                }
-              ]
+              "name": "Set",
+              "refId": "Set"
             },
             "kind": "method",
-            "name": "toList",
-            "id": "toList0()"
-          },
-          {
-            "returnType": {
-              "name": "HashSet",
-              "refId": "HashSet"
-            },
-            "kind": "method",
+            "comment": "\nUse the [map] method then [toSet] instead.\n",
             "name": "toHashSet",
             "children": [
               {
@@ -8558,10 +8472,11 @@
           },
           {
             "returnType": {
-              "name": "HashMap",
-              "refId": "HashMap"
+              "name": "Map",
+              "refId": "Map"
             },
             "kind": "method",
+            "comment": "\nUse [toMap] instead.\n",
             "name": "toHashMap",
             "children": [
               {
@@ -8585,6 +8500,36 @@
               }
             ],
             "id": "toHashMap2()"
+          },
+          {
+            "returnType": {
+              "name": "Map",
+              "refId": "Map"
+            },
+            "kind": "method",
+            "name": "toMap",
+            "children": [
+              {
+                "ref": {
+                  "name": "Func1",
+                  "refId": "Func1"
+                },
+                "kind": "param",
+                "name": "valueFunc",
+                "id": "valueFunc"
+              },
+              {
+                "ref": {
+                  "name": "Func1",
+                  "refId": "Func1"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "keyFunc",
+                "id": "keyFunc"
+              }
+            ],
+            "id": "toMap2()"
           },
           {
             "returnType": {
@@ -8614,15 +8559,6 @@
             "kind": "method",
             "name": "toString",
             "id": "toString0()"
-          },
-          {
-            "ref": {
-              "name": "bool",
-              "refId": "bool"
-            },
-            "kind": "property",
-            "name": "isEmpty",
-            "id": "isEmpty"
           },
           {
             "returnType": {
@@ -8845,10 +8781,11 @@
           {
             "isStatic": true,
             "returnType": {
-              "name": "HashMap",
-              "refId": "HashMap"
+              "name": "Map",
+              "refId": "Map"
             },
             "kind": "method",
+            "comment": "\nUse [toMap] instead.\n",
             "name": "toHashMap",
             "children": [
               {
@@ -8885,10 +8822,51 @@
           {
             "isStatic": true,
             "returnType": {
-              "name": "HashSet",
-              "refId": "HashSet"
+              "name": "Map",
+              "refId": "Map"
             },
             "kind": "method",
+            "name": "toMap",
+            "children": [
+              {
+                "ref": {
+                  "name": "Iterable",
+                  "refId": "Iterable"
+                },
+                "kind": "param",
+                "name": "source",
+                "id": "source"
+              },
+              {
+                "ref": {
+                  "name": "Func1",
+                  "refId": "Func1"
+                },
+                "kind": "param",
+                "name": "valueFunc",
+                "id": "valueFunc"
+              },
+              {
+                "ref": {
+                  "name": "Func1",
+                  "refId": "Func1"
+                },
+                "isOptional": true,
+                "kind": "param",
+                "name": "keyFunc",
+                "id": "keyFunc"
+              }
+            ],
+            "id": "toMap3()"
+          },
+          {
+            "isStatic": true,
+            "returnType": {
+              "name": "Set",
+              "refId": "Set"
+            },
+            "kind": "method",
+            "comment": "\nUse `Iterable.map(...).toSet()` instead.\n",
             "name": "toHashSet",
             "children": [
               {
@@ -21685,6 +21663,27 @@
     "children": [
       {
         "returnType": {
+          "name": "Matcher",
+          "refId": "Matcher"
+        },
+        "kind": "method",
+        "comment": "\nMatches a [Future] that completes succesfully with a value that matches\n[matcher]. Note that this creates an asynchronous expectation. The call to\n`expect()` that includes this will return immediately and execution will\ncontinue. Later, when the future completes, the actual expectation will run.\n\nTo test that a Future completes with an exception, you can use [throws] and\n[throwsA].\n",
+        "name": "finishesWith",
+        "children": [
+          {
+            "ref": {
+              "name": "dynamic",
+              "refId": "dynamic"
+            },
+            "kind": "param",
+            "name": "matcher",
+            "id": "matcher"
+          }
+        ],
+        "id": "finishesWith1()"
+      },
+      {
+        "returnType": {
           "name": "void",
           "refId": "void"
         },
@@ -21751,6 +21750,15 @@
         "kind": "method",
         "name": "pending",
         "id": "pending0()"
+      },
+      {
+        "ref": {
+          "name": "Matcher",
+          "refId": "Matcher"
+        },
+        "kind": "property",
+        "name": "finishes",
+        "id": "finishes"
       },
       {
         "ref": {

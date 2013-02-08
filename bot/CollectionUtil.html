@@ -83,12 +83,19 @@ class CollectionUtil {
    }
  }
 
- static HashMap toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
+ /**
+  * Use [toMap] instead.
+  */
+ @deprecated
+ static Map toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) =&gt;
+     toMap(source, valueFunc, keyFunc);
+
+ static Map toMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
    if(keyFunc == null) {
      keyFunc = (a) =&gt; a;
    }
 
-   final map = new HashMap();
+   final map = new Map();
    for(final e in source) {
      final k = keyFunc(e);
      if(map.containsKey(k)) {
@@ -99,14 +106,17 @@ class CollectionUtil {
    return map;
  }
 
- static HashSet toHashSet(Iterable source, [Func1 f]) {
+ /**
+  * Use `Iterable.map(...).toSet()` instead.
+  */
+ @deprecated
+ static Set toHashSet(Iterable source, [Func1 f]) {
    if(f == null) {
-     return new HashSet.from(source);
+     return new Set.from(source);
    } else {
-     return new HashSet.from(source.map(f));
+     return new Set.from(source.map(f));
    }
  }
-
 }
 </pre>
 </div>
@@ -211,16 +221,29 @@ static void forEachWithIndex(Iterable source, Action2&lt;dynamic, int&gt; f) {
 </div>
 <div class="method"><h4 id="toHashMap">
 <button class="show-code">Code</button>
-HashMap <strong>toHashMap</strong>(Iterable source, <a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
+Map <strong>toHashMap</strong>(Iterable source, <a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
               title="Permalink to CollectionUtil.toHashMap">#</a></h4>
 <div class="doc">
+<p>Use <a class="crossref" href="../bot/CollectionUtil.html#toMap">toMap</a> instead.</p>
 <pre class="source">
-static HashMap toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
+@deprecated
+static Map toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) =&gt;
+   toMap(source, valueFunc, keyFunc);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toMap">
+<button class="show-code">Code</button>
+Map <strong>toMap</strong>(Iterable source, <a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toMap"
+              title="Permalink to CollectionUtil.toMap">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Map toMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
  if(keyFunc == null) {
    keyFunc = (a) =&gt; a;
  }
 
- final map = new HashMap();
+ final map = new Map();
  for(final e in source) {
    final k = keyFunc(e);
    if(map.containsKey(k)) {
@@ -235,15 +258,17 @@ static HashMap toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
 </div>
 <div class="method"><h4 id="toHashSet">
 <button class="show-code">Code</button>
-HashSet <strong>toHashSet</strong>(Iterable source, [<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
+Set <strong>toHashSet</strong>(Iterable source, [<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
               title="Permalink to CollectionUtil.toHashSet">#</a></h4>
 <div class="doc">
+<p>Use <code>Iterable.map(...).toSet()</code> instead.</p>
 <pre class="source">
-static HashSet toHashSet(Iterable source, [Func1 f]) {
+@deprecated
+static Set toHashSet(Iterable source, [Func1 f]) {
  if(f == null) {
-   return new HashSet.from(source);
+   return new Set.from(source);
  } else {
-   return new HashSet.from(source.map(f));
+   return new Set.from(source.map(f));
  }
 }
 </pre>

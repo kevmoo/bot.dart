@@ -201,12 +201,10 @@ final bool         <strong>isEmpty</strong> <a class="anchor-link"
             href="#isEmpty"
             title="Permalink to ListBase&lt;E&gt;.isEmpty">#</a>
         </h4>
-        <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
+        <div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Returns true if there is no element in this collection.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-bool get isEmpty =&gt; !some((e) =&gt; true);
+bool get isEmpty =&gt; !iterator.moveNext();
 </pre>
 </div>
 </div>
@@ -459,18 +457,15 @@ void clear() {
 </div>
 <div class="method inherited"><h4 id="contains">
 <button class="show-code">Code</button>
-bool <strong>contains</strong>(<a href="../bot/ListBase.html">T</a> item) <a class="anchor-link" href="#contains"
+bool <strong>contains</strong>(<a href="../bot/ListBase.html">E</a> element) <a class="anchor-link" href="#contains"
               title="Permalink to ListBase&lt;E&gt;.contains">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
-<p>Check whether the collection contains an element equal to <code>element</code>.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Check whether the collection contains an element equal to 
+<span class="param">element</span>.</p>
 <pre class="source">
-bool contains(T item) {
- for (final e in this) {
-   if(e == item) {
-     return true;
-   }
+bool contains(E element) {
+ for (E e in this) {
+   if (e == element) return true;
  }
  return false;
 }
@@ -528,19 +523,16 @@ E elementAt(int index) {
 </div>
 <div class="method inherited"><h4 id="every">
 <button class="show-code">Code</button>
-bool <strong>every</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#every"
+bool <strong>every</strong>(bool f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#every"
               title="Permalink to ListBase&lt;E&gt;.every">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Returns true if every elements of this collection satisify the
 predicate 
 <span class="param">f</span>. Returns false otherwise.</p>
 <pre class="source">
-bool every(Func1&lt;T, bool&gt; f) {
- requireArgumentNotNull(f, 'f');
- for (final e in this) {
-   if(!f(e)) {
-     return false;
-   }
+bool every(bool f(E element)) {
+ for (E element in this) {
+   if (!f(element)) return false;
  }
  return true;
 }
@@ -583,18 +575,14 @@ E firstMatching(bool test(E value), { E orElse() }) {
 </div>
 <div class="method inherited"><h4 id="forEach">
 <button class="show-code">Code</button>
-void <strong>forEach</strong>(<a href="../bot/Action1.html">Action1</a> f) <a class="anchor-link" href="#forEach"
+void <strong>forEach</strong>(void f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#forEach"
               title="Permalink to ListBase&lt;E&gt;.forEach">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Applies the function 
 <span class="param">f</span> to each element of this collection.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-void forEach(Action1&lt;T&gt; f) {
- for(final e in this) {
-   f(e);
- }
+void forEach(void f(E element)) {
+ for (E element in this) f(element);
 }
 </pre>
 </div>
@@ -711,26 +699,31 @@ void insertRange(int start, int length, [E initialValue]) {
 </div>
 <div class="method inherited"><h4 id="join">
 <button class="show-code">Code</button>
-String <strong>join</strong>([String separator = ', ']) <a class="anchor-link" href="#join"
+String <strong>join</strong>([String separator]) <a class="anchor-link" href="#join"
               title="Permalink to ListBase&lt;E&gt;.join">#</a></h4>
-<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Convert each element to a <code>String</code> and concatenate the strings.</p>
 <p>Converts each element to a <code>String</code> by calling <code>Object.toString</code> on it.
 Then concatenates the strings, optionally separated by the 
 <span class="param">separator</span>
 string.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-String join([String separator = ', ']) {
- final StringBuffer sb = new StringBuffer();
- for(final e in this) {
-   if(sb.length &gt; 0) {
-     sb.add(separator);
+String join([String separator]) {
+ Iterator&lt;E&gt; iterator = this.iterator;
+ if (!iterator.moveNext()) return "";
+ StringBuffer buffer = new StringBuffer();
+ if (separator == null || separator == "") {
+   do {
+     buffer.add("${iterator.current}");
+   } while (iterator.moveNext());
+ } else {
+   buffer.add("${iterator.current}");
+   while (iterator.moveNext()) {
+     buffer.add(separator);
+     buffer.add("${iterator.current}");
    }
-   sb.add(e);
  }
- return sb.toString();
+ return buffer.toString();
 }
 </pre>
 </div>
@@ -793,11 +786,17 @@ E lastMatching(bool test(E value), {E orElse()}) {
 <a href="../bot/Enumerable.html">Enumerable</a> <strong>map</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#map"
               title="Permalink to ListBase&lt;E&gt;.map">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<p>Returns a new collection with the elements <code> f(e) </code>
-for each element <code>e</code> of this collection.</p>
-<p>Note on typing: the return type of f() could be an arbitrary
-type and consequently the returned collection's
-typeis Collection.</p>
+<div class="inherited">
+<p>Returns a lazy <code>Iterable</code> where each element <code>e</code> of <code>this</code> is replaced
+by the result of <code>f(e)</code>.</p>
+<p>This method returns a view of the mapped elements. As long as the
+returned <code>Iterable</code> is not iterated over, the supplied function 
+<span class="param">f</span> will
+not be invoked. The transformed elements will not be cached. Iterating
+multiple times over the the returned <code>Iterable</code> will invoke the supplied
+function 
+<span class="param">f</span> multiple times on the same element.</p>
+<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
    $(super.map(f));
@@ -806,13 +805,17 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 </div>
 <div class="method inherited"><h4 id="mappedBy">
 <button class="show-code">Code</button>
-Iterable <strong>mappedBy</strong>(f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#mappedBy"
+<a href="../bot/Enumerable.html">Enumerable</a> <strong>mappedBy</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#mappedBy"
               title="Permalink to ListBase&lt;E&gt;.mappedBy">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited">
 <p>Deprecated alias for <code>map</code>.</p>
 <p>@deprecated</p>
+<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-Iterable mappedBy(f(E element)) =&gt; map(f);
+@deprecated @override
+Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
+   this.map(f);
 </pre>
 </div>
 </div>
@@ -1268,33 +1271,48 @@ Iterable&lt;E&gt; takeWhile(bool test(E value)) {
 </div>
 <div class="method inherited"><h4 id="toHashMap">
 <button class="show-code">Code</button>
-HashMap <strong>toHashMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
+Map <strong>toHashMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
               title="Permalink to ListBase&lt;E&gt;.toHashMap">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<p>Use <code>toMap</code> instead.</p>
 <pre class="source">
-HashMap toHashMap(Func1&lt;T, Object&gt; valueFunc, [Func1&lt;T, dynamic&gt; keyFunc]) =&gt;
-   CollectionUtil.toHashMap(this, valueFunc, keyFunc);
+@deprecated
+Map toHashMap(Func1&lt;T, Object&gt; valueFunc, [Func1&lt;T, dynamic&gt; keyFunc]) =&gt;
+   this.toMap(valueFunc, keyFunc);
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="toHashSet">
 <button class="show-code">Code</button>
-HashSet <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
+Set <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
               title="Permalink to ListBase&lt;E&gt;.toHashSet">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<p>Use the <code>map</code> method then <code>toSet</code> instead.</p>
 <pre class="source">
-HashSet toHashSet([Func1&lt;T, dynamic&gt; f]) =&gt;
+@deprecated
+Set toHashSet([Func1&lt;T, dynamic&gt; f]) =&gt;
    CollectionUtil.toHashSet(this, f);
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="toList">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/ListBase.html">T</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
+List&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
               title="Permalink to ListBase&lt;E&gt;.toList">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<pre class="source">
+List&lt;E&gt; toList() =&gt; new List&lt;E&gt;.from(this);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="toMap">
+<button class="show-code">Code</button>
+Map <strong>toMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toMap"
+              title="Permalink to ListBase&lt;E&gt;.toMap">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <pre class="source">
-List&lt;T&gt; toList() =&gt; new List&lt;T&gt;.from(this);
+Map toMap(Func1&lt;T, Object&gt; valueFunc, [Func1&lt;T, dynamic&gt; keyFunc]) =&gt;
+   CollectionUtil.toMap(this, valueFunc, keyFunc);
 </pre>
 </div>
 </div>
@@ -1327,7 +1345,7 @@ String <strong>toString</strong>() <a class="anchor-link" href="#toString"
 <p>Returns a string representation of this object.</p>
 <div class="docs-inherited-from">docs inherited from Object </div></div>
 <pre class="source">
-String toString() =&gt; "[${this.join()}]";
+String toString() =&gt; "[${join(', ')}]";
 </pre>
 </div>
 </div>
