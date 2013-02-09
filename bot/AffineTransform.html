@@ -211,10 +211,8 @@ class AffineTransform implements Cloneable&lt;AffineTransform&gt; {
        _shY == other._shY &amp;&amp; _scY == other._scY &amp;&amp; _tY == other._tY;
  }
 
- String toString() {
-   final values = [scaleX, shearY, shearX, scaleY, translateX, translateY];
-   return Strings.join(values.map((n) =&gt; n.toString()), ', ');
- }
+ String toString() =&gt;
+   [scaleX, shearY, shearX, scaleY, translateX, translateY].join(', ');
 }
 </pre>
 </div>
@@ -602,10 +600,8 @@ String <strong>toString</strong>() <a class="anchor-link" href="#toString"
 <p>Returns a string representation of this object.</p>
 <div class="docs-inherited-from">docs inherited from Object </div></div>
 <pre class="source">
-String toString() {
- final values = [scaleX, shearY, shearX, scaleY, translateX, translateY];
- return Strings.join(values.map((n) =&gt; n.toString()), ', ');
-}
+String toString() =&gt;
+ [scaleX, shearY, shearX, scaleY, translateX, translateY].join(', ');
 </pre>
 </div>
 </div>

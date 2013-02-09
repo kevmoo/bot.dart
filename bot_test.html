@@ -95,6 +95,8 @@ const Throws(const _NullArgumentError())
 continue. Later, when the future completes, the actual expectation will run.</p>
 <p>To test that a Future completes with an exception, you can use <code>throws</code> and
 <code>throwsA</code>.</p>
+<p>Unlike <code>completion</code> in <code>unittest</code>, exceptions are registered directly with
+the test framework. They are not wrapped.</p>
 <pre class="source">
 Matcher finishesWith(matcher) =&gt; new _Finishes(wrapMatcher(matcher));
 </pre>
@@ -157,7 +159,7 @@ void <strong>pending</strong>() <a class="anchor-link" href="#pending"
 <div class="doc">
 <pre class="source">
 void pending() {
- throw new ExpectException('Not implemented');
+ fail('Not implemented');
 }
 </pre>
 </div>

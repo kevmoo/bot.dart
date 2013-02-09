@@ -126,7 +126,7 @@ Future&lt;bool&gt; startProcess(TaskLogger ctx, String command,
  }
 
  ctx.fine("Starting process:");
- ctx.fine("$command ${Strings.join(args, ' ')}");
+ ctx.fine("$command ${args.join(' ')}");
  return Process.start(command, args)
      .then((process) {
        return pipeProcess(process,
@@ -280,16 +280,16 @@ Task getCompileDocsFunc(String targetBranch, String packageDir,
 </div>
 <div class="method"><h4 id="createDart2JsTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(List&lt;String&gt; inputs, {String output: null, String packageRoot: null, bool minify: false, bool allowUnsafeEval: true, bool liveTypeAnalysis: false, rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
+<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(List&lt;String&gt; inputs, {String output: null, String packageRoot: null, bool minify: false, bool allowUnsafeEval: true, bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
               title="Permalink to createDart2JsTask">#</a></h4>
 <div class="doc">
 <pre class="source">
 Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
  String packageRoot: null, bool minify: false, bool allowUnsafeEval: true,
- bool liveTypeAnalysis: false, rejectDeprecatedFeatures: false}) {
+ bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) {
  return new Task.async((context) {
    final futureFuncs = inputs
-       .mappedBy((p) =&gt; () =&gt; _dart2js(context, p,
+       .map((p) =&gt; () =&gt; _dart2js(context, p,
            output: output,
            minify: minify,
            allowUnsafeEval: allowUnsafeEval,
@@ -318,7 +318,7 @@ Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
    final bool enableTypeChecks = parseResult['enable_type_checks'];
    final bool verbose = parseResult['verbose'];
 
-   final fileList = files.mappedBy((f) =&gt; new Path(f)).toList();
+   final fileList = files.map((f) =&gt; new Path(f)).toList();
 
    return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
  }, 'Running dart analyzer');

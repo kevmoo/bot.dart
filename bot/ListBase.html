@@ -60,7 +60,7 @@ abstract class ListBase&lt;E&gt; extends Enumerable&lt;E&gt; implements List&lt;
    return -1;
  }
 
- Iterator&lt;E&gt; get iterator =&gt; new ListIterator(this);
+ Iterator&lt;E&gt; get iterator =&gt; new _ListIterator(this);
 
  void operator []=(int index, E value) {
    throw new UnsupportedError(
@@ -131,7 +131,7 @@ abstract class ListBase&lt;E&gt; extends Enumerable&lt;E&gt; implements List&lt;
        "Cannot remove from an unmodifiable list");
  }
 
- List&lt;E&gt; get reversed =&gt; new ReversedListView(this, 0, null);
+ List&lt;E&gt; get reversed =&gt; IterableMixinWorkaround.reversedList(this);
 
  void setRange(int start, int length, List&lt;E&gt; from, [int startFrom]) {
    throw new UnsupportedError(
@@ -219,7 +219,7 @@ final Iterator&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>itera
 <p>Returns an <code>Iterator</code> that iterates over this <code>Iterable</code> object.</p>
 <div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-Iterator&lt;E&gt; get iterator =&gt; new ListIterator(this);
+Iterator&lt;E&gt; get iterator =&gt; new _ListIterator(this);
 </pre>
 </div>
 </div>
@@ -300,7 +300,7 @@ It is backed by this list, but will stop working if this list
 becomes shorter than its current length.</p>
 <div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
-List&lt;E&gt; get reversed =&gt; new ReversedListView(this, 0, null);
+List&lt;E&gt; get reversed =&gt; IterableMixinWorkaround.reversedList(this);
 </pre>
 </div>
 </div>
@@ -547,6 +547,24 @@ bool every(bool f(E element)) {
 <pre class="source">
 Enumerable&lt;T&gt; exclude(Iterable&lt;T&gt; items) =&gt;
    CollectionUtil.exclude(this, items);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="expand">
+<button class="show-code">Code</button>
+Iterable <strong>expand</strong>(Iterable f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#expand"
+              title="Permalink to ListBase&lt;E&gt;.expand">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Expand each element of this <code>Iterable</code> into zero or more elements.</p>
+<p>The resulting Iterable will run through the elements returned
+by 
+<span class="param">f</span> for each element of this, in order.</p>
+<p>The returned <code>Iterable</code> is lazy, and will call 
+<span class="param">f</span> for each element
+of this every time it's iterated.</p>
+<pre class="source">
+Iterable expand(Iterable f(E element)) =&gt;
+   new ExpandIterable&lt;E, dynamic&gt;(this, f);
 </pre>
 </div>
 </div>
@@ -810,7 +828,6 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <div class="inherited">
 <p>Deprecated alias for <code>map</code>.</p>
-<p>@deprecated</p>
 <div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 @deprecated @override
@@ -1290,8 +1307,13 @@ Set <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a cla
 <p>Use the <code>map</code> method then <code>toSet</code> instead.</p>
 <pre class="source">
 @deprecated
-Set toHashSet([Func1&lt;T, dynamic&gt; f]) =&gt;
-   CollectionUtil.toHashSet(this, f);
+Set toHashSet([Func1&lt;T, dynamic&gt; f]) {
+ if(f == null) {
+   return this.toSet();
+ } else {
+   return this.map(f).toSet();
+ }
+}
 </pre>
 </div>
 </div>

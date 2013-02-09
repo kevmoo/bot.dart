@@ -94,8 +94,13 @@ abstract class Enumerable&lt;T&gt; extends Iterable&lt;T&gt; {
   * Use the [map] method then [toSet] instead.
   */
  @deprecated
- Set toHashSet([Func1&lt;T, dynamic&gt; f]) =&gt;
-     CollectionUtil.toHashSet(this, f);
+ Set toHashSet([Func1&lt;T, dynamic&gt; f]) {
+   if(f == null) {
+     return this.toSet();
+   } else {
+     return this.map(f).toSet();
+   }
+ }
 
  /**
   * Use [toMap] instead.
@@ -377,6 +382,24 @@ Enumerable&lt;T&gt; exclude(Iterable&lt;T&gt; items) =&gt;
 </pre>
 </div>
 </div>
+<div class="method inherited"><h4 id="expand">
+<button class="show-code">Code</button>
+Iterable <strong>expand</strong>(Iterable f(<a href="../bot/Enumerable.html">E</a> element)) <a class="anchor-link" href="#expand"
+              title="Permalink to Enumerable&lt;T&gt;.expand">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Expand each element of this <code>Iterable</code> into zero or more elements.</p>
+<p>The resulting Iterable will run through the elements returned
+by 
+<span class="param">f</span> for each element of this, in order.</p>
+<p>The returned <code>Iterable</code> is lazy, and will call 
+<span class="param">f</span> for each element
+of this every time it's iterated.</p>
+<pre class="source">
+Iterable expand(Iterable f(E element)) =&gt;
+   new ExpandIterable&lt;E, dynamic&gt;(this, f);
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="firstMatching">
 <button class="show-code">Code</button>
 <a href="../bot/Enumerable.html">E</a> <strong>firstMatching</strong>(bool test(<a href="../bot/Enumerable.html">E</a> value), {<a href="../bot/Enumerable.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
@@ -530,7 +553,6 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 <div class="doc">
 <div class="inherited">
 <p>Deprecated alias for <a class="crossref" href="../bot/Enumerable.html#map">map</a>.</p>
-<p>@deprecated</p>
 <div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/Enumerable.html">T</a>&gt; </div></div>
 <pre class="source">
 @deprecated @override
@@ -787,8 +809,13 @@ Set <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a cla
 <p>Use the <a class="crossref" href="../bot/Enumerable.html#map">map</a> method then <code>toSet</code> instead.</p>
 <pre class="source">
 @deprecated
-Set toHashSet([Func1&lt;T, dynamic&gt; f]) =&gt;
-   CollectionUtil.toHashSet(this, f);
+Set toHashSet([Func1&lt;T, dynamic&gt; f]) {
+ if(f == null) {
+   return this.toSet();
+ } else {
+   return this.map(f).toSet();
+ }
+}
 </pre>
 </div>
 </div>

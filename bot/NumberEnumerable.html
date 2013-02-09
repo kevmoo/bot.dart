@@ -332,6 +332,24 @@ bool every(bool f(E element)) {
 </pre>
 </div>
 </div>
+<div class="method inherited"><h4 id="expand">
+<button class="show-code">Code</button>
+Iterable <strong>expand</strong>(Iterable f(<a href="../bot/NumberEnumerable.html">E</a> element)) <a class="anchor-link" href="#expand"
+              title="Permalink to NumberEnumerable&lt;T&gt;.expand">#</a></h4>
+<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<p>Expand each element of this <code>Iterable</code> into zero or more elements.</p>
+<p>The resulting Iterable will run through the elements returned
+by 
+<span class="param">f</span> for each element of this, in order.</p>
+<p>The returned <code>Iterable</code> is lazy, and will call 
+<span class="param">f</span> for each element
+of this every time it's iterated.</p>
+<pre class="source">
+Iterable expand(Iterable f(E element)) =&gt;
+   new ExpandIterable&lt;E, dynamic&gt;(this, f);
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="firstMatching">
 <button class="show-code">Code</button>
 <a href="../bot/NumberEnumerable.html">E</a> <strong>firstMatching</strong>(bool test(<a href="../bot/NumberEnumerable.html">E</a> value), {<a href="../bot/NumberEnumerable.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
@@ -454,8 +472,8 @@ Iterable <strong>mappedBy</strong>(f(<a href="../bot/NumberEnumerable.html">E</a
               title="Permalink to NumberEnumerable&lt;T&gt;.mappedBy">#</a></h4>
 <div class="inherited-from">inherited from Iterable </div><div class="doc">
 <p>Deprecated alias for <code>map</code>.</p>
-<p>@deprecated</p>
 <pre class="source">
+@deprecated
 Iterable mappedBy(f(E element)) =&gt; map(f);
 </pre>
 </div>

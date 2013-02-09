@@ -65,7 +65,7 @@ class CollectionUtil {
  static Iterable exclude(Iterable source, Iterable itemsToExclude) {
    requireArgumentNotNull(itemsToExclude, 'itemsToExclude');
    Func1&lt;dynamic, bool&gt; f = (e) =&gt; !itemsToExclude.contains(e);
-   return $(new WhereIterable(source, f));
+   return $(IterableMixinWorkaround.where(source, f));
  }
 
  static Iterable distinct(Iterable source, [Func2&lt;dynamic, dynamic, bool&gt; comparer = null]) {
@@ -183,7 +183,7 @@ Iterable <strong>exclude</strong>(Iterable source, Iterable itemsToExclude) <a c
 static Iterable exclude(Iterable source, Iterable itemsToExclude) {
  requireArgumentNotNull(itemsToExclude, 'itemsToExclude');
  Func1&lt;dynamic, bool&gt; f = (e) =&gt; !itemsToExclude.contains(e);
- return $(new WhereIterable(source, f));
+ return $(IterableMixinWorkaround.where(source, f));
 }
 </pre>
 </div>

@@ -21667,7 +21667,7 @@
           "refId": "Matcher"
         },
         "kind": "method",
-        "comment": "\nMatches a [Future] that completes succesfully with a value that matches\n[matcher]. Note that this creates an asynchronous expectation. The call to\n`expect()` that includes this will return immediately and execution will\ncontinue. Later, when the future completes, the actual expectation will run.\n\nTo test that a Future completes with an exception, you can use [throws] and\n[throwsA].\n",
+        "comment": "\nMatches a [Future] that completes succesfully with a value that matches\n[matcher]. Note that this creates an asynchronous expectation. The call to\n`expect()` that includes this will return immediately and execution will\ncontinue. Later, when the future completes, the actual expectation will run.\n\nTo test that a Future completes with an exception, you can use [throws] and\n[throwsA].\n\nUnlike [completion] in `unittest`, exceptions are registered directly with\nthe test framework. They are not wrapped.\n",
         "name": "finishesWith",
         "children": [
           {
@@ -25560,8 +25560,8 @@
           },
           {
             "ref": {
-              "name": "dynamic",
-              "refId": "dynamic"
+              "name": "bool",
+              "refId": "bool"
             },
             "isOptional": true,
             "kind": "param",
@@ -25646,8 +25646,8 @@
           },
           {
             "ref": {
-              "name": "dynamic",
-              "refId": "dynamic"
+              "name": "bool",
+              "refId": "bool"
             },
             "isOptional": true,
             "kind": "param",
@@ -30525,7 +30525,7 @@
         "id": "SupportedBrowser"
       }
     ],
-    "id": "file:///usr/local/Cellar/dart-editor/18115/dart-sdk/lib/html/html_common/metadata.dart"
+    "id": "file:///usr/local/Cellar/dart-editor/18300/dart-sdk/lib/html/html_common/metadata.dart"
   },
   {
     "kind": "library",
