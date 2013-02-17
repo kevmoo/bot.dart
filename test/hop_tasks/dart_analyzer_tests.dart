@@ -49,6 +49,12 @@ class DartAnalyzerTests {
 
       });
 
+      test('cache directory directory', () {
+        final fileTexts = {"main.dart": "void main() => print('hello bot');"};
+
+        _testAnalyzerTask(fileTexts, RunResult.SUCCESS, cacheDirectory: "out");
+      });
+
 //      test('mixed multiple passing, warning, failed files', () {
 //        expect(isTrue, isFalse);
 //      });
@@ -57,7 +63,7 @@ class DartAnalyzerTests {
   }
 }
 
-void _testAnalyzerTask(Map<String, String> inputs, RunResult expectedResult) {
+void _testAnalyzerTask(Map<String, String> inputs, RunResult expectedResult, {String cacheDirectory: null}) {
   TempDir tempDir;
 
   final future = TempDir.create()
@@ -72,7 +78,14 @@ void _testAnalyzerTask(Map<String, String> inputs, RunResult expectedResult) {
         var fullPaths = inputs.keys.map((e) =>
             new Path(tempDir.path).join(new Path(e)).toNativePath()).toList();
 
-        final task = createDartAnalyzerTask(fullPaths);
+        Task task;
+
+        if (cacheDirectory == null) {
+          task = createDartAnalyzerTask(fullPaths);
+        } else {
+          task = createDartAnalyzerTask(fullPaths, cacheDirectory: cacheDirectory);
+        }
+
         return _runTask(task);
       })
       .then((RunResult runResult) {
