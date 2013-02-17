@@ -8,7 +8,7 @@ part of hop_tasks;
 const _verboseArgName = 'verbose';
 const _enableTypeChecksArgName = 'enable-type-checks';
 
-Task createDartAnalyzerTask(Iterable<String> files, {String cacheDirectory: ""}) {
+Task createDartAnalyzerTask(Iterable<String> files, {String cacheDirectory}) {
   return new Task.async((context) {
     final parseResult = context.arguments;
 
@@ -17,7 +17,7 @@ Task createDartAnalyzerTask(Iterable<String> files, {String cacheDirectory: ""})
 
     final fileList = files.map((f) => new Path(f)).toList();
 
-    return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose, cacheDirectory.isEmpty ? null : new Path(cacheDirectory));
+    return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose, cacheDirectory);
   }, description: 'Running dart analyzer', config: _analyzerParserConfig);
 }
 
@@ -28,7 +28,7 @@ void _analyzerParserConfig(ArgParser parser) {
 }
 
 Future<bool> _processAnalyzerFile(TaskContext context, List<Path> analyzerFilePaths,
-    bool enableTypeChecks, bool verbose, Path cachePath) {
+    bool enableTypeChecks, bool verbose, String cacheDirectory) {
 
   int errorsCount = 0;
   int passedCount = 0;
@@ -36,15 +36,7 @@ Future<bool> _processAnalyzerFile(TaskContext context, List<Path> analyzerFilePa
 
   return Future.forEach(analyzerFilePaths, (Path path) {
     final logger = context.getSubLogger(path.toString());
-    if (cachePath != null) {
-      if (path.isAbsolute) {
-        // Remove the root since join does not allow that type of concatenation
-        cachePath = cachePath.join(new Path(path.toString().replaceFirst("/", "")));
-      } else {
-        cachePath = cachePath.join(path);
-      }
-    }
-    return _analyzer(logger, path, enableTypeChecks, verbose, cachePath)
+    return _analyzer(logger, path, enableTypeChecks, verbose, cacheDirectory)
         .then((int exitCode) {
 
           String prefix;
@@ -78,49 +70,52 @@ Future<bool> _processAnalyzerFile(TaskContext context, List<Path> analyzerFilePa
 }
 
 Future<int> _analyzer(TaskLogger logger, Path filePath, bool enableTypeChecks,
-    bool verbose, Path cachePath) {
-  TempDir tmpDir;
-  var processArgs = ['--extended-exit-code', '--work'];
-
-  _processPipe(process) {
-    if(verbose) {
-      return pipeProcess(process,
-          stdOutWriter: logger.fine,
-          stdErrWriter: logger.severe);
-    } else {
-      return pipeProcess(process);
-    }
-  }
-
-  _process(path) {
-    processArgs.add(path);
-
-    if (enableTypeChecks) {
-      processArgs.add('--enable_type_checks');
-    }
-
-    if (enableTypeChecks) {
-      processArgs.add('--enable_type_checks');
-    }
-
-    processArgs.addAll([filePath.toNativePath()]);
-
-    return Process.start('dart_analyzer', processArgs);
-  }
-
-  if (cachePath != null) {
-    return _process(cachePath.toNativePath()).then(_processPipe);
+    bool verbose, String outDir) {
+  if(outDir == null) {
+    return _analyzerInTemp(logger, filePath, enableTypeChecks, verbose);
   } else {
-    return TempDir.create()
-        .then((TempDir td) {
-          tmpDir = td;
-          return _process(tmpDir.dir.path);
-        })
-        .then(_processPipe)
-        .whenComplete(() {
-          if(tmpDir != null) {
-            tmpDir.dispose();
-          }
-        });
+    return _analyzerCore(logger, filePath, enableTypeChecks, verbose, outDir);
   }
+}
+
+Future<int> _analyzerInTemp(TaskLogger logger, Path filePath, bool enableTypeChecks,
+    bool verbose) {
+
+  TempDir td;
+
+  return TempDir.create()
+      .then((TempDir value) {
+        td = value;
+        return _analyzerCore(logger, filePath, enableTypeChecks, verbose, td.dir.path);
+      })
+      .whenComplete(() {
+        if(td != null) {
+          td.dispose();
+        }
+      });
+}
+
+Future<int> _analyzerCore(TaskLogger logger, Path filePath, bool enableTypeChecks,
+    bool verbose, String outDir) {
+  assert(outDir != null);
+  assert(!outDir.isEmpty);
+
+  var processArgs = ['--extended-exit-code', '--work', outDir];
+
+  if (enableTypeChecks) {
+    processArgs.add('--enable_type_checks');
+  }
+
+  processArgs.add(filePath.toNativePath());
+
+  return Process.start('dart_analyzer', processArgs)
+      .then((Process process) {
+        if(verbose) {
+          return pipeProcess(process,
+              stdOutWriter: logger.fine,
+              stdErrWriter: logger.severe);
+        } else {
+          return pipeProcess(process);
+        }
+      });
 }

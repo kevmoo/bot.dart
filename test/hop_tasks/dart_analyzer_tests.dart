@@ -52,48 +52,79 @@ class DartAnalyzerTests {
       test('cache directory directory', () {
         final fileTexts = {"main.dart": "void main() => print('hello bot');"};
 
-        _testAnalyzerTask(fileTexts, RunResult.SUCCESS, cacheDirectory: "out");
+        _testAnalyzerTask(fileTexts, RunResult.SUCCESS, cacheDirectory: true);
       });
 
-//      test('mixed multiple passing, warning, failed files', () {
-//        expect(isTrue, isFalse);
-//      });
+//    test('mixed multiple passing, warning, failed files', () {
+//      expect(isTrue, isFalse);
+//    });
 
     });
   }
 }
 
-void _testAnalyzerTask(Map<String, String> inputs, RunResult expectedResult, {String cacheDirectory: null}) {
-  TempDir tempDir;
+void _testAnalyzerTask(Map<String, String> inputs, RunResult expectedResult, {bool cacheDirectory: false}) {
+  TempDir codeDir;
+  TempDir outDir;
 
   final future = TempDir.create()
       .then((TempDir value) {
-        tempDir = value;
+        codeDir = value;
         final populater = new MapDirectoryPopulater(inputs);
-        return tempDir.populate(populater);
+        return codeDir.populate(populater);
       })
       .then((TempDir value) {
-        assert(value == tempDir);
+        assert(value == codeDir);
 
-        var fullPaths = inputs.keys.map((e) =>
-            new Path(tempDir.path).join(new Path(e)).toNativePath()).toList();
+        if(cacheDirectory) {
+          return TempDir.create();
+        } else {
+          return null;
+        }
+      })
+      .then((TempDir value) {
+        outDir = value;
+        expect(outDir != null, cacheDirectory, reason: 'only exists if cachDir was requested');
+
+        var fullPaths = inputs.keys
+            .map((fileName) {
+              new Path(codeDir.path).join(new Path(fileName)).toNativePath();
+            })
+            .toList();
 
         Task task;
 
-        if (cacheDirectory == null) {
-          task = createDartAnalyzerTask(fullPaths);
+        if (cacheDirectory) {
+          task = createDartAnalyzerTask(fullPaths, cacheDirectory: outDir.dir.path);
         } else {
-          task = createDartAnalyzerTask(fullPaths, cacheDirectory: cacheDirectory);
+          task = createDartAnalyzerTask(fullPaths);
         }
 
         return _runTask(task);
       })
       .then((RunResult runResult) {
         expect(runResult, expectedResult);
+
+        if(cacheDirectory) {
+          return outDir.isEmpty();
+        } else {
+          return null;
+        }
+      })
+      .then((bool isEmpty) {
+        if(cacheDirectory) {
+          expect(isEmpty, isFalse);
+        } else {
+          expect(isEmpty, isNull);
+        }
       })
       .whenComplete(() {
-        if(tempDir != null) {
-          tempDir.dispose();
+        if(codeDir != null) {
+          codeDir.dispose();
+        }
+
+        if(outDir != null) {
+          outDir.dispose();
         }
       });
 
