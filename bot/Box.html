@@ -95,7 +95,7 @@ class Box {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Box">
 <button class="show-code">Code</button>
-const <strong>Box</strong>(num left, num top, num width, num height) <a class="anchor-link" href="#Box"
+const <strong>Box</strong>(<a href="http://api.dartlang.org/dart_core/num.html">num</a> left, <a href="http://api.dartlang.org/dart_core/num.html">num</a> top, <a href="http://api.dartlang.org/dart_core/num.html">num</a> width, <a href="http://api.dartlang.org/dart_core/num.html">num</a> height) <a class="anchor-link" href="#Box"
               title="Permalink to Box.Box">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -120,7 +120,7 @@ factory Box.fromCoordSize(Coordinate topLeft, Size size) {
 <h3>Properties</h3>
 <div class="field"><h4 id="bottom">
 <button class="show-code">Code</button>
-final num         <strong>bottom</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>bottom</strong> <a class="anchor-link"
             href="#bottom"
             title="Permalink to Box.bottom">#</a>
         </h4>
@@ -132,7 +132,7 @@ num get bottom =&gt; top + height;
 </div>
 <div class="field"><h4 id="hashCode">
 <button class="show-code">Code</button>
-final int         <strong>hashCode</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>hashCode</strong> <a class="anchor-link"
             href="#hashCode"
             title="Permalink to Box.hashCode">#</a>
         </h4>
@@ -146,7 +146,7 @@ the hash codes. They will not be consistent between runs and
 there are no distribution guarantees.</p>
 <p>If a subclass overrides <a class="crossref" href="../bot/Box.html#hashCode">hashCode</a> it should override the
 equality operator as well to maintain consistency.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 int get hashCode =&gt; Util.getHashCode([left, top, width, height]);
 </pre>
@@ -154,7 +154,7 @@ int get hashCode =&gt; Util.getHashCode([left, top, width, height]);
 </div>
 <div class="field"><h4 id="height">
 <button class="show-code">Code</button>
-final num         <strong>height</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>height</strong> <a class="anchor-link"
             href="#height"
             title="Permalink to Box.height">#</a>
         </h4>
@@ -166,7 +166,7 @@ height
 </div>
 <div class="field"><h4 id="isValid">
 <button class="show-code">Code</button>
-final bool         <strong>isValid</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isValid</strong> <a class="anchor-link"
             href="#isValid"
             title="Permalink to Box.isValid">#</a>
         </h4>
@@ -178,7 +178,7 @@ bool get isValid =&gt; topLeft.isValid &amp;&amp; size.isValid;
 </div>
 <div class="field"><h4 id="left">
 <button class="show-code">Code</button>
-final num         <strong>left</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>left</strong> <a class="anchor-link"
             href="#left"
             title="Permalink to Box.left">#</a>
         </h4>
@@ -190,7 +190,7 @@ left
 </div>
 <div class="field"><h4 id="right">
 <button class="show-code">Code</button>
-final num         <strong>right</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>right</strong> <a class="anchor-link"
             href="#right"
             title="Permalink to Box.right">#</a>
         </h4>
@@ -214,7 +214,7 @@ Size get size =&gt; new Size(width, height);
 </div>
 <div class="field"><h4 id="top">
 <button class="show-code">Code</button>
-final num         <strong>top</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>top</strong> <a class="anchor-link"
             href="#top"
             title="Permalink to Box.top">#</a>
         </h4>
@@ -238,7 +238,7 @@ Coordinate get topLeft =&gt; new Coordinate(left, top);
 </div>
 <div class="field"><h4 id="width">
 <button class="show-code">Code</button>
-final num         <strong>width</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>width</strong> <a class="anchor-link"
             href="#width"
             title="Permalink to Box.width">#</a>
         </h4>
@@ -253,7 +253,7 @@ width
 <h3>Operators</h3>
 <div class="method"><h4 id="==">
 <button class="show-code">Code</button>
-bool <strong>operator ==</strong>(<a href="../bot/Box.html">Box</a> other) <a class="anchor-link" href="#=="
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>operator ==</strong>(<a href="../bot/Box.html">Box</a> other) <a class="anchor-link" href="#=="
               title="Permalink to Box.operator ==">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -263,7 +263,7 @@ only if <code>this</code> and
 <span class="param">other</span> are the same object.</p>
 <p>If a subclass overrides the equality operator it should override
 the <a class="crossref" href="../bot/Box.html#hashCode">hashCode</a> method as well to maintain consistency.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 bool operator ==(Box other) {
  return other != null &amp;&amp; other.left == left &amp;&amp; other.top == top &amp;&amp;
@@ -296,7 +296,7 @@ Coordinate constrain(Coordinate value) {
 </div>
 <div class="method"><h4 id="contains">
 <button class="show-code">Code</button>
-bool <strong>contains</strong>(<a href="../bot/Coordinate.html">Coordinate</a> point) <a class="anchor-link" href="#contains"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>contains</strong>(<a href="../bot/Coordinate.html">Coordinate</a> point) <a class="anchor-link" href="#contains"
               title="Permalink to Box.contains">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -311,7 +311,7 @@ bool contains(Coordinate point){
 </div>
 <div class="method"><h4 id="getCorners">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/Coordinate.html">Coordinate</a>&gt; <strong>getCorners</strong>() <a class="anchor-link" href="#getCorners"
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Coordinate.html">Coordinate</a>&gt; <strong>getCorners</strong>() <a class="anchor-link" href="#getCorners"
               title="Permalink to Box.getCorners">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -328,12 +328,12 @@ List&lt;Coordinate&gt; getCorners() {
 </div>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to Box.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 String toString() =&gt; "Location: $topLeft, Size: $size";
 </pre>

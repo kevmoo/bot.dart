@@ -237,7 +237,7 @@ static get root =&gt; new Logger('');
 <h3>Constructors</h3>
 <div class="method"><h4 id="Logger">
 <button class="show-code">Code</button>
-factory <strong>Logger</strong>(String name) <a class="anchor-link" href="#Logger"
+factory <strong>Logger</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#Logger"
               title="Permalink to Logger.Logger">#</a></h4>
 <div class="doc">
 <p>Singleton constructor. Calling <code>new Logger(name)</code> will return the same
@@ -273,7 +273,7 @@ factory Logger(String name) {
 <h3>Properties</h3>
 <div class="field"><h4 id="children">
 <button class="show-code">Code</button>
-Map&lt;String, <a href="../logging/Logger.html">Logger</a>&gt;         <strong>children</strong> <a class="anchor-link"
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../logging/Logger.html">Logger</a>&gt;         <strong>children</strong> <a class="anchor-link"
             href="#children"
             title="Permalink to Logger.children">#</a>
         </h4>
@@ -285,7 +285,7 @@ children
 </div>
 <div class="field"><h4 id="fullName">
 <button class="show-code">Code</button>
-final String         <strong>fullName</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>fullName</strong> <a class="anchor-link"
             href="#fullName"
             title="Permalink to Logger.fullName">#</a>
         </h4>
@@ -339,7 +339,7 @@ set level(value) {
 </div>
 <div class="field"><h4 id="name">
 <button class="show-code">Code</button>
-final String         <strong>name</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>name</strong> <a class="anchor-link"
             href="#name"
             title="Permalink to Logger.name">#</a>
         </h4>
@@ -382,7 +382,7 @@ parent
 <h3>Methods</h3>
 <div class="method"><h4 id="config">
 <button class="show-code">Code</button>
-void <strong>config</strong>(String message) <a class="anchor-link" href="#config"
+void <strong>config</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#config"
               title="Permalink to Logger.config">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#CONFIG">Level.CONFIG</a>. </p>
@@ -393,7 +393,7 @@ void config(String message) =&gt; log(Level.CONFIG, message);
 </div>
 <div class="method"><h4 id="fine">
 <button class="show-code">Code</button>
-void <strong>fine</strong>(String message) <a class="anchor-link" href="#fine"
+void <strong>fine</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fine"
               title="Permalink to Logger.fine">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#FINE">Level.FINE</a>. </p>
@@ -404,7 +404,7 @@ void fine(String message) =&gt; log(Level.FINE, message);
 </div>
 <div class="method"><h4 id="finer">
 <button class="show-code">Code</button>
-void <strong>finer</strong>(String message) <a class="anchor-link" href="#finer"
+void <strong>finer</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#finer"
               title="Permalink to Logger.finer">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#FINER">Level.FINER</a>. </p>
@@ -415,7 +415,7 @@ void finer(String message) =&gt; log(Level.FINER, message);
 </div>
 <div class="method"><h4 id="finest">
 <button class="show-code">Code</button>
-void <strong>finest</strong>(String message) <a class="anchor-link" href="#finest"
+void <strong>finest</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#finest"
               title="Permalink to Logger.finest">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#FINEST">Level.FINEST</a>. </p>
@@ -426,7 +426,7 @@ void finest(String message) =&gt; log(Level.FINEST, message);
 </div>
 <div class="method"><h4 id="info">
 <button class="show-code">Code</button>
-void <strong>info</strong>(String message) <a class="anchor-link" href="#info"
+void <strong>info</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#info"
               title="Permalink to Logger.info">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#INFO">Level.INFO</a>. </p>
@@ -437,7 +437,7 @@ void info(String message) =&gt; log(Level.INFO, message);
 </div>
 <div class="method"><h4 id="isLoggable">
 <button class="show-code">Code</button>
-bool <strong>isLoggable</strong>(<a href="../logging/Level.html">Level</a> value) <a class="anchor-link" href="#isLoggable"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>isLoggable</strong>(<a href="../logging/Level.html">Level</a> value) <a class="anchor-link" href="#isLoggable"
               title="Permalink to Logger.isLoggable">#</a></h4>
 <div class="doc">
 <p>Whether a message for 
@@ -449,7 +449,7 @@ bool isLoggable(Level value) =&gt; (value &gt;= level);
 </div>
 <div class="method"><h4 id="log">
 <button class="show-code">Code</button>
-void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, String message) <a class="anchor-link" href="#log"
+void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#log"
               title="Permalink to Logger.log">#</a></h4>
 <div class="doc">
 <p>Adds a log record for a 
@@ -479,7 +479,7 @@ void log(Level logLevel, String message) {
 </div>
 <div class="method"><h4 id="severe">
 <button class="show-code">Code</button>
-void <strong>severe</strong>(String message) <a class="anchor-link" href="#severe"
+void <strong>severe</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#severe"
               title="Permalink to Logger.severe">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#SEVERE">Level.SEVERE</a>. </p>
@@ -490,7 +490,7 @@ void severe(String message) =&gt; log(Level.SEVERE, message);
 </div>
 <div class="method"><h4 id="shout">
 <button class="show-code">Code</button>
-void <strong>shout</strong>(String message) <a class="anchor-link" href="#shout"
+void <strong>shout</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#shout"
               title="Permalink to Logger.shout">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#SHOUT">Level.SHOUT</a>. </p>
@@ -501,7 +501,7 @@ void shout(String message) =&gt; log(Level.SHOUT, message);
 </div>
 <div class="method"><h4 id="warning">
 <button class="show-code">Code</button>
-void <strong>warning</strong>(String message) <a class="anchor-link" href="#warning"
+void <strong>warning</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#warning"
               title="Permalink to Logger.warning">#</a></h4>
 <div class="doc">
 <p>Log message at level <a class="crossref" href="../logging/Level.html#WARNING">Level.WARNING</a>. </p>

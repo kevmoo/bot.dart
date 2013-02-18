@@ -31,7 +31,7 @@
 <h3>Functions</h3>
 <div class="method"><h4 id="getImmediateFuture">
 <button class="show-code">Code</button>
-Future <strong>getImmediateFuture</strong>() <a class="anchor-link" href="#getImmediateFuture"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a> <strong>getImmediateFuture</strong>() <a class="anchor-link" href="#getImmediateFuture"
               title="Permalink to getImmediateFuture">#</a></h4>
 <div class="doc">
 <p>Get a <code>Future</code> that completes after a call to <code>window.setImmediate</code>.</p>
@@ -48,21 +48,25 @@ Future getImmediateFuture() {
 </div>
 <div class="method"><h4 id="getTimeoutFuture">
 <button class="show-code">Code</button>
-Future&lt;int&gt; <strong>getTimeoutFuture</strong>(int milliseconds) <a class="anchor-link" href="#getTimeoutFuture"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>&gt; <strong>getTimeoutFuture</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> milliseconds) <a class="anchor-link" href="#getTimeoutFuture"
               title="Permalink to getTimeoutFuture">#</a></h4>
 <div class="doc">
 <p>Get a <code>Future</code> that completes after a call to <code>window.setTimeout</code> with the
 provided value. If 
 <span class="param">milliseconds</span> is less than or equal to zero, the value of
 <a class="crossref" href="bot_html.html#getImmediateFuture">getImmediateFuture</a> is returned instead.</p>
+<p><strong>DEPRECATED</strong></p>
+<p>Use <code>new Timer()</code> instead. We might add something similiar that's not
+html-specific to the <code>bot</code> library soon.</p>
 <pre class="source">
+@deprecated
 Future&lt;int&gt; getTimeoutFuture(int milliseconds) {
  if(milliseconds &lt; 0) {
    return getImmediateFuture();
  } else {
    final completer = new Completer();
 
-   window.setTimeout(() =&gt; completer.complete(milliseconds), milliseconds);
+   new Timer(new Duration(milliseconds: milliseconds), () =&gt; completer.complete(milliseconds));
 
    return completer.future;
  }
@@ -72,7 +76,7 @@ Future&lt;int&gt; getTimeoutFuture(int milliseconds) {
 </div>
 <div class="method"><h4 id="getMouseEventCoordinate">
 <button class="show-code">Code</button>
-<a href="bot/Coordinate.html">Coordinate</a> <strong>getMouseEventCoordinate</strong>(MouseEvent event) <a class="anchor-link" href="#getMouseEventCoordinate"
+<a href="bot/Coordinate.html">Coordinate</a> <strong>getMouseEventCoordinate</strong>(<a href="http://api.dartlang.org/dart_html/MouseEvent.html">MouseEvent</a> event) <a class="anchor-link" href="#getMouseEventCoordinate"
               title="Permalink to getMouseEventCoordinate">#</a></h4>
 <div class="doc">
 <pre class="source">

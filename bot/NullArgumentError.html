@@ -45,7 +45,7 @@ class NullArgumentError extends DetailedArgumentError {
 <h3>Constructors</h3>
 <div class="method"><h4 id="NullArgumentError">
 <button class="show-code">Code</button>
-new <strong>NullArgumentError</strong>(String argument) <a class="anchor-link" href="#NullArgumentError"
+new <strong>NullArgumentError</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> argument) <a class="anchor-link" href="#NullArgumentError"
               title="Permalink to NullArgumentError.NullArgumentError">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -82,13 +82,13 @@ details
 </div>
 <div class="field inherited"><h4 id="message">
 <button class="show-code">Code</button>
-final         <strong>message</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>message</strong> <a class="anchor-link"
             href="#message"
             title="Permalink to NullArgumentError.message">#</a>
         </h4>
-        <div class="inherited-from">inherited from ArgumentError </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a> </div><div class="doc">
 <pre class="source">
-message
+String get message =&gt; 'Illegal argument: "$argument" -- $details';
 </pre>
 </div>
 </div>
@@ -97,12 +97,12 @@ message
 <h3>Methods</h3>
 <div class="method inherited"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to NullArgumentError.toString">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/DetailedArgumentError.html">DetailedArgumentError</a> </div><div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 String toString() =&gt; message;
 </pre>

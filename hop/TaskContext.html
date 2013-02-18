@@ -34,7 +34,7 @@
 <div class="doc">
 <pre class="source">
 abstract class TaskContext extends TaskLogger implements Disposable {
- List&lt;String&gt; get arguments;
+ ArgResults get arguments;
 
  TaskLogger getSubLogger(String name);
 
@@ -43,7 +43,7 @@ abstract class TaskContext extends TaskLogger implements Disposable {
   * [message].
   */
  void fail(String message) {
-   throw new TaskFailError(message);
+   throw new _TaskFailError(message);
  }
 }
 </pre>
@@ -61,19 +61,19 @@ abstract class TaskContext extends TaskLogger implements Disposable {
 <h3>Properties</h3>
 <div class="field"><h4 id="arguments">
 <button class="show-code">Code</button>
-final List&lt;String&gt;         <strong>arguments</strong> <a class="anchor-link"
+final <a href="../args/ArgResults.html">ArgResults</a>         <strong>arguments</strong> <a class="anchor-link"
             href="#arguments"
             title="Permalink to TaskContext.arguments">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-List&lt;String&gt; get arguments;
+ArgResults get arguments;
 </pre>
 </div>
 </div>
 <div class="field inherited"><h4 id="isDisposed">
 <button class="show-code">Code</button>
-final bool         <strong>isDisposed</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isDisposed</strong> <a class="anchor-link"
             href="#isDisposed"
             title="Permalink to TaskContext.isDisposed">#</a>
         </h4>
@@ -94,7 +94,7 @@ abstract void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
 </div>
 <div class="method"><h4 id="fail">
 <button class="show-code">Code</button>
-void <strong>fail</strong>(String message) <a class="anchor-link" href="#fail"
+void <strong>fail</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fail"
               title="Permalink to TaskContext.fail">#</a></h4>
 <div class="doc">
 <p>Terminates the current <a class="crossref" href="../hop/Task.html">Task</a> with a <a class="crossref" href="../hop/TaskFailError.html">TaskFailError</a> including the provided
@@ -102,14 +102,14 @@ void <strong>fail</strong>(String message) <a class="anchor-link" href="#fail"
 <span class="param">message</span>.</p>
 <pre class="source">
 void fail(String message) {
- throw new TaskFailError(message);
+ throw new _TaskFailError(message);
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="fine">
 <button class="show-code">Code</button>
-void <strong>fine</strong>(String message) <a class="anchor-link" href="#fine"
+void <strong>fine</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fine"
               title="Permalink to TaskContext.fine">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -120,14 +120,14 @@ void fine(String message) {
 </div>
 </div>
 <div class="method"><h4 id="getSubLogger">
-abstract <a href="../hop/TaskLogger.html">TaskLogger</a> <strong>getSubLogger</strong>(String name) <a class="anchor-link" href="#getSubLogger"
+abstract <a href="../hop/TaskLogger.html">TaskLogger</a> <strong>getSubLogger</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#getSubLogger"
               title="Permalink to TaskContext.getSubLogger">#</a></h4>
 <div class="doc">
 </div>
 </div>
 <div class="method inherited"><h4 id="info">
 <button class="show-code">Code</button>
-void <strong>info</strong>(String message) <a class="anchor-link" href="#info"
+void <strong>info</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#info"
               title="Permalink to TaskContext.info">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -138,14 +138,14 @@ void info(String message) {
 </div>
 </div>
 <div class="method inherited"><h4 id="log">
-abstract void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, String message) <a class="anchor-link" href="#log"
+abstract void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#log"
               title="Permalink to TaskContext.log">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 </div>
 </div>
 <div class="method inherited"><h4 id="severe">
 <button class="show-code">Code</button>
-void <strong>severe</strong>(String message) <a class="anchor-link" href="#severe"
+void <strong>severe</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#severe"
               title="Permalink to TaskContext.severe">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -157,7 +157,7 @@ void severe(String message) {
 </div>
 <div class="method inherited"><h4 id="warning">
 <button class="show-code">Code</button>
-void <strong>warning</strong>(String message) <a class="anchor-link" href="#warning"
+void <strong>warning</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#warning"
               title="Permalink to TaskContext.warning">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">

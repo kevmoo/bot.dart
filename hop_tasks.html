@@ -40,20 +40,26 @@ Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
    final config = new _HopTestConfiguration(ctx);
    unitTestAction(config);
 
-   unittest.filterTests((unittest.TestCase tc) {
-     return ctx.arguments.every((arg) =&gt; tc.description.contains(arg));
-   });
+   if(!ctx.arguments.rest.isEmpty) {
+     ctx.info('Filtering tests by: ${ctx.arguments.rest}');
+
+     unittest.filterTests((unittest.TestCase tc) {
+       return ctx.arguments.rest.every((arg) =&gt; tc.description.contains(arg));
+     });
+   }
 
    unittest.runTests();
    return config.future;
- }, 'Run unit tests in the console');
+ },
+ description: 'Run unit tests in the console',
+ extendedArgs: [new TaskArgument('filter', multiple: true)]);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="pipeProcess">
 <button class="show-code">Code</button>
-Future&lt;int&gt; <strong>pipeProcess</strong>(Process process, {<a href="bot/Action1.html">Action1</a> stdOutWriter, <a href="bot/Action1.html">Action1</a> stdErrWriter}) <a class="anchor-link" href="#pipeProcess"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>&gt; <strong>pipeProcess</strong>(<a href="http://api.dartlang.org/dart_io/Process.html">Process</a> process, {<a href="bot/Action1.html">Action1</a> stdOutWriter, <a href="bot/Action1.html">Action1</a> stdErrWriter}) <a class="anchor-link" href="#pipeProcess"
               title="Permalink to pipeProcess">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -112,7 +118,7 @@ Future&lt;int&gt; pipeProcess(Process process,
 </div>
 <div class="method"><h4 id="startProcess">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskLogger.html">TaskLogger</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>startProcess</strong>(<a href="hop/TaskLogger.html">TaskLogger</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> command, [<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args = null]) <a class="anchor-link" href="#startProcess"
               title="Permalink to startProcess">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -130,7 +136,7 @@ Future&lt;bool&gt; startProcess(TaskLogger ctx, String command,
  return Process.start(command, args)
      .then((process) {
        return pipeProcess(process,
-           stdOutWriter: ctx.fine,
+           stdOutWriter: ctx.info,
            stdErrWriter: ctx.severe);
      })
      .then((int exitCode) {
@@ -142,19 +148,19 @@ Future&lt;bool&gt; startProcess(TaskLogger ctx, String command,
 </div>
 <div class="method"><h4 id="createProcessTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createProcessTask</strong>(String command, {List&lt;String&gt; args: null, String description: ''}) <a class="anchor-link" href="#createProcessTask"
+<a href="hop/Task.html">Task</a> <strong>createProcessTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> command, {<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args: null, <a href="http://api.dartlang.org/dart_core/String.html">String</a> description}) <a class="anchor-link" href="#createProcessTask"
               title="Permalink to createProcessTask">#</a></h4>
 <div class="doc">
 <pre class="source">
-Task createProcessTask(String command, {List&lt;String&gt; args: null, String description: ''}) {
- return new Task.async((ctx) =&gt; startProcess(ctx, command, args), description);
+Task createProcessTask(String command, {List&lt;String&gt; args: null, String description}) {
+ return new Task.async((ctx) =&gt; startProcess(ctx, command, args), description: description);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="branchForDir">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>branchForDir</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String sourceBranch, String sourceDir, String targetBranch, {String workingDir}) <a class="anchor-link" href="#branchForDir"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>branchForDir</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> sourceBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> sourceDir, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> workingDir}) <a class="anchor-link" href="#branchForDir"
               title="Permalink to branchForDir">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -209,16 +215,18 @@ Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sou
 </div>
 <div class="method"><h4 id="compileDocs">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String targetBranch, <a href="bot/Func.html">Func</a> libGetter, String packageDir) <a class="anchor-link" href="#compileDocs"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="bot/Func.html">Func</a> libGetter, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#compileDocs"
               title="Permalink to compileDocs">#</a></h4>
 <div class="doc">
 <pre class="source">
 Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
-   Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter, String packageDir) {
+   Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter, String packageDir,
+   {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
 
- final parser = _getDartDocParser();
- final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
- final bool allowDirty = parseResult['allow-dirty'];
+ final excludeList = excludeLibs == null ? [] : excludeLibs.toList();
+
+ final parseResult = ctx.arguments;
+ final bool allowDirty = parseResult[_allowDirtyArg];
 
  final currentWorkingDir = new Directory.current().path;
 
@@ -247,7 +255,7 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
      .then((String commitMessage) {
 
        return gitDir.populateBranch(targetBranch,
-           (TempDir td) =&gt; _doDocsPopulate(ctx, td, libs, packageDir),
+           (TempDir td) =&gt; _doDocsPopulate(ctx, td, libs, packageDir, excludeList, linkApi),
            commitMessage);
      })
      .then((Commit value) {
@@ -266,21 +274,24 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
 </div>
 <div class="method"><h4 id="getCompileDocsFunc">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(String targetBranch, String packageDir, <a href="bot/Func.html">Func</a> libGetter) <a class="anchor-link" href="#getCompileDocsFunc"
+<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, <a href="bot/Func.html">Func</a> libGetter, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#getCompileDocsFunc"
               title="Permalink to getCompileDocsFunc">#</a></h4>
 <div class="doc">
 <pre class="source">
 Task getCompileDocsFunc(String targetBranch, String packageDir,
-                       Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter) {
- return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, libGetter, packageDir),
-     'Generate documentation for the provided libraries.');
+                       Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter,
+                       {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
+ return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, libGetter,
+     packageDir, excludeLibs: excludeLibs, linkApi: linkApi),
+     description: 'Generate documentation for the provided libraries.',
+     config: _dartDocParserConfig);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="createDart2JsTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(List&lt;String&gt; inputs, {String output: null, String packageRoot: null, bool minify: false, bool allowUnsafeEval: true, bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
+<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; inputs, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> output: null, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageRoot: null, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> minify: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowUnsafeEval: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> liveTypeAnalysis: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
               title="Permalink to createDart2JsTask">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -297,31 +308,29 @@ Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
            liveTypeAnalysis: liveTypeAnalysis,
            rejectDeprecatedFeatures: rejectDeprecatedFeatures))
        .toList();
-   return _chainTasks(futureFuncs);
- }, 'Run Dart-to-Javascript compiler');
+   return _chainTasks(context, futureFuncs);
+ }, description: 'Run Dart-to-Javascript compiler');
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="createDartAnalyzerTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(Iterable&lt;String&gt; files) <a class="anchor-link" href="#createDartAnalyzerTask"
+<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; files) <a class="anchor-link" href="#createDartAnalyzerTask"
               title="Permalink to createDartAnalyzerTask">#</a></h4>
 <div class="doc">
 <pre class="source">
 Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
  return new Task.async((context) {
+   final parseResult = context.arguments;
 
-   final parser = _getDartAnalyzerParser();
-   final parseResult = _helpfulParseArgs(context, parser, context.arguments);
-
-   final bool enableTypeChecks = parseResult['enable_type_checks'];
-   final bool verbose = parseResult['verbose'];
+   final bool enableTypeChecks = parseResult[_enableTypeChecksArgName];
+   final bool verbose = parseResult[_verboseArgName];
 
    final fileList = files.map((f) =&gt; new Path(f)).toList();
 
    return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
- }, 'Running dart analyzer');
+ }, description: 'Running dart analyzer', config: _analyzerParserConfig);
 }
 </pre>
 </div>
@@ -334,11 +343,9 @@ Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
 <pre class="source">
 Task createBenchTask() {
  return new Task.async((ctx) {
+   final parseResult = ctx.arguments;
 
-   final parser = _getBenchParser();
-   final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
-
-   final count = int.parse(parseResult['run_count'], onError: (s) =&gt; _defaultRunCount);
+   final count = int.parse(parseResult[_runCountArgName], onError: (s) =&gt; _defaultRunCount);
 
    if(parseResult.rest.isEmpty) {
      ctx.fail('No command provided.');
@@ -355,7 +362,10 @@ Task createBenchTask() {
          return true;
        });
 
- }, 'Run a benchmark against the provided task');
+ },
+ config: _benchParserConfig,
+ description: 'Run a benchmark against the provided task',
+ extendedArgs: [new TaskArgument('command', required: true)]);
 }
 </pre>
 </div>

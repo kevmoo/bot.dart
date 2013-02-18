@@ -38,16 +38,51 @@ class Task {
 
  final TaskDefinition _exec;
  final String description;
+ final ArgParserConfigure _argParserConfig;
+ final ReadOnlyCollection&lt;TaskArgument&gt; _extendedArgs;
 
- factory Task.sync(Func1&lt;TaskContext, bool&gt; exec, [String description]) {
+ factory Task.sync(Func1&lt;TaskContext, bool&gt; exec,
+     {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) {
    final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
 
-   return new Task.async(futureExec, description);
+   return new Task.async(futureExec,
+       description: description, config: config, extendedArgs: extendedArgs);
  }
 
- Task.async(this._exec, [String desc = '']) :
-   this.description = (desc == null) ? '' : desc {
+ Task.async(this._exec,
+     {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) :
+   this.description = (description == null) ? '' : description,
+   this._argParserConfig = config,
+   this._extendedArgs = extendedArgs == null ?
+       const ReadOnlyCollection&lt;TaskArgument&gt;.empty() :
+         new ReadOnlyCollection&lt;TaskArgument&gt;(extendedArgs) {
    requireArgumentNotNull(_exec, '_exec');
+   TaskArgument.validateArgs(_extendedArgs);
+ }
+
+ void configureArgParser(ArgParser parser) {
+   if(_argParserConfig != null) {
+     _argParserConfig(parser);
+   }
+ }
+
+ String getUsage() {
+   final parser = new ArgParser();
+   configureArgParser(parser);
+   return parser.getUsage();
+ }
+
+ String getExtendedArgsUsage() {
+   return _extendedArgs.map((TaskArgument arg) {
+     var value = '&lt;${arg.name}&gt;';
+     if(arg.multiple) {
+       value = value.concat('...');
+     }
+     if(!arg.required) {
+       value = '[$value]';
+     }
+     return value;
+   }).join(' ');
  }
 
  Future&lt;bool&gt; run(TaskContext ctx) {
@@ -76,27 +111,35 @@ class Task {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Task.async">
 <button class="show-code">Code</button>
-new <strong>Task.async</strong>(<a href="../hop/TaskDefinition.html">TaskDefinition</a> _exec, [String desc = '']) <a class="anchor-link" href="#Task.async"
+new <strong>Task.async</strong>(<a href="../hop/TaskDefinition.html">TaskDefinition</a> _exec, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> description, <a href="../hop/ArgParserConfigure.html">ArgParserConfigure</a> config, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../hop/TaskArgument.html">TaskArgument</a>&gt; extendedArgs}) <a class="anchor-link" href="#Task.async"
               title="Permalink to Task.Task.async">#</a></h4>
 <div class="doc">
 <pre class="source">
-Task.async(this._exec, [String desc = '']) :
- this.description = (desc == null) ? '' : desc {
+Task.async(this._exec,
+   {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) :
+ this.description = (description == null) ? '' : description,
+ this._argParserConfig = config,
+ this._extendedArgs = extendedArgs == null ?
+     const ReadOnlyCollection&lt;TaskArgument&gt;.empty() :
+       new ReadOnlyCollection&lt;TaskArgument&gt;(extendedArgs) {
  requireArgumentNotNull(_exec, '_exec');
+ TaskArgument.validateArgs(_extendedArgs);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="Task.sync">
 <button class="show-code">Code</button>
-factory <strong>Task.sync</strong>(<a href="../bot/Func1.html">Func1</a> exec, [String description]) <a class="anchor-link" href="#Task.sync"
+factory <strong>Task.sync</strong>(<a href="../bot/Func1.html">Func1</a> exec, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> description, <a href="../hop/ArgParserConfigure.html">ArgParserConfigure</a> config, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../hop/TaskArgument.html">TaskArgument</a>&gt; extendedArgs}) <a class="anchor-link" href="#Task.sync"
               title="Permalink to Task.Task.sync">#</a></h4>
 <div class="doc">
 <pre class="source">
-factory Task.sync(Func1&lt;TaskContext, bool&gt; exec, [String description]) {
+factory Task.sync(Func1&lt;TaskContext, bool&gt; exec,
+   {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) {
  final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
 
- return new Task.async(futureExec, description);
+ return new Task.async(futureExec,
+     description: description, config: config, extendedArgs: extendedArgs);
 }
 </pre>
 </div>
@@ -106,7 +149,7 @@ factory Task.sync(Func1&lt;TaskContext, bool&gt; exec, [String description]) {
 <h3>Properties</h3>
 <div class="field"><h4 id="description">
 <button class="show-code">Code</button>
-final String         <strong>description</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>description</strong> <a class="anchor-link"
             href="#description"
             title="Permalink to Task.description">#</a>
         </h4>
@@ -119,9 +162,58 @@ description
 </div>
 <div>
 <h3>Methods</h3>
+<div class="method"><h4 id="configureArgParser">
+<button class="show-code">Code</button>
+void <strong>configureArgParser</strong>(<a href="../args/ArgParser.html">ArgParser</a> parser) <a class="anchor-link" href="#configureArgParser"
+              title="Permalink to Task.configureArgParser">#</a></h4>
+<div class="doc">
+<pre class="source">
+void configureArgParser(ArgParser parser) {
+ if(_argParserConfig != null) {
+   _argParserConfig(parser);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getExtendedArgsUsage">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getExtendedArgsUsage</strong>() <a class="anchor-link" href="#getExtendedArgsUsage"
+              title="Permalink to Task.getExtendedArgsUsage">#</a></h4>
+<div class="doc">
+<pre class="source">
+String getExtendedArgsUsage() {
+ return _extendedArgs.map((TaskArgument arg) {
+   var value = '&lt;${arg.name}&gt;';
+   if(arg.multiple) {
+     value = value.concat('...');
+   }
+   if(!arg.required) {
+     value = '[$value]';
+   }
+   return value;
+ }).join(' ');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getUsage">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+              title="Permalink to Task.getUsage">#</a></h4>
+<div class="doc">
+<pre class="source">
+String getUsage() {
+ final parser = new ArgParser();
+ configureArgParser(parser);
+ return parser.getUsage();
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="run">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>run</strong>(<a href="../hop/TaskContext.html">TaskContext</a> ctx) <a class="anchor-link" href="#run"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>run</strong>(<a href="../hop/TaskContext.html">TaskContext</a> ctx) <a class="anchor-link" href="#run"
               title="Permalink to Task.run">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -146,12 +238,12 @@ Future&lt;bool&gt; run(TaskContext ctx) {
 </div>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to Task.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 @override
 String toString() =&gt; "Task: $description";

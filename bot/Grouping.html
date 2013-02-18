@@ -71,7 +71,7 @@ class Grouping&lt;K, V&gt; {
   */
  Iterable&lt;K&gt; getKeys() =&gt; _values.keys;
 
- Iterable&lt;V&gt; getValues() =&gt; CollectionUtil.selectMany(_values.values, (a) =&gt; a);
+ Iterable&lt;V&gt; getValues() =&gt; _values.values.expand((a) =&gt; a);
 
  /**
   * The number of {key, value} pairs in the map.
@@ -91,7 +91,7 @@ class Grouping&lt;K, V&gt; {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Grouping">
 <button class="show-code">Code</button>
-new <strong>Grouping</strong>(Iterable&lt;<a href="../bot/Grouping.html">V</a>&gt; source, [<a href="../bot/Func1.html">Func1</a> keyFunc = null]) <a class="anchor-link" href="#Grouping"
+new <strong>Grouping</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Grouping.html">V</a>&gt; source, [<a href="../bot/Func1.html">Func1</a> keyFunc = null]) <a class="anchor-link" href="#Grouping"
               title="Permalink to Grouping&lt;K, V&gt;.Grouping">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -114,7 +114,7 @@ Grouping(Iterable&lt;V&gt; source, [Func1&lt;V, K&gt; keyFunc = null]) {
 <h3>Properties</h3>
 <div class="field"><h4 id="isEmpty">
 <button class="show-code">Code</button>
-final bool         <strong>isEmpty</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isEmpty</strong> <a class="anchor-link"
             href="#isEmpty"
             title="Permalink to Grouping&lt;K, V&gt;.isEmpty">#</a>
         </h4>
@@ -127,7 +127,7 @@ bool get isEmpty =&gt; _values.isEmpty;
 </div>
 <div class="field"><h4 id="length">
 <button class="show-code">Code</button>
-final int         <strong>length</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>length</strong> <a class="anchor-link"
             href="#length"
             title="Permalink to Grouping&lt;K, V&gt;.length">#</a>
         </h4>
@@ -143,7 +143,7 @@ int get length =&gt; _values.length;
 <h3>Operators</h3>
 <div class="method"><h4 id="[]">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>operator []</strong>(<a href="../bot/Grouping.html">K</a> key) <a class="anchor-link" href="#[]"
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>operator []</strong>(<a href="../bot/Grouping.html">K</a> key) <a class="anchor-link" href="#[]"
               title="Permalink to Grouping&lt;K, V&gt;.operator []">#</a></h4>
 <div class="doc">
 <p>Returns the value for the given 
@@ -162,7 +162,7 @@ List&lt;V&gt; operator [](K key) =&gt; _values[key];
 <h3>Methods</h3>
 <div class="method"><h4 id="containsKey">
 <button class="show-code">Code</button>
-bool <strong>containsKey</strong>(<a href="../bot/Grouping.html">K</a> key) <a class="anchor-link" href="#containsKey"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>containsKey</strong>(<a href="../bot/Grouping.html">K</a> key) <a class="anchor-link" href="#containsKey"
               title="Permalink to Grouping&lt;K, V&gt;.containsKey">#</a></h4>
 <div class="doc">
 <p>Returns whether this map contains the given 
@@ -174,7 +174,7 @@ bool containsKey(K key) =&gt; _values.containsKey(key);
 </div>
 <div class="method"><h4 id="forEach">
 <button class="show-code">Code</button>
-void <strong>forEach</strong>(void f(<a href="../bot/Grouping.html">K</a> key, List&lt;<a href="../bot/Grouping.html">V</a>&gt; value)) <a class="anchor-link" href="#forEach"
+void <strong>forEach</strong>(void f(<a href="../bot/Grouping.html">K</a> key, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Grouping.html">V</a>&gt; value)) <a class="anchor-link" href="#forEach"
               title="Permalink to Grouping&lt;K, V&gt;.forEach">#</a></h4>
 <div class="doc">
 <p>Applies 
@@ -186,7 +186,7 @@ void forEach(void f(K key, List&lt;V&gt; value)) =&gt; _values.forEach(f);
 </div>
 <div class="method"><h4 id="getKeys">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/Grouping.html">K</a>&gt; <strong>getKeys</strong>() <a class="anchor-link" href="#getKeys"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Grouping.html">K</a>&gt; <strong>getKeys</strong>() <a class="anchor-link" href="#getKeys"
               title="Permalink to Grouping&lt;K, V&gt;.getKeys">#</a></h4>
 <div class="doc">
 <p>Returns a collection containing all the keys in the map.</p>
@@ -197,22 +197,22 @@ Iterable&lt;K&gt; getKeys() =&gt; _values.keys;
 </div>
 <div class="method"><h4 id="getValues">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>getValues</strong>() <a class="anchor-link" href="#getValues"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Grouping.html">V</a>&gt; <strong>getValues</strong>() <a class="anchor-link" href="#getValues"
               title="Permalink to Grouping&lt;K, V&gt;.getValues">#</a></h4>
 <div class="doc">
 <pre class="source">
-Iterable&lt;V&gt; getValues() =&gt; CollectionUtil.selectMany(_values.values, (a) =&gt; a);
+Iterable&lt;V&gt; getValues() =&gt; _values.values.expand((a) =&gt; a);
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to Grouping&lt;K, V&gt;.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 String toString() =&gt; _values.toString();
 </pre>

@@ -180,7 +180,7 @@ final <a href="../bot/ListBase.html">E</a>         <strong>first</strong> <a cla
             href="#first"
             title="Permalink to ListBase&lt;E&gt;.first">#</a>
         </h4>
-        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the first element.</p>
 <p>If <code>this</code> is empty throws a <code>StateError</code>. Otherwise this method is
 equivalent to <code>this.elementAt(0)</code></p>
@@ -197,11 +197,11 @@ E get first {
 </div>
 <div class="field inherited"><h4 id="isEmpty">
 <button class="show-code">Code</button>
-final bool         <strong>isEmpty</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isEmpty</strong> <a class="anchor-link"
             href="#isEmpty"
             title="Permalink to ListBase&lt;E&gt;.isEmpty">#</a>
         </h4>
-        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns true if there is no element in this collection.</p>
 <pre class="source">
 bool get isEmpty =&gt; !iterator.moveNext();
@@ -210,14 +210,14 @@ bool get isEmpty =&gt; !iterator.moveNext();
 </div>
 <div class="field"><h4 id="iterator">
 <button class="show-code">Code</button>
-final Iterator&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>iterator</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/Iterator.html">Iterator</a>&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>iterator</strong> <a class="anchor-link"
             href="#iterator"
             title="Permalink to ListBase&lt;E&gt;.iterator">#</a>
         </h4>
         <div class="doc">
 <div class="inherited">
 <p>Returns an <code>Iterator</code> that iterates over this <code>Iterable</code> object.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 Iterator&lt;E&gt; get iterator =&gt; new _ListIterator(this);
 </pre>
@@ -229,7 +229,7 @@ final <a href="../bot/ListBase.html">E</a>         <strong>last</strong> <a clas
             href="#last"
             title="Permalink to ListBase&lt;E&gt;.last">#</a>
         </h4>
-        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the last element.</p>
 <p>If <code>this</code> is empty throws a <code>StateError</code>.</p>
 <pre class="source">
@@ -249,9 +249,9 @@ E get last {
 </div>
 <div class="method inherited"><h4 id="length">
 <button class="show-code">Code</button>
-int <strong>get length</strong> <a class="anchor-link" href="#length"
+<a href="http://api.dartlang.org/dart_core/int.html">int</a> <strong>get length</strong> <a class="anchor-link" href="#length"
               title="Permalink to ListBase&lt;E&gt;.get length">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the number of elements in <code>this</code>.</p>
 <p>Counting all elements may be involve running through all elements and can
 therefore be slow.</p>
@@ -269,7 +269,7 @@ int get length {
 </div>
 <div class="method"><h4 id="length=">
 <button class="show-code">Code</button>
-void <strong>set length</strong>(int newLength) <a class="anchor-link" href="#length="
+void <strong>set length</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> newLength) <a class="anchor-link" href="#length="
               title="Permalink to ListBase&lt;E&gt;.set length">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -277,7 +277,7 @@ void <strong>set length</strong>(int newLength) <a class="anchor-link" href="#le
 <span class="param">newLength</span> is greater than
 the current <code>length</code>, entries are initialized to <code>null</code>. Throws
 an <code>UnsupportedError</code> if the list is not extendable.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void set length(int newLength) {
  throw new UnsupportedError(
@@ -288,7 +288,7 @@ void set length(int newLength) {
 </div>
 <div class="field"><h4 id="reversed">
 <button class="show-code">Code</button>
-final List&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>reversed</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>reversed</strong> <a class="anchor-link"
             href="#reversed"
             title="Permalink to ListBase&lt;E&gt;.reversed">#</a>
         </h4>
@@ -298,7 +298,7 @@ final List&lt;<a href="../bot/ListBase.html">E</a>&gt;         <strong>reversed<
 <p>The reversed list has elements in the opposite order of this list.
 It is backed by this list, but will stop working if this list
 becomes shorter than its current length.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 List&lt;E&gt; get reversed =&gt; IterableMixinWorkaround.reversedList(this);
 </pre>
@@ -310,7 +310,7 @@ final <a href="../bot/ListBase.html">E</a>         <strong>single</strong> <a cl
             href="#single"
             title="Permalink to ListBase&lt;E&gt;.single">#</a>
         </h4>
-        <div class="inherited-from">inherited from Iterable </div><div class="doc">
+        <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the single element in <code>this</code>.</p>
 <p>If <code>this</code> is empty or has more than one element throws a <code>StateError</code>.</p>
 <pre class="source">
@@ -328,9 +328,9 @@ E get single {
 <div>
 <h3>Operators</h3>
 <div class="method inherited"><h4 id="[]">
-abstract <a href="../bot/ListBase.html">E</a> <strong>operator []</strong>(int index) <a class="anchor-link" href="#[]"
+abstract <a href="../bot/ListBase.html">E</a> <strong>operator []</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> index) <a class="anchor-link" href="#[]"
               title="Permalink to ListBase&lt;E&gt;.operator []">#</a></h4>
-<div class="inherited-from">inherited from List </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a> </div><div class="doc">
 <p>Returns the element at the given 
 <span class="param">index</span> in the list or throws
 an <code>RangeError</code> if 
@@ -339,7 +339,7 @@ an <code>RangeError</code> if
 </div>
 <div class="method"><h4 id="[]=">
 <button class="show-code">Code</button>
-void <strong>operator []=</strong>(int index, <a href="../bot/ListBase.html">E</a> value) <a class="anchor-link" href="#[]="
+void <strong>operator []=</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> index, <a href="../bot/ListBase.html">E</a> value) <a class="anchor-link" href="#[]="
               title="Permalink to ListBase&lt;E&gt;.operator []=">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -348,7 +348,7 @@ void <strong>operator []=</strong>(int index, <a href="../bot/ListBase.html">E</
 <span class="param">value</span>.
 Throws an <code>RangeError</code> if 
 <span class="param">index</span> is out of bounds.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void operator []=(int index, E value) {
  throw new UnsupportedError(
@@ -370,7 +370,7 @@ void <strong>add</strong>(<a href="../bot/ListBase.html">E</a> value) <a class="
 <span class="param">value</span> at the end of the list, extending the length by
 one. Throws an <code>UnsupportedError</code> if the list is not
 extendable.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void add(E value) {
  throw new UnsupportedError(
@@ -381,7 +381,7 @@ void add(E value) {
 </div>
 <div class="method"><h4 id="addAll">
 <button class="show-code">Code</button>
-void <strong>addAll</strong>(Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt; iterable) <a class="anchor-link" href="#addAll"
+void <strong>addAll</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; iterable) <a class="anchor-link" href="#addAll"
               title="Permalink to ListBase&lt;E&gt;.addAll">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -390,7 +390,7 @@ void <strong>addAll</strong>(Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt
 Extends the length of the list by the number of elements in 
 <span class="param">iterable</span>.
 Throws an <code>UnsupportedError</code> if this list is not extensible.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void addAll(Iterable&lt;E&gt; iterable) {
  throw new UnsupportedError(
@@ -409,7 +409,7 @@ void <strong>addLast</strong>(<a href="../bot/ListBase.html">E</a> value) <a cla
 <span class="param">value</span> at the end of the list, extending the length by
 one. Throws an <code>UnsupportedError</code> if the list is not
 extendable.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void addLast(E value) {
  throw new UnsupportedError(
@@ -420,9 +420,9 @@ void addLast(E value) {
 </div>
 <div class="method inherited"><h4 id="any">
 <button class="show-code">Code</button>
-bool <strong>any</strong>(bool f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#any"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>any</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#any"
               title="Permalink to ListBase&lt;E&gt;.any">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns true if one element of this collection satisfies the
 predicate 
 <span class="param">f</span>. Returns false otherwise.</p>
@@ -446,7 +446,7 @@ void <strong>clear</strong>() <a class="anchor-link" href="#clear"
 <p>The length of the list becomes zero.
 Throws an <code>UnsupportedError</code>, and retains all elements, if the
 length of the list cannot be changed.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void clear() {
  throw new UnsupportedError(
@@ -457,9 +457,9 @@ void clear() {
 </div>
 <div class="method inherited"><h4 id="contains">
 <button class="show-code">Code</button>
-bool <strong>contains</strong>(<a href="../bot/ListBase.html">E</a> element) <a class="anchor-link" href="#contains"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>contains</strong>(<a href="../bot/ListBase.html">E</a> element) <a class="anchor-link" href="#contains"
               title="Permalink to ListBase&lt;E&gt;.contains">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Check whether the collection contains an element equal to 
 <span class="param">element</span>.</p>
 <pre class="source">
@@ -474,7 +474,7 @@ bool contains(E element) {
 </div>
 <div class="method inherited"><h4 id="count">
 <button class="show-code">Code</button>
-int <strong>count</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#count"
+<a href="http://api.dartlang.org/dart_core/int.html">int</a> <strong>count</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#count"
               title="Permalink to ListBase&lt;E&gt;.count">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <pre class="source">
@@ -496,9 +496,9 @@ Enumerable&lt;T&gt; distinct([Func2&lt;T, T, bool&gt; comparer = null]) =&gt;
 </div>
 <div class="method inherited"><h4 id="elementAt">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>elementAt</strong>(int index) <a class="anchor-link" href="#elementAt"
+<a href="../bot/ListBase.html">E</a> <strong>elementAt</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> index) <a class="anchor-link" href="#elementAt"
               title="Permalink to ListBase&lt;E&gt;.elementAt">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the 
 <span class="param">index</span>th element.</p>
 <p>If [this] [Iterable] has fewer than 
@@ -523,9 +523,9 @@ E elementAt(int index) {
 </div>
 <div class="method inherited"><h4 id="every">
 <button class="show-code">Code</button>
-bool <strong>every</strong>(bool f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#every"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>every</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#every"
               title="Permalink to ListBase&lt;E&gt;.every">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns true if every elements of this collection satisify the
 predicate 
 <span class="param">f</span>. Returns false otherwise.</p>
@@ -541,7 +541,7 @@ bool every(bool f(E element)) {
 </div>
 <div class="method inherited"><h4 id="exclude">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; <strong>exclude</strong>(Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; items) <a class="anchor-link" href="#exclude"
+<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; <strong>exclude</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; items) <a class="anchor-link" href="#exclude"
               title="Permalink to ListBase&lt;E&gt;.exclude">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <pre class="source">
@@ -552,9 +552,10 @@ Enumerable&lt;T&gt; exclude(Iterable&lt;T&gt; items) =&gt;
 </div>
 <div class="method inherited"><h4 id="expand">
 <button class="show-code">Code</button>
-Iterable <strong>expand</strong>(Iterable f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#expand"
+<a href="../bot/Enumerable.html">Enumerable</a> <strong>expand</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#expand"
               title="Permalink to ListBase&lt;E&gt;.expand">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<div class="inherited">
 <p>Expand each element of this <code>Iterable</code> into zero or more elements.</p>
 <p>The resulting Iterable will run through the elements returned
 by 
@@ -562,17 +563,18 @@ by
 <p>The returned <code>Iterable</code> is lazy, and will call 
 <span class="param">f</span> for each element
 of this every time it's iterated.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
-Iterable expand(Iterable f(E element)) =&gt;
-   new ExpandIterable&lt;E, dynamic&gt;(this, f);
+Enumerable expand(Func1&lt;T, Iterable&gt; f) =&gt;
+   $(super.expand(f));
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="firstMatching">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>firstMatching</strong>(bool test(<a href="../bot/ListBase.html">E</a> value), {<a href="../bot/ListBase.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
+<a href="../bot/ListBase.html">E</a> <strong>firstMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> value), {<a href="../bot/ListBase.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
               title="Permalink to ListBase&lt;E&gt;.firstMatching">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the first element that satisfies the given predicate <code>f</code>.</p>
 <p>If none matches, the result of invoking the 
 <span class="param">orElse</span> function is
@@ -595,7 +597,7 @@ E firstMatching(bool test(E value), { E orElse() }) {
 <button class="show-code">Code</button>
 void <strong>forEach</strong>(void f(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#forEach"
               title="Permalink to ListBase&lt;E&gt;.forEach">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Applies the function 
 <span class="param">f</span> to each element of this collection.</p>
 <pre class="source">
@@ -622,7 +624,7 @@ void forEachWithIndex(Action2&lt;T, int&gt; f) {
 </div>
 <div class="method"><h4 id="getRange">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>getRange</strong>(int start, int length) <a class="anchor-link" href="#getRange"
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>getRange</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> start, <a href="http://api.dartlang.org/dart_core/int.html">int</a> length) <a class="anchor-link" href="#getRange"
               title="Permalink to ListBase&lt;E&gt;.getRange">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -637,7 +639,7 @@ Throws an <code>ArgumentError</code> if
 Throws an <code>RangeError</code> if 
 <span class="param">start</span> or
 <code>start + length - 1</code> are out of range.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 List&lt;E&gt; getRange(int start, int length) {
  List&lt;E&gt; result = &lt;E&gt;[];
@@ -663,7 +665,7 @@ Grouping&lt;dynamic, T&gt; group([Func1&lt;T, Object&gt; keyFunc = null]) {
 </div>
 <div class="method"><h4 id="indexOf">
 <button class="show-code">Code</button>
-int <strong>indexOf</strong>(<a href="../bot/ListBase.html">E</a> value, [int start = 0]) <a class="anchor-link" href="#indexOf"
+<a href="http://api.dartlang.org/dart_core/int.html">int</a> <strong>indexOf</strong>(<a href="../bot/ListBase.html">E</a> value, [<a href="http://api.dartlang.org/dart_core/int.html">int</a> start = 0]) <a class="anchor-link" href="#indexOf"
               title="Permalink to ListBase&lt;E&gt;.indexOf">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -673,7 +675,7 @@ int <strong>indexOf</strong>(<a href="../bot/ListBase.html">E</a> value, [int st
 The first time an element <code>e</code> is encountered so that <code>e == element</code>,
 the index of <code>e</code> is returned.
 Returns -1 if <code>element</code> is not found.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 int indexOf(E value, [int start = 0]) {
  for (int i = start; i &lt; length; i++) {
@@ -686,7 +688,7 @@ int indexOf(E value, [int start = 0]) {
 </div>
 <div class="method"><h4 id="insertRange">
 <button class="show-code">Code</button>
-void <strong>insertRange</strong>(int start, int length, [<a href="../bot/ListBase.html">E</a> initialValue]) <a class="anchor-link" href="#insertRange"
+void <strong>insertRange</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> start, <a href="http://api.dartlang.org/dart_core/int.html">int</a> length, [<a href="../bot/ListBase.html">E</a> initialValue]) <a class="anchor-link" href="#insertRange"
               title="Permalink to ListBase&lt;E&gt;.insertRange">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -706,7 +708,7 @@ Throws an <code>RangeError</code> if
 <span class="param">start</span> is negative or if
 
 <span class="param">start</span> is greater than the length of the list.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void insertRange(int start, int length, [E initialValue]) {
  throw new UnsupportedError(
@@ -717,9 +719,9 @@ void insertRange(int start, int length, [E initialValue]) {
 </div>
 <div class="method inherited"><h4 id="join">
 <button class="show-code">Code</button>
-String <strong>join</strong>([String separator]) <a class="anchor-link" href="#join"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>join</strong>([<a href="http://api.dartlang.org/dart_core/String.html">String</a> separator]) <a class="anchor-link" href="#join"
               title="Permalink to ListBase&lt;E&gt;.join">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Convert each element to a <code>String</code> and concatenate the strings.</p>
 <p>Converts each element to a <code>String</code> by calling <code>Object.toString</code> on it.
 Then concatenates the strings, optionally separated by the 
@@ -748,7 +750,7 @@ String join([String separator]) {
 </div>
 <div class="method"><h4 id="lastIndexOf">
 <button class="show-code">Code</button>
-int <strong>lastIndexOf</strong>(<a href="../bot/ListBase.html">E</a> value, [int start]) <a class="anchor-link" href="#lastIndexOf"
+<a href="http://api.dartlang.org/dart_core/int.html">int</a> <strong>lastIndexOf</strong>(<a href="../bot/ListBase.html">E</a> value, [<a href="http://api.dartlang.org/dart_core/int.html">int</a> start]) <a class="anchor-link" href="#lastIndexOf"
               title="Permalink to ListBase&lt;E&gt;.lastIndexOf">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -758,7 +760,7 @@ The first time an element <code>e</code> is encountered so that <code>e == eleme
 the index of <code>e</code> is returned.
 If start is not provided, it defaults to <code>this.length - 1</code> .
 Returns -1 if <code>element</code> is not found.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 int lastIndexOf(E value, [int start]) {
  if (start == null) start = length - 1;
@@ -772,9 +774,9 @@ int lastIndexOf(E value, [int start]) {
 </div>
 <div class="method inherited"><h4 id="lastMatching">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>lastMatching</strong>(bool test(<a href="../bot/ListBase.html">E</a> value), {<a href="../bot/ListBase.html">E</a> orElse()}) <a class="anchor-link" href="#lastMatching"
+<a href="../bot/ListBase.html">E</a> <strong>lastMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> value), {<a href="../bot/ListBase.html">E</a> orElse()}) <a class="anchor-link" href="#lastMatching"
               title="Permalink to ListBase&lt;E&gt;.lastMatching">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the last element that satisfies the given predicate <code>f</code>.</p>
 <p>If none matches, the result of invoking the 
 <span class="param">orElse</span> function is
@@ -814,7 +816,7 @@ not be invoked. The transformed elements will not be cached. Iterating
 multiple times over the the returned <code>Iterable</code> will invoke the supplied
 function 
 <span class="param">f</span> multiple times on the same element.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
    $(super.map(f));
@@ -828,7 +830,7 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <div class="inherited">
 <p>Deprecated alias for <code>map</code>.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 @deprecated @override
 Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
@@ -838,9 +840,9 @@ Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
 </div>
 <div class="method inherited"><h4 id="max">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>max</strong>([int compare(<a href="../bot/ListBase.html">E</a> a, <a href="../bot/ListBase.html">E</a> b)]) <a class="anchor-link" href="#max"
+<a href="../bot/ListBase.html">E</a> <strong>max</strong>([<a href="http://api.dartlang.org/dart_core/int.html">int</a> compare(<a href="../bot/ListBase.html">E</a> a, <a href="../bot/ListBase.html">E</a> b)]) <a class="anchor-link" href="#max"
               title="Permalink to ListBase&lt;E&gt;.max">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Find the largest element in the iterable.</p>
 <p>Returns null if the iterable is empty.
 Otherwise returns an element <code>x</code> of this <code>Iterable</code> so that
@@ -867,9 +869,9 @@ E max([int compare(E a, E b)]) {
 </div>
 <div class="method inherited"><h4 id="min">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>min</strong>([int compare(<a href="../bot/ListBase.html">E</a> a, <a href="../bot/ListBase.html">E</a> b)]) <a class="anchor-link" href="#min"
+<a href="../bot/ListBase.html">E</a> <strong>min</strong>([<a href="http://api.dartlang.org/dart_core/int.html">int</a> compare(<a href="../bot/ListBase.html">E</a> a, <a href="../bot/ListBase.html">E</a> b)]) <a class="anchor-link" href="#min"
               title="Permalink to ListBase&lt;E&gt;.min">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Find the least element in the iterable.</p>
 <p>Returns null if the iterable is empty.
 Otherwise returns an element <code>x</code> of this <code>Iterable</code> so that
@@ -898,7 +900,7 @@ E min([int compare(E a, E b)]) {
 <button class="show-code">Code</button>
 <strong>reduce</strong>(initialValue, combine(previousValue, <a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#reduce"
               title="Permalink to ListBase&lt;E&gt;.reduce">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Reduce a collection to a single value by iteratively combining each element
 of the collection with an existing value using the provided function.
 Use 
@@ -929,7 +931,7 @@ void <strong>remove</strong>(<a href="../bot/ListBase.html">E</a> element) <a cl
 contain the same element more than once (e.g., <code>List</code>). Which instance
 is removed is decided by the collection.</p>
 <p>Has no effect if the elements is not in this collection.</p>
-<div class="docs-inherited-from">docs inherited from Collection&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Collection.html">Collection</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void remove(E element) {
  throw new UnsupportedError(
@@ -940,7 +942,7 @@ void remove(E element) {
 </div>
 <div class="method"><h4 id="removeAll">
 <button class="show-code">Code</button>
-void <strong>removeAll</strong>(Iterable elements) <a class="anchor-link" href="#removeAll"
+void <strong>removeAll</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> elements) <a class="anchor-link" href="#removeAll"
               title="Permalink to ListBase&lt;E&gt;.removeAll">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -949,7 +951,7 @@ void <strong>removeAll</strong>(Iterable elements) <a class="anchor-link" href="
 <p>Equivalent to calling <a class="crossref" href="../bot/ListBase.html#remove">remove</a> once for each element in
 
 <span class="param">elements</span>, but may be faster for some collections.</p>
-<div class="docs-inherited-from">docs inherited from Collection&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Collection.html">Collection</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void removeAll(Iterable elements) {
  throw new UnsupportedError(
@@ -960,7 +962,7 @@ void removeAll(Iterable elements) {
 </div>
 <div class="method"><h4 id="removeAt">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>removeAt</strong>(int index) <a class="anchor-link" href="#removeAt"
+<a href="../bot/ListBase.html">E</a> <strong>removeAt</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> index) <a class="anchor-link" href="#removeAt"
               title="Permalink to ListBase&lt;E&gt;.removeAt">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -976,7 +978,7 @@ Throws an <code>RangeError</code> if the
 the list.
 Throws an <code>UnsupportedError</code>, and doesn't remove the element,
 if the length of the list cannot be changed.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 E removeAt(int index) {
  throw new UnsupportedError(
@@ -994,7 +996,7 @@ E removeAt(int index) {
 <p>Pops and returns the last element of the list.
 Throws a <code>UnsupportedError</code> if the length of the
 list cannot be changed.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 E removeLast() {
  throw new UnsupportedError(
@@ -1005,7 +1007,7 @@ E removeLast() {
 </div>
 <div class="method"><h4 id="removeMatching">
 <button class="show-code">Code</button>
-void <strong>removeMatching</strong>(bool test(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#removeMatching"
+void <strong>removeMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> element)) <a class="anchor-link" href="#removeMatching"
               title="Permalink to ListBase&lt;E&gt;.removeMatching">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -1013,7 +1015,7 @@ void <strong>removeMatching</strong>(bool test(<a href="../bot/ListBase.html">E<
 <span class="param">test</span>.</p>
 <p>An elements <code>e</code> satisfies 
 <span class="param">test</span> if <code>test(e)</code> is true.</p>
-<div class="docs-inherited-from">docs inherited from Collection&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Collection.html">Collection</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void removeMatching(bool test(E element)) {
  throw new UnsupportedError(
@@ -1024,7 +1026,7 @@ void removeMatching(bool test(E element)) {
 </div>
 <div class="method"><h4 id="removeRange">
 <button class="show-code">Code</button>
-void <strong>removeRange</strong>(int start, int length) <a class="anchor-link" href="#removeRange"
+void <strong>removeRange</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> start, <a href="http://api.dartlang.org/dart_core/int.html">int</a> length) <a class="anchor-link" href="#removeRange"
               title="Permalink to ListBase&lt;E&gt;.removeRange">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -1040,7 +1042,7 @@ Throws an <code>ArgumentError</code> if
 Throws an <code>RangeError</code> if 
 <span class="param">start</span> or
 <code>:start + length: - 1</code> are out of range.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void removeRange(int start, int length) {
  throw new UnsupportedError(
@@ -1051,7 +1053,7 @@ void removeRange(int start, int length) {
 </div>
 <div class="method"><h4 id="retainAll">
 <button class="show-code">Code</button>
-void <strong>retainAll</strong>(Iterable elements) <a class="anchor-link" href="#retainAll"
+void <strong>retainAll</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> elements) <a class="anchor-link" href="#retainAll"
               title="Permalink to ListBase&lt;E&gt;.retainAll">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -1059,7 +1061,7 @@ void <strong>retainAll</strong>(Iterable elements) <a class="anchor-link" href="
 in 
 <span class="param">elements</span>.</p>
 <p>For <code>Set</code>s, this is the intersection of the two original sets.</p>
-<div class="docs-inherited-from">docs inherited from Collection&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Collection.html">Collection</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void retainAll(Iterable elements) {
  throw new UnsupportedError(
@@ -1078,7 +1080,7 @@ void <strong>retainMatching</strong>(<a href="../bot/Func1.html">Func1</a> test)
 <span class="param">test</span>.</p>
 <p>An elements <code>e</code> satisfies 
 <span class="param">test</span> if <code>test(e)</code> is true.</p>
-<div class="docs-inherited-from">docs inherited from Collection&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Collection.html">Collection</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void retainMatching(Func1&lt;E, bool&gt; test) {
  throw new UnsupportedError(
@@ -1092,9 +1094,11 @@ void retainMatching(Func1&lt;E, bool&gt; test) {
 <a href="../bot/Enumerable.html">Enumerable</a> <strong>selectMany</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#selectMany"
               title="Permalink to ListBase&lt;E&gt;.selectMany">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
+<p>Use <code>expand</code> instead</p>
 <pre class="source">
+@deprecated
 Enumerable selectMany(Func1&lt;T, Iterable&gt; f) =&gt;
-   CollectionUtil.selectMany(this, f);
+   this.expand(f);
 </pre>
 </div>
 </div>
@@ -1111,7 +1115,7 @@ NumberEnumerable selectNumbers(Func1&lt;T, num&gt; f) =&gt;
 </div>
 <div class="method"><h4 id="setRange">
 <button class="show-code">Code</button>
-void <strong>setRange</strong>(int start, int length, List&lt;<a href="../bot/ListBase.html">E</a>&gt; from, [int startFrom]) <a class="anchor-link" href="#setRange"
+void <strong>setRange</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> start, <a href="http://api.dartlang.org/dart_core/int.html">int</a> length, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; from, [<a href="http://api.dartlang.org/dart_core/int.html">int</a> startFrom]) <a class="anchor-link" href="#setRange"
               title="Permalink to ListBase&lt;E&gt;.setRange">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -1131,7 +1135,7 @@ Throws an <code>RangeError</code> if
 
 <span class="param">startFrom</span> or <code>startFrom + length - 1</code> are out of range for 
 <span class="param">from</span>.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void setRange(int start, int length, List&lt;E&gt; from, [int startFrom]) {
  throw new UnsupportedError(
@@ -1142,9 +1146,9 @@ void setRange(int start, int length, List&lt;E&gt; from, [int startFrom]) {
 </div>
 <div class="method inherited"><h4 id="singleMatching">
 <button class="show-code">Code</button>
-<a href="../bot/ListBase.html">E</a> <strong>singleMatching</strong>(bool test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#singleMatching"
+<a href="../bot/ListBase.html">E</a> <strong>singleMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#singleMatching"
               title="Permalink to ListBase&lt;E&gt;.singleMatching">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the single element that satisfies <code>f</code>. If no or more than one
 element match then a <code>StateError</code> is thrown.</p>
 <pre class="source">
@@ -1169,9 +1173,9 @@ E singleMatching(bool test(E value)) {
 </div>
 <div class="method inherited"><h4 id="skip">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>skip</strong>(int n) <a class="anchor-link" href="#skip"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>skip</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> n) <a class="anchor-link" href="#skip"
               title="Permalink to ListBase&lt;E&gt;.skip">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns an <code>Iterable</code> that skips the first 
 <span class="param">n</span> elements.</p>
 <p>If <code>this</code> has fewer than 
@@ -1186,9 +1190,9 @@ Iterable&lt;E&gt; skip(int n) {
 </div>
 <div class="method inherited"><h4 id="skipWhile">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>skipWhile</strong>(bool test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#skipWhile"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>skipWhile</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#skipWhile"
               title="Permalink to ListBase&lt;E&gt;.skipWhile">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns an <code>Iterable</code> that skips elements while 
 <span class="param">test</span> is satisfied.</p>
 <p>The filtering happens lazily. Every new <code>Iterator</code> of the returned
@@ -1207,7 +1211,7 @@ Iterable&lt;E&gt; skipWhile(bool test(E value)) {
 </div>
 <div class="method inherited"><h4 id="some">
 <button class="show-code">Code</button>
-bool <strong>some</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#some"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>some</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#some"
               title="Permalink to ListBase&lt;E&gt;.some">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <p>Returns true if one element of this collection satisfies the
@@ -1228,7 +1232,7 @@ bool some(Func1&lt;T, bool&gt; f) {
 </div>
 <div class="method"><h4 id="sort">
 <button class="show-code">Code</button>
-void <strong>sort</strong>([Comparator compare]) <a class="anchor-link" href="#sort"
+void <strong>sort</strong>([<a href="http://api.dartlang.org/dart_core/Comparator.html">Comparator</a> compare]) <a class="anchor-link" href="#sort"
               title="Permalink to ListBase&lt;E&gt;.sort">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -1239,7 +1243,7 @@ void <strong>sort</strong>([Comparator compare]) <a class="anchor-link" href="#s
 The default <code>List</code> implementations use <code>Comparable.compare</code> if
 
 <span class="param">compare</span> is omitted.</p>
-<div class="docs-inherited-from">docs inherited from List&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; </div></div>
 <pre class="source">
 void sort([Comparator&lt;E&gt; compare]) {
  throw new UnsupportedError(
@@ -1250,9 +1254,9 @@ void sort([Comparator&lt;E&gt; compare]) {
 </div>
 <div class="method inherited"><h4 id="take">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>take</strong>(int n) <a class="anchor-link" href="#take"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>take</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> n) <a class="anchor-link" href="#take"
               title="Permalink to ListBase&lt;E&gt;.take">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns an <code>Iterable</code> with at most 
 <span class="param">n</span> elements.</p>
 <p>The returned <code>Iterable</code> may contain fewer than 
@@ -1268,9 +1272,9 @@ Iterable&lt;E&gt; take(int n) {
 </div>
 <div class="method inherited"><h4 id="takeWhile">
 <button class="show-code">Code</button>
-Iterable&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>takeWhile</strong>(bool test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#takeWhile"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>takeWhile</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/ListBase.html">E</a> value)) <a class="anchor-link" href="#takeWhile"
               title="Permalink to ListBase&lt;E&gt;.takeWhile">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns an <code>Iterable</code> that stops once 
 <span class="param">test</span> is not satisfied anymore.</p>
 <p>The filtering happens lazily. Every new <code>Iterator</code> of the returned
@@ -1288,7 +1292,7 @@ Iterable&lt;E&gt; takeWhile(bool test(E value)) {
 </div>
 <div class="method inherited"><h4 id="toHashMap">
 <button class="show-code">Code</button>
-Map <strong>toHashMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a> <strong>toHashMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
               title="Permalink to ListBase&lt;E&gt;.toHashMap">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <p>Use <code>toMap</code> instead.</p>
@@ -1301,7 +1305,7 @@ Map toHashMap(Func1&lt;T, Object&gt; valueFunc, [Func1&lt;T, dynamic&gt; keyFunc
 </div>
 <div class="method inherited"><h4 id="toHashSet">
 <button class="show-code">Code</button>
-Set <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
+<a href="http://api.dartlang.org/dart_core/Set.html">Set</a> <strong>toHashSet</strong>([<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
               title="Permalink to ListBase&lt;E&gt;.toHashSet">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <p>Use the <code>map</code> method then <code>toSet</code> instead.</p>
@@ -1319,9 +1323,9 @@ Set toHashSet([Func1&lt;T, dynamic&gt; f]) {
 </div>
 <div class="method inherited"><h4 id="toList">
 <button class="show-code">Code</button>
-List&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
               title="Permalink to ListBase&lt;E&gt;.toList">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <pre class="source">
 List&lt;E&gt; toList() =&gt; new List&lt;E&gt;.from(this);
 </pre>
@@ -1329,7 +1333,7 @@ List&lt;E&gt; toList() =&gt; new List&lt;E&gt;.from(this);
 </div>
 <div class="method inherited"><h4 id="toMap">
 <button class="show-code">Code</button>
-Map <strong>toMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toMap"
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a> <strong>toMap</strong>(<a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toMap"
               title="Permalink to ListBase&lt;E&gt;.toMap">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <pre class="source">
@@ -1350,9 +1354,9 @@ ReadOnlyCollection&lt;T&gt; toReadOnlyCollection() =&gt; new ReadOnlyCollection&
 </div>
 <div class="method inherited"><h4 id="toSet">
 <button class="show-code">Code</button>
-Set&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>toSet</strong>() <a class="anchor-link" href="#toSet"
+<a href="http://api.dartlang.org/dart_core/Set.html">Set</a>&lt;<a href="../bot/ListBase.html">E</a>&gt; <strong>toSet</strong>() <a class="anchor-link" href="#toSet"
               title="Permalink to ListBase&lt;E&gt;.toSet">#</a></h4>
-<div class="inherited-from">inherited from Iterable </div><div class="doc">
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <pre class="source">
 Set&lt;E&gt; toSet() =&gt; new Set&lt;E&gt;.from(this);
 </pre>
@@ -1360,12 +1364,12 @@ Set&lt;E&gt; toSet() =&gt; new Set&lt;E&gt;.from(this);
 </div>
 <div class="method inherited"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to ListBase&lt;E&gt;.toString">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 String toString() =&gt; "[${join(', ')}]";
 </pre>
@@ -1387,7 +1391,7 @@ not be invoked. Iterating will not cache results, and thus iterating
 multiple times over the the returned <code>Iterable</code> will invoke the supplied
 function 
 <span class="param">f</span> multiple times on the same element.</p>
-<div class="docs-inherited-from">docs inherited from Iterable&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/ListBase.html">T</a>&gt; </div></div>
 <pre class="source">
 Enumerable&lt;T&gt; where(Func1&lt;T, bool&gt; f) =&gt;
    $(super.where(f));

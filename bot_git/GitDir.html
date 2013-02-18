@@ -52,6 +52,23 @@ class GitDir {
        });
  }
 
+ /**
+  * [rev] should probably be a sha1 to a commit.
+  * But GIT lets you do other things.
+  * See http://git-scm.com/docs/gitrevisions.html
+  */
+ Future&lt;Commit&gt; getCommit(String rev) {
+   return runCommand(['cat-file', '-p', rev])
+       .then((ProcessResult pr) {
+         return Commit.parse(pr.stdout);
+       });
+ }
+
+ Future&lt;List&lt;Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
+   return runCommand(['rev-list', '--format=raw', branchName])
+       .then((ProcessResult pr) =&gt; Commit.parseRawRevList(pr.stdout));
+ }
+
  Future&lt;List&lt;String&gt;&gt; getBranchNames() {
    return getBranchReferences()
        .then((list) {
@@ -77,7 +94,42 @@ class GitDir {
  }
 
  Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
-   return runCommand(['show-ref', '--heads'], false)
+   return showRef(heads: true)
+       .then((List&lt;CommitReference&gt; refs) {
+         return refs.map((cr) =&gt; cr.toBranchReference()).toList();
+       });
+ }
+
+ /*
+  * TODO: Test this! No tags. Many tags. Etc.
+  */
+ Future&lt;List&lt;Tag&gt;&gt; getTags() {
+   return showRef(tags: true)
+       .then((List&lt;CommitReference&gt; refs) {
+
+         final futures = refs.map((ref) {
+           return runCommand(['cat-file', '-p', ref.sha])
+               .then((ProcessResult pr) {
+                 return Tag.parseCatFile(pr.stdout);
+               });
+         });
+
+         return Future.wait(futures);
+       });
+ }
+
+ Future&lt;List&lt;CommitReference&gt;&gt; showRef({bool heads:false, bool tags:false}) {
+   final args = ['show-ref'];
+
+   if(heads) {
+     args.add('--heads');
+   }
+
+   if(tags) {
+     args.add('--tags');
+   }
+
+   return runCommand(args, false)
        .then((ProcessResult pr) {
          if(pr.exitCode == 1) {
            // no heads present, return empty collection
@@ -87,9 +139,7 @@ class GitDir {
          // otherwise, it should have worked fine...
          assert(pr.exitCode == 0);
 
-         return CommitReference.fromShowRefOutput(pr.stdout)
-             .map((gr) =&gt; gr.toBranchReference())
-             .toList();
+         return CommitReference.fromShowRefOutput(pr.stdout);
        });
  }
 
@@ -143,18 +193,6 @@ class GitDir {
            map[paths[i]] = shas[i];
          }
          return map;
-       });
- }
-
- /**
-  * [rev] should probably be a sha1 to a commit.
-  * But GIT lets you do other things.
-  * See http://git-scm.com/docs/gitrevisions.html
-  */
- Future&lt;Commit&gt; getCommit(String rev) {
-   return runCommand(['cat-file', '-p', rev])
-       .then((ProcessResult pr) {
-         return Commit.parse(pr.stdout);
        });
  }
 
@@ -430,7 +468,7 @@ class GitDir {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="isGitDir">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>isGitDir</strong>(String path) <a class="anchor-link" href="#isGitDir"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>isGitDir</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> path) <a class="anchor-link" href="#isGitDir"
               title="Permalink to GitDir.isGitDir">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -450,7 +488,7 @@ static Future&lt;bool&gt; isGitDir(String path) {
 </div>
 <div class="method"><h4 id="init">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>init</strong>(Directory source, {bool allowContent: false}) <a class="anchor-link" href="#init"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>init</strong>(<a href="http://api.dartlang.org/dart_io/Directory.html">Directory</a> source, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowContent: false}) <a class="anchor-link" href="#init"
               title="Permalink to GitDir.init">#</a></h4>
 <div class="doc">
 <p>
@@ -478,7 +516,7 @@ static Future&lt;GitDir&gt; init(Directory source, {bool allowContent: false}) {
 </div>
 <div class="method"><h4 id="fromExisting">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>fromExisting</strong>(String gitDirRoot) <a class="anchor-link" href="#fromExisting"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/GitDir.html">GitDir</a>&gt; <strong>fromExisting</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> gitDirRoot) <a class="anchor-link" href="#fromExisting"
               title="Permalink to GitDir.fromExisting">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -505,7 +543,7 @@ static Future&lt;GitDir&gt; fromExisting(String gitDirRoot) {
 <h3>Properties</h3>
 <div class="field"><h4 id="path">
 <button class="show-code">Code</button>
-final Path         <strong>path</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_io/Path.html">Path</a>         <strong>path</strong> <a class="anchor-link"
             href="#path"
             title="Permalink to GitDir.path">#</a>
         </h4>
@@ -520,7 +558,7 @@ Path get path =&gt; _path;
 <h3>Methods</h3>
 <div class="method"><h4 id="getBranchNames">
 <button class="show-code">Code</button>
-Future&lt;List&lt;String&gt;&gt; <strong>getBranchNames</strong>() <a class="anchor-link" href="#getBranchNames"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;&gt; <strong>getBranchNames</strong>() <a class="anchor-link" href="#getBranchNames"
               title="Permalink to GitDir.getBranchNames">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -537,7 +575,7 @@ Future&lt;List&lt;String&gt;&gt; getBranchNames() {
 </div>
 <div class="method"><h4 id="getBranchReference">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getBranchReference</strong>(String branchName) <a class="anchor-link" href="#getBranchReference"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getBranchReference</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName) <a class="anchor-link" href="#getBranchReference"
               title="Permalink to GitDir.getBranchReference">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -560,24 +598,14 @@ Future&lt;BranchReference&gt; getBranchReference(String branchName) {
 </div>
 <div class="method"><h4 id="getBranchReferences">
 <button class="show-code">Code</button>
-Future&lt;List&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt;&gt; <strong>getBranchReferences</strong>() <a class="anchor-link" href="#getBranchReferences"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt;&gt; <strong>getBranchReferences</strong>() <a class="anchor-link" href="#getBranchReferences"
               title="Permalink to GitDir.getBranchReferences">#</a></h4>
 <div class="doc">
 <pre class="source">
 Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
- return runCommand(['show-ref', '--heads'], false)
-     .then((ProcessResult pr) {
-       if(pr.exitCode == 1) {
-         // no heads present, return empty collection
-         return [];
-       }
-
-       // otherwise, it should have worked fine...
-       assert(pr.exitCode == 0);
-
-       return CommitReference.fromShowRefOutput(pr.stdout)
-           .map((gr) =&gt; gr.toBranchReference())
-           .toList();
+ return showRef(heads: true)
+     .then((List&lt;CommitReference&gt; refs) {
+       return refs.map((cr) =&gt; cr.toBranchReference()).toList();
      });
 }
 </pre>
@@ -585,7 +613,7 @@ Future&lt;List&lt;BranchReference&gt;&gt; getBranchReferences() {
 </div>
 <div class="method"><h4 id="getCommit">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/Commit.html">Commit</a>&gt; <strong>getCommit</strong>(String rev) <a class="anchor-link" href="#getCommit"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/Commit.html">Commit</a>&gt; <strong>getCommit</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> rev) <a class="anchor-link" href="#getCommit"
               title="Permalink to GitDir.getCommit">#</a></h4>
 <div class="doc">
 <p>
@@ -604,7 +632,7 @@ Future&lt;Commit&gt; getCommit(String rev) {
 </div>
 <div class="method"><h4 id="getCommitCount">
 <button class="show-code">Code</button>
-Future&lt;int&gt; <strong>getCommitCount</strong>([String branchName = 'HEAD']) <a class="anchor-link" href="#getCommitCount"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>&gt; <strong>getCommitCount</strong>([<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName = 'HEAD']) <a class="anchor-link" href="#getCommitCount"
               title="Permalink to GitDir.getCommitCount">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -617,9 +645,22 @@ Future&lt;int&gt; getCommitCount([String branchName = 'HEAD']) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="getCommits">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/Commit.html">Commit</a>&gt;&gt; <strong>getCommits</strong>([<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName = 'HEAD']) <a class="anchor-link" href="#getCommits"
+              title="Permalink to GitDir.getCommits">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
+ return runCommand(['rev-list', '--format=raw', branchName])
+     .then((ProcessResult pr) =&gt; Commit.parseRawRevList(pr.stdout));
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="getCurrentBranch">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getCurrentBranch</strong>() <a class="anchor-link" href="#getCurrentBranch"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/BranchReference.html">BranchReference</a>&gt; <strong>getCurrentBranch</strong>() <a class="anchor-link" href="#getCurrentBranch"
               title="Permalink to GitDir.getCurrentBranch">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -635,9 +676,32 @@ Future&lt;BranchReference&gt; getCurrentBranch() {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="getTags">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/Tag.html">Tag</a>&gt;&gt; <strong>getTags</strong>() <a class="anchor-link" href="#getTags"
+              title="Permalink to GitDir.getTags">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;Tag&gt;&gt; getTags() {
+ return showRef(tags: true)
+     .then((List&lt;CommitReference&gt; refs) {
+
+       final futures = refs.map((ref) {
+         return runCommand(['cat-file', '-p', ref.sha])
+             .then((ProcessResult pr) {
+               return Tag.parseCatFile(pr.stdout);
+             });
+       });
+
+       return Future.wait(futures);
+     });
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="isWorkingTreeClean">
 <button class="show-code">Code</button>
-Future&lt;bool&gt; <strong>isWorkingTreeClean</strong>() <a class="anchor-link" href="#isWorkingTreeClean"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>isWorkingTreeClean</strong>() <a class="anchor-link" href="#isWorkingTreeClean"
               title="Permalink to GitDir.isWorkingTreeClean">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -650,7 +714,7 @@ Future&lt;bool&gt; isWorkingTreeClean() {
 </div>
 <div class="method"><h4 id="lsTree">
 <button class="show-code">Code</button>
-Future&lt;List&lt;<a href="../bot_git/TreeEntry.html">TreeEntry</a>&gt;&gt; <strong>lsTree</strong>(String treeish, {bool subTreesOnly: false, String path: null}) <a class="anchor-link" href="#lsTree"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/TreeEntry.html">TreeEntry</a>&gt;&gt; <strong>lsTree</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> treeish, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> subTreesOnly: false, <a href="http://api.dartlang.org/dart_core/String.html">String</a> path: null}) <a class="anchor-link" href="#lsTree"
               title="Permalink to GitDir.lsTree">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -679,7 +743,7 @@ Future&lt;List&lt;TreeEntry&gt;&gt; lsTree(String treeish,
 </div>
 <div class="method"><h4 id="populateBranch">
 <button class="show-code">Code</button>
-Future&lt;<a href="../bot_git/Commit.html">Commit</a>&gt; <strong>populateBranch</strong>(String branchName, <a href="../bot_git/PopulateTempDir.html">PopulateTempDir</a> populator, String commitMessage) <a class="anchor-link" href="#populateBranch"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_git/Commit.html">Commit</a>&gt; <strong>populateBranch</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName, <a href="../bot_git/PopulateTempDir.html">PopulateTempDir</a> populator, <a href="http://api.dartlang.org/dart_core/String.html">String</a> commitMessage) <a class="anchor-link" href="#populateBranch"
               title="Permalink to GitDir.populateBranch">#</a></h4>
 <div class="doc">
 <p>If the content provided matches the content in the specificed 
@@ -761,7 +825,7 @@ Future&lt;Commit&gt; populateBranch(String branchName, PopulateTempDir populator
 </div>
 <div class="method"><h4 id="runCommand">
 <button class="show-code">Code</button>
-Future&lt;ProcessResult&gt; <strong>runCommand</strong>(Iterable&lt;String&gt; args, [bool throwOnError = true]) <a class="anchor-link" href="#runCommand"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_io/ProcessResult.html">ProcessResult</a>&gt; <strong>runCommand</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args, [<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> throwOnError = true]) <a class="anchor-link" href="#runCommand"
               title="Permalink to GitDir.runCommand">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -785,9 +849,42 @@ Future&lt;ProcessResult&gt; runCommand(Iterable&lt;String&gt; args, [bool throwO
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="showRef">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/CommitReference.html">CommitReference</a>&gt;&gt; <strong>showRef</strong>({<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> heads: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> tags: false}) <a class="anchor-link" href="#showRef"
+              title="Permalink to GitDir.showRef">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;List&lt;CommitReference&gt;&gt; showRef({bool heads:false, bool tags:false}) {
+ final args = ['show-ref'];
+
+ if(heads) {
+   args.add('--heads');
+ }
+
+ if(tags) {
+   args.add('--tags');
+ }
+
+ return runCommand(args, false)
+     .then((ProcessResult pr) {
+       if(pr.exitCode == 1) {
+         // no heads present, return empty collection
+         return [];
+       }
+
+       // otherwise, it should have worked fine...
+       assert(pr.exitCode == 0);
+
+       return CommitReference.fromShowRefOutput(pr.stdout);
+     });
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="writeObjects">
 <button class="show-code">Code</button>
-Future&lt;Map&lt;String, String&gt;&gt; <strong>writeObjects</strong>(List&lt;String&gt; paths) <a class="anchor-link" href="#writeObjects"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;&gt; <strong>writeObjects</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; paths) <a class="anchor-link" href="#writeObjects"
               title="Permalink to GitDir.writeObjects">#</a></h4>
 <div class="doc">
 <p>Given a list of 

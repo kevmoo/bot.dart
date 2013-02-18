@@ -38,27 +38,28 @@ class RunResult {
  // Accessed 2012-11-07
 
  /// Ran successfully
- static final RunResult SUCCESS = const RunResult._internal(0);
+ static final RunResult SUCCESS = const RunResult._internal(0, 'SUCCESS');
 
  /// C/C++ standard for bad usage. Hop was called incorrectly
- static final RunResult BAD_USAGE = const RunResult._internal(64);
+ static final RunResult BAD_USAGE = const RunResult._internal(64, 'BAD USAGE');
 
  /// Task was was started and failed gracefully
- static final RunResult FAIL = const RunResult._internal(80);
+ static final RunResult FAIL = const RunResult._internal(80, 'FAIL');
 
  /// Task was was started, but threw an exception
- static final RunResult EXCEPTION = const RunResult._internal(81);
+ static final RunResult EXCEPTION = const RunResult._internal(81, 'EXCEPTION');
 
  /// Task misbehaved. Returned null, used TaskContext incorrectly, etc.
- static final RunResult ERROR = const RunResult._internal(82);
+ static final RunResult ERROR = const RunResult._internal(82, 'ERROR');
 
  final int exitCode;
+ final String name;
 
- const RunResult._internal(this.exitCode);
+ const RunResult._internal(this.exitCode, this.name);
 
  bool get success =&gt; exitCode == SUCCESS.exitCode;
 
- String toString() =&gt; 'RunResult - $exitCode';
+ String toString() =&gt; 'RunResult $name ($exitCode)';
 }
 </pre>
 </div>
@@ -72,7 +73,7 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>BAD_USAGE</s
         </h4>
         <div class="doc">
 <pre class="source">
-BAD_USAGE = const RunResult._internal(64)
+BAD_USAGE = const RunResult._internal(64, 'BAD USAGE')
 </pre>
 </div>
 </div>
@@ -84,7 +85,7 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>ERROR</stron
         </h4>
         <div class="doc">
 <pre class="source">
-ERROR = const RunResult._internal(82)
+ERROR = const RunResult._internal(82, 'ERROR')
 </pre>
 </div>
 </div>
@@ -96,7 +97,7 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>EXCEPTION</s
         </h4>
         <div class="doc">
 <pre class="source">
-EXCEPTION = const RunResult._internal(81)
+EXCEPTION = const RunResult._internal(81, 'EXCEPTION')
 </pre>
 </div>
 </div>
@@ -108,7 +109,7 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>FAIL</strong
         </h4>
         <div class="doc">
 <pre class="source">
-FAIL = const RunResult._internal(80)
+FAIL = const RunResult._internal(80, 'FAIL')
 </pre>
 </div>
 </div>
@@ -120,7 +121,7 @@ final <a href="../hop/RunResult.html">RunResult</a>         <strong>SUCCESS</str
         </h4>
         <div class="doc">
 <pre class="source">
-SUCCESS = const RunResult._internal(0)
+SUCCESS = const RunResult._internal(0, 'SUCCESS')
 </pre>
 </div>
 </div>
@@ -129,7 +130,7 @@ SUCCESS = const RunResult._internal(0)
 <h3>Properties</h3>
 <div class="field"><h4 id="exitCode">
 <button class="show-code">Code</button>
-final int         <strong>exitCode</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>exitCode</strong> <a class="anchor-link"
             href="#exitCode"
             title="Permalink to RunResult.exitCode">#</a>
         </h4>
@@ -139,9 +140,21 @@ exitCode
 </pre>
 </div>
 </div>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to RunResult.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
 <div class="field"><h4 id="success">
 <button class="show-code">Code</button>
-final bool         <strong>success</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>success</strong> <a class="anchor-link"
             href="#success"
             title="Permalink to RunResult.success">#</a>
         </h4>
@@ -156,14 +169,14 @@ bool get success =&gt; exitCode == SUCCESS.exitCode;
 <h3>Methods</h3>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to RunResult.toString">#</a></h4>
 <div class="doc">
 <div class="inherited">
 <p>Returns a string representation of this object.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
-String toString() =&gt; 'RunResult - $exitCode';
+String toString() =&gt; 'RunResult $name ($exitCode)';
 </pre>
 </div>
 </div>

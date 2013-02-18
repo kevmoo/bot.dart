@@ -171,7 +171,7 @@ ArgParser();
 <h3>Properties</h3>
 <div class="field"><h4 id="commands">
 <button class="show-code">Code</button>
-final Map&lt;String, <a href="../args/ArgParser.html">ArgParser</a>&gt;         <strong>commands</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../args/ArgParser.html">ArgParser</a>&gt;         <strong>commands</strong> <a class="anchor-link"
             href="#commands"
             title="Permalink to ArgParser.commands">#</a>
         </h4>
@@ -183,7 +183,7 @@ commands = &lt;String, ArgParser&gt;{}
 </div>
 <div class="field"><h4 id="options">
 <button class="show-code">Code</button>
-final Map&lt;String, <a href="../args/Option.html">Option</a>&gt;         <strong>options</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../args/Option.html">Option</a>&gt;         <strong>options</strong> <a class="anchor-link"
             href="#options"
             title="Permalink to ArgParser.options">#</a>
         </h4>
@@ -198,7 +198,7 @@ options = &lt;String, Option&gt;{}
 <h3>Methods</h3>
 <div class="method"><h4 id="addCommand">
 <button class="show-code">Code</button>
-<a href="../args/ArgParser.html">ArgParser</a> <strong>addCommand</strong>(String name) <a class="anchor-link" href="#addCommand"
+<a href="../args/ArgParser.html">ArgParser</a> <strong>addCommand</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#addCommand"
               title="Permalink to ArgParser.addCommand">#</a></h4>
 <div class="doc">
 <p>Defines a command. A command is a named argument which may in turn
@@ -220,7 +220,7 @@ ArgParser addCommand(String name) {
 </div>
 <div class="method"><h4 id="addFlag">
 <button class="show-code">Code</button>
-void <strong>addFlag</strong>(String name, {String abbr, String help, bool defaultsTo: false, bool negatable: true, void callback(bool value)}) <a class="anchor-link" href="#addFlag"
+void <strong>addFlag</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr, <a href="http://api.dartlang.org/dart_core/String.html">String</a> help, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> defaultsTo: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> negatable: true, void callback(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> value)}) <a class="anchor-link" href="#addFlag"
               title="Permalink to ArgParser.addFlag">#</a></h4>
 <div class="doc">
 <p>Defines a flag. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option named 
@@ -237,7 +237,7 @@ void addFlag(String name, {String abbr, String help, bool defaultsTo: false,
 </div>
 <div class="method"><h4 id="addOption">
 <button class="show-code">Code</button>
-void <strong>addOption</strong>(String name, {String abbr, String help, List&lt;String&gt; allowed, Map&lt;String, String&gt; allowedHelp, String defaultsTo, void callback(value), bool allowMultiple: false}) <a class="anchor-link" href="#addOption"
+void <strong>addOption</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr, <a href="http://api.dartlang.org/dart_core/String.html">String</a> help, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; allowed, <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; allowedHelp, <a href="http://api.dartlang.org/dart_core/String.html">String</a> defaultsTo, void callback(value), <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowMultiple: false}) <a class="anchor-link" href="#addOption"
               title="Permalink to ArgParser.addOption">#</a></h4>
 <div class="doc">
 <p>Defines a value-taking option. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option with name 
@@ -255,7 +255,7 @@ void addOption(String name, {String abbr, String help, List&lt;String&gt; allowe
 </div>
 <div class="method"><h4 id="findByAbbreviation">
 <button class="show-code">Code</button>
-<a href="../args/Option.html">Option</a> <strong>findByAbbreviation</strong>(String abbr) <a class="anchor-link" href="#findByAbbreviation"
+<a href="../args/Option.html">Option</a> <strong>findByAbbreviation</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr) <a class="anchor-link" href="#findByAbbreviation"
               title="Permalink to ArgParser.findByAbbreviation">#</a></h4>
 <div class="doc">
 <p>Finds the option whose abbreviation is 
@@ -271,7 +271,7 @@ Option findByAbbreviation(String abbr) {
 </div>
 <div class="method"><h4 id="getDefault">
 <button class="show-code">Code</button>
-<strong>getDefault</strong>(String option) <a class="anchor-link" href="#getDefault"
+<strong>getDefault</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> option) <a class="anchor-link" href="#getDefault"
               title="Permalink to ArgParser.getDefault">#</a></h4>
 <div class="doc">
 <p>Get the default value for an option. Useful after parsing to test
@@ -288,7 +288,7 @@ getDefault(String option) {
 </div>
 <div class="method"><h4 id="getUsage">
 <button class="show-code">Code</button>
-String <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
               title="Permalink to ArgParser.getUsage">#</a></h4>
 <div class="doc">
 <p>Generates a string displaying usage information for the defined options.
@@ -300,7 +300,7 @@ String getUsage() =&gt; new Usage(this).generate();
 </div>
 <div class="method"><h4 id="parse">
 <button class="show-code">Code</button>
-<a href="../args/ArgResults.html">ArgResults</a> <strong>parse</strong>(List&lt;String&gt; args) <a class="anchor-link" href="#parse"
+<a href="../args/ArgResults.html">ArgResults</a> <strong>parse</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args) <a class="anchor-link" href="#parse"
               title="Permalink to ArgParser.parse">#</a></h4>
 <div class="doc">
 <p>Parses 

@@ -306,7 +306,7 @@ class Parser {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Parser">
 <button class="show-code">Code</button>
-new <strong>Parser</strong>(String commandName, <a href="../args/ArgParser.html">ArgParser</a> grammar, List&lt;String&gt; args, [<a href="../args.src.parser/Parser.html">Parser</a> parent]) <a class="anchor-link" href="#Parser"
+new <strong>Parser</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> commandName, <a href="../args/ArgParser.html">ArgParser</a> grammar, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args, [<a href="../args.src.parser/Parser.html">Parser</a> parent]) <a class="anchor-link" href="#Parser"
               title="Permalink to Parser.Parser">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -319,7 +319,7 @@ Parser(this.commandName, this.grammar, this.args, [this.parent]);
 <h3>Properties</h3>
 <div class="field"><h4 id="args">
 <button class="show-code">Code</button>
-final List&lt;String&gt;         <strong>args</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>args</strong> <a class="anchor-link"
             href="#args"
             title="Permalink to Parser.args">#</a>
         </h4>
@@ -331,7 +331,7 @@ args
 </div>
 <div class="field"><h4 id="commandName">
 <button class="show-code">Code</button>
-final String         <strong>commandName</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>commandName</strong> <a class="anchor-link"
             href="#commandName"
             title="Permalink to Parser.commandName">#</a>
         </h4>
@@ -343,7 +343,7 @@ commandName
 </div>
 <div class="field"><h4 id="current">
 <button class="show-code">Code</button>
-final String         <strong>current</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>current</strong> <a class="anchor-link"
             href="#current"
             title="Permalink to Parser.current">#</a>
         </h4>
@@ -380,7 +380,7 @@ parent
 </div>
 <div class="field"><h4 id="results">
 <button class="show-code">Code</button>
-final Map         <strong>results</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>         <strong>results</strong> <a class="anchor-link"
             href="#results"
             title="Permalink to Parser.results">#</a>
         </h4>
@@ -461,7 +461,7 @@ ArgResults parse() {
 </div>
 <div class="method"><h4 id="parseAbbreviation">
 <button class="show-code">Code</button>
-bool <strong>parseAbbreviation</strong>(<a href="../args.src.parser/Parser.html">Parser</a> innermostCommand) <a class="anchor-link" href="#parseAbbreviation"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>parseAbbreviation</strong>(<a href="../args.src.parser/Parser.html">Parser</a> innermostCommand) <a class="anchor-link" href="#parseAbbreviation"
               title="Permalink to Parser.parseAbbreviation">#</a></h4>
 <div class="doc">
 <p>Tries to parse the current argument as a series of collapsed abbreviations
@@ -511,7 +511,7 @@ bool parseAbbreviation(Parser innermostCommand) {
 </div>
 <div class="method"><h4 id="parseLongOption">
 <button class="show-code">Code</button>
-bool <strong>parseLongOption</strong>() <a class="anchor-link" href="#parseLongOption"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>parseLongOption</strong>() <a class="anchor-link" href="#parseLongOption"
               title="Permalink to Parser.parseLongOption">#</a></h4>
 <div class="doc">
 <p>Tries to parse the current argument as a long-form named option, which
@@ -565,7 +565,7 @@ bool parseLongOption() {
 </div>
 <div class="method"><h4 id="parseShortFlag">
 <button class="show-code">Code</button>
-void <strong>parseShortFlag</strong>(String c) <a class="anchor-link" href="#parseShortFlag"
+void <strong>parseShortFlag</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> c) <a class="anchor-link" href="#parseShortFlag"
               title="Permalink to Parser.parseShortFlag">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -591,7 +591,7 @@ void parseShortFlag(String c) {
 </div>
 <div class="method"><h4 id="parseSoloOption">
 <button class="show-code">Code</button>
-bool <strong>parseSoloOption</strong>() <a class="anchor-link" href="#parseSoloOption"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>parseSoloOption</strong>() <a class="anchor-link" href="#parseSoloOption"
               title="Permalink to Parser.parseSoloOption">#</a></h4>
 <div class="doc">
 <p>Tries to parse the current argument as a "solo" option, which is a single
@@ -650,7 +650,7 @@ void readNextArgAsValue(Option option) {
 </div>
 <div class="method"><h4 id="setOption">
 <button class="show-code">Code</button>
-<strong>setOption</strong>(Map results, <a href="../args/Option.html">Option</a> option, value) <a class="anchor-link" href="#setOption"
+<strong>setOption</strong>(<a href="http://api.dartlang.org/dart_core/Map.html">Map</a> results, <a href="../args/Option.html">Option</a> option, value) <a class="anchor-link" href="#setOption"
               title="Permalink to Parser.setOption">#</a></h4>
 <div class="doc">
 <p>Validates and stores 
@@ -675,7 +675,7 @@ setOption(Map results, Option option, value) {
 </div>
 <div class="method"><h4 id="validate">
 <button class="show-code">Code</button>
-<strong>validate</strong>(bool condition, String message) <a class="anchor-link" href="#validate"
+<strong>validate</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> condition, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#validate"
               title="Permalink to Parser.validate">#</a></h4>
 <div class="doc">
 <p>Called during parsing to validate the arguments. Throws a

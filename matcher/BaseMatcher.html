@@ -33,10 +33,9 @@
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
 <p>BaseMatcher is the base class for all matchers. To implement a new
-matcher, either add a class that implements from IMatcher or
-a class that inherits from Matcher. Inheriting from Matcher has
-the benefit that a default implementation of describeMismatch will
-be provided.</p>
+matcher, either add a class that implements Matcher or a class that
+extends BaseMatcher. Extending BaseMatcher has the benefit that a
+default implementation of describeMismatch will be provided.</p>
 <pre class="source">
 abstract class BaseMatcher implements Matcher {
  const BaseMatcher();
@@ -100,7 +99,7 @@ by appending to
 </div>
 <div class="method"><h4 id="describeMismatch">
 <button class="show-code">Code</button>
-<a href="../matcher/Description.html">Description</a> <strong>describeMismatch</strong>(item, <a href="../matcher/Description.html">Description</a> mismatchDescription, <a href="../matcher/MatchState.html">MatchState</a> matchState, bool verbose) <a class="anchor-link" href="#describeMismatch"
+<a href="../matcher/Description.html">Description</a> <strong>describeMismatch</strong>(item, <a href="../matcher/Description.html">Description</a> mismatchDescription, <a href="../matcher/MatchState.html">MatchState</a> matchState, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> verbose) <a class="anchor-link" href="#describeMismatch"
               title="Permalink to BaseMatcher.describeMismatch">#</a></h4>
 <div class="doc">
 <p>Generates a description of the matcher failed for a particular
@@ -120,7 +119,7 @@ Description describeMismatch(item, Description mismatchDescription,
 </div>
 </div>
 <div class="method"><h4 id="matches">
-abstract bool <strong>matches</strong>(item, <a href="../matcher/MatchState.html">MatchState</a> matchState) <a class="anchor-link" href="#matches"
+abstract <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>matches</strong>(item, <a href="../matcher/MatchState.html">MatchState</a> matchState) <a class="anchor-link" href="#matches"
               title="Permalink to BaseMatcher.matches">#</a></h4>
 <div class="doc">
 <p>Tests the matcher against a given 

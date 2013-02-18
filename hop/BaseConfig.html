@@ -35,7 +35,7 @@
 <pre class="source">
 class BaseConfig {
  static final RegExp _validNameRegExp = new RegExp(r'^[a-z][a-z0-9_]*$');
- static const _reservedTasks = const[Runner.RAW_TASK_LIST_CMD];
+ static const _reservedTasks = const[COMPLETION_COMMAND_NAME];
  final Map&lt;String, Task&gt; _tasks = new Map();
  ReadOnlyCollection&lt;String&gt; _sortedTaskNames;
 
@@ -68,8 +68,7 @@ class BaseConfig {
  void addTask(String name, Task task) {
    require(!isFrozen, "Cannot add a task. Frozen.");
    requireArgumentNotNullOrEmpty(name, 'name');
-   requireArgument(_validNameRegExp.hasMatch(name), 'name',
-       '"$name" is not a valid name');
+   requireArgumentMatches(_validNameRegExp, name, 'name');
    requireArgument(!_reservedTasks.contains(name), 'task',
        'The provided task has a reserved name');
    requireArgument(!_tasks.containsKey(name), 'task',
@@ -113,7 +112,7 @@ BaseConfig();
 <h3>Properties</h3>
 <div class="field"><h4 id="isFrozen">
 <button class="show-code">Code</button>
-final bool         <strong>isFrozen</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isFrozen</strong> <a class="anchor-link"
             href="#isFrozen"
             title="Permalink to BaseConfig.isFrozen">#</a>
         </h4>
@@ -125,7 +124,7 @@ bool get isFrozen =&gt; _sortedTaskNames != null;
 </div>
 <div class="field"><h4 id="taskNames">
 <button class="show-code">Code</button>
-final List&lt;String&gt;         <strong>taskNames</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>taskNames</strong> <a class="anchor-link"
             href="#taskNames"
             title="Permalink to BaseConfig.taskNames">#</a>
         </h4>
@@ -145,7 +144,7 @@ List&lt;String&gt; get taskNames {
 <h3>Methods</h3>
 <div class="method"><h4 id="addAsync">
 <button class="show-code">Code</button>
-void <strong>addAsync</strong>(String name, <a href="../hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsync"
+void <strong>addAsync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsync"
               title="Permalink to BaseConfig.addAsync">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -157,7 +156,7 @@ void addAsync(String name, TaskDefinition execFuture) {
 </div>
 <div class="method"><h4 id="addSync">
 <button class="show-code">Code</button>
-void <strong>addSync</strong>(String name, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#addSync"
+void <strong>addSync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#addSync"
               title="Permalink to BaseConfig.addSync">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -169,15 +168,14 @@ void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
 </div>
 <div class="method"><h4 id="addTask">
 <button class="show-code">Code</button>
-void <strong>addTask</strong>(String name, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
+void <strong>addTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
               title="Permalink to BaseConfig.addTask">#</a></h4>
 <div class="doc">
 <pre class="source">
 void addTask(String name, Task task) {
  require(!isFrozen, "Cannot add a task. Frozen.");
  requireArgumentNotNullOrEmpty(name, 'name');
- requireArgument(_validNameRegExp.hasMatch(name), 'name',
-     '"$name" is not a valid name');
+ requireArgumentMatches(_validNameRegExp, name, 'name');
  requireArgument(!_reservedTasks.contains(name), 'task',
      'The provided task has a reserved name');
  requireArgument(!_tasks.containsKey(name), 'task',
@@ -206,7 +204,7 @@ void freeze() {
 </div>
 <div class="method"><h4 id="hasTask">
 <button class="show-code">Code</button>
-bool <strong>hasTask</strong>(String taskName) <a class="anchor-link" href="#hasTask"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>hasTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> taskName) <a class="anchor-link" href="#hasTask"
               title="Permalink to BaseConfig.hasTask">#</a></h4>
 <div class="doc">
 <pre class="source">

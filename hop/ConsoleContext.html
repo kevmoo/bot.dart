@@ -34,25 +34,15 @@
 <div class="doc">
 <pre class="source">
 class ConsoleContext extends TaskContext {
- final ReadOnlyCollection&lt;String&gt; arguments;
+ final Task task;
+ final ArgResults arguments;
  bool _isDisposed = false;
 
- ConsoleContext.raw(this.arguments);
-
- factory ConsoleContext() {
-   var args = new ReadOnlyCollection(new Options().arguments);
-   return new ConsoleContext.raw(args);
- }
+ ConsoleContext.raw(this.arguments, this.task);
 
  void log(Level logLevel, String message) {
    _assertNotDisposed();
    print(message);
- }
-
- void fail(String message) {
-   print(message);
-   this.dispose();
-   io.exit(1);
  }
 
  /**
@@ -72,8 +62,26 @@ class ConsoleContext extends TaskContext {
 
  static void runTaskAsProcess(Task task) {
    assert(task != null);
-   final ctx = new ConsoleContext();
-   task.run(ctx);
+
+   final parser = new ArgParser();
+   task.configureArgParser(parser);
+
+   ArgResults args;
+   try {
+     args = tryArgsCompletion(parser);
+   } on FormatException catch (ex, stack) {
+     print('There was a problem parsing the provided arguments.');
+     print(ex.message);
+     print(parser.getUsage());
+     io.exit(RunResult.BAD_USAGE.exitCode);
+   }
+   final ctx = new ConsoleContext.raw(args, task);
+
+   Runner.runTask(ctx, task)
+     .then((RunResult rr) {
+       ctx.dispose();
+       io.exit(rr.exitCode);
+     });
  }
 
  void _assertNotDisposed() {
@@ -97,8 +105,26 @@ void <strong>runTaskAsProcess</strong>(<a href="../hop/Task.html">Task</a> task)
 <pre class="source">
 static void runTaskAsProcess(Task task) {
  assert(task != null);
- final ctx = new ConsoleContext();
- task.run(ctx);
+
+ final parser = new ArgParser();
+ task.configureArgParser(parser);
+
+ ArgResults args;
+ try {
+   args = tryArgsCompletion(parser);
+ } on FormatException catch (ex, stack) {
+   print('There was a problem parsing the provided arguments.');
+   print(ex.message);
+   print(parser.getUsage());
+   io.exit(RunResult.BAD_USAGE.exitCode);
+ }
+ final ctx = new ConsoleContext.raw(args, task);
+
+ Runner.runTask(ctx, task)
+   .then((RunResult rr) {
+     ctx.dispose();
+     io.exit(rr.exitCode);
+   });
 }
 </pre>
 </div>
@@ -106,26 +132,13 @@ static void runTaskAsProcess(Task task) {
 </div>
 <div>
 <h3>Constructors</h3>
-<div class="method"><h4 id="ConsoleContext">
-<button class="show-code">Code</button>
-factory <strong>ConsoleContext</strong>() <a class="anchor-link" href="#ConsoleContext"
-              title="Permalink to ConsoleContext.ConsoleContext">#</a></h4>
-<div class="doc">
-<pre class="source">
-factory ConsoleContext() {
- var args = new ReadOnlyCollection(new Options().arguments);
- return new ConsoleContext.raw(args);
-}
-</pre>
-</div>
-</div>
 <div class="method"><h4 id="ConsoleContext.raw">
 <button class="show-code">Code</button>
-new <strong>ConsoleContext.raw</strong>(<a href="../bot/ReadOnlyCollection.html">ReadOnlyCollection</a>&lt;String&gt; arguments) <a class="anchor-link" href="#ConsoleContext.raw"
+new <strong>ConsoleContext.raw</strong>(<a href="../args/ArgResults.html">ArgResults</a> arguments, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#ConsoleContext.raw"
               title="Permalink to ConsoleContext.ConsoleContext.raw">#</a></h4>
 <div class="doc">
 <pre class="source">
-ConsoleContext.raw(this.arguments);
+ConsoleContext.raw(this.arguments, this.task);
 </pre>
 </div>
 </div>
@@ -134,7 +147,7 @@ ConsoleContext.raw(this.arguments);
 <h3>Properties</h3>
 <div class="field"><h4 id="arguments">
 <button class="show-code">Code</button>
-final <a href="../bot/ReadOnlyCollection.html">ReadOnlyCollection</a>&lt;String&gt;         <strong>arguments</strong> <a class="anchor-link"
+final <a href="../args/ArgResults.html">ArgResults</a>         <strong>arguments</strong> <a class="anchor-link"
             href="#arguments"
             title="Permalink to ConsoleContext.arguments">#</a>
         </h4>
@@ -146,13 +159,25 @@ arguments
 </div>
 <div class="field"><h4 id="isDisposed">
 <button class="show-code">Code</button>
-final bool         <strong>isDisposed</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isDisposed</strong> <a class="anchor-link"
             href="#isDisposed"
             title="Permalink to ConsoleContext.isDisposed">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
 bool get isDisposed =&gt; _isDisposed;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="task">
+<button class="show-code">Code</button>
+final <a href="../hop/Task.html">Task</a>         <strong>task</strong> <a class="anchor-link"
+            href="#task"
+            title="Permalink to ConsoleContext.task">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+task
 </pre>
 </div>
 </div>
@@ -172,28 +197,24 @@ void dispose() {
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="fail">
+<div class="method inherited"><h4 id="fail">
 <button class="show-code">Code</button>
-void <strong>fail</strong>(String message) <a class="anchor-link" href="#fail"
+void <strong>fail</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fail"
               title="Permalink to ConsoleContext.fail">#</a></h4>
-<div class="doc">
-<div class="inherited">
+<div class="inherited-from">inherited from <a href="../hop/TaskContext.html">TaskContext</a> </div><div class="doc">
 <p>Terminates the current <a class="crossref" href="../hop/Task.html">Task</a> with a <a class="crossref" href="../hop/TaskFailError.html">TaskFailError</a> including the provided
 
 <span class="param">message</span>.</p>
-<div class="docs-inherited-from">docs inherited from <a href="../hop/TaskContext.html">TaskContext</a> </div></div>
 <pre class="source">
 void fail(String message) {
- print(message);
- this.dispose();
- io.exit(1);
+ throw new _TaskFailError(message);
 }
 </pre>
 </div>
 </div>
 <div class="method inherited"><h4 id="fine">
 <button class="show-code">Code</button>
-void <strong>fine</strong>(String message) <a class="anchor-link" href="#fine"
+void <strong>fine</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fine"
               title="Permalink to ConsoleContext.fine">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -205,7 +226,7 @@ void fine(String message) {
 </div>
 <div class="method"><h4 id="getSubLogger">
 <button class="show-code">Code</button>
-<a href="../hop/TaskLogger.html">TaskLogger</a> <strong>getSubLogger</strong>(String name) <a class="anchor-link" href="#getSubLogger"
+<a href="../hop/TaskLogger.html">TaskLogger</a> <strong>getSubLogger</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#getSubLogger"
               title="Permalink to ConsoleContext.getSubLogger">#</a></h4>
 <div class="doc">
 <p>At the moment <a class="crossref" href="../hop/ConsoleContext.html#getSubLogger">getSubLogger</a> returns <code>this</code>.</p>
@@ -219,7 +240,7 @@ TaskLogger getSubLogger(String name) {
 </div>
 <div class="method inherited"><h4 id="info">
 <button class="show-code">Code</button>
-void <strong>info</strong>(String message) <a class="anchor-link" href="#info"
+void <strong>info</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#info"
               title="Permalink to ConsoleContext.info">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -231,7 +252,7 @@ void info(String message) {
 </div>
 <div class="method"><h4 id="log">
 <button class="show-code">Code</button>
-void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, String message) <a class="anchor-link" href="#log"
+void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#log"
               title="Permalink to ConsoleContext.log">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -244,7 +265,7 @@ void log(Level logLevel, String message) {
 </div>
 <div class="method inherited"><h4 id="severe">
 <button class="show-code">Code</button>
-void <strong>severe</strong>(String message) <a class="anchor-link" href="#severe"
+void <strong>severe</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#severe"
               title="Permalink to ConsoleContext.severe">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">
@@ -256,7 +277,7 @@ void severe(String message) {
 </div>
 <div class="method inherited"><h4 id="warning">
 <button class="show-code">Code</button>
-void <strong>warning</strong>(String message) <a class="anchor-link" href="#warning"
+void <strong>warning</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#warning"
               title="Permalink to ConsoleContext.warning">#</a></h4>
 <div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
 <pre class="source">

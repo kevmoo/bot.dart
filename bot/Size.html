@@ -98,7 +98,7 @@ class Size {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Size">
 <button class="show-code">Code</button>
-const <strong>Size</strong>(num width, num height) <a class="anchor-link" href="#Size"
+const <strong>Size</strong>(<a href="http://api.dartlang.org/dart_core/num.html">num</a> width, <a href="http://api.dartlang.org/dart_core/num.html">num</a> height) <a class="anchor-link" href="#Size"
               title="Permalink to Size.Size">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -111,7 +111,7 @@ const Size(this.width, this.height);
 <h3>Properties</h3>
 <div class="field"><h4 id="area">
 <button class="show-code">Code</button>
-final num         <strong>area</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>area</strong> <a class="anchor-link"
             href="#area"
             title="Permalink to Size.area">#</a>
         </h4>
@@ -124,7 +124,7 @@ num get area =&gt; width * height;
 </div>
 <div class="field"><h4 id="aspectRatio">
 <button class="show-code">Code</button>
-final num         <strong>aspectRatio</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>aspectRatio</strong> <a class="anchor-link"
             href="#aspectRatio"
             title="Permalink to Size.aspectRatio">#</a>
         </h4>
@@ -137,7 +137,7 @@ num get aspectRatio =&gt; width / height;
 </div>
 <div class="field"><h4 id="height">
 <button class="show-code">Code</button>
-final num         <strong>height</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>height</strong> <a class="anchor-link"
             href="#height"
             title="Permalink to Size.height">#</a>
         </h4>
@@ -149,7 +149,7 @@ height
 </div>
 <div class="field"><h4 id="isValid">
 <button class="show-code">Code</button>
-final bool         <strong>isValid</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isValid</strong> <a class="anchor-link"
             href="#isValid"
             title="Permalink to Size.isValid">#</a>
         </h4>
@@ -162,7 +162,7 @@ bool get isValid =&gt; isValidNumber(width) &amp;&amp; isValidNumber(height) &am
 </div>
 <div class="field"><h4 id="perimeter">
 <button class="show-code">Code</button>
-final num         <strong>perimeter</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>perimeter</strong> <a class="anchor-link"
             href="#perimeter"
             title="Permalink to Size.perimeter">#</a>
         </h4>
@@ -175,7 +175,7 @@ num get perimeter =&gt; (width + height) * 2;
 </div>
 <div class="field"><h4 id="width">
 <button class="show-code">Code</button>
-final num         <strong>width</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/num.html">num</a>         <strong>width</strong> <a class="anchor-link"
             href="#width"
             title="Permalink to Size.width">#</a>
         </h4>
@@ -190,7 +190,7 @@ width
 <h3>Operators</h3>
 <div class="method"><h4 id="*">
 <button class="show-code">Code</button>
-<a href="../bot/Size.html">Size</a> <strong>operator *</strong>(num magnitude) <a class="anchor-link" href="#*"
+<a href="../bot/Size.html">Size</a> <strong>operator *</strong>(<a href="http://api.dartlang.org/dart_core/num.html">num</a> magnitude) <a class="anchor-link" href="#*"
               title="Permalink to Size.operator *">#</a></h4>
 <div class="doc">
 <p>Multiplies each dimensions by the provided magnitude and returns a new <a class="crossref" href="../bot/Size.html#Size">Size</a>.</p>
@@ -201,7 +201,7 @@ Size operator *(num magnitude) =&gt; this.scale(magnitude);
 </div>
 <div class="method"><h4 id="==">
 <button class="show-code">Code</button>
-bool <strong>operator ==</strong>(<a href="../bot/Size.html">Size</a> other) <a class="anchor-link" href="#=="
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>operator ==</strong>(<a href="../bot/Size.html">Size</a> other) <a class="anchor-link" href="#=="
               title="Permalink to Size.operator ==">#</a></h4>
 <div class="doc">
 <div class="inherited">
@@ -211,7 +211,7 @@ only if <code>this</code> and
 <span class="param">other</span> are the same object.</p>
 <p>If a subclass overrides the equality operator it should override
 the <code>hashCode</code> method as well to maintain consistency.</p>
-<div class="docs-inherited-from">docs inherited from Object </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
 <pre class="source">
 bool operator ==(Size other) {
  return other != null &amp;&amp; width == other.width &amp;&amp; height == other.height;
@@ -224,7 +224,7 @@ bool operator ==(Size other) {
 <h3>Methods</h3>
 <div class="method"><h4 id="fitsInside">
 <button class="show-code">Code</button>
-bool <strong>fitsInside</strong>(<a href="../bot/Size.html">Size</a> target) <a class="anchor-link" href="#fitsInside"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>fitsInside</strong>(<a href="../bot/Size.html">Size</a> target) <a class="anchor-link" href="#fitsInside"
               title="Permalink to Size.fitsInside">#</a></h4>
 <div class="doc">
 <p>Returns true if this Size is the same size or smaller than the
@@ -239,7 +239,7 @@ bool fitsInside(Size target) {
 </div>
 <div class="method"><h4 id="isEmpty">
 <button class="show-code">Code</button>
-bool <strong>isEmpty</strong>() <a class="anchor-link" href="#isEmpty"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>isEmpty</strong>() <a class="anchor-link" href="#isEmpty"
               title="Permalink to Size.isEmpty">#</a></h4>
 <div class="doc">
 <p>Returns true if the size has zero area, false if both dimensions</p>
@@ -251,7 +251,7 @@ bool isEmpty() =&gt; area == 0;
 </div>
 <div class="method"><h4 id="scale">
 <button class="show-code">Code</button>
-<a href="../bot/Size.html">Size</a> <strong>scale</strong>(num magnitude) <a class="anchor-link" href="#scale"
+<a href="../bot/Size.html">Size</a> <strong>scale</strong>(<a href="http://api.dartlang.org/dart_core/num.html">num</a> magnitude) <a class="anchor-link" href="#scale"
               title="Permalink to Size.scale">#</a></h4>
 <div class="doc">
 <p>Multiplies each dimensions by the provided magnitude and returns a new <a class="crossref" href="../bot/Size.html#Size">Size</a>.</p>
@@ -262,7 +262,7 @@ Size scale(num magnitude) =&gt; new Size(width * magnitude, height * magnitude);
 </div>
 <div class="method"><h4 id="toString">
 <button class="show-code">Code</button>
-String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
               title="Permalink to Size.toString">#</a></h4>
 <div class="doc">
 <p>Returns a nice string representing size.

@@ -472,7 +472,7 @@ throwsUnsupportedError = const Throws(isUnsupportedError)
 </div>
 <div class="field"><h4 id="wrapAsync">
 <button class="show-code">Code</button>
-Function         <strong>wrapAsync</strong> <a class="anchor-link"
+<a href="http://api.dartlang.org/dart_core/Function.html">Function</a>         <strong>wrapAsync</strong> <a class="anchor-link"
             href="#wrapAsync"
             title="Permalink to wrapAsync">#</a>
         </h4>
@@ -519,7 +519,7 @@ Matcher stringContainsInOrder(substrings) =&gt;
 </div>
 <div class="method"><h4 id="endsWith">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>endsWith</strong>(String suffixString) <a class="anchor-link" href="#endsWith"
+<a href="matcher/Matcher.html">Matcher</a> <strong>endsWith</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> suffixString) <a class="anchor-link" href="#endsWith"
               title="Permalink to endsWith">#</a></h4>
 <div class="doc">
 <p>Returns a matcher that matches if the match argument is a string and
@@ -532,7 +532,7 @@ Matcher endsWith(String suffixString) =&gt; new _StringEndsWith(suffixString);
 </div>
 <div class="method"><h4 id="startsWith">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>startsWith</strong>(String prefixString) <a class="anchor-link" href="#startsWith"
+<a href="matcher/Matcher.html">Matcher</a> <strong>startsWith</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> prefixString) <a class="anchor-link" href="#startsWith"
               title="Permalink to startsWith">#</a></h4>
 <div class="doc">
 <p>Returns a matcher that matches if the match argument is a string and
@@ -545,7 +545,7 @@ Matcher startsWith(String prefixString) =&gt; new _StringStartsWith(prefixString
 </div>
 <div class="method"><h4 id="collapseWhitespace">
 <button class="show-code">Code</button>
-String <strong>collapseWhitespace</strong>(_string) <a class="anchor-link" href="#collapseWhitespace"
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>collapseWhitespace</strong>(_string) <a class="anchor-link" href="#collapseWhitespace"
               title="Permalink to collapseWhitespace">#</a></h4>
 <div class="doc">
 <p>Utility function to collapse whitespace runs to single spaces
@@ -590,7 +590,7 @@ Matcher equalsIgnoringWhitespace(_string) =&gt;
 </div>
 <div class="method"><h4 id="equalsIgnoringCase">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>equalsIgnoringCase</strong>(String value) <a class="anchor-link" href="#equalsIgnoringCase"
+<a href="matcher/Matcher.html">Matcher</a> <strong>equalsIgnoringCase</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value) <a class="anchor-link" href="#equalsIgnoringCase"
               title="Permalink to equalsIgnoringCase">#</a></h4>
 <div class="doc">
 <p>Returns a matcher which matches if the match argument is a string and
@@ -988,7 +988,7 @@ Matcher wrapMatcher(x) {
 </div>
 <div class="method"><h4 id="expect">
 <button class="show-code">Code</button>
-void <strong>expect</strong>(actual, matcher, {String reason, <a href="matcher/FailureHandler.html">FailureHandler</a> failureHandler, bool verbose: false}) <a class="anchor-link" href="#expect"
+void <strong>expect</strong>(actual, matcher, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> reason, <a href="matcher/FailureHandler.html">FailureHandler</a> failureHandler, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> verbose: false}) <a class="anchor-link" href="#expect"
               title="Permalink to expect">#</a></h4>
 <div class="doc">
 <p>This is the main assertion function. It asserts that 
@@ -1039,13 +1039,14 @@ void expect(actual, matcher, {String reason, FailureHandler failureHandler,
 </div>
 <div class="method"><h4 id="predicate">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>predicate</strong>(f, [description = 'satisfies function']) <a class="anchor-link" href="#predicate"
+<a href="matcher/Matcher.html">Matcher</a> <strong>predicate</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> f, [description = 'satisfies function']) <a class="anchor-link" href="#predicate"
               title="Permalink to predicate">#</a></h4>
 <div class="doc">
 <p>Returns a matcher that uses an arbitrary function that returns
-true or false for the actual value.</p>
+true or false for the actual value. For example:</p>
+<pre><span class="i ">expect</span><span class="p ">(</span><span class="i ">v</span><span class="p ">,</span> <span class="i ">predicate</span><span class="p ">(</span><span class="p ">(</span><span class="i ">x</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="p ">(</span><span class="p ">(</span><span class="i ">x</span> <span class="o ">%</span> <span class="n ">2</span><span class="p ">)</span> <span class="o ">==</span> <span class="n ">0</span><span class="p ">)</span><span class="p ">,</span> <span class="s si">"is even"</span><span class="p ">)</span><span class="p ">)</span></pre>
 <pre class="source">
-Matcher predicate(f, [description ='satisfies function']) =&gt;
+Matcher predicate(Function f, [description ='satisfies function']) =&gt;
    new _Predicate(f, description);
 </pre>
 </div>
@@ -1145,7 +1146,7 @@ Matcher same(expected) =&gt; new _IsSameAs(expected);
 </div>
 <div class="method"><h4 id="unorderedEquals">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>unorderedEquals</strong>(Iterable expected) <a class="anchor-link" href="#unorderedEquals"
+<a href="matcher/Matcher.html">Matcher</a> <strong>unorderedEquals</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> expected) <a class="anchor-link" href="#unorderedEquals"
               title="Permalink to unorderedEquals">#</a></h4>
 <div class="doc">
 <p>Returns a matcher which matches <code>Iterable</code>s that have the same
@@ -1161,7 +1162,7 @@ Matcher unorderedEquals(Iterable expected) =&gt;
 </div>
 <div class="method"><h4 id="orderedEquals">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>orderedEquals</strong>(Iterable expected) <a class="anchor-link" href="#orderedEquals"
+<a href="matcher/Matcher.html">Matcher</a> <strong>orderedEquals</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> expected) <a class="anchor-link" href="#orderedEquals"
               title="Permalink to orderedEquals">#</a></h4>
 <div class="doc">
 <p>Returns a matcher which matches <code>Iterable</code>s that have the same
