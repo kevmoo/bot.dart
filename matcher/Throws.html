@@ -40,6 +40,7 @@ class Throws extends BaseMatcher {
    this._matcher = matcher;
 
  bool matches(item, MatchState matchState) {
+   if (item is! Function &amp;&amp; item is! Future) return false;
    if (item is Future) {
      var done = wrapAsync((fn) =&gt; fn());
 
@@ -60,7 +61,6 @@ class Throws extends BaseMatcher {
          expect(e.error, _matcher, reason: reason);
        });
      });
-
      // It hasn't failed yet.
      return true;
    }
@@ -93,7 +93,9 @@ class Throws extends BaseMatcher {
  Description describeMismatch(item, Description mismatchDescription,
                               MatchState matchState,
                               bool verbose) {
-   if (_matcher == null ||  matchState.state == null) {
+   if (item is! Function &amp;&amp; item is! Future) {
+     return mismatchDescription.add(' not a Function or Future');
+   } else if (_matcher == null ||  matchState.state == null) {
      return mismatchDescription.add(' no exception');
    } else {
      mismatchDescription.
@@ -169,7 +171,9 @@ about the mismatch in
 Description describeMismatch(item, Description mismatchDescription,
                             MatchState matchState,
                             bool verbose) {
- if (_matcher == null ||  matchState.state == null) {
+ if (item is! Function &amp;&amp; item is! Future) {
+   return mismatchDescription.add(' not a Function or Future');
+ } else if (_matcher == null ||  matchState.state == null) {
    return mismatchDescription.add(' no exception');
  } else {
    mismatchDescription.
@@ -200,6 +204,7 @@ the use of <a class="crossref" href="../matcher/Throws.html#describeMismatch">de
 <div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
 <pre class="source">
 bool matches(item, MatchState matchState) {
+ if (item is! Function &amp;&amp; item is! Future) return false;
  if (item is Future) {
    var done = wrapAsync((fn) =&gt; fn());
 
@@ -220,7 +225,6 @@ bool matches(item, MatchState matchState) {
        expect(e.error, _matcher, reason: reason);
      });
    });
-
    // It hasn't failed yet.
    return true;
  }

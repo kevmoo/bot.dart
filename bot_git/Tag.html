@@ -40,7 +40,7 @@ class Tag {
  final String tagger;
 
  Tag._internal(this.objectSha, this.type, this.tag, this.tagger) {
-   assert(Git.isValidSha(objectSha));
+   requireArgumentValidSha1(objectSha, 'objectSha');
    requireArgumentNotNullOrEmpty(type, 'type');
    requireArgumentNotNullOrEmpty(tag, 'tag');
    requireArgumentNotNullOrEmpty(tagger, 'tagger');

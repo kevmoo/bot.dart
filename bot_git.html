@@ -28,6 +28,27 @@
 <div class="content">
 <h2><strong>bot_git</strong> library</h2>
 <div>
+<h3>Functions</h3>
+<div class="method"><h4 id="requireArgumentValidSha1">
+<button class="show-code">Code</button>
+void <strong>requireArgumentValidSha1</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argName) <a class="anchor-link" href="#requireArgumentValidSha1"
+              title="Permalink to requireArgumentValidSha1">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireArgumentValidSha1(String value, String argName) {
+ _metaRequireArgumentNotNullOrEmpty(argName);
+ requireArgumentNotNullOrEmpty(value, argName);
+
+ if(!Git.isValidSha(value)) {
+   final message = 'Not a valid SHA1 value: $value';
+   throw new DetailedArgumentError(argName, message);
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
 <h3>Classes</h3>
           <div class="type">
           <h4>

@@ -41,7 +41,7 @@ class CommitReference {
  final String reference;
 
  CommitReference(this.sha, this.reference) {
-   assert(Git.isValidSha(sha));
+   requireArgumentValidSha1(this.sha, 'sha');
 
    assert(reference != null);
    // TODO: probably a better way to verify...but this is fine for now
@@ -113,7 +113,7 @@ new <strong>CommitReference</strong>(<a href="http://api.dartlang.org/dart_core/
 <div class="doc">
 <pre class="source">
 CommitReference(this.sha, this.reference) {
- assert(Git.isValidSha(sha));
+ requireArgumentValidSha1(this.sha, 'sha');
 
  assert(reference != null);
  // TODO: probably a better way to verify...but this is fine for now

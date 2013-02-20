@@ -175,6 +175,83 @@ class GitDir {
  }
 
  /**
+  * Returns the SHA for the new commit if one is created. `null` if the branch is not updated.
+  */
+ Future&lt;String&gt; createOrUpdateBranch(String branchName, String treeSha,
+                             String commitMessage) {
+   requireArgumentNotNullOrEmpty(branchName, 'branchName');
+   requireArgumentValidSha1(treeSha, 'treeSha');
+
+   return getBranchReference(branchName)
+       .then((BranchReference targetBranchRef) {
+         if(targetBranchRef == null) {
+           return commitTree(treeSha, commitMessage);
+         } else {
+           return _updateBranch(targetBranchRef.sha, treeSha, commitMessage);
+         }
+       })
+       .then((String newCommitSha) {
+         if(newCommitSha == null) {
+           return null;
+         }
+
+         assert(Git.isValidSha(newCommitSha));
+
+         final targetBranchRef = 'refs/heads/$branchName';
+
+         // TODO: if update-ref fails should we leave the new commit dangling?
+         // or at least log so the user can go clean up?
+         return runCommand(['update-ref', targetBranchRef, newCommitSha])
+             .then((ProcessResult pr) =&gt; newCommitSha);
+       });
+ }
+
+ /**
+  * Returns the SHA for the new commit if one is created. `null` if the branch is not updated.
+  */
+ Future&lt;String&gt; _updateBranch(String targetBranchSha, String treeSha, String commitMessage) {
+   return getCommit(targetBranchSha)
+       .then((Commit commitObj) {
+         if(commitObj.treeSha == treeSha) {
+           return null;
+         }
+
+         return commitTree(treeSha, commitMessage, parentCommitShas: [targetBranchSha]);
+       });
+ }
+
+ /**
+  * Returns the `SHA1` for the new commit.
+  *
+  * See [git-commit-tree](http://git-scm.com/docs/git-commit-tree)
+  */
+ Future&lt;String&gt; commitTree(String treeSha, String commitMessage, {List&lt;String&gt; parentCommitShas}) {
+   requireArgumentValidSha1(treeSha, 'treeSha');
+
+   requireArgumentNotNullOrEmpty(commitMessage, 'commitMessage');
+   requireArgument(commitMessage.trim() == commitMessage, 'commitMessage', 'Value cannot start or end with whitespace.');
+
+   if(parentCommitShas == null) {
+     parentCommitShas = [];
+   }
+
+   final args = ['commit-tree', treeSha, '-m', commitMessage];
+
+   for(final parentSha in parentCommitShas) {
+     requireArgumentValidSha1(parentSha, 'parentCommitShas');
+     args.addAll(['-p', parentSha]);
+   }
+
+   return runCommand(args)
+       .then((ProcessResult pr) {
+         final sha = pr.stdout.trim();
+         assert(Git.isValidSha(sha));
+         return sha;
+       });
+ }
+
+ // TODO: should be renamed writeBlob?
+ /**
   * Given a list of [paths], write those files to the object store
   * and return a [Map] where the key is the input path and the value is
   * the SHA of the newly written object.
@@ -278,8 +355,6 @@ class GitDir {
          // Time to commit.
          return tempDirs.gitDir.runCommand(['commit', '--verbose', '-m', commitMessage])
              .then((ProcessResult pr) {
-               // now...uh...just push gd to 'this'? I'm scared, but we'll try
-
                // --verbose is not strictly needed, but nice for debugging
                return tempDirs.gitDir.runCommand(['push', '--verbose', '--progress', path.toNativePath(), branchName]);
              })
@@ -556,6 +631,79 @@ Path get path =&gt; _path;
 </div>
 <div>
 <h3>Methods</h3>
+<div class="method"><h4 id="commitTree">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; <strong>commitTree</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> treeSha, <a href="http://api.dartlang.org/dart_core/String.html">String</a> commitMessage, {<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; parentCommitShas}) <a class="anchor-link" href="#commitTree"
+              title="Permalink to GitDir.commitTree">#</a></h4>
+<div class="doc">
+<p>Returns the <code>SHA1</code> for the new commit.</p>
+<p>See <a href="http://git-scm.com/docs/git-commit-tree">git-commit-tree</a></p>
+<pre class="source">
+Future&lt;String&gt; commitTree(String treeSha, String commitMessage, {List&lt;String&gt; parentCommitShas}) {
+ requireArgumentValidSha1(treeSha, 'treeSha');
+
+ requireArgumentNotNullOrEmpty(commitMessage, 'commitMessage');
+ requireArgument(commitMessage.trim() == commitMessage, 'commitMessage', 'Value cannot start or end with whitespace.');
+
+ if(parentCommitShas == null) {
+   parentCommitShas = [];
+ }
+
+ final args = ['commit-tree', treeSha, '-m', commitMessage];
+
+ for(final parentSha in parentCommitShas) {
+   requireArgumentValidSha1(parentSha, 'parentCommitShas');
+   args.addAll(['-p', parentSha]);
+ }
+
+ return runCommand(args)
+     .then((ProcessResult pr) {
+       final sha = pr.stdout.trim();
+       assert(Git.isValidSha(sha));
+       return sha;
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createOrUpdateBranch">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; <strong>createOrUpdateBranch</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName, <a href="http://api.dartlang.org/dart_core/String.html">String</a> treeSha, <a href="http://api.dartlang.org/dart_core/String.html">String</a> commitMessage) <a class="anchor-link" href="#createOrUpdateBranch"
+              title="Permalink to GitDir.createOrUpdateBranch">#</a></h4>
+<div class="doc">
+<p>Returns the SHA for the new commit if one is created. <code>null</code> if the branch is not updated.</p>
+<pre class="source">
+Future&lt;String&gt; createOrUpdateBranch(String branchName, String treeSha,
+                           String commitMessage) {
+ requireArgumentNotNullOrEmpty(branchName, 'branchName');
+ requireArgumentValidSha1(treeSha, 'treeSha');
+
+ return getBranchReference(branchName)
+     .then((BranchReference targetBranchRef) {
+       if(targetBranchRef == null) {
+         return commitTree(treeSha, commitMessage);
+       } else {
+         return _updateBranch(targetBranchRef.sha, treeSha, commitMessage);
+       }
+     })
+     .then((String newCommitSha) {
+       if(newCommitSha == null) {
+         return null;
+       }
+
+       assert(Git.isValidSha(newCommitSha));
+
+       final targetBranchRef = 'refs/heads/$branchName';
+
+       // TODO: if update-ref fails should we leave the new commit dangling?
+       // or at least log so the user can go clean up?
+       return runCommand(['update-ref', targetBranchRef, newCommitSha])
+           .then((ProcessResult pr) =&gt; newCommitSha);
+     });
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="getBranchNames">
 <button class="show-code">Code</button>
 <a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;&gt; <strong>getBranchNames</strong>() <a class="anchor-link" href="#getBranchNames"
@@ -801,8 +949,6 @@ Future&lt;Commit&gt; populateBranch(String branchName, PopulateTempDir populator
        // Time to commit.
        return tempDirs.gitDir.runCommand(['commit', '--verbose', '-m', commitMessage])
            .then((ProcessResult pr) {
-             // now...uh...just push gd to 'this'? I'm scared, but we'll try
-
              // --verbose is not strictly needed, but nice for debugging
              return tempDirs.gitDir.runCommand(['push', '--verbose', '--progress', path.toNativePath(), branchName]);
            })

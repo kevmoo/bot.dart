@@ -1070,10 +1070,11 @@ Matcher isIn(expected) =&gt; new _In(expected);
 <div class="doc">
 <p>Returns a matcher that matches if the match argument contains
 the expected value. For <code>String</code>s this means substring matching;
-for <code>Map</code>s is means the map has the key, and for <code>Collection</code>s it
-means the collection has a matching element. In the case of collections,
-
-<span class="param">expected</span> can itself be a matcher.</p>
+for <code>Map</code>s it means the map has the key, and for <code>Iterable</code>s
+(including <code>Collection</code>s) it means the iterable has a matching
+element. In the case of iterables, 
+<span class="param">expected</span> can itself be a
+matcher.</p>
 <pre class="source">
 Matcher contains(expected) =&gt; new _Contains(expected);
 </pre>

@@ -48,9 +48,24 @@ Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
      });
    }
 
+   if(ctx.arguments[_listFlag]) {
+     final list = unittest.testCases
+         .map((tc) =&gt; tc.description)
+         .toList();
+
+     list.sort();
+
+     list.insertRange(0, 1, 'Test cases:');
+
+     ctx.info(list.join('\n'));
+
+     return new Future.immediate(true);
+   }
+
    unittest.runTests();
    return config.future;
  },
+ config: _unittestParserConfig,
  description: 'Run unit tests in the console',
  extendedArgs: [new TaskArgument('filter', multiple: true)]);
 }
@@ -173,8 +188,8 @@ Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sou
 
  GitDir gitDir;
 
- List&lt;String&gt; gitArgs;
  String sourceDirTreeSha;
+ String commitMsg;
 
  return GitDir.fromExisting(workingDir)
      .then((GitDir value) {
@@ -192,35 +207,60 @@ Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sou
 
        sourceDirTreeSha = tree.sha;
 
-       gitArgs = ['commit-tree', sourceDirTreeSha];
-
-       return gitDir.getBranchReference(targetBranch);
+       // get the commit SHA for the source branch for the commit MSG
+       return gitDir.getBranchReference(sourceBranch);
      })
-     .then((BranchReference branchRef) {
+     .then((BranchReference sourceBranchRef) {
+       final sourceBranchCommitShortSha = sourceBranchRef.sha.substring(0, 8);
+       commitMsg = 'Contents of $sourceDir from commit $sourceBranchCommitShortSha';
 
-       if(branchRef == null) {
-         // branch does not exist. New branch!
-         return _doCommit(ctx, 'created', gitArgs, sourceBranch, sourceDir,
-             targetBranch, gitDir);
+       return gitDir.createOrUpdateBranch(targetBranch, sourceDirTreeSha, commitMsg);
+     })
+     .then((String newCommitSha) {
+       if(newCommitSha == null) {
+         ctx.fine('There have been no changes to "$sourceDir" since the last commit');
        } else {
-         // existing branch, need to find the tree info so we can create
-         // a valid commit w/ the right parent
-         return _withExistingBranch(ctx, branchRef, sourceDirTreeSha, sourceDir,
-             gitArgs, sourceBranch, targetBranch, gitDir);
+         ctx.info("Branch '$targetBranch' is now at commit $newCommitSha");
        }
+       return true;
      });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getBranchForDirTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>getBranchForDirTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> sourceBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> sourceDir, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> workingDir}) <a class="anchor-link" href="#getBranchForDirTask"
+              title="Permalink to getBranchForDirTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task getBranchForDirTask(String sourceBranch, String sourceDir,
+                        String targetBranch, {String workingDir}) {
+ requireArgumentNotNullOrEmpty(sourceBranch, 'sourceBranch');
+ requireArgumentNotNullOrEmpty(sourceDir, 'sourceDir');
+ requireArgumentNotNullOrEmpty(targetBranch, 'targetBranch');
+
+ final description = 'Commit the tree for dir "$sourceDir" in branch'
+     ' "$sourceBranch" and create/update branch "$targetBranch" with the new commit';
+
+ return new Task.async((ctx) =&gt;
+     branchForDir(ctx, sourceBranch, sourceDir, targetBranch, workingDir: workingDir),
+     description: description);
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="compileDocs">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="bot/Func.html">Func</a> libGetter, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#compileDocs"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, delayedLibraryList, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#compileDocs"
               title="Permalink to compileDocs">#</a></h4>
 <div class="doc">
+<p>
+<span class="param">delayedLibraryList</span> a [List<String>] mapping to paths to libraries or some
+combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
 <pre class="source">
 Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
-   Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter, String packageDir,
+   dynamic delayedLibraryList, String packageDir,
    {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
 
  final excludeList = excludeLibs == null ? [] : excludeLibs.toList();
@@ -244,7 +284,7 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
          ctx.fail('Working tree is dirty. Cannot generate docs.');
        }
 
-       return libGetter();
+       return getDelayedResult(delayedLibraryList);
      })
      .then((List&lt;String&gt; value) {
        assert(value != null);
@@ -274,14 +314,17 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
 </div>
 <div class="method"><h4 id="getCompileDocsFunc">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, <a href="bot/Func.html">Func</a> libGetter, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#getCompileDocsFunc"
+<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, delayedLibraryList, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#getCompileDocsFunc"
               title="Permalink to getCompileDocsFunc">#</a></h4>
 <div class="doc">
+<p>
+<span class="param">delayedLibraryList</span> a [List<String>] mapping to paths to libraries or some
+combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
 <pre class="source">
 Task getCompileDocsFunc(String targetBranch, String packageDir,
-                       Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter,
+                       dynamic delayedLibraryList,
                        {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
- return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, libGetter,
+ return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, delayedLibraryList,
      packageDir, excludeLibs: excludeLibs, linkApi: linkApi),
      description: 'Generate documentation for the provided libraries.',
      config: _dartDocParserConfig);
@@ -316,21 +359,28 @@ Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
 </div>
 <div class="method"><h4 id="createDartAnalyzerTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; files) <a class="anchor-link" href="#createDartAnalyzerTask"
+<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(delayedFileList) <a class="anchor-link" href="#createDartAnalyzerTask"
               title="Permalink to createDartAnalyzerTask">#</a></h4>
 <div class="doc">
+<p>
+<span class="param">delayedFileList</span> a [List<String>] mapping to paths to dart files or some
+combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
 <pre class="source">
-Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
+Task createDartAnalyzerTask(dynamic delayedFileList) {
  return new Task.async((context) {
    final parseResult = context.arguments;
 
    final bool enableTypeChecks = parseResult[_enableTypeChecksArgName];
    final bool verbose = parseResult[_verboseArgName];
 
-   final fileList = files.map((f) =&gt; new Path(f)).toList();
-
-   return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
- }, description: 'Running dart analyzer', config: _analyzerParserConfig);
+   return getDelayedResult(delayedFileList)
+       .then((List&lt;String&gt; files) {
+         final fileList = files.map((f) =&gt; new Path(f)).toList();
+         return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
+       });
+ },
+ description: 'Run "dart_analyzer" for the provided dart files.',
+ config: _analyzerParserConfig);
 }
 </pre>
 </div>

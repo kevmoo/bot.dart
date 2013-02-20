@@ -58,7 +58,7 @@ abstract class Enumerable&lt;T&gt; extends Iterable&lt;T&gt; {
  int count(Func1&lt;T, bool&gt; f) =&gt;
      CollectionUtil.count(this, f);
 
- @deprecated @override
+ @deprecated
  Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
      this.map(f);
 
@@ -560,11 +560,8 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 <a href="../bot/Enumerable.html">Enumerable</a> <strong>mappedBy</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#mappedBy"
               title="Permalink to Enumerable&lt;T&gt;.mappedBy">#</a></h4>
 <div class="doc">
-<div class="inherited">
-<p>Deprecated alias for <a class="crossref" href="../bot/Enumerable.html#map">map</a>.</p>
-<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Enumerable.html">T</a>&gt; </div></div>
 <pre class="source">
-@deprecated @override
+@deprecated
 Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
    this.map(f);
 </pre>

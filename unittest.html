@@ -32,8 +32,7 @@
 Create a pubspec.yaml file in your project and add
 a dependency on unittest with the following lines:</p>
 <pre><span class="i ">dependencies</span><span class="p ">:</span>
-  <span class="i ">unittest</span><span class="p ">:</span>
-    <span class="i ">sdk</span><span class="p ">:</span> <span class="i ">unittest</span></pre>
+  <span class="i ">unittest</span><span class="p ">:</span> <span class="i ">any</span></pre>
 <p>Then run 'pub install' from your project directory or using
 the DartEditor.</p>
 <p>Please see <a href="http://pub.dartlang.org/doc">Pub Getting Started</a>
@@ -98,19 +97,19 @@ of times the callback should be called (the default is 1).</p>
   <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed once'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
     <span class="c ">// wrap the callback of an asynchronous call with [expectAsync0] if</span>
     <span class="c ">// the callback takes 0 arguments...</span>
-    <span class="k ">var</span> <span class="i ">timer</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="k ">var</span> <span class="i ">timer</span> <span class="o ">=</span> <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
       <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
       <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
     <span class="p ">}</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
   <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
 
   <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed twice'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="k ">var</span> <span class="i ">callback</span> <span class="o ">=</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="k ">var</span> <span class="i ">callback</span> <span class="o ">=</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
       <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
       <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
     <span class="p ">}</span><span class="p ">,</span> <span class="i ">count</span><span class="p ">:</span> <span class="n ">2</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// &lt;-- we can indicate multiplicity to [expectAsync0]</span>
-    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
   <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
 <span class="p ">}</span></pre>
 <p>expectAsyncX() will wrap the callback code in a try/catch handler to handle
@@ -135,7 +134,7 @@ but will be coming here soon).</p>
   <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
     <span class="c ">// indicate ahead of time that an async callback is expected.</span>
     <span class="k ">var</span> <span class="i ">async</span> <span class="o ">=</span> <span class="i ">startAsync</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="k ">new</span> <span class="t ">Timer</span><span class="p ">(</span><span class="n ">0</span><span class="p ">,</span> <span class="p ">(</span><span class="i ">_</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
       <span class="c ">// Guard the body of the callback, so errors are propagated</span>
       <span class="c ">// correctly.</span>
       <span class="i ">guardAsync</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
@@ -442,9 +441,12 @@ void <strong>tearDown</strong>(<a href="http://api.dartlang.org/dart_core/Functi
 <div class="doc">
 <p>Register a <a class="crossref" href="unittest.html#tearDown">tearDown</a> function for a test <a class="crossref" href="unittest.html#group">group</a>. This function will
 be called after each test in the group is run. Note that if groups
-are nested only the most locally scoped <a class="crossref" href="unittest.html#tearDown">tearDown</a> function will be run.
+are nested only the most locally scoped 
+<span class="param">teardownTest</span> function will be run.
 <a class="crossref" href="unittest.html#setUp">setUp</a> and <a class="crossref" href="unittest.html#tearDown">tearDown</a> should be called within the <a class="crossref" href="unittest.html#group">group</a> before any
-calls to <a class="crossref" href="unittest.html#test">test</a>.</p>
+calls to <a class="crossref" href="unittest.html#test">test</a>. The 
+<span class="param">teardownTest</span> function can be asynchronous; in this
+case it must return a <code>Future</code>.</p>
 <pre class="source">
 void tearDown(Function teardownTest) {
  _testTeardown = teardownTest;
@@ -459,9 +461,11 @@ void <strong>setUp</strong>(<a href="http://api.dartlang.org/dart_core/Function.
 <div class="doc">
 <p>Register a <a class="crossref" href="unittest.html#setUp">setUp</a> function for a test <a class="crossref" href="unittest.html#group">group</a>. This function will
 be called before each test in the group is run. Note that if groups
-are nested only the most locally scoped <a class="crossref" href="unittest.html#setUp">setUp</a> function will be run.
+are nested only the most locally scoped <code>setUpTest</code> function will be run.
 <a class="crossref" href="unittest.html#setUp">setUp</a> and <a class="crossref" href="unittest.html#tearDown">tearDown</a> should be called within the <a class="crossref" href="unittest.html#group">group</a> before any
-calls to <a class="crossref" href="unittest.html#test">test</a>.</p>
+calls to <a class="crossref" href="unittest.html#test">test</a>. The 
+<span class="param">setupTest</span> function can be asynchronous; in this
+case it must return a <code>Future</code>.</p>
 <pre class="source">
 void setUp(Function setupTest) {
  _testSetup = setupTest;
@@ -612,35 +616,37 @@ Function expectAsyncUntil0(Function callback, Function isDone) {
 </div>
 <div class="method"><h4 id="expectAsync2">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync2</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1}) <a class="anchor-link" href="#expectAsync2"
+<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync2</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1, <a href="http://api.dartlang.org/dart_core/String.html">String</a> id}) <a class="anchor-link" href="#expectAsync2"
               title="Permalink to expectAsync2">#</a></h4>
 <div class="doc">
 <p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
 <span class="param">callback</span> should take 2 positional arguments. </p>
 <pre class="source">
-Function expectAsync2(Function callback, {int count: 1}) {
- return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke2;
+Function expectAsync2(Function callback, {int count: 1, String id}) {
+ return new _SpreadArgsHelper.
+     fixedCallCount(callback, count, id).invoke2;
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="expectAsync1">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync1</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1}) <a class="anchor-link" href="#expectAsync1"
+<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync1</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1, <a href="http://api.dartlang.org/dart_core/String.html">String</a> id}) <a class="anchor-link" href="#expectAsync1"
               title="Permalink to expectAsync1">#</a></h4>
 <div class="doc">
 <p>Like <a class="crossref" href="unittest.html#expectAsync0">expectAsync0</a> but 
 <span class="param">callback</span> should take 1 positional argument. </p>
 <pre class="source">
-Function expectAsync1(Function callback, {int count: 1}) {
- return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke1;
+Function expectAsync1(Function callback, {int count: 1, String id}) {
+ return new _SpreadArgsHelper.
+     fixedCallCount(callback, count, id).invoke1;
 }
 </pre>
 </div>
 </div>
 <div class="method"><h4 id="expectAsync0">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync0</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1}) <a class="anchor-link" href="#expectAsync0"
+<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> <strong>expectAsync0</strong>(<a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/int.html">int</a> count: 1, <a href="http://api.dartlang.org/dart_core/String.html">String</a> id}) <a class="anchor-link" href="#expectAsync0"
               title="Permalink to expectAsync0">#</a></h4>
 <div class="doc">
 <p>Indicate that 
@@ -653,10 +659,14 @@ specified
 <span class="param">callback</span> are
 tracked and reported. 
 <span class="param">callback</span> should take 0 positional arguments (named
-arguments are not supported).</p>
+arguments are not supported). 
+<span class="param">id</span> can be used to provide more
+descriptive error messages if the callback is called more often than
+expected.</p>
 <pre class="source">
-Function expectAsync0(Function callback, {int count: 1}) {
- return new _SpreadArgsHelper.fixedCallCount(callback, count).invoke0;
+Function expectAsync0(Function callback, {int count: 1, String id}) {
+ return new _SpreadArgsHelper.
+     fixedCallCount(callback, count, id).invoke0;
 }
 </pre>
 </div>
@@ -689,30 +699,6 @@ void solo_test(String spec, TestFunction body) {
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="asyncTest">
-<button class="show-code">Code</button>
-void <strong>asyncTest</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> spec, <a href="http://api.dartlang.org/dart_core/int.html">int</a> callbacks, <a href="unittest/TestFunction.html">TestFunction</a> body) <a class="anchor-link" href="#asyncTest"
-              title="Permalink to asyncTest">#</a></h4>
-<div class="doc">
-<p>(Deprecated) Creates a new async test case with the given description
-and body. The description will include the descriptions of any surrounding
-group() calls.</p>
-<pre class="source">
-void asyncTest(String spec, int callbacks, TestFunction body) {
- ensureInitialized();
-
- final testCase = new TestCase(
-     _tests.length + 1, _fullSpec(spec), body, callbacks);
- _tests.add(testCase);
-
- if (callbacks &lt; 1) {
-   testCase.error(
-       'Async tests must wait for at least one callback ', '');
- }
-}
-</pre>
-</div>
-</div>
 <div class="method"><h4 id="test">
 <button class="show-code">Code</button>
 void <strong>test</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> spec, <a href="unittest/TestFunction.html">TestFunction</a> body) <a class="anchor-link" href="#test"
@@ -725,42 +711,6 @@ calls.</p>
 void test(String spec, TestFunction body) {
  ensureInitialized();
  _tests.add(new TestCase(_tests.length + 1, _fullSpec(spec), body, 0));
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="expectThrow">
-<button class="show-code">Code</button>
-void <strong>expectThrow</strong>(function, [<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> callback(exception)]) <a class="anchor-link" href="#expectThrow"
-              title="Permalink to expectThrow">#</a></h4>
-<div class="doc">
-<p>(Deprecated) Evaluates the 
-<span class="param">function</span> and validates that it throws an
-exception. If 
-<span class="param">callback</span> is provided, then it will be invoked with the
-thrown exception. The callback may do any validation it wants. In addition,
-if it returns <code>false</code>, that also indicates an expectation failure.</p>
-<pre class="source">
-void expectThrow(function, [bool callback(exception)]) {
- bool threw = false;
- try {
-   function();
- } catch (e) {
-   threw = true;
-
-   // Also let the callback look at it.
-   if (callback != null) {
-     var result = callback(e);
-
-     // If the callback explicitly returned false, treat that like an
-     // expectation too. (If it returns null, though, don't.)
-     if (result == false) {
-       fail('Exception:\n$e\ndid not match expectation.');
-     }
-   }
- }
-
- if (threw != true) fail('An expected exception was not thrown.');
 }
 </pre>
 </div>

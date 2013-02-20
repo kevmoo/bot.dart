@@ -342,10 +342,7 @@ final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href=
         </h4>
         <div class="inherited-from">inherited from <a href="../bot/ListBase.html">ListBase</a> </div><div class="doc">
 <div class="inherited">
-<p>Returns a reversed fixed-length view of this <code>List</code>.</p>
-<p>The reversed list has elements in the opposite order of this list.
-It is backed by this list, but will stop working if this list
-becomes shorter than its current length.</p>
+<p>Returns an <code>Iterable</code> of the elements of this <code>List</code> in reverse order.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
 <pre class="source">
 List&lt;E&gt; get reversed =&gt; IterableMixinWorkaround.reversedList(this);
@@ -968,11 +965,8 @@ Enumerable map(Func1&lt;T, Object&gt; f) =&gt;
 <a href="../bot/Enumerable.html">Enumerable</a> <strong>mappedBy</strong>(<a href="../bot/Func1.html">Func1</a> f) <a class="anchor-link" href="#mappedBy"
               title="Permalink to Array2d&lt;T&gt;.mappedBy">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot/Enumerable.html">Enumerable</a> </div><div class="doc">
-<div class="inherited">
-<p>Deprecated alias for <code>map</code>.</p>
-<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Array2d.html">T</a>&gt; </div></div>
 <pre class="source">
-@deprecated @override
+@deprecated
 Enumerable mappedBy(Func1&lt;T, Object&gt; f) =&gt;
    this.map(f);
 </pre>

@@ -54,10 +54,12 @@ class Commit {
      this.content, Iterable&lt;String&gt; parents) :
      this.parents = new ReadOnlyCollection&lt;String&gt;(parents) {
 
-   requireArgument(Git.isValidSha(this.treeSha), 'treeSha');
-   requireArgument(commitSha == null || Git.isValidSha(this.commitSha), 'commitSha');
+   requireArgumentValidSha1(this.treeSha, 'treeSha');
+   if(commitSha != null) {
+     requireArgumentValidSha1(this.commitSha, 'commitSha');
+   }
    for(final parent in parents) {
-     requireArgument(Git.isValidSha(parent), 'parents', 'Every entry must be a valid sha');
+     requireArgumentValidSha1(parent, 'parents');
    }
 
    // null checks on many things

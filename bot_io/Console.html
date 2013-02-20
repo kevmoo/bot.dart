@@ -88,9 +88,9 @@ class Console {
      assert(value.length &lt;= width);
 
      while(buffer.length &lt; targetWidth) {
-       buffer.add(' ');
+       buffer.write(' ');
      }
-     buffer.add(value);
+     buffer.write(value);
 
      targetWidth += width + minBuffer;
    }

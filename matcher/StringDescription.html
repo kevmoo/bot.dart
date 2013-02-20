@@ -74,6 +74,12 @@ class StringDescription implements Description {
      String description = (value == null) ? "null" : value.toString();
      if (description.startsWith('&lt;') &amp;&amp; description.endsWith('&gt;')) {
          add(description);
+     } else if (description.startsWith("Instance of")) {
+       add('&lt;');
+       add(description);
+       add(':');
+       add(value.hashCode.toString());
+       add('&gt;');
      } else {
        add('&lt;');
        add(description);
@@ -214,6 +220,12 @@ Description addDescriptionOf(value) {
    String description = (value == null) ? "null" : value.toString();
    if (description.startsWith('&lt;') &amp;&amp; description.endsWith('&gt;')) {
        add(description);
+   } else if (description.startsWith("Instance of")) {
+     add('&lt;');
+     add(description);
+     add(':');
+     add(value.hashCode.toString());
+     add('&gt;');
    } else {
      add('&lt;');
      add(description);
