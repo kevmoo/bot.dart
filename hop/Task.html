@@ -43,7 +43,7 @@ class Task {
 
  factory Task.sync(Func1&lt;TaskContext, bool&gt; exec,
      {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) {
-   final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
+   final futureExec = (TaskContext ctx) =&gt; new Future.of(() =&gt; exec(ctx));
 
    return new Task.async(futureExec,
        description: description, config: config, extendedArgs: extendedArgs);
@@ -136,7 +136,7 @@ factory <strong>Task.sync</strong>(<a href="../bot/Func1.html">Func1</a> exec, {
 <pre class="source">
 factory Task.sync(Func1&lt;TaskContext, bool&gt; exec,
    {String description, ArgParserConfigure config, List&lt;TaskArgument&gt; extendedArgs}) {
- final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
+ final futureExec = (TaskContext ctx) =&gt; new Future.of(() =&gt; exec(ctx));
 
  return new Task.async(futureExec,
      description: description, config: config, extendedArgs: extendedArgs);

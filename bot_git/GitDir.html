@@ -64,7 +64,7 @@ class GitDir {
        });
  }
 
- Future&lt;List&lt;Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
+ Future&lt;Map&lt;String, Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
    return runCommand(['rev-list', '--format=raw', branchName])
        .then((ProcessResult pr) =&gt; Commit.parseRawRevList(pr.stdout));
  }
@@ -795,11 +795,11 @@ Future&lt;int&gt; getCommitCount([String branchName = 'HEAD']) {
 </div>
 <div class="method"><h4 id="getCommits">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/Commit.html">Commit</a>&gt;&gt; <strong>getCommits</strong>([<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName = 'HEAD']) <a class="anchor-link" href="#getCommits"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../bot_git/Commit.html">Commit</a>&gt;&gt; <strong>getCommits</strong>([<a href="http://api.dartlang.org/dart_core/String.html">String</a> branchName = 'HEAD']) <a class="anchor-link" href="#getCommits"
               title="Permalink to GitDir.getCommits">#</a></h4>
 <div class="doc">
 <pre class="source">
-Future&lt;List&lt;Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
+Future&lt;Map&lt;String, Commit&gt;&gt; getCommits([String branchName = 'HEAD']) {
  return runCommand(['rev-list', '--format=raw', branchName])
      .then((ProcessResult pr) =&gt; Commit.parseRawRevList(pr.stdout));
 }
