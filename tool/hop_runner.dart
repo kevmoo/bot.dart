@@ -10,6 +10,7 @@ import '../test/harness_console.dart' as test_console;
 
 import 'tasks/update_example_html.dart' as html_tasks;
 import 'tasks/dartdoc_postbuild.dart' as dartdoc;
+import 'tasks/unified_docs.dart' as unified_docs;
 
 void main() {
   // Easy to enable hop-wide logging
@@ -45,6 +46,8 @@ void main() {
   addTask('bench', createBenchTask());
 
   addTask('update-html', html_tasks.getUpdateExampleHtmlTask());
+
+  addTask('x-git-docs', unified_docs.gitGitDocExperimentTask());
 
   runHop();
 }
