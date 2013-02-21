@@ -10596,8 +10596,8 @@ $.buildLibraryNavigation = function(html, libraryInfo) {
 
 $.setupLocation = function() {
   var body = document.query$1("body");
-  $.currentLibrary = $.$$index(body.get$dataAttributes(), "library");
-  $.currentType = $.$$index(body.get$dataAttributes(), "type");
+  $.currentLibrary = body.dataset['library'];
+  $.currentType = body.dataset['type'];
   $.prefix = !($.currentType == null) ? "../" : "";
 };
 
