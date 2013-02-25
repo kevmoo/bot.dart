@@ -39,8 +39,7 @@ abstract class TaskContext extends TaskLogger implements Disposable {
  TaskLogger getSubLogger(String name);
 
  /**
-  * Terminates the current [Task] with a [TaskFailError] including the provided
-  * [message].
+  * Terminates the current [Task] with a failure, explained by [message].
   */
  void fail(String message) {
    throw new _TaskFailError(message);
@@ -97,8 +96,7 @@ abstract void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
 void <strong>fail</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fail"
               title="Permalink to TaskContext.fail">#</a></h4>
 <div class="doc">
-<p>Terminates the current <a class="crossref" href="../hop/Task.html">Task</a> with a <a class="crossref" href="../hop/TaskFailError.html">TaskFailError</a> including the provided
-
+<p>Terminates the current <a class="crossref" href="../hop/Task.html">Task</a> with a failure, explained by 
 <span class="param">message</span>.</p>
 <pre class="source">
 void fail(String message) {

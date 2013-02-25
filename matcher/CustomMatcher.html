@@ -40,13 +40,15 @@ description, and an instance matcher, and should implement the
 while the feature name will just name the feature. For example, we may
 have a Widget class where each Widget has a price; we could make a
 FeatureMatcher that can make assertions about prices with:</p>
-<pre><span class="k ">class</span> <span class="t ">HasPrice</span> <span class="k ">extends</span> <span class="t ">FeatureMatcher</span> <span class="p ">{</span>
-  <span class="k ">const</span> <span class="t ">HasPrice</span><span class="p ">(</span><span class="i ">matcher</span><span class="p ">)</span> <span class="p ">:</span>
-      <span class="r ">super</span><span class="p ">(</span><span class="s si">"Widget with price that is"</span><span class="p ">,</span> <span class="s si">"price"</span><span class="p ">,</span> <span class="i ">matcher</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="i ">featureValueOf</span><span class="p ">(</span><span class="i ">actual</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">actual</span><span class="p ">.</span><span class="i ">price</span><span class="p ">;</span>
-<span class="p ">}</span></pre>
+<pre><code>class HasPrice extends FeatureMatcher {
+  const HasPrice(matcher) :
+      super("Widget with price that is", "price", matcher);
+  featureValueOf(actual) =&gt; actual.price;
+}
+</code></pre>
 <p>and then use this for example like:</p>
-<pre> <span class="i ">expect</span><span class="p ">(</span><span class="i ">inventoryItem</span><span class="p ">,</span> <span class="k ">new</span> <span class="t ">HasPrice</span><span class="p ">(</span><span class="i ">greaterThan</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code> expect(inventoryItem, new HasPrice(greaterThan(0)));
+</code></pre>
 <pre class="source">
 class CustomMatcher extends BaseMatcher {
  final String _featureDescription;

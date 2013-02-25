@@ -119,21 +119,38 @@ Enumerable $(Iterable source) {
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="requireArgumentMatches">
+<div class="method"><h4 id="requireArgumentContainsPattern">
 <button class="show-code">Code</button>
-void <strong>requireArgumentMatches</strong>(<a href="http://api.dartlang.org/dart_core/RegExp.html">RegExp</a> regex, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argument, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argName) <a class="anchor-link" href="#requireArgumentMatches"
-              title="Permalink to requireArgumentMatches">#</a></h4>
+void <strong>requireArgumentContainsPattern</strong>(<a href="http://api.dartlang.org/dart_core/Pattern.html">Pattern</a> pattern, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argValue, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argName) <a class="anchor-link" href="#requireArgumentContainsPattern"
+              title="Permalink to requireArgumentContainsPattern">#</a></h4>
 <div class="doc">
 <pre class="source">
-void requireArgumentMatches(RegExp regex, String argument, String argName) {
- if(regex == null) {
-   throw new InvalidOperationError("That's just sad. No null regex");
+void requireArgumentContainsPattern(Pattern pattern, String argValue, String argName) {
+ if(pattern == null) {
+   throw new InvalidOperationError("That's just sad. No null pattern");
  }
- requireArgumentNotNull(argument, argName);
- if(!regex.hasMatch(argument)) {
+ requireArgumentNotNull(argValue, argName);
+ if(!argValue.contains(pattern)) {
    throw new DetailedArgumentError(argName,
-       'The value "$argument" must match the regular expression "${regex.pattern}"');
+       'The value "$argValue" does not contain the pattern "${pattern}"');
  }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="requireArgumentMatches">
+<button class="show-code">Code</button>
+void <strong>requireArgumentMatches</strong>(<a href="http://api.dartlang.org/dart_core/RegExp.html">RegExp</a> regex, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argValue, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argName) <a class="anchor-link" href="#requireArgumentMatches"
+              title="Permalink to requireArgumentMatches">#</a></h4>
+<div class="doc">
+<p>Use <a class="crossref" href="bot.html#requireArgumentContainsPattern">requireArgumentContainsPattern</a> instead.</p>
+<pre class="source">
+@deprecated
+/**
+* Use [requireArgumentContainsPattern] instead.
+*/
+void requireArgumentMatches(RegExp regex, String argValue, String argName) {
+ requireArgumentContainsPattern(regex, argValue, argName);
 }
 </pre>
 </div>

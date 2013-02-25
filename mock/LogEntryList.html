@@ -968,16 +968,18 @@ method commit() that returns -1 on failure. Before commit() gets called
 the value being committed is created by process(). We may want to find
 the calls to process() that preceded calls to commit() that failed.
 We could do this with:</p>
-<pre> <span class="i ">print</span><span class="p ">(</span><span class="i ">log</span><span class="p ">.</span><span class="i ">preceding</span><span class="p ">(</span><span class="i ">log</span><span class="p ">.</span><span class="i ">getLogs</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'commit'</span><span class="p ">)</span><span class="p ">,</span> <span class="i ">returning</span><span class="p ">(</span><span class="o ">-</span><span class="n ">1</span><span class="p ">)</span><span class="p ">)</span><span class="p ">,</span>
-     <span class="i ">logFilter</span><span class="p ">:</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'process'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">toString</span><span class="p ">(</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code> print(log.preceding(log.getLogs(callsTo('commit'), returning(-1)),
+     logFilter: callsTo('process')).toString());
+</code></pre>
 <p>We might want to include the details of the failing calls to commit()
 to see what parameters were passed in, in which case we would set
 
 <span class="param">includeKeys</span>.</p>
 <p>As another simple example, say we wanted to know the three method
 calls that immediately preceded each failing call to commit():</p>
-<pre><span class="i ">print</span><span class="p ">(</span><span class="i ">log</span><span class="p ">.</span><span class="i ">preceding</span><span class="p ">(</span><span class="i ">log</span><span class="p ">.</span><span class="i ">getLogs</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'commit'</span><span class="p ">)</span><span class="p ">,</span> <span class="i ">returning</span><span class="p ">(</span><span class="o ">-</span><span class="n ">1</span><span class="p ">)</span><span class="p ">)</span><span class="p ">,</span>
-    <span class="i ">distance</span><span class="p ">:</span> <span class="n ">3</span><span class="p ">)</span><span class="p ">.</span><span class="i ">toString</span><span class="p ">(</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>print(log.preceding(log.getLogs(callsTo('commit'), returning(-1)),
+    distance: 3).toString());
+</code></pre>
 <pre class="source">
 LogEntryList preceding(LogEntryList keys,
                       {mockNameFilter: null,

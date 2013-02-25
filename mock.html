@@ -29,7 +29,8 @@
 <h2><strong>mock</strong> library</h2>
 <div class="doc"><p>A simple mocking/spy library.</p>
 <p>To create a mock objects for some class T, create a new class using:</p>
-<pre><span class="k ">class</span> <span class="t ">MockT</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="i ">T</span> <span class="p ">{</span><span class="p ">}</span><span class="p ">;</span></pre>
+<pre><code>class MockT extends Mock implements T {};
+</code></pre>
 <p>Then specify the <a class="crossref" href="mock/Behavior.html">Behavior</a> of the Mock for different methods using
 <code>when</code> (to select the method and parameters) and then the <a class="crossref" href="mock/Action.html">Action</a>s
 for the <a class="crossref" href="mock/Behavior.html">Behavior</a> by calling <code>thenReturn</code>, <code>alwaysReturn</code>, <code>thenThrow</code>,
@@ -37,14 +38,16 @@ for the <a class="crossref" href="mock/Behavior.html">Behavior</a> by calling <c
 <p><code>thenReturn</code>, <code>thenThrow</code> and <code>thenCall</code> are one-shot so you would
 typically call these more than once to specify a sequence of actions;
 this can be done with chained calls, e.g.:</p>
-<pre> <span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span>
-     <span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">1</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">2</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code> m.when(callsTo('foo')).
+     thenReturn(0).thenReturn(1).thenReturn(2);
+</code></pre>
 <p><code>thenCall</code> and <code>alwaysCall</code> allow you to proxy mocked methods, chaining
 to some other implementation. This provides a way to implement 'spies'.</p>
 <p>For getters and setters, use "get foo" and "set foo"-style arguments
 to <a class="crossref" href="mock.html#callsTo">callsTo</a>.</p>
 <p>You can disable logging for a particular <a class="crossref" href="mock/Behavior.html">Behavior</a> easily:</p>
-<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">logging</span> <span class="o ">=</span> <span class="k ">false</span><span class="p ">;</span></pre>
+<pre><code>m.when(callsTo('bar')).logging = false;
+</code></pre>
 <p>You can then use the mock object. Once you are done, to verify the
 behavior, use <code>getLogs</code> to extract a relevant subset of method call
 logs and apply <code>Matchers</code> to these through calling <code>verify</code>.</p>
@@ -56,38 +59,42 @@ to ensure that mock names, if used, are unique.</p>
 <p>to mock getters you will need to include parentheses in the call
   (e.g. m.length() will work but not m.length).</p></li></ul>
 <p>Here is a simple example:</p>
-<pre><span class="k ">class</span> <span class="t ">MockList</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="t ">List</span> <span class="p ">{</span><span class="p ">}</span><span class="p ">;</span>
+<pre><code>class MockList extends Mock implements List {};
 
-<span class="t ">List</span> <span class="i ">m</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">MockList</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
+List m = new MockList();
+m.when(callsTo('add', anything)).alwaysReturn(0);
 
-<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">;</span>
+m.add('foo');
+m.add('bar');
 
-<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">verify</span><span class="p ">(</span><span class="i ">happenedExactly</span><span class="p ">(</span><span class="n ">2</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">verify</span><span class="p ">(</span><span class="i ">happenedOnce</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> unterminated string literal</pre>
+getLogs(m, callsTo('add', anything)).verify(happenedExactly(2));
+getLogs(m, callsTo('add', 'foo')).verify(happenedOnce);
+getLogs(m, callsTo('add', 'isNull)).verify(neverHappened);
+</code></pre>
 <p>Note that we don't need to provide argument matchers for all arguments,
 but we do need to provide arguments for all matchers. So this is allowed:</p>
-<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="n ">1</span><span class="p ">,</span> <span class="n ">2</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>m.when(callsTo('add')).alwaysReturn(0);
+m.add(1, 2);
+</code></pre>
 <p>But this is not allowed and will throw an exception:</p>
-<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
-<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="n ">1</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>m.when(callsTo('add', anything, anything)).alwaysReturn(0);
+m.add(1);
+</code></pre>
 <p>Here is a way to implement a 'spy', which is where we log the call
 but then hand it off to some other function, which is the same
 method in a real instance of the class being mocked:</p>
-<pre><span class="k ">class</span> <span class="t ">Foo</span> <span class="p ">{</span>
-  <span class="i ">bar</span><span class="p ">(</span><span class="i ">a</span><span class="p ">,</span> <span class="i ">b</span><span class="p ">,</span> <span class="i ">c</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">a</span> <span class="o ">+</span> <span class="i ">b</span> <span class="o ">+</span> <span class="i ">c</span><span class="p ">;</span>
-<span class="p ">}</span>
+<pre><code>class Foo {
+  bar(a, b, c) =&gt; a + b + c;
+}
 
-<span class="k ">class</span> <span class="t ">MockFoo</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="t ">Foo</span> <span class="p ">{</span>
-  <span class="t ">Foo</span> <span class="i ">real</span><span class="p ">;</span>
-  <span class="t ">MockFoo</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="i ">real</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">Foo</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="r ">this</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysCall</span><span class="p ">(</span><span class="i ">real</span><span class="p ">.</span><span class="i ">bar</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span>
-<span class="p ">}</span></pre></div>
+class MockFoo extends Mock implements Foo {
+  Foo real;
+  MockFoo() {
+    real = new Foo();
+    this.when(callsTo('bar')).alwaysCall(real.bar);
+  }
+}
+</code></pre></div>
 <div>
 <h3>Properties</h3>
 <div class="field"><h4 id="happenedAtLeastOnce">

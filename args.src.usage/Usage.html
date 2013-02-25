@@ -35,8 +35,9 @@
 <p>Takes an <code>ArgParser</code> and generates a string of usage (i.e. help) text for its
 defined options. Internally, it works like a tabular printer. The output is
 divided into three horizontal columns, like so:</p>
-<pre><span class="o ">-</span><span class="i ">h</span><span class="p ">,</span> <span class="o ">--</span><span class="i ">help</span>  <span class="t ">Prints</span> <span class="i ">the</span> <span class="i ">usage</span> <span class="i ">information</span>
-<span class="o ">|</span>  <span class="o ">|</span>        <span class="o ">|</span>                                 <span class="o ">|</span></pre>
+<pre><code>-h, --help  Prints the usage information
+|  |        |                                 |
+</code></pre>
 <p>It builds the usage text up one column at a time and handles padding with
 spaces and wrapping to the next line to keep the cells correctly lined up.</p>
 <pre class="source">
@@ -191,7 +192,7 @@ class Usage {
  writeLine(int column, String text) {
    // Write any pending newlines.
    while (newlinesNeeded &gt; 0) {
-     buffer.add('\n');
+     buffer.write('\n');
      newlinesNeeded--;
    }
 
@@ -199,19 +200,19 @@ class Usage {
    // to the next line.
    while (currentColumn != column) {
      if (currentColumn &lt; NUM_COLUMNS - 1) {
-       buffer.add(padRight('', columnWidths[currentColumn]));
+       buffer.write(padRight('', columnWidths[currentColumn]));
      } else {
-       buffer.add('\n');
+       buffer.write('\n');
      }
      currentColumn = (currentColumn + 1) % NUM_COLUMNS;
    }
 
    if (column &lt; columnWidths.length) {
      // Fixed-size column, so pad it.
-     buffer.add(padRight(text, columnWidths[column]));
+     buffer.write(padRight(text, columnWidths[column]));
    } else {
      // The last column, so just write it.
-     buffer.add(text);
+     buffer.write(text);
    }
 
    // Advance to the next column.
@@ -231,17 +232,17 @@ class Usage {
 
  buildAllowedList(Option option) {
    var allowedBuffer = new StringBuffer();
-   allowedBuffer.add('[');
+   allowedBuffer.write('[');
    bool first = true;
    for (var allowed in option.allowed) {
-     if (!first) allowedBuffer.add(', ');
-     allowedBuffer.add(allowed);
+     if (!first) allowedBuffer.write(', ');
+     allowedBuffer.write(allowed);
      if (allowed == option.defaultValue) {
-       allowedBuffer.add(' (default)');
+       allowedBuffer.write(' (default)');
      }
      first = false;
    }
-   allowedBuffer.add(']');
+   allowedBuffer.write(']');
    return allowedBuffer.toString();
  }
 }
@@ -360,17 +361,17 @@ numHelpLines = 0
 <pre class="source">
 buildAllowedList(Option option) {
  var allowedBuffer = new StringBuffer();
- allowedBuffer.add('[');
+ allowedBuffer.write('[');
  bool first = true;
  for (var allowed in option.allowed) {
-   if (!first) allowedBuffer.add(', ');
-   allowedBuffer.add(allowed);
+   if (!first) allowedBuffer.write(', ');
+   allowedBuffer.write(allowed);
    if (allowed == option.defaultValue) {
-     allowedBuffer.add(' (default)');
+     allowedBuffer.write(' (default)');
    }
    first = false;
  }
- allowedBuffer.add(']');
+ allowedBuffer.write(']');
  return allowedBuffer.toString();
 }
 </pre>
@@ -549,7 +550,7 @@ write(int column, String text) {
 writeLine(int column, String text) {
  // Write any pending newlines.
  while (newlinesNeeded &gt; 0) {
-   buffer.add('\n');
+   buffer.write('\n');
    newlinesNeeded--;
  }
 
@@ -557,19 +558,19 @@ writeLine(int column, String text) {
  // to the next line.
  while (currentColumn != column) {
    if (currentColumn &lt; NUM_COLUMNS - 1) {
-     buffer.add(padRight('', columnWidths[currentColumn]));
+     buffer.write(padRight('', columnWidths[currentColumn]));
    } else {
-     buffer.add('\n');
+     buffer.write('\n');
    }
    currentColumn = (currentColumn + 1) % NUM_COLUMNS;
  }
 
  if (column &lt; columnWidths.length) {
    // Fixed-size column, so pad it.
-   buffer.add(padRight(text, columnWidths[column]));
+   buffer.write(padRight(text, columnWidths[column]));
  } else {
    // The last column, so just write it.
-   buffer.add(text);
+   buffer.write(text);
  }
 
  // Advance to the next column.

@@ -229,9 +229,11 @@ mock. Proxies can be used to wrap real objects or to define
 more complex return/throw behavior. You could even (if you
 wanted) use proxies to emulate the behavior of thenReturn;
 e.g.:</p>
-<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span></pre>
+<pre><code>m.when(callsTo('foo')).thenReturn(0)
+</code></pre>
 <p>is equivalent to:</p>
-<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenCall</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="n ">0</span><span class="p ">)</span></pre>
+<pre><code>m.when(callsTo('foo')).thenCall(() =&gt; 0)
+</code></pre>
 <pre class="source">
 Behavior thenCall(value, [count = 1]) {
  actions.add(new Responder(value, count, Action.PROXY));

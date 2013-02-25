@@ -87,19 +87,7 @@ class Task {
 
  Future&lt;bool&gt; run(TaskContext ctx) {
    requireArgumentNotNull(ctx, 'ctx');
-
-   Future&lt;bool&gt; f;
-
-   try {
-     f = _exec(ctx);
-   } catch(error, stackTrace) {
-     return new Future.immediateError(error, stackTrace);
-   }
-   if(f == null) {
-     return new Future.immediateError(_nullFutureResultEx);
-   } else {
-     return f;
-   }
+   return new Future&lt;bool&gt;.of(() =&gt; _exec(ctx));
  }
 
  @override
@@ -219,19 +207,7 @@ String getUsage() {
 <pre class="source">
 Future&lt;bool&gt; run(TaskContext ctx) {
  requireArgumentNotNull(ctx, 'ctx');
-
- Future&lt;bool&gt; f;
-
- try {
-   f = _exec(ctx);
- } catch(error, stackTrace) {
-   return new Future.immediateError(error, stackTrace);
- }
- if(f == null) {
-   return new Future.immediateError(_nullFutureResultEx);
- } else {
-   return f;
- }
+ return new Future&lt;bool&gt;.of(() =&gt; _exec(ctx));
 }
 </pre>
 </div>

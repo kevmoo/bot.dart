@@ -43,7 +43,7 @@ class TaskArgument {
  TaskArgument(this.name, {this.required: false, this.multiple: false}) {
    requireArgumentNotNull(required, 'required');
    requireArgumentNotNull(multiple, 'multiple');
-   requireArgumentMatches(nameRegex, name, 'name');
+   requireArgumentContainsPattern(nameRegex, name, 'name');
  }
 
  static void validateArgs(List&lt;TaskArgument&gt; args) {
@@ -139,7 +139,7 @@ new <strong>TaskArgument</strong>(<a href="http://api.dartlang.org/dart_core/Str
 TaskArgument(this.name, {this.required: false, this.multiple: false}) {
  requireArgumentNotNull(required, 'required');
  requireArgumentNotNull(multiple, 'multiple');
- requireArgumentMatches(nameRegex, name, 'name');
+ requireArgumentContainsPattern(nameRegex, name, 'name');
 }
 </pre>
 </div>

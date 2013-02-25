@@ -38,10 +38,12 @@ of <code>type</code> (or a subtype).</p>
 approximate this test by using a generic wrapper class.</p>
 <p>For example, to test whether 'bar' is an instance of type
 'Foo', we would write:</p>
-<pre><span class="i ">expect</span><span class="p ">(</span><span class="i ">bar</span><span class="p ">,</span> <span class="k ">new</span> <span class="i ">isInstanceOf</span><span class="o ">&lt;</span><span class="t ">Foo</span><span class="o ">&gt;</span><span class="p ">(</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>expect(bar, new isInstanceOf&lt;Foo&gt;());
+</code></pre>
 <p>To get better error message, supply a name when creating the
 Type wrapper; e.g.:</p>
-<pre><span class="i ">expect</span><span class="p ">(</span><span class="i ">bar</span><span class="p ">,</span> <span class="k ">new</span> <span class="i ">isInstanceOf</span><span class="o ">&lt;</span><span class="t ">Foo</span><span class="o ">&gt;</span><span class="p ">(</span><span class="s si">'Foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>expect(bar, new isInstanceOf&lt;Foo&gt;('Foo'));
+</code></pre>
 <p>Note that this does not currently work in dart2js; it will
 match any type, and isNot(new isInstanceof&lt;T>()) will always
 fail. This is because dart2js currently ignores template type

@@ -42,7 +42,7 @@ follows (in descending order): <a class="crossref" href="../logging/Level.html#S
 own level, make sure you use a value between those used in <a class="crossref" href="../logging/Level.html#ALL">Level.ALL</a> and
 <a class="crossref" href="../logging/Level.html#OFF">Level.OFF</a>.</p>
 <pre class="source">
-class Level implements Comparable {
+class Level implements Comparable&lt;Level&gt; {
 
  // TODO(sigmund): mark name/value as 'const' when the language supports it.
  final String name;
@@ -98,7 +98,7 @@ class Level implements Comparable {
 </div>
 <h3>Implements</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../dart_core/Comparable.html">Comparable</a></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_core/Comparable.html">Comparable&lt;Level&gt;</a></span></p>
 <div>
 <h3>Static Properties</h3>
 <div class="field"><h4 id="ALL">
@@ -359,7 +359,7 @@ bool operator ==(Level other) =&gt; other != null &amp;&amp; value == other.valu
 <p>May throw an <code>ArgumentError</code> if 
 <span class="param">other</span> is of a type that
 is not comparable to <code>this</code>.</p>
-<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Comparable.html">Comparable</a> </div></div>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Comparable.html">Comparable</a>&lt;<a href="../logging/Level.html">Level</a>&gt; </div></div>
 <pre class="source">
 int compareTo(Level other) =&gt; value - other.value;
 </pre>

@@ -468,7 +468,8 @@ restrict the returned logs based on the action the mock performed.
 <span class="param">logFilter</span> can be a <a class="crossref" href="../mock/CallMatcher.html">CallMatcher</a> or a predicate function that
 takes a <a class="crossref" href="../mock/LogEntry.html">LogEntry</a> and returns a bool.</p>
 <p>Typical usage:</p>
-<pre><span class="i ">getLogs</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span>...<span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">verify</span><span class="p ">(</span>...<span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>getLogs(callsTo(...)).verify(...);
+</code></pre>
 <pre class="source">
 LogEntryList getLogs([CallMatcher logFilter,
                      Matcher actionMatcher,
@@ -668,7 +669,8 @@ bool verifyZeroInteractions() {
 A [CallMatcher] [filter] must be supplied, and the <a class="crossref" href="../mock/Behavior.html">Behavior</a>s for
 that signature are returned (being created first if needed).</p>
 <p>Typical use case:</p>
-<pre><span class="i ">mock</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span>...<span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span>...<span class="p ">)</span><span class="p ">;</span></pre>
+<pre><code>mock.when(callsTo(...)).alwaysReturn(...);
+</code></pre>
 <pre class="source">
 Behavior when(CallMatcher logFilter) {
  String key = logFilter.toString();

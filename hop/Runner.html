@@ -36,9 +36,9 @@
 class Runner {
  final ArgParser _parser;
  ArgResults _args;
- final BaseConfig _state;
+ final HopConfig _state;
 
- Runner(BaseConfig config, Iterable&lt;String&gt; args) :
+ Runner(HopConfig config, Iterable&lt;String&gt; args) :
    this._state = config,
    this._parser = _getParser(config) {
    _args = _parser.parse(args);
@@ -95,7 +95,7 @@ class Runner {
   *
   * [runCore] should be the last method you call in an application.
   */
- static void runCore(BaseConfig config) {
+ static void runCore(HopConfig config) {
    final options = new Options();
 
    final parser = _getParser(config);
@@ -104,9 +104,9 @@ class Runner {
    try {
      args = tryArgsCompletion(parser);
    } on FormatException catch(ex, stack) {
-     print("There was an error parsing the provided arguments");
-     print(ex.message);
-     print('');
+     config.doPrint("There was an error parsing the provided arguments");
+     config.doPrint(ex.message);
+     config.doPrint('');
      _printHelp(config);
 
      _libLogger.severe(ex.message);
@@ -181,7 +181,7 @@ class Runner {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="runCore">
 <button class="show-code">Code</button>
-void <strong>runCore</strong>(<a href="../hop/BaseConfig.html">BaseConfig</a> config) <a class="anchor-link" href="#runCore"
+void <strong>runCore</strong>(<a href="../hop/HopConfig.html">HopConfig</a> config) <a class="anchor-link" href="#runCore"
               title="Permalink to Runner.runCore">#</a></h4>
 <div class="doc">
 <p>Parses provided command line args
@@ -189,7 +189,7 @@ Handles command completion with the correct paramaters</p>
 <p><a class="crossref" href="../hop/Runner.html#runCore">runCore</a> calls <code>io.exit</code> which terminates the application.</p>
 <p><a class="crossref" href="../hop/Runner.html#runCore">runCore</a> should be the last method you call in an application.</p>
 <pre class="source">
-static void runCore(BaseConfig config) {
+static void runCore(HopConfig config) {
  final options = new Options();
 
  final parser = _getParser(config);
@@ -198,9 +198,9 @@ static void runCore(BaseConfig config) {
  try {
    args = tryArgsCompletion(parser);
  } on FormatException catch(ex, stack) {
-   print("There was an error parsing the provided arguments");
-   print(ex.message);
-   print('');
+   config.doPrint("There was an error parsing the provided arguments");
+   config.doPrint(ex.message);
+   config.doPrint('');
    _printHelp(config);
 
    _libLogger.severe(ex.message);
@@ -275,11 +275,11 @@ static Future&lt;RunResult&gt; runTask(TaskContext context, Task task) {
 <h3>Constructors</h3>
 <div class="method"><h4 id="Runner">
 <button class="show-code">Code</button>
-new <strong>Runner</strong>(<a href="../hop/BaseConfig.html">BaseConfig</a> config, <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args) <a class="anchor-link" href="#Runner"
+new <strong>Runner</strong>(<a href="../hop/HopConfig.html">HopConfig</a> config, <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args) <a class="anchor-link" href="#Runner"
               title="Permalink to Runner.Runner">#</a></h4>
 <div class="doc">
 <pre class="source">
-Runner(BaseConfig config, Iterable&lt;String&gt; args) :
+Runner(HopConfig config, Iterable&lt;String&gt; args) :
  this._state = config,
  this._parser = _getParser(config) {
  _args = _parser.parse(args);

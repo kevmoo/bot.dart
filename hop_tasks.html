@@ -80,7 +80,6 @@ Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
 <pre class="source">
 Future&lt;int&gt; pipeProcess(Process process,
    {Action1&lt;String&gt; stdOutWriter, Action1&lt;String&gt; stdErrWriter}) {
- final completer = new Completer&lt;int&gt;();
 
  bool finished = false;
 
@@ -96,19 +95,17 @@ Future&lt;int&gt; pipeProcess(Process process,
  }
 
  if(stdOutWriter != null) {
-   process.stdout.onData = () {
-     final data = process.stdout.read();
+   process.stdout.listen((List&lt;int&gt; data) {
      final str = new String.fromCharCodes(data).trim();
 
      if(validateNotFinished('stdout - $str')) {
        stdOutWriter(str);
      }
-   };
+   });
  }
 
  if(stdErrWriter != null) {
-   process.stderr.onData = () {
-     final data = process.stderr.read();
+   process.stderr.listen((List&lt;int&gt; data) {
      assert(data != null);
      final str = new String.fromCharCodes(data).trim();
 
@@ -116,17 +113,14 @@ Future&lt;int&gt; pipeProcess(Process process,
        stdErrWriter(str);
      }
 
-   };
+   });
  }
 
- process.onExit = (int exitCode){
-   if(validateNotFinished('onExit')) {
-     finished = true;
-     completer.complete(exitCode);
-   }
- };
-
- return completer.future;
+ return process.exitCode
+     .whenComplete(() {
+       validateNotFinished('onExit');
+       finished = true;
+     });
 }
 </pre>
 </div>
@@ -334,24 +328,46 @@ Task getCompileDocsFunc(String targetBranch, String packageDir,
 </div>
 <div class="method"><h4 id="createDart2JsTask">
 <button class="show-code">Code</button>
-<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; inputs, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> output: null, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageRoot: null, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> minify: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowUnsafeEval: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> liveTypeAnalysis: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
+<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(delayedRootList, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> output: null, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageRoot: null, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> minify: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowUnsafeEval: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> liveTypeAnalysis: true, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
               title="Permalink to createDart2JsTask">#</a></h4>
 <div class="doc">
+<p>
+<span class="param">delayedRootList</span> a [List<String>] mapping to paths to libraries or some
+combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
 <pre class="source">
-Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
+Task createDart2JsTask(dynamic delayedRootList, {String output: null,
  String packageRoot: null, bool minify: false, bool allowUnsafeEval: true,
  bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) {
+
  return new Task.async((context) {
-   final futureFuncs = inputs
-       .map((p) =&gt; () =&gt; _dart2js(context, p,
-           output: output,
-           minify: minify,
-           allowUnsafeEval: allowUnsafeEval,
-           packageRoot: packageRoot,
-           liveTypeAnalysis: liveTypeAnalysis,
-           rejectDeprecatedFeatures: rejectDeprecatedFeatures))
-       .toList();
-   return _chainTasks(context, futureFuncs);
+   bool errors = false;
+
+   return getDelayedResult(delayedRootList)
+       .then((List&lt;String&gt; inputs) {
+
+         return Future.forEach(inputs, (path) {
+           if(errors) {
+             context.warning('Compile errors. Skipping $path');
+             return new Future.immediate(null);
+           }
+
+           return _dart2js(context, path,
+               output: output,
+               minify: minify,
+               allowUnsafeEval: allowUnsafeEval,
+               packageRoot: packageRoot,
+               liveTypeAnalysis: liveTypeAnalysis,
+               rejectDeprecatedFeatures: rejectDeprecatedFeatures)
+               .then((bool success) {
+                 // should not have been run if we had pending errors
+                 assert(errors == false);
+                 errors = !success;
+               });
+         });
+       })
+       .then((_) {
+         return !errors;
+       });
  }, description: 'Run Dart-to-Javascript compiler');
 }
 </pre>

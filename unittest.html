@@ -31,8 +31,9 @@
 <p>To import this library, use the pub package manager.
 Create a pubspec.yaml file in your project and add
 a dependency on unittest with the following lines:</p>
-<pre><span class="i ">dependencies</span><span class="p ">:</span>
-  <span class="i ">unittest</span><span class="p ">:</span> <span class="i ">any</span></pre>
+<pre><code>dependencies:
+  unittest: any
+</code></pre>
 <p>Then run 'pub install' from your project directory or using
 the DartEditor.</p>
 <p>Please see <a href="http://pub.dartlang.org/doc">Pub Getting Started</a>
@@ -47,71 +48,75 @@ for more details about the pub package manager.</p>
    running native Dart tests on the VM).</p></li></ul>
 <h2>Examples</h2>
 <p>A trivial test:</p>
-<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
-<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is a test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-<span class="p ">}</span></pre>
+<pre><code>import 'package:unittest/unittest.dart';
+main() {
+  test('this is a test', () {
+    int x = 2 + 3;
+    expect(x, equals(5));
+  });
+}
+</code></pre>
 <p>Multiple tests:</p>
-<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
-<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is a test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'this is another test'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-    <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-<span class="p ">}</span></pre>
+<pre><code>import 'package:unittest/unittest.dart';
+main() {
+  test('this is a test', () {
+    int x = 2 + 3;
+    expect(x, equals(5));
+  });
+  test('this is another test', () {
+    int x = 2 + 3;
+    expect(x, equals(5));
+  });
+}
+</code></pre>
 <p>Multiple tests, grouped by category:</p>
-<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
-<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-  <span class="i ">group</span><span class="p ">(</span><span class="s si">'group A'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="i ">test</span><span class="p ">(</span><span class="s si">'test A.1'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="i ">test</span><span class="p ">(</span><span class="s si">'test A.2'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="i ">group</span><span class="p ">(</span><span class="s si">'group B'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="i ">test</span><span class="p ">(</span><span class="s si">'this B.1'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-<span class="p ">}</span></pre>
+<pre><code>import 'package:unittest/unittest.dart';
+main() {
+  group('group A', () {
+    test('test A.1', () {
+      int x = 2 + 3;
+      expect(x, equals(5));
+    });
+    test('test A.2', () {
+      int x = 2 + 3;
+      expect(x, equals(5));
+    });
+  });
+  group('group B', () {
+    test('this B.1', () {
+      int x = 2 + 3;
+      expect(x, equals(5));
+    });
+  });
+}
+</code></pre>
 <p>Asynchronous tests: if callbacks expect between 0 and 2 positional arguments,
 depending on the suffix of expectAsyncX(). expectAsyncX() will wrap a
 function into a new callback and will not consider the test complete until
 that callback is run. A count argument can be provided to specify the number
 of times the callback should be called (the default is 1).</p>
-<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
-<span class="k ">import</span> <span class="s si">'dart:isolate'</span><span class="p ">;</span>
-<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed once'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="c ">// wrap the callback of an asynchronous call with [expectAsync0] if</span>
-    <span class="c ">// the callback takes 0 arguments...</span>
-    <span class="k ">var</span> <span class="i ">timer</span> <span class="o ">=</span> <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
+<pre><code>import 'package:unittest/unittest.dart';
+import 'dart:isolate';
+main() {
+  test('callback is executed once', () {
+    // wrap the callback of an asynchronous call with [expectAsync0] if
+    // the callback takes 0 arguments...
+    var timer = Timer.run(expectAsync0(() {
+      int x = 2 + 3;
+      expect(x, equals(5));
+    }));
+  });
 
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed twice'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="k ">var</span> <span class="i ">callback</span> <span class="o ">=</span> <span class="i ">expectAsync0</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-      <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">,</span> <span class="i ">count</span><span class="p ">:</span> <span class="n ">2</span><span class="p ">)</span><span class="p ">;</span> <span class="c ">// &lt;-- we can indicate multiplicity to [expectAsync0]</span>
-    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="i ">callback</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-<span class="p ">}</span></pre>
+  test('callback is executed twice', () {
+    var callback = expectAsync0(() {
+      int x = 2 + 3;
+      expect(x, equals(5));
+    }, count: 2); // &lt;-- we can indicate multiplicity to [expectAsync0]
+    Timer.run(callback);
+    Timer.run(callback);
+  });
+}
+</code></pre>
 <p>expectAsyncX() will wrap the callback code in a try/catch handler to handle
 exceptions (treated as test failures). There may be times when the number of
 times a callback should be called is non-deterministic. In this case a dummy
@@ -128,24 +133,25 @@ features or fixes to the current spec (e.g. see
 <p>Meanwhile, we plan to add this alternative API for callbacks of more than 2
 arguments or that take named parameters. (this is not implemented yet,
 but will be coming here soon).</p>
-<pre><span class="k ">import</span> <span class="s si">'package:unittest/unittest.dart'</span><span class="p ">;</span>
-<span class="k ">import</span> <span class="s si">'dart:isolate'</span><span class="p ">;</span>
-<span class="i ">main</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-  <span class="i ">test</span><span class="p ">(</span><span class="s si">'callback is executed'</span><span class="p ">,</span> <span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-    <span class="c ">// indicate ahead of time that an async callback is expected.</span>
-    <span class="k ">var</span> <span class="i ">async</span> <span class="o ">=</span> <span class="i ">startAsync</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="t ">Timer</span><span class="p ">.</span><span class="i ">run</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-      <span class="c ">// Guard the body of the callback, so errors are propagated</span>
-      <span class="c ">// correctly.</span>
-      <span class="i ">guardAsync</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
-        <span class="t ">int</span> <span class="i ">x</span> <span class="o ">=</span> <span class="n ">2</span> <span class="o ">+</span> <span class="n ">3</span><span class="p ">;</span>
-        <span class="i ">expect</span><span class="p ">(</span><span class="i ">x</span><span class="p ">,</span> <span class="i ">equals</span><span class="p ">(</span><span class="n ">5</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
-      <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-      <span class="c ">// indicate that the asynchronous callback was invoked.</span>
-      <span class="i ">async</span><span class="p ">.</span><span class="i ">complete</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
-    <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-  <span class="p ">}</span><span class="p ">)</span><span class="p ">;</span>
-<span class="p ">}</span></pre></div>
+<pre><code>import 'package:unittest/unittest.dart';
+import 'dart:isolate';
+main() {
+  test('callback is executed', () {
+    // indicate ahead of time that an async callback is expected.
+    var async = startAsync();
+    Timer.run(() {
+      // Guard the body of the callback, so errors are propagated
+      // correctly.
+      guardAsync(() {
+        int x = 2 + 3;
+        expect(x, equals(5));
+      });
+      // indicate that the asynchronous callback was invoked.
+      async.complete();
+    });
+  });
+}
+</code></pre></div>
 <div>
 <h3>Properties</h3>
 <div class="field"><h4 id="config">

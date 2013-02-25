@@ -40,10 +40,10 @@
 <pre class="source">
 String padRight(String source, int length) {
  final result = new StringBuffer();
- result.add(source);
+ result.write(source);
 
  while (result.length &lt; length) {
-   result.add(' ');
+   result.write(' ');
  }
 
  return result.toString();
