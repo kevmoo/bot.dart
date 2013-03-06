@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>HopConfig class / hop Library / Dart Documentation</title>
+        <title>HopConfig class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/HopConfig.html">HopConfig</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -34,221 +34,106 @@
 <div class="doc">
 <pre class="source">
 class HopConfig {
- static final RegExp _validNameRegExp = new RegExp(r'^[a-z][a-z0-9_-]*$');
- static const _reservedTasks = const[COMPLETION_COMMAND_NAME];
- final Map&lt;String, Task&gt; _tasks = new Map();
- ReadOnlyCollection&lt;String&gt; _sortedTaskNames;
-
- HopConfig();
-
- /// Can only be accessed when frozen
- /// Always sorted
- List&lt;String&gt; get taskNames {
-   requireFrozen();
-   return _sortedTaskNames;
- }
-
- bool hasTask(String taskName) {
-   requireFrozen();
-   return _tasks.containsKey(taskName);
- }
-
- Task _getTask(String taskName) {
-   return _tasks[taskName];
- }
-
- void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
-   addTask(name, new Task.sync(func));
- }
-
- void addAsync(String name, TaskDefinition execFuture) {
-   addTask(name, new Task.async(execFuture));
- }
-
- void addTask(String name, Task task) {
-   require(!isFrozen, "Cannot add a task. Frozen.");
-   requireArgumentNotNullOrEmpty(name, 'name');
-   requireArgumentContainsPattern(_validNameRegExp, name, 'name');
-   requireArgument(!_reservedTasks.contains(name), 'task',
-       'The provided task has a reserved name');
-   requireArgument(!_tasks.containsKey(name), 'task',
-       'A task with name ${name} already exists');
-
-   requireArgumentNotNull(task, 'task');
-   _tasks[name] = task;
- }
-
- void requireFrozen() {
-   if(!isFrozen) {
-     throw "not frozen!";
-   }
- }
-
- void freeze() {
-   require(!isFrozen, "Already frozen.");
-   final list = new List&lt;String&gt;.from(_tasks.keys);
-   list.sort();
-   _sortedTaskNames = new ReadOnlyCollection&lt;String&gt;.wrap(list);
- }
-
- bool get isFrozen =&gt; _sortedTaskNames != null;
+ final TaskRegistry taskRegistry;
+ final ArgParser parser;
+ final ArgResults args;
+ final Printer _printer;
 
  /**
-  * Defaults to [print] method from `dart:io`
+  * This constructor exists for testing Hop.
+  *
+  * If you're using it in another context, you might be doing something wrong.
   */
- void doPrint(Object value) {
-   print(value);
+ factory HopConfig(TaskRegistry registry, List&lt;String&gt; args, Printer printer) {
+   registry._freeze();
+
+   final parser = _getParser(registry, Level.INFO);
+   final argResults = parser.parse(args);
+
+   return new HopConfig._internal(registry, parser, argResults, printer);
  }
+
+ HopConfig._internal(this.taskRegistry, this.parser, this.args, this._printer) {
+   taskRegistry._freeze();
+   requireArgumentNotNull(args, 'args');
+   requireArgumentNotNull(parser, 'parser');
+   requireArgumentNotNull(_printer, '_printer');
+ }
+
+ void doPrint(Object value) =&gt; _printer(value);
 }
 </pre>
 </div>
-<h3>Subclasses</h3>
-<p>
-<span class="type-box"><span class="icon-class"></span><a href="../hop/BaseConfig.html">BaseConfig</a></span></p>
 <div>
 <h3>Constructors</h3>
 <div class="method"><h4 id="HopConfig">
 <button class="show-code">Code</button>
-new <strong>HopConfig</strong>() <a class="anchor-link" href="#HopConfig"
+factory <strong>HopConfig</strong>(<a href="../hop/TaskRegistry.html">TaskRegistry</a> registry, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args, <a href="../hop/Printer.html">Printer</a> printer) <a class="anchor-link" href="#HopConfig"
               title="Permalink to HopConfig.HopConfig">#</a></h4>
 <div class="doc">
+<p>This constructor exists for testing Hop.</p>
+<p>If you're using it in another context, you might be doing something wrong.</p>
 <pre class="source">
-HopConfig();
+factory HopConfig(TaskRegistry registry, List&lt;String&gt; args, Printer printer) {
+ registry._freeze();
+
+ final parser = _getParser(registry, Level.INFO);
+ final argResults = parser.parse(args);
+
+ return new HopConfig._internal(registry, parser, argResults, printer);
+}
 </pre>
 </div>
 </div>
 </div>
 <div>
 <h3>Properties</h3>
-<div class="field"><h4 id="isFrozen">
+<div class="field"><h4 id="args">
 <button class="show-code">Code</button>
-final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isFrozen</strong> <a class="anchor-link"
-            href="#isFrozen"
-            title="Permalink to HopConfig.isFrozen">#</a>
+final <a href="../args/ArgResults.html">ArgResults</a>         <strong>args</strong> <a class="anchor-link"
+            href="#args"
+            title="Permalink to HopConfig.args">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-bool get isFrozen =&gt; _sortedTaskNames != null;
+args
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="taskNames">
+<div class="field"><h4 id="parser">
 <button class="show-code">Code</button>
-final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>taskNames</strong> <a class="anchor-link"
-            href="#taskNames"
-            title="Permalink to HopConfig.taskNames">#</a>
+final <a href="../args/ArgParser.html">ArgParser</a>         <strong>parser</strong> <a class="anchor-link"
+            href="#parser"
+            title="Permalink to HopConfig.parser">#</a>
         </h4>
         <div class="doc">
-<p>Can only be accessed when frozen
-Always sorted</p>
 <pre class="source">
-List&lt;String&gt; get taskNames {
- requireFrozen();
- return _sortedTaskNames;
-}
+parser
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="taskRegistry">
+<button class="show-code">Code</button>
+final <a href="../hop/TaskRegistry.html">TaskRegistry</a>         <strong>taskRegistry</strong> <a class="anchor-link"
+            href="#taskRegistry"
+            title="Permalink to HopConfig.taskRegistry">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+taskRegistry
 </pre>
 </div>
 </div>
 </div>
 <div>
 <h3>Methods</h3>
-<div class="method"><h4 id="addAsync">
-<button class="show-code">Code</button>
-void <strong>addAsync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsync"
-              title="Permalink to HopConfig.addAsync">#</a></h4>
-<div class="doc">
-<pre class="source">
-void addAsync(String name, TaskDefinition execFuture) {
- addTask(name, new Task.async(execFuture));
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="addSync">
-<button class="show-code">Code</button>
-void <strong>addSync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#addSync"
-              title="Permalink to HopConfig.addSync">#</a></h4>
-<div class="doc">
-<pre class="source">
-void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
- addTask(name, new Task.sync(func));
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="addTask">
-<button class="show-code">Code</button>
-void <strong>addTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
-              title="Permalink to HopConfig.addTask">#</a></h4>
-<div class="doc">
-<pre class="source">
-void addTask(String name, Task task) {
- require(!isFrozen, "Cannot add a task. Frozen.");
- requireArgumentNotNullOrEmpty(name, 'name');
- requireArgumentContainsPattern(_validNameRegExp, name, 'name');
- requireArgument(!_reservedTasks.contains(name), 'task',
-     'The provided task has a reserved name');
- requireArgument(!_tasks.containsKey(name), 'task',
-     'A task with name ${name} already exists');
-
- requireArgumentNotNull(task, 'task');
- _tasks[name] = task;
-}
-</pre>
-</div>
-</div>
 <div class="method"><h4 id="doPrint">
 <button class="show-code">Code</button>
 void <strong>doPrint</strong>(<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> value) <a class="anchor-link" href="#doPrint"
               title="Permalink to HopConfig.doPrint">#</a></h4>
 <div class="doc">
-<p>Defaults to <code>print</code> method from <code>dart:io</code></p>
 <pre class="source">
-void doPrint(Object value) {
- print(value);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="freeze">
-<button class="show-code">Code</button>
-void <strong>freeze</strong>() <a class="anchor-link" href="#freeze"
-              title="Permalink to HopConfig.freeze">#</a></h4>
-<div class="doc">
-<pre class="source">
-void freeze() {
- require(!isFrozen, "Already frozen.");
- final list = new List&lt;String&gt;.from(_tasks.keys);
- list.sort();
- _sortedTaskNames = new ReadOnlyCollection&lt;String&gt;.wrap(list);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="hasTask">
-<button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>hasTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> taskName) <a class="anchor-link" href="#hasTask"
-              title="Permalink to HopConfig.hasTask">#</a></h4>
-<div class="doc">
-<pre class="source">
-bool hasTask(String taskName) {
- requireFrozen();
- return _tasks.containsKey(taskName);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="requireFrozen">
-<button class="show-code">Code</button>
-void <strong>requireFrozen</strong>() <a class="anchor-link" href="#requireFrozen"
-              title="Permalink to HopConfig.requireFrozen">#</a></h4>
-<div class="doc">
-<pre class="source">
-void requireFrozen() {
- if(!isFrozen) {
-   throw "not frozen!";
- }
-}
+void doPrint(Object value) =&gt; _printer(value);
 </pre>
 </div>
 </div>

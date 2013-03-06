@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>hop_tasks Library / Dart Documentation</title>
+        <title>hop_tasks Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="index.html"><div class="logo"></div></a>
-          <a href="index.html">Dart Documentation</a>
+          <a href="index.html">BOT Documentation</a>
          &rsaquo; <a href="hop_tasks.html">hop_tasks</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -249,59 +249,14 @@ Task getBranchForDirTask(String sourceBranch, String sourceDir,
 <a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, <a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, delayedLibraryList, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#compileDocs"
               title="Permalink to compileDocs">#</a></h4>
 <div class="doc">
-<p>
-<span class="param">delayedLibraryList</span> a [List<String>] mapping to paths to libraries or some
-combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
+<p>This method is deprecated. Use <a class="crossref" href="hop_tasks.html#createDartDocTask">createDartDocTask</a> instead.</p>
 <pre class="source">
+@deprecated
 Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
    dynamic delayedLibraryList, String packageDir,
    {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
-
- final excludeList = excludeLibs == null ? [] : excludeLibs.toList();
-
- final parseResult = ctx.arguments;
- final bool allowDirty = parseResult[_allowDirtyArg];
-
- final currentWorkingDir = new Directory.current().path;
-
- GitDir gitDir;
- List&lt;String&gt; libs;
-
- return GitDir.fromExisting(currentWorkingDir)
-     .then((GitDir value) {
-       gitDir = value;
-
-       return gitDir.isWorkingTreeClean();
-     })
-     .then((bool isClean) {
-       if(!allowDirty &amp;&amp; !isClean) {
-         ctx.fail('Working tree is dirty. Cannot generate docs.');
-       }
-
-       return getDelayedResult(delayedLibraryList);
-     })
-     .then((List&lt;String&gt; value) {
-       assert(value != null);
-       libs = value;
-
-       return _getCommitMessageFuture(gitDir);
-     })
-     .then((String commitMessage) {
-
-       return gitDir.populateBranch(targetBranch,
-           (TempDir td) =&gt; _doDocsPopulate(ctx, td, libs, packageDir, excludeList, linkApi),
-           commitMessage);
-     })
-     .then((Commit value) {
-       if(value == null) {
-         ctx.info('No commit. Nothing changed.');
-       } else {
-         ctx.info('New commit created at branch $targetBranch');
-         ctx.info('Message: ${value.message}');
-       }
-
-       return true;
-     });
+ return _compileDocs(ctx, targetBranch, delayedLibraryList, packageDir,
+     excludeLibs, linkApi, null);
 }
 </pre>
 </div>
@@ -311,17 +266,57 @@ Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
 <a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch, <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir, delayedLibraryList, {<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false}) <a class="anchor-link" href="#getCompileDocsFunc"
               title="Permalink to getCompileDocsFunc">#</a></h4>
 <div class="doc">
-<p>
-<span class="param">delayedLibraryList</span> a [List<String>] mapping to paths to libraries or some
-combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
+<p>This method is deprecated. Use <a class="crossref" href="hop_tasks.html#createDartDocTask">createDartDocTask</a> instead.</p>
 <pre class="source">
+@deprecated
 Task getCompileDocsFunc(String targetBranch, String packageDir,
                        dynamic delayedLibraryList,
                        {Iterable&lt;String&gt; excludeLibs, bool linkApi: false}) {
- return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, delayedLibraryList,
-     packageDir, excludeLibs: excludeLibs, linkApi: linkApi),
-     description: 'Generate documentation for the provided libraries.',
-     config: _dartDocParserConfig);
+ return createDartDocTask(delayedLibraryList,
+     targetBranch: targetBranch,
+     packageDir: packageDir,
+     excludeLibs:excludeLibs,
+     linkApi:linkApi);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createDartDocTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createDartDocTask</strong>(delayedLibraryList, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> targetBranch: 'gh-pages', <a href="http://api.dartlang.org/dart_core/String.html">String</a> packageDir: 'packages/', <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; excludeLibs, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> linkApi: false, <a href="bot/Func2.html">Func2</a> postBuild}) <a class="anchor-link" href="#createDartDocTask"
+              title="Permalink to createDartDocTask">#</a></h4>
+<div class="doc">
+<p>
+<span class="param">targetBranch</span> the Git branch that will contain the generated docs. If the
+branch doesn't exist, it will be created. Default: <code>gh-pages</code></p>
+<p>
+<span class="param">packageDir</span> the package directory for the current project. Default: <code>packages/</code></p>
+<p>
+<span class="param">delayedLibraryList</span> a [List<String>] mapping to paths to libraries or some
+combinations of <code>Future</code> or <code>Function</code> values that return a [List<String>].</p>
+<p>
+<span class="param">postBuild</span> A <code>Function</code> to call before content is committed. It has the
+signature <code>Future postBuild(TaskLogger logger, String tempDocPath)</code>. Use this
+if you want to modify the doc output.</p>
+<pre class="source">
+Task createDartDocTask(dynamic delayedLibraryList, {
+ String targetBranch: 'gh-pages',
+ String packageDir: 'packages/',
+ Iterable&lt;String&gt; excludeLibs,
+ bool linkApi: false,
+ Func2&lt;TaskContext, String, Future&gt; postBuild
+ }) {
+ requireArgumentNotNull(targetBranch, 'targetBranch');
+ requireArgumentNotNull(packageDir, 'packageDir');
+
+ return new Task.async((ctx) {
+   targetBranch = ctx.arguments[_targetBranchArg];
+
+   return _compileDocs(ctx, targetBranch, delayedLibraryList, packageDir,
+       excludeLibs, linkApi, postBuild);
+ },
+ description: 'Generate documentation for the provided libraries.',
+ config: (parser) =&gt; _dartDocParserConfig(parser, targetBranch));
 }
 </pre>
 </div>

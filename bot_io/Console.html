@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Console class / bot_io Library / Dart Documentation</title>
+        <title>Console class / bot_io Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/Console.html">Console</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -34,6 +34,20 @@
 <div class="doc">
 <pre class="source">
 class Console {
+
+ /**
+  * `true` if it is valid to include [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code)
+  * entities in values sent to standard output (usually via [print]).
+  *
+  * At the moment, this is just a check to see if the `CLICOLOR` value is set
+  * in [Platform.environment].
+  *
+  * Other methods might include checking the value of the `TERM` environment
+  * variable or the output of `tput colors` in bash.
+  *
+  * Open to feedback and suggestions here.
+  */
+ static bool get supportsColor =&gt; Platform.environment.containsKey('CLICOLOR');
 
  static Iterable&lt;String&gt; getTable(List source,
      List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
@@ -99,6 +113,28 @@ class Console {
  }
 }
 </pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="supportsColor">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>supportsColor</strong> <a class="anchor-link"
+            href="#supportsColor"
+            title="Permalink to Console.supportsColor">#</a>
+        </h4>
+        <div class="doc">
+<p><code>true</code> if it is valid to include <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
+entities in values sent to standard output (usually via <code>print</code>).</p>
+<p>At the moment, this is just a check to see if the <code>CLICOLOR</code> value is set
+in <code>Platform.environment</code>.</p>
+<p>Other methods might include checking the value of the <code>TERM</code> environment
+variable or the output of <code>tput colors</code> in bash.</p>
+<p>Open to feedback and suggestions here.</p>
+<pre class="source">
+static bool get supportsColor =&gt; Platform.environment.containsKey('CLICOLOR');
+</pre>
+</div>
+</div>
 </div>
 <div>
 <h3>Static Methods</h3>

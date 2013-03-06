@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>FutureValue&lt;TInput, TOutput&gt; abstract class / bot_async Library / Dart Documentation</title>
+        <title>FutureValue&lt;TInput, TOutput&gt; abstract class / bot_async Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_async.html">bot_async</a> &rsaquo; <a href="../bot_async/FutureValue.html">FutureValue&lt;TInput, TOutput&gt;</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -48,14 +48,16 @@ abstract class FutureValue&lt;TInput, TOutput&gt; {
    } else {
      _pending = true;
    }
-   _inputChangedHandle.fireEvent(EventArgs.empty);
+   _inputChangedHandle.add(EventArgs.empty);
  }
 
  TOutput get output =&gt; _output;
 
- EventRoot&lt;EventArgs&gt; get outputChanged =&gt; _outputChangedHandle;
- EventRoot&lt;EventArgs&gt; get inputChanged =&gt; _inputChangedHandle;
- EventRoot get error =&gt; _errorHandle;
+ Stream&lt;EventArgs&gt; get outputChanged =&gt; _outputChangedHandle.stream;
+ Stream&lt;EventArgs&gt; get inputChanged =&gt; _inputChangedHandle.stream;
+
+ // TODO: roll this into outputChanged stream w/ errors? Hmm...
+ Stream get error =&gt; _errorHandle.stream;
 
  Future&lt;TOutput&gt; getFuture(TInput value);
 
@@ -69,7 +71,7 @@ abstract class FutureValue&lt;TInput, TOutput&gt; {
  bool _futureException(Object exception) {
    assert(_future != null);
    _future = null;
-   _errorHandle.fireEvent(exception);
+   _errorHandle.add(exception);
    _cleanup();
    return true;
  }
@@ -78,7 +80,7 @@ abstract class FutureValue&lt;TInput, TOutput&gt; {
    assert(_future != null);
    _future = null;
    _output = value;
-   _outputChangedHandle.fireEvent(EventArgs.empty);
+   _outputChangedHandle.add(EventArgs.empty);
    _cleanup();
  }
 
@@ -123,13 +125,13 @@ FutureValue() :
 <h3>Properties</h3>
 <div class="field"><h4 id="error">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>         <strong>error</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>         <strong>error</strong> <a class="anchor-link"
             href="#error"
             title="Permalink to FutureValue&lt;TInput, TOutput&gt;.error">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot get error =&gt; _errorHandle;
+Stream get error =&gt; _errorHandle.stream;
 </pre>
 </div>
 </div>
@@ -151,20 +153,20 @@ void set input(TInput value) {
  } else {
    _pending = true;
  }
- _inputChangedHandle.fireEvent(EventArgs.empty);
+ _inputChangedHandle.add(EventArgs.empty);
 }
 </pre>
 </div>
 </div>
 <div class="field"><h4 id="inputChanged">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>inputChanged</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>inputChanged</strong> <a class="anchor-link"
             href="#inputChanged"
             title="Permalink to FutureValue&lt;TInput, TOutput&gt;.inputChanged">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot&lt;EventArgs&gt; get inputChanged =&gt; _inputChangedHandle;
+Stream&lt;EventArgs&gt; get inputChanged =&gt; _inputChangedHandle.stream;
 </pre>
 </div>
 </div>
@@ -182,13 +184,13 @@ TOutput get output =&gt; _output;
 </div>
 <div class="field"><h4 id="outputChanged">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>outputChanged</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>outputChanged</strong> <a class="anchor-link"
             href="#outputChanged"
             title="Permalink to FutureValue&lt;TInput, TOutput&gt;.outputChanged">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot&lt;EventArgs&gt; get outputChanged =&gt; _outputChangedHandle;
+Stream&lt;EventArgs&gt; get outputChanged =&gt; _outputChangedHandle.stream;
 </pre>
 </div>
 </div>

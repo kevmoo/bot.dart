@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>ThingDragStartingEventArgs class / bot_retained Library / Dart Documentation</title>
+        <title>ThingDragStartingEventArgs class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/ThingDragStartingEventArgs.html">ThingDragStartingEventArgs</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -39,8 +39,10 @@ class ThingDragStartingEventArgs extends ThingMouseEventArgs implements Cancelab
  ThingDragStartingEventArgs(Thing thing, MouseEvent source) :
    super(thing, source);
 
+ @override
  bool get isCanceled =&gt; _canceled;
 
+ @override
  void cancel() {
    assert(!isCanceled);
    _canceled = true;
@@ -78,6 +80,7 @@ final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <st
         </h4>
         <div class="doc">
 <pre class="source">
+@override
 bool get isCanceled =&gt; _canceled;
 </pre>
 </div>
@@ -127,6 +130,7 @@ void <strong>cancel</strong>() <a class="anchor-link" href="#cancel"
               title="Permalink to ThingDragStartingEventArgs.cancel">#</a></h4>
 <div class="doc">
 <pre class="source">
+@override
 void cancel() {
  assert(!isCanceled);
  _canceled = true;

@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>bot_io Library / Dart Documentation</title>
+        <title>bot_io Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="index.html"><div class="logo"></div></a>
-          <a href="index.html">Dart Documentation</a>
+          <a href="index.html">BOT Documentation</a>
          &rsaquo; <a href="bot_io.html">bot_io</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -353,7 +353,7 @@ void <strong>enableScriptLogListener</strong>() <a class="anchor-link" href="#en
 <div class="doc">
 <p>When called, a listener is added to the root <code>Logger</code> and all output is
 appended to a log file named "<code>new Options().script</code>.log".</p>
-<p>The format: <code>LogRecord.time</code> 'tab' <code>LogRecord.loggerName</code> 'tab' <code>LoggerRecord.message</code></p>
+<p>The format: <code>LogRecord.time</code> 'tab' <code>LogRecord.level</code> 'tab' <code>LogRecord.loggerName</code> 'tab' <code>LoggerRecord.message</code></p>
 <pre class="source">
 void enableScriptLogListener() {
  if(_scriptLogListenerPath == null) {
@@ -363,8 +363,9 @@ void enableScriptLogListener() {
    _scriptLogListenerPath = new Path(script).toNativePath().concat('.log');
 
    final logging.Logger rootLogger = logging.Logger.root;
+   rootLogger.level = logging.Level.ALL;
 
-   rootLogger.on.record.add(_doLog);
+   rootLogger.onRecord.listen(_doLog);
 
    final logging.Logger logger = logging.Logger.root;
 
@@ -380,6 +381,12 @@ void enableScriptLogListener() {
           <div class="type">
           <h4>
             <a href="bot_io/DirectoryPopulater.html"><strong>DirectoryPopulater</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_io/ShellString.html"><strong>ShellString</strong></a>
           </h4>
           </div>
           

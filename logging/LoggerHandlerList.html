@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>LoggerHandlerList class / logging Library / Dart Documentation</title>
+        <title>LoggerHandlerList class / logging Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../logging.html">logging</a> &rsaquo; <a href="../logging/LoggerHandlerList.html">LoggerHandlerList</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -41,7 +41,7 @@ class LoggerHandlerList {
 
  void add(LoggerHandler handler) =&gt; _logger._addHandler(handler);
  void remove(LoggerHandler handler) =&gt; _logger._removeHandler(handler);
- void clear() =&gt; _logger._clearHandlers();
+ void clear() =&gt; _logger.clearListeners();
 }
 </pre>
 </div>
@@ -76,7 +76,7 @@ void <strong>clear</strong>() <a class="anchor-link" href="#clear"
               title="Permalink to LoggerHandlerList.clear">#</a></h4>
 <div class="doc">
 <pre class="source">
-void clear() =&gt; _logger._clearHandlers();
+void clear() =&gt; _logger.clearListeners();
 </pre>
 </div>
 </div>

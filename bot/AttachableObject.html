@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>AttachableObject class / bot Library / Dart Documentation</title>
+        <title>AttachableObject class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot.html">bot</a> &rsaquo; <a href="../bot/AttachableObject.html">AttachableObject</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -34,12 +34,13 @@
 <div class="doc">
 <pre class="source">
 class AttachableObject extends DisposableImpl {
- final HashMap&lt;Property, Object&gt; _propertyValues =
-     new HashMap&lt;Property, Object&gt;();
+ final Map&lt;Property, Object&gt; _propertyValues =
+     new Map&lt;Property, Object&gt;();
 
- final HashMap&lt;Attachable, EventHandle&gt; _eventHandlers =
-     new HashMap&lt;Attachable, EventHandle&gt;();
+ final Map&lt;Attachable, EventHandle&gt; _eventHandlers =
+     new Map&lt;Attachable, EventHandle&gt;();
 
+ @override @protected
  void disposeInternal(){
    super.disposeInternal();
    _eventHandlers.forEach((a, e) {
@@ -48,27 +49,36 @@ class AttachableObject extends DisposableImpl {
    _eventHandlers.clear();
  }
 
- GlobalId _addHandler(Attachable property, Action1 watcher) {
+ async.Stream _getStream(Attachable property) {
    validateNotDisposed();
-   var handle = _eventHandlers.putIfAbsent(property, () =&gt; new EventHandle());
-   return handle.add(watcher);
+   var handle = _eventHandlers.putIfAbsent(property,
+       () =&gt; new EventHandle(onSubscriptionStateChange: () =&gt; _onSubscriptionChanged(property)));
+   return handle.stream;
  }
 
- bool _removeHandler(Attachable property, GlobalId handlerId){
+ bool _hasSubscribers(Attachable property) {
    validateNotDisposed();
-   requireArgumentNotNull(handlerId, 'handlerId');
-   var handle = _eventHandlers[property];
-   if(handle != null){
-     return handle.remove(handlerId);
+   final handle = _eventHandlers[property];
+   return handle != null &amp;&amp; handle.hasSubscribers;
+ }
+
+ void _onSubscriptionChanged(Attachable property) {
+   assert(property != null);
+   if(!isDisposed) {
+     var handle = _eventHandlers[property];
+     assert(handle != null);
+     if(!handle.hasSubscribers) {
+       handle.dispose();
+       _eventHandlers.remove(property);
+     }
    }
-   return false;
  }
 
  void _fireEvent(Attachable attachable, dynamic args) {
    validateNotDisposed();
    var handle = _eventHandlers[attachable];
    if(handle != null){
-     handle.fireEvent(args);
+     handle.add(args);
    }
  }
 
@@ -76,7 +86,7 @@ class AttachableObject extends DisposableImpl {
    validateNotDisposed();
    assert(!identical(value, Property.Undefined));
    _propertyValues[key] = value;
-   _fireChange(key);
+   _fireChange(key, value, false);
  }
 
  bool _isSet(Property key){
@@ -91,7 +101,7 @@ class AttachableObject extends DisposableImpl {
      // NOTE: remove returns the removed item, which could be null. Bleh.
      // TODO: ponder null-ish value to avoid these double access scenarios? Maybe?
      _propertyValues.remove(key);
-     _fireChange(key);
+     _fireChange(key, null, true);
    }
  }
 
@@ -111,11 +121,16 @@ class AttachableObject extends DisposableImpl {
    }
  }
 
- void _fireChange(Property key) {
+ void _fireChange(Property key, dynamic value, bool isClear) {
    validateNotDisposed();
    var handle = _eventHandlers[key];
    if(handle != null){
-     handle.fireEvent(key);
+     if(isClear) {
+       assert(value == null);
+       handle.add(new PropertyChangedEventArgs.valueCleared(key));
+     } else {
+       handle.add(new PropertyChangedEventArgs(key, value));
+     }
    }
  }
 }
@@ -167,6 +182,7 @@ void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInt
 Subclasses should override this method to implement <a class="crossref" href="../bot/Disposable.html">Disposable</a> behavior.</p>
 <div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
+@override @protected
 void disposeInternal(){
  super.disposeInternal();
  _eventHandlers.forEach((a, e) {

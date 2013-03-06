@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>MouseManager class / bot_retained Library / Dart Documentation</title>
+        <title>MouseManager class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/MouseManager.html">MouseManager</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -34,7 +34,8 @@
 <div class="doc">
 <pre class="source">
 class MouseManager {
- static const String _autoCursor = 'auto';
+ static final Property&lt;String&gt; cursorProperty =
+     new Property&lt;String&gt;("cursor");
 
  static final Property&lt;MouseManager&gt; _clickManagerProperty =
      new Property&lt;MouseManager&gt;("_clickManager");
@@ -44,9 +45,6 @@ class MouseManager {
 
  static final Property&lt;bool&gt; _isDraggableProperty =
      new Property&lt;bool&gt;("isDraggable", false);
-
- static final Property&lt;String&gt; _cursorProperty =
-     new Property&lt;String&gt;("_cursor");
 
  static final AttachedEvent&lt;ThingMouseEventArgs&gt; _clickEvent =
      new AttachedEvent&lt;ThingMouseEventArgs&gt;('clickEvent');
@@ -98,15 +96,15 @@ class MouseManager {
  static void setCursor(Thing thing, String value) {
    assert(thing != null);
    if(value == null) {
-     _cursorProperty.clear(thing);
+     cursorProperty.clear(thing);
    } else {
-     _cursorProperty.set(thing, value);
+     cursorProperty.set(thing, value);
    }
  }
 
  static String getCursor(Thing thing) {
    assert(thing != null);
-   return _cursorProperty.get(thing);
+   return cursorProperty.get(thing);
  }
 
  static void setClickable(Thing thing, bool value) {
@@ -159,13 +157,13 @@ class MouseManager {
        }
      }
    }
-   _updateCursor(cursor);
+   _updateStageCursor(cursor);
  }
 
  void _mouseOut(MouseEvent e) {
    _updateMouseLocation(null);
    _mouseOutEvent.fireEvent(_stage, EventArgs.empty);
-   _updateCursor(null);
+   _updateStageCursor(null);
  }
 
  void _mouseUp(MouseEvent e) {
@@ -211,12 +209,8 @@ class MouseManager {
    }
  }
 
- void _updateCursor(String cursor) {
-   if(cursor == null) {
-     cursor = _autoCursor;
-   }
-   final canvas = _stage._canvas;
-   canvas.style.cursor = cursor;
+ void _updateStageCursor(String cursor) {
+   cursorProperty.set(_stage, cursor);
  }
 
  List&lt;Thing&gt; _updateMouseLocation(Coordinate value) {
@@ -284,70 +278,51 @@ class MouseManager {
  // Static event logic
  //
 
- static GlobalId addHandler(Thing thing,
-                            Action1&lt;ThingMouseEventArgs&gt; handler) {
-   return _clickEvent.addHandler(thing, handler);
+ static Stream&lt;ThingMouseEventArgs&gt; getClickStream(Thing thing) {
+   return _clickEvent.getStream(thing);
  }
 
- static bool removeHandler(Thing obj, GlobalId handlerId) {
-   return _clickEvent.removeHandler(obj, handlerId);
+ static Stream&lt;ThingMouseEventArgs&gt; getMouseMoveStream(Thing thing) {
+   return _mouseMoveEvent.getStream(thing);
  }
 
- static GlobalId addMouseMoveHandler(Thing thing,
-                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
-   return _mouseMoveEvent.addHandler(thing, handler);
+ static Stream&lt;ThingMouseEventArgs&gt; getMouseUpStream(Thing thing) {
+   return _mouseUpEvent.getStream(thing);
  }
 
- static bool removeMouseMoveHandler(Thing thing, GlobalId handlerId) {
-   return _mouseMoveEvent.removeHandler(thing, handlerId);
+ static Stream&lt;ThingMouseEventArgs&gt; getMouseDownStream(Thing thing) {
+   return _mouseDownEvent.getStream(thing);
  }
 
- static GlobalId addMouseUpHandler(Thing thing,
-                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
-   return _mouseUpEvent.addHandler(thing, handler);
+ static Stream&lt;ThingMouseEventArgs&gt; getMouseOutStream(Stage stage) {
+   return _mouseOutEvent.getStream(stage);
  }
 
- static bool removeMouseUpHandler(Thing thing, GlobalId handlerId) {
-   return _mouseUpEvent.removeHandler(thing, handlerId);
+ static Stream&lt;ThingDragStartingEventArgs&gt; addDragStartingStream(Thing thing) {
+   return _dragStartingEvent.getStream(thing);
  }
 
- static GlobalId addMouseDownHandler(Thing thing,
-                                     Action1&lt;ThingMouseEventArgs&gt; handler) {
-   return _mouseDownEvent.addHandler(thing, handler);
- }
-
- static bool removeMouseDownHandler(Thing thing, GlobalId handlerId) {
-   return _mouseDownEvent.removeHandler(thing, handlerId);
- }
-
- static GlobalId addMouseOutHandler(Stage stage,
-                                    Action1&lt;ThingMouseEventArgs&gt; handler) {
-   return _mouseOutEvent.addHandler(stage, handler);
- }
-
- static bool removeMouseOutHandler(Stage stage, GlobalId handlerId) {
-   return _mouseOutEvent.removeHandler(stage, handlerId);
- }
-
- static GlobalId addDragStartingHandler(Thing thing,
-                                    Action1&lt;ThingDragStartingEventArgs&gt; handler) {
-   return _dragStartingEvent.addHandler(thing, handler);
- }
-
- static bool removeDragStartingHandler(Thing thing, GlobalId handlerId) {
-   return _dragStartingEvent.removeHandler(thing, handlerId);
- }
-
- static GlobalId addDragHandler(Thing thing,
-                                    Action1&lt;ThingDragEventArgs&gt; handler) {
-   return _dragEvent.addHandler(thing, handler);
- }
-
- static bool removeDragHandler(Thing thing, GlobalId handlerId) {
-   return _dragEvent.removeHandler(thing, handlerId);
+ static Stream&lt;ThingDragEventArgs&gt; getDragStream(Thing thing) {
+   return _dragEvent.getStream(thing);
  }
 }
 </pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="cursorProperty">
+<button class="show-code">Code</button>
+final <a href="../bot/Property.html">Property</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>cursorProperty</strong> <a class="anchor-link"
+            href="#cursorProperty"
+            title="Permalink to MouseManager.cursorProperty">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+cursorProperty =
+new Property&lt;String&gt;("cursor")
+</pre>
+</div>
+</div>
 </div>
 <div>
 <h3>Static Methods</h3>
@@ -360,9 +335,9 @@ void <strong>setCursor</strong>(<a href="../bot_retained/Thing.html">Thing</a> t
 static void setCursor(Thing thing, String value) {
  assert(thing != null);
  if(value == null) {
-   _cursorProperty.clear(thing);
+   cursorProperty.clear(thing);
  } else {
-   _cursorProperty.set(thing, value);
+   cursorProperty.set(thing, value);
  }
 }
 </pre>
@@ -376,7 +351,7 @@ static void setCursor(Thing thing, String value) {
 <pre class="source">
 static String getCursor(Thing thing) {
  assert(thing != null);
- return _cursorProperty.get(thing);
+ return cursorProperty.get(thing);
 }
 </pre>
 </div>
@@ -431,177 +406,86 @@ static bool getDraggable(Thing thing) {
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="addHandler">
+<div class="method"><h4 id="getClickStream">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addHandler"
-              title="Permalink to MouseManager.addHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingMouseEventArgs.html">ThingMouseEventArgs</a>&gt; <strong>getClickStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getClickStream"
+              title="Permalink to MouseManager.getClickStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addHandler(Thing thing,
-                          Action1&lt;ThingMouseEventArgs&gt; handler) {
- return _clickEvent.addHandler(thing, handler);
+static Stream&lt;ThingMouseEventArgs&gt; getClickStream(Thing thing) {
+ return _clickEvent.getStream(thing);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="removeHandler">
+<div class="method"><h4 id="getMouseMoveStream">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeHandler"
-              title="Permalink to MouseManager.removeHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingMouseEventArgs.html">ThingMouseEventArgs</a>&gt; <strong>getMouseMoveStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getMouseMoveStream"
+              title="Permalink to MouseManager.getMouseMoveStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeHandler(Thing obj, GlobalId handlerId) {
- return _clickEvent.removeHandler(obj, handlerId);
+static Stream&lt;ThingMouseEventArgs&gt; getMouseMoveStream(Thing thing) {
+ return _mouseMoveEvent.getStream(thing);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="addMouseMoveHandler">
+<div class="method"><h4 id="getMouseUpStream">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseMoveHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseMoveHandler"
-              title="Permalink to MouseManager.addMouseMoveHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingMouseEventArgs.html">ThingMouseEventArgs</a>&gt; <strong>getMouseUpStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getMouseUpStream"
+              title="Permalink to MouseManager.getMouseUpStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseMoveHandler(Thing thing,
-                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
- return _mouseMoveEvent.addHandler(thing, handler);
+static Stream&lt;ThingMouseEventArgs&gt; getMouseUpStream(Thing thing) {
+ return _mouseUpEvent.getStream(thing);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="removeMouseMoveHandler">
+<div class="method"><h4 id="getMouseDownStream">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeMouseMoveHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseMoveHandler"
-              title="Permalink to MouseManager.removeMouseMoveHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingMouseEventArgs.html">ThingMouseEventArgs</a>&gt; <strong>getMouseDownStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getMouseDownStream"
+              title="Permalink to MouseManager.getMouseDownStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseMoveHandler(Thing thing, GlobalId handlerId) {
- return _mouseMoveEvent.removeHandler(thing, handlerId);
+static Stream&lt;ThingMouseEventArgs&gt; getMouseDownStream(Thing thing) {
+ return _mouseDownEvent.getStream(thing);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="addMouseUpHandler">
+<div class="method"><h4 id="getMouseOutStream">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseUpHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseUpHandler"
-              title="Permalink to MouseManager.addMouseUpHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingMouseEventArgs.html">ThingMouseEventArgs</a>&gt; <strong>getMouseOutStream</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage) <a class="anchor-link" href="#getMouseOutStream"
+              title="Permalink to MouseManager.getMouseOutStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseUpHandler(Thing thing,
-                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
- return _mouseUpEvent.addHandler(thing, handler);
+static Stream&lt;ThingMouseEventArgs&gt; getMouseOutStream(Stage stage) {
+ return _mouseOutEvent.getStream(stage);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="removeMouseUpHandler">
+<div class="method"><h4 id="addDragStartingStream">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeMouseUpHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseUpHandler"
-              title="Permalink to MouseManager.removeMouseUpHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingDragStartingEventArgs.html">ThingDragStartingEventArgs</a>&gt; <strong>addDragStartingStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#addDragStartingStream"
+              title="Permalink to MouseManager.addDragStartingStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool removeMouseUpHandler(Thing thing, GlobalId handlerId) {
- return _mouseUpEvent.removeHandler(thing, handlerId);
+static Stream&lt;ThingDragStartingEventArgs&gt; addDragStartingStream(Thing thing) {
+ return _dragStartingEvent.getStream(thing);
 }
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="addMouseDownHandler">
+<div class="method"><h4 id="getDragStream">
 <button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseDownHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseDownHandler"
-              title="Permalink to MouseManager.addMouseDownHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot_retained/ThingDragEventArgs.html">ThingDragEventArgs</a>&gt; <strong>getDragStream</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#getDragStream"
+              title="Permalink to MouseManager.getDragStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-static GlobalId addMouseDownHandler(Thing thing,
-                                   Action1&lt;ThingMouseEventArgs&gt; handler) {
- return _mouseDownEvent.addHandler(thing, handler);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="removeMouseDownHandler">
-<button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeMouseDownHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseDownHandler"
-              title="Permalink to MouseManager.removeMouseDownHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static bool removeMouseDownHandler(Thing thing, GlobalId handlerId) {
- return _mouseDownEvent.removeHandler(thing, handlerId);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="addMouseOutHandler">
-<button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addMouseOutHandler"
-              title="Permalink to MouseManager.addMouseOutHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static GlobalId addMouseOutHandler(Stage stage,
-                                  Action1&lt;ThingMouseEventArgs&gt; handler) {
- return _mouseOutEvent.addHandler(stage, handler);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="removeMouseOutHandler">
-<button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeMouseOutHandler</strong>(<a href="../bot_retained/Stage.html">Stage</a> stage, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeMouseOutHandler"
-              title="Permalink to MouseManager.removeMouseOutHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static bool removeMouseOutHandler(Stage stage, GlobalId handlerId) {
- return _mouseOutEvent.removeHandler(stage, handlerId);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="addDragStartingHandler">
-<button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addDragStartingHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addDragStartingHandler"
-              title="Permalink to MouseManager.addDragStartingHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static GlobalId addDragStartingHandler(Thing thing,
-                                  Action1&lt;ThingDragStartingEventArgs&gt; handler) {
- return _dragStartingEvent.addHandler(thing, handler);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="removeDragStartingHandler">
-<button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeDragStartingHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeDragStartingHandler"
-              title="Permalink to MouseManager.removeDragStartingHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static bool removeDragStartingHandler(Thing thing, GlobalId handlerId) {
- return _dragStartingEvent.removeHandler(thing, handlerId);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="addDragHandler">
-<button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addDragHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addDragHandler"
-              title="Permalink to MouseManager.addDragHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static GlobalId addDragHandler(Thing thing,
-                                  Action1&lt;ThingDragEventArgs&gt; handler) {
- return _dragEvent.addHandler(thing, handler);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="removeDragHandler">
-<button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeDragHandler</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeDragHandler"
-              title="Permalink to MouseManager.removeDragHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-static bool removeDragHandler(Thing thing, GlobalId handlerId) {
- return _dragEvent.removeHandler(thing, handlerId);
+static Stream&lt;ThingDragEventArgs&gt; getDragStream(Thing thing) {
+ return _dragEvent.getStream(thing);
 }
 </pre>
 </div>

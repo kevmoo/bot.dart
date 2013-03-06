@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>ConsoleContext class / hop Library / Dart Documentation</title>
+        <title>ConsoleContext class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/ConsoleContext.html">ConsoleContext</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -184,6 +184,18 @@ task
 </div>
 <div>
 <h3>Methods</h3>
+<div class="method inherited"><h4 id="config">
+<button class="show-code">Code</button>
+void <strong>config</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#config"
+              title="Permalink to ConsoleContext.config">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void config(String message) {
+ log(Level.CONFIG, message);
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="dispose">
 <button class="show-code">Code</button>
 void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
@@ -219,6 +231,30 @@ void <strong>fine</strong>(<a href="http://api.dartlang.org/dart_core/String.htm
 <pre class="source">
 void fine(String message) {
  log(Level.FINE, message);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="finer">
+<button class="show-code">Code</button>
+void <strong>finer</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#finer"
+              title="Permalink to ConsoleContext.finer">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void finer(String message) {
+ log(Level.FINER, message);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="finest">
+<button class="show-code">Code</button>
+void <strong>finest</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#finest"
+              title="Permalink to ConsoleContext.finest">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void finest(String message) {
+ log(Level.FINEST, message);
 }
 </pre>
 </div>

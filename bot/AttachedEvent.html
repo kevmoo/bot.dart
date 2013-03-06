@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>AttachedEvent&lt;T&gt; class / bot Library / Dart Documentation</title>
+        <title>AttachedEvent&lt;T&gt; class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot.html">bot</a> &rsaquo; <a href="../bot/AttachedEvent.html">AttachedEvent&lt;T&gt;</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -37,13 +37,12 @@ class AttachedEvent&lt;T&gt; extends Attachable {
 
  AttachedEvent(String name) : super(name);
 
- GlobalId addHandler(AttachableObject obj, Action1&lt;T&gt; handler) {
-   return obj._addHandler(this, handler);
+ async.Stream getStream(AttachableObject obj) {
+   return obj._getStream(this);
  }
 
- bool removeHandler(AttachableObject obj, GlobalId handlerId) {
-   requireArgumentNotNull(obj, 'obj');
-   return obj._removeHandler(this, handlerId);
+ bool hasSubscribers(AttachableObject obj) {
+   return obj._hasSubscribers(this);
  }
 
  void fireEvent(AttachableObject obj, T args) =&gt; obj._fireEvent(this, args);
@@ -83,18 +82,6 @@ name
 </div>
 <div>
 <h3>Methods</h3>
-<div class="method"><h4 id="addHandler">
-<button class="show-code">Code</button>
-<a href="../bot/GlobalId.html">GlobalId</a> <strong>addHandler</strong>(<a href="../bot/AttachableObject.html">AttachableObject</a> obj, <a href="../bot/Action1.html">Action1</a> handler) <a class="anchor-link" href="#addHandler"
-              title="Permalink to AttachedEvent&lt;T&gt;.addHandler">#</a></h4>
-<div class="doc">
-<pre class="source">
-GlobalId addHandler(AttachableObject obj, Action1&lt;T&gt; handler) {
- return obj._addHandler(this, handler);
-}
-</pre>
-</div>
-</div>
 <div class="method"><h4 id="fireEvent">
 <button class="show-code">Code</button>
 void <strong>fireEvent</strong>(<a href="../bot/AttachableObject.html">AttachableObject</a> obj, <a href="../bot/AttachedEvent.html">T</a> args) <a class="anchor-link" href="#fireEvent"
@@ -105,15 +92,26 @@ void fireEvent(AttachableObject obj, T args) =&gt; obj._fireEvent(this, args);
 </pre>
 </div>
 </div>
-<div class="method"><h4 id="removeHandler">
+<div class="method"><h4 id="getStream">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>removeHandler</strong>(<a href="../bot/AttachableObject.html">AttachableObject</a> obj, <a href="../bot/GlobalId.html">GlobalId</a> handlerId) <a class="anchor-link" href="#removeHandler"
-              title="Permalink to AttachedEvent&lt;T&gt;.removeHandler">#</a></h4>
+<a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a> <strong>getStream</strong>(<a href="../bot/AttachableObject.html">AttachableObject</a> obj) <a class="anchor-link" href="#getStream"
+              title="Permalink to AttachedEvent&lt;T&gt;.getStream">#</a></h4>
 <div class="doc">
 <pre class="source">
-bool removeHandler(AttachableObject obj, GlobalId handlerId) {
- requireArgumentNotNull(obj, 'obj');
- return obj._removeHandler(this, handlerId);
+async.Stream getStream(AttachableObject obj) {
+ return obj._getStream(this);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hasSubscribers">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>hasSubscribers</strong>(<a href="../bot/AttachableObject.html">AttachableObject</a> obj) <a class="anchor-link" href="#hasSubscribers"
+              title="Permalink to AttachedEvent&lt;T&gt;.hasSubscribers">#</a></h4>
+<div class="doc">
+<pre class="source">
+bool hasSubscribers(AttachableObject obj) {
+ return obj._hasSubscribers(this);
 }
 </pre>
 </div>

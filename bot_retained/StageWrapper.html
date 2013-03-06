@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>StageWrapper&lt;T&gt; class / bot_retained Library / Dart Documentation</title>
+        <title>StageWrapper&lt;T&gt; class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/StageWrapper.html">StageWrapper&lt;T&gt;</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -44,7 +44,7 @@ class StageWrapper&lt;T extends Thing&gt; extends DisposableImpl {
  @protected
  final T rootThing;
 
- GlobalId _invalidatedEventId;
+ StreamSubscription _invalidatedEventSub;
 
  bool _frameRequested = false;
 
@@ -52,7 +52,7 @@ class StageWrapper&lt;T extends Thing&gt; extends DisposableImpl {
    this.canvas = canvas,
    this.rootThing = rootThing,
    this.stage = new Stage(canvas, rootThing) {
-   _invalidatedEventId = stage.invalidated.add((_) =&gt; requestFrame());
+   _invalidatedEventSub = stage.invalidated.listen((_) =&gt; requestFrame());
  }
 
  void requestFrame() {
@@ -63,8 +63,8 @@ class StageWrapper&lt;T extends Thing&gt; extends DisposableImpl {
  }
 
  void disposeInternal() {
-   stage.invalidated.remove(_invalidatedEventId);
-   _invalidatedEventId = null;
+   _invalidatedEventSub.cancel();
+   _invalidatedEventSub = null;
  }
 
  @protected
@@ -91,7 +91,7 @@ StageWrapper(CanvasElement canvas, T rootThing) :
  this.canvas = canvas,
  this.rootThing = rootThing,
  this.stage = new Stage(canvas, rootThing) {
- _invalidatedEventId = stage.invalidated.add((_) =&gt; requestFrame());
+ _invalidatedEventSub = stage.invalidated.listen((_) =&gt; requestFrame());
 }
 </pre>
 </div>
@@ -180,8 +180,8 @@ Subclasses should override this method to implement <code>Disposable</code> beha
 <div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
 <pre class="source">
 void disposeInternal() {
- stage.invalidated.remove(_invalidatedEventId);
- _invalidatedEventId = null;
+ _invalidatedEventSub.cancel();
+ _invalidatedEventSub = null;
 }
 </pre>
 </div>

@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Configuration class / unittest Library / Dart Documentation</title>
+        <title>Configuration class / unittest Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../unittest.html">unittest</a> &rsaquo; <a href="../unittest/Configuration.html">Configuration</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -41,19 +41,19 @@ class Configuration {
  // The VM won't shut down if a receive port is open. Use this to make sure
  // we correctly wait for asynchronous tests.
  ReceivePort _receivePort;
- TestCase currentTestCase = null;
 
  /**
   * Subclasses can override this with something useful for diagnostics.
   * Particularly useful in cases where we have parent/child configurations
   * such as layout tests.
   */
- get name =&gt; 'Configuration';
+ String get name =&gt; 'Configuration';
+
  /**
   * If true, then tests are started automatically (otherwise [runTests]
   * must be called explicitly after the tests are set up.
   */
- get autoStart =&gt; true;
+ bool get autoStart =&gt; true;
 
  /**
   * Called as soon as the unittest framework becomes initialized. This is done
@@ -75,15 +75,24 @@ class Configuration {
   * a test suite.
   */
  void onTestStart(TestCase testCase) {
-   currentTestCase = testCase;
+   assert(testCase != null);	
  }
 
  /**
-  * Called when each test is completed. Useful to show intermediate progress on
-  * a test suite.
+  * Called when each test is first completed. Useful to show intermediate
+  * progress on a test suite.
   */
  void onTestResult(TestCase testCase) {
-   currentTestCase = null;
+   assert(testCase != null);	
+ }
+
+ /**
+  * Called when an already completed test changes state; for example a test
+  * that was marked as passing may later be marked as being in error because
+  * it still had callbacks being invoked.
+  */
+ void onTestResultChanged(TestCase testCase) {
+   assert(testCase != null);
  }
 
  /**
@@ -92,12 +101,9 @@ class Configuration {
   * should instead override logMessage which is passed the test case.
   */
  void logMessage(String message) {
-   if (currentTestCase == null || _currentTest &gt;= _tests.length ||
-       currentTestCase.id != _tests[_currentTest].id) {
-     // Before or after tests run, or with a mismatch between what the
-     // config and the test harness think is the current test. In this
-     // case we pass null for the test case reference and let the config
-     // decide what to do with this.
+   if (currentTestCase == null) {
+     // Before or after tests run. In this case we pass null for the test
+     // case reference and let the config decide what to do with this.
      logTestCaseMessage(null, message);
    } else {
      logTestCaseMessage(currentTestCase, message);
@@ -178,23 +184,8 @@ class Configuration {
  /** Handle errors that happen outside the tests. */
  // TODO(vsm): figure out how to expose the stack trace here
  // Currently e.message works in dartium, but not in dartc.
- handleExternalError(e, String message) =&gt;
+ void handleExternalError(e, String message) =&gt;
      _reportTestError('$message\nCaught $e', '');
-
- /**
-  * Send messages to the test controller code (see 'test_controller.js'). This
-  * is only needed to support browser tests with dart2js. Note: we could wrap
-  * tests and send the appropriate messages to the controller through the
-  * wrapper, but using wrappers has a noticeable overhead in the testing bots,
-  * so we use this approach instead.
-  *
-  * Configurations that will not run in DRT (such as vm_config and
-  * compact_vm_config), can safely override this method to avoid printing extra
-  * mesages in the console.
-  */
- // TODO(sigmund): find a way to unify notifyController and _postMessage
- void notifyController(String message) {
- }
 
  _postMessage(String message) {
    // In dart2js browser tests, the JavaScript-based test controller
@@ -208,7 +199,7 @@ class Configuration {
 <h3>Properties</h3>
 <div class="field"><h4 id="autoStart">
 <button class="show-code">Code</button>
-final         <strong>autoStart</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>autoStart</strong> <a class="anchor-link"
             href="#autoStart"
             title="Permalink to Configuration.autoStart">#</a>
         </h4>
@@ -216,25 +207,13 @@ final         <strong>autoStart</strong> <a class="anchor-link"
 <p>If true, then tests are started automatically (otherwise <a class="crossref" href="../unittest.html#runTests">runTests</a>
 must be called explicitly after the tests are set up.</p>
 <pre class="source">
-get autoStart =&gt; true;
-</pre>
-</div>
-</div>
-<div class="field"><h4 id="currentTestCase">
-<button class="show-code">Code</button>
-<a href="../unittest/TestCase.html">TestCase</a>         <strong>currentTestCase</strong> <a class="anchor-link"
-            href="#currentTestCase"
-            title="Permalink to Configuration.currentTestCase">#</a>
-        </h4>
-        <div class="doc">
-<pre class="source">
-currentTestCase = null
+bool get autoStart =&gt; true;
 </pre>
 </div>
 </div>
 <div class="field"><h4 id="name">
 <button class="show-code">Code</button>
-final         <strong>name</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>name</strong> <a class="anchor-link"
             href="#name"
             title="Permalink to Configuration.name">#</a>
         </h4>
@@ -243,7 +222,7 @@ final         <strong>name</strong> <a class="anchor-link"
 Particularly useful in cases where we have parent/child configurations
 such as layout tests.</p>
 <pre class="source">
-get name =&gt; 'Configuration';
+String get name =&gt; 'Configuration';
 </pre>
 </div>
 </div>
@@ -252,12 +231,12 @@ get name =&gt; 'Configuration';
 <h3>Methods</h3>
 <div class="method"><h4 id="handleExternalError">
 <button class="show-code">Code</button>
-<strong>handleExternalError</strong>(e, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#handleExternalError"
+void <strong>handleExternalError</strong>(e, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#handleExternalError"
               title="Permalink to Configuration.handleExternalError">#</a></h4>
 <div class="doc">
 <p>Handle errors that happen outside the tests. </p>
 <pre class="source">
-handleExternalError(e, String message) =&gt;
+void handleExternalError(e, String message) =&gt;
    _reportTestError('$message\nCaught $e', '');
 </pre>
 </div>
@@ -272,12 +251,9 @@ instead of print. Subclasses should not override this; they
 should instead override logMessage which is passed the test case.</p>
 <pre class="source">
 void logMessage(String message) {
- if (currentTestCase == null || _currentTest &gt;= _tests.length ||
-     currentTestCase.id != _tests[_currentTest].id) {
-   // Before or after tests run, or with a mismatch between what the
-   // config and the test harness think is the current test. In this
-   // case we pass null for the test case reference and let the config
-   // decide what to do with this.
+ if (currentTestCase == null) {
+   // Before or after tests run. In this case we pass null for the test
+   // case reference and let the config decide what to do with this.
    logTestCaseMessage(null, message);
  } else {
    logTestCaseMessage(currentTestCase, message);
@@ -296,25 +272,6 @@ this base configuration is to call print();</p>
 <pre class="source">
 void logTestCaseMessage(TestCase testCase, String message) {
  print(message);
-}
-</pre>
-</div>
-</div>
-<div class="method"><h4 id="notifyController">
-<button class="show-code">Code</button>
-void <strong>notifyController</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#notifyController"
-              title="Permalink to Configuration.notifyController">#</a></h4>
-<div class="doc">
-<p>Send messages to the test controller code (see 'test_controller.js'). This
-is only needed to support browser tests with dart2js. Note: we could wrap
-tests and send the appropriate messages to the controller through the
-wrapper, but using wrappers has a noticeable overhead in the testing bots,
-so we use this approach instead.</p>
-<p>Configurations that will not run in DRT (such as vm<em>config and
-compact</em>vm_config), can safely override this method to avoid printing extra
-mesages in the console.</p>
-<pre class="source">
-void notifyController(String message) {
 }
 </pre>
 </div>
@@ -422,11 +379,26 @@ void onSummary(int passed, int failed, int errors, List&lt;TestCase&gt; results,
 void <strong>onTestResult</strong>(<a href="../unittest/TestCase.html">TestCase</a> testCase) <a class="anchor-link" href="#onTestResult"
               title="Permalink to Configuration.onTestResult">#</a></h4>
 <div class="doc">
-<p>Called when each test is completed. Useful to show intermediate progress on
-a test suite.</p>
+<p>Called when each test is first completed. Useful to show intermediate
+progress on a test suite.</p>
 <pre class="source">
 void onTestResult(TestCase testCase) {
- currentTestCase = null;
+ assert(testCase != null);	
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="onTestResultChanged">
+<button class="show-code">Code</button>
+void <strong>onTestResultChanged</strong>(<a href="../unittest/TestCase.html">TestCase</a> testCase) <a class="anchor-link" href="#onTestResultChanged"
+              title="Permalink to Configuration.onTestResultChanged">#</a></h4>
+<div class="doc">
+<p>Called when an already completed test changes state; for example a test
+that was marked as passing may later be marked as being in error because
+it still had callbacks being invoked.</p>
+<pre class="source">
+void onTestResultChanged(TestCase testCase) {
+ assert(testCase != null);
 }
 </pre>
 </div>
@@ -440,7 +412,7 @@ void <strong>onTestStart</strong>(<a href="../unittest/TestCase.html">TestCase</
 a test suite.</p>
 <pre class="source">
 void onTestStart(TestCase testCase) {
- currentTestCase = testCase;
+ assert(testCase != null);	
 }
 </pre>
 </div>

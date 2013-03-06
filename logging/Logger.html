@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Logger class / logging Library / Dart Documentation</title>
+        <title>Logger class / logging Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../logging.html">logging</a> &rsaquo; <a href="../logging/Logger.html">Logger</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -52,8 +52,11 @@ class Logger {
  /** Children in the hierarchy of loggers, indexed by their simple names. */
  Map&lt;String, Logger&gt; children;
 
- /** Handlers used to process log entries in this logger. */
- List&lt;LoggerHandler&gt; _handlers;
+ /** Controller used to notify when log entries are added to this logger. */
+ StreamController&lt;LogRecord&gt; _controller;
+
+ // TODO(sigmund): remove together with the deprecated [on] API.
+ Map&lt;LoggerHandler, StreamSubscription&gt; _deprecatedSubscriptions;
 
  /**
   * Singleton constructor. Calling `new Logger(name)` will return the same
@@ -100,7 +103,7 @@ class Logger {
  }
 
  /** Override the level for this particular [Logger] and its children. */
- set level(value) {
+ set level(Level value) {
    if (hierarchicalLoggingEnabled &amp;&amp; parent != null) {
      _level = value;
    } else {
@@ -114,42 +117,20 @@ class Logger {
  }
 
  /**
-  * Returns an event manager for this [Logger]. You can listen for log messages
-  * by adding a [LoggerHandler] to an event from the event manager, for
-  * instance:
-  *    logger.on.record.add((record) { ... });
+  * Returns an stream of messages added to this [Logger]. You can listen for
+  * messages using the standard stream APIs, for instance:
+  *    logger.onRecord.listen((record) { ... });
   */
- LoggerEvents get on =&gt; new LoggerEvents(this);
+ Stream&lt;LogRecord&gt; get onRecord =&gt; _getStream();
 
- /** Adds a handler to listen whenever a log record is added to this logger. */
- void _addHandler(LoggerHandler handler) {
+ void clearListeners() {
    if (hierarchicalLoggingEnabled || parent == null) {
-     if (_handlers == null) {
-       _handlers = new List&lt;LoggerHandler&gt;();
+     if (_controller != null) {
+       _controller.close();
+       _controller = null;
      }
-     _handlers.add(handler);
    } else {
-     root._addHandler(handler);
-   }
- }
-
- /** Remove a previously added handler. */
- void _removeHandler(LoggerHandler handler) {
-   if (hierarchicalLoggingEnabled || parent == null) {
-     if (_handlers == null) return;
-     int index = _handlers.indexOf(handler);
-     if (index != -1) _handlers.removeRange(index, 1);
-   } else {
-     root._removeHandler(handler);
-   }
- }
-
- /** Removes all handlers previously added to this logger. */
- void _clearHandlers() {
-   if (hierarchicalLoggingEnabled || parent == null) {
-     _handlers = null;
-   } else {
-     root._clearHandlers();
+     root.clearListeners();
    }
  }
 
@@ -203,14 +184,46 @@ class Logger {
  /** Log message at level [Level.SHOUT]. */
  void shout(String message) =&gt; log(Level.SHOUT, message);
 
+ Stream&lt;LogRecord&gt; _getStream() {
+   if (hierarchicalLoggingEnabled || parent == null) {
+     if (_controller == null) {
+       _controller = new StreamController&lt;LogRecord&gt;.broadcast();
+     }
+     return _controller.stream;
+   } else {
+     return root._getStream();
+   }
+ }
+
+ /** Adds a handler to listen whenever a log record is added to this logger. */
+ void _addHandler(LoggerHandler handler) {
+   if (_deprecatedSubscriptions == null) {
+     _deprecatedSubscriptions = new Map&lt;LoggerHandler, StreamSubscription&gt;();
+   }
+
+   _deprecatedSubscriptions[handler] = onRecord.listen(handler);
+ }
+
+ void _removeHandler(LoggerHandler handler) {
+   if (_deprecatedSubscriptions != null) {
+     var sub = _deprecatedSubscriptions.remove(handler);
+     if (sub != null) {
+       sub.cancel();
+     }
+     if (_deprecatedSubscriptions.isEmpty) {
+       _deprecatedSubscriptions = null;
+     }
+   }
+ }
+
  void _publish(LogRecord record) {
-   if (_handlers != null) {
-     _handlers.forEach((h) =&gt; h(record));
+   if (_controller != null) {
+     _controller.add(record);
    }
  }
 
  /** Top-level root [Logger]. */
- static get root =&gt; new Logger('');
+ static Logger get root =&gt; new Logger('');
 
  /** All [Logger]s in the system. */
  static Map&lt;String, Logger&gt; _loggers;
@@ -221,14 +234,14 @@ class Logger {
 <h3>Static Properties</h3>
 <div class="field"><h4 id="root">
 <button class="show-code">Code</button>
-final         <strong>root</strong> <a class="anchor-link"
+final <a href="../logging/Logger.html">Logger</a>         <strong>root</strong> <a class="anchor-link"
             href="#root"
             title="Permalink to Logger.root">#</a>
         </h4>
         <div class="doc">
 <p>Top-level root <a class="crossref" href="../logging/Logger.html#Logger">Logger</a>. </p>
 <pre class="source">
-static get root =&gt; new Logger('');
+static Logger get root =&gt; new Logger('');
 </pre>
 </div>
 </div>
@@ -317,12 +330,12 @@ Level get level {
 </div>
 <div class="method"><h4 id="level=">
 <button class="show-code">Code</button>
-<strong>set level</strong>(value) <a class="anchor-link" href="#level="
+<strong>set level</strong>(<a href="../logging/Level.html">Level</a> value) <a class="anchor-link" href="#level="
               title="Permalink to Logger.set level">#</a></h4>
 <div class="doc">
 <p>Override the level for this particular <a class="crossref" href="../logging/Logger.html#Logger">Logger</a> and its children. </p>
 <pre class="source">
-set level(value) {
+set level(Level value) {
  if (hierarchicalLoggingEnabled &amp;&amp; parent != null) {
    _level = value;
  } else {
@@ -349,19 +362,18 @@ name
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="on">
+<div class="field"><h4 id="onRecord">
 <button class="show-code">Code</button>
-final <a href="../logging/LoggerEvents.html">LoggerEvents</a>         <strong>on</strong> <a class="anchor-link"
-            href="#on"
-            title="Permalink to Logger.on">#</a>
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../logging/LogRecord.html">LogRecord</a>&gt;         <strong>onRecord</strong> <a class="anchor-link"
+            href="#onRecord"
+            title="Permalink to Logger.onRecord">#</a>
         </h4>
         <div class="doc">
-<p>Returns an event manager for this <a class="crossref" href="../logging/Logger.html#Logger">Logger</a>. You can listen for log messages
-by adding a <a class="crossref" href="../logging/LoggerHandler.html">LoggerHandler</a> to an event from the event manager, for
-instance:
-   logger.on.record.add((record) { ... });</p>
+<p>Returns an stream of messages added to this <a class="crossref" href="../logging/Logger.html#Logger">Logger</a>. You can listen for
+messages using the standard stream APIs, for instance:
+   logger.onRecord.listen((record) { ... });</p>
 <pre class="source">
-LoggerEvents get on =&gt; new LoggerEvents(this);
+Stream&lt;LogRecord&gt; get onRecord =&gt; _getStream();
 </pre>
 </div>
 </div>
@@ -380,6 +392,25 @@ parent
 </div>
 <div>
 <h3>Methods</h3>
+<div class="method"><h4 id="clearListeners">
+<button class="show-code">Code</button>
+void <strong>clearListeners</strong>() <a class="anchor-link" href="#clearListeners"
+              title="Permalink to Logger.clearListeners">#</a></h4>
+<div class="doc">
+<pre class="source">
+void clearListeners() {
+ if (hierarchicalLoggingEnabled || parent == null) {
+   if (_controller != null) {
+     _controller.close();
+     _controller = null;
+   }
+ } else {
+   root.clearListeners();
+ }
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="config">
 <button class="show-code">Code</button>
 void <strong>config</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#config"

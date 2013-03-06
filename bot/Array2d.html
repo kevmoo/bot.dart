@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Array2d&lt;T&gt; class / bot Library / Dart Documentation</title>
+        <title>Array2d&lt;T&gt; class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot.html">bot</a> &rsaquo; <a href="../bot/Array2d.html">Array2d&lt;T&gt;</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -272,6 +272,7 @@ final <a href="http://api.dartlang.org/dart_core/Iterator.html">Iterator</a>&lt;
 <p>Returns an <code>Iterator</code> that iterates over this <code>Iterable</code> object.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Array2d.html">T</a>&gt; </div></div>
 <pre class="source">
+@override
 Iterator&lt;E&gt; get iterator =&gt; new _ListIterator(this);
 </pre>
 </div>
@@ -484,6 +485,7 @@ void <strong>addLast</strong>(<a href="../bot/Array2d.html">E</a> value) <a clas
 <span class="param">value</span> at the end of the list, extending the length by
 one. Throws an <code>UnsupportedError</code> if the list is not
 extendable.</p>
+<p><em>Deprecated</em>: Use <code>add</code> instead.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
 <pre class="source">
 void addLast(E value) {
@@ -508,6 +510,22 @@ bool any(bool f(E element)) {
  }
  return false;
 }
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="asMap">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>, <a href="../bot/Array2d.html">E</a>&gt; <strong>asMap</strong>() <a class="anchor-link" href="#asMap"
+              title="Permalink to Array2d&lt;T&gt;.asMap">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot/ListBase.html">ListBase</a> </div><div class="doc">
+<div class="inherited">
+<p>Returns an unmodifiable <code>Map</code> view of <code>this</code>.</p>
+<p>It has the indices of this list as keys, and the corresponding elements
+as values.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
+<pre class="source">
+@override
+Map&lt;int, E&gt; asMap() =&gt; IterableMixinWorkaround.asMapList(this);
 </pre>
 </div>
 </div>
@@ -778,6 +796,7 @@ Throws an <code>RangeError</code> if
 <code>start + length - 1</code> are out of range.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
 <pre class="source">
+@override
 List&lt;E&gt; getRange(int start, int length) {
  List&lt;E&gt; result = &lt;E&gt;[];
  for (int i = 0; i &lt; length; i++) {
@@ -814,6 +833,7 @@ the index of <code>e</code> is returned.
 Returns -1 if <code>element</code> is not found.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
 <pre class="source">
+@override
 int indexOf(E value, [int start = 0]) {
  for (int i = start; i &lt; length; i++) {
    if (this[i] == value) return i;
@@ -899,6 +919,7 @@ If start is not provided, it defaults to <code>this.length - 1</code> .
 Returns -1 if <code>element</code> is not found.</p>
 <div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; </div></div>
 <pre class="source">
+@override
 int lastIndexOf(E value, [int start]) {
  if (start == null) start = length - 1;
  for (int i = start; i &gt;= 0; i--) {
@@ -1470,11 +1491,12 @@ Set toHashSet([Func1&lt;T, dynamic&gt; f]) {
 </div>
 <div class="method inherited"><h4 id="toList">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; <strong>toList</strong>() <a class="anchor-link" href="#toList"
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot/Array2d.html">E</a>&gt; <strong>toList</strong>({<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> growable: true}) <a class="anchor-link" href="#toList"
               title="Permalink to Array2d&lt;T&gt;.toList">#</a></h4>
 <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <pre class="source">
-List&lt;E&gt; toList() =&gt; new List&lt;E&gt;.from(this);
+List&lt;E&gt; toList({ bool growable: true }) =&gt;
+   new List&lt;E&gt;.from(this, growable: growable);
 </pre>
 </div>
 </div>

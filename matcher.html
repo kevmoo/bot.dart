@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>matcher Library / Dart Documentation</title>
+        <title>matcher Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="index.html"><div class="logo"></div></a>
-          <a href="index.html">Dart Documentation</a>
+          <a href="index.html">BOT Documentation</a>
          &rsaquo; <a href="matcher.html">matcher</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -56,7 +56,7 @@ anything = const _IsAnything()
         </h4>
         <div class="doc">
 <pre class="source">
-completes = const _Completes(null)
+completes = const _Completes(null, '')
 </pre>
 </div>
 </div>
@@ -117,18 +117,6 @@ const         <strong>isFormatException</strong> <a class="anchor-link"
         <div class="doc">
 <pre class="source">
 isFormatException = const _FormatException()
-</pre>
-</div>
-</div>
-<div class="field"><h4 id="isIllegalJSRegExpException">
-<button class="show-code">Code</button>
-const         <strong>isIllegalJSRegExpException</strong> <a class="anchor-link"
-            href="#isIllegalJSRegExpException"
-            title="Permalink to isIllegalJSRegExpException">#</a>
-        </h4>
-        <div class="doc">
-<pre class="source">
-isIllegalJSRegExpException = const _IllegalJSRegExpException()
 </pre>
 </div>
 </div>
@@ -394,19 +382,6 @@ const Throws(isFormatException)
 </pre>
 </div>
 </div>
-<div class="field"><h4 id="throwsIllegalJSRegExpException">
-<button class="show-code">Code</button>
-const <a href="matcher/Matcher.html">Matcher</a>         <strong>throwsIllegalJSRegExpException</strong> <a class="anchor-link"
-            href="#throwsIllegalJSRegExpException"
-            title="Permalink to throwsIllegalJSRegExpException">#</a>
-        </h4>
-        <div class="doc">
-<pre class="source">
-throwsIllegalJSRegExpException =
-const Throws(isIllegalJSRegExpException)
-</pre>
-</div>
-</div>
 <div class="field"><h4 id="throwsNoSuchMethodError">
 <button class="show-code">Code</button>
 const <a href="matcher/Matcher.html">Matcher</a>         <strong>throwsNoSuchMethodError</strong> <a class="anchor-link"
@@ -479,7 +454,7 @@ throwsUnsupportedError = const Throws(isUnsupportedError)
         </h4>
         <div class="doc">
 <pre class="source">
-wrapAsync = (f) =&gt; f
+wrapAsync = (f, [id]) =&gt; f
 </pre>
 </div>
 </div>
@@ -894,7 +869,7 @@ Matcher containsValue(value) =&gt; new _ContainsValue(value);
 </div>
 <div class="method"><h4 id="completion">
 <button class="show-code">Code</button>
-<a href="matcher/Matcher.html">Matcher</a> <strong>completion</strong>(matcher) <a class="anchor-link" href="#completion"
+<a href="matcher/Matcher.html">Matcher</a> <strong>completion</strong>(matcher, [<a href="http://api.dartlang.org/dart_core/String.html">String</a> id = '']) <a class="anchor-link" href="#completion"
               title="Permalink to completion">#</a></h4>
 <div class="doc">
 <p>Matches a <code>Future</code> that completes succesfully with a value that matches
@@ -904,8 +879,12 @@ Matcher containsValue(value) =&gt; new _ContainsValue(value);
 continue. Later, when the future completes, the actual expectation will run.</p>
 <p>To test that a Future completes with an exception, you can use <a class="crossref" href="matcher.html#throws">throws</a> and
 <a class="crossref" href="matcher.html#throwsA">throwsA</a>.</p>
+<p>
+<span class="param">id</span> is an optional tag that can be used to identify the completion matcher
+in error messages.</p>
 <pre class="source">
-Matcher completion(matcher) =&gt; new _Completes(wrapMatcher(matcher));
+Matcher completion(matcher, [String id = '']) =&gt;
+   new _Completes(wrapMatcher(matcher), id);
 </pre>
 </div>
 </div>
@@ -954,7 +933,7 @@ void <strong>configureExpectFailureHandler</strong>([<a href="matcher/FailureHan
 
 <span class="param">handler</span> is a reference to the new handler; if this is omitted
 or null then the failure handler is reset to the default, which
-throws <code>ExpectExceptions</code> on <a class="crossref" href="matcher.html#expect">expect</a> assertion failures.</p>
+throws <a class="crossref" href="matcher/TestFailure.html">TestFailure</a>s on <a class="crossref" href="matcher.html#expect">expect</a> assertion failures.</p>
 <pre class="source">
 void configureExpectFailureHandler([FailureHandler handler = null]) {
  if (handler == null) {
@@ -987,6 +966,21 @@ Matcher wrapMatcher(x) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="fail">
+<button class="show-code">Code</button>
+void <strong>fail</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message, {<a href="matcher/FailureHandler.html">FailureHandler</a> failureHandler}) <a class="anchor-link" href="#fail"
+              title="Permalink to fail">#</a></h4>
+<div class="doc">
+<pre class="source">
+void fail(String message, {FailureHandler failureHandler}) {
+ if (failureHandler == null) {
+   failureHandler = getOrCreateExpectFailureHandler();
+ }
+ failureHandler.fail(message);
+}
+</pre>
+</div>
+</div>
 <div class="method"><h4 id="expect">
 <button class="show-code">Code</button>
 void <strong>expect</strong>(actual, matcher, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> reason, <a href="matcher/FailureHandler.html">FailureHandler</a> failureHandler, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> verbose: false}) <a class="anchor-link" href="#expect"
@@ -1003,8 +997,8 @@ is included it is appended to the reason generated by the matcher.</p>
 <p>
 <span class="param">matcher</span> can be a value in which case it will be wrapped in an
 <a class="crossref" href="matcher.html#equals">equals</a> matcher.</p>
-<p>If the assertion fails, then the default behavior is to throw an
-<code>ExpectException</code>, but this behavior can be changed by calling
+<p>If the assertion fails, then the default behavior is to throw a
+<a class="crossref" href="matcher/TestFailure.html">TestFailure</a>, but this behavior can be changed by calling
 <a class="crossref" href="matcher.html#configureExpectFailureHandler">configureExpectFailureHandler</a> and providing an alternative handler that
 implements the <code>IFailureHandler</code> interface. It is also possible to
 pass a 
@@ -1266,6 +1260,12 @@ Matcher everyElement(matcher) =&gt; new _EveryElement(wrapMatcher(matcher));
           <div class="type">
           <h4>
             <a href="matcher/StringDescription.html"><strong>StringDescription</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="matcher/TestFailure.html"><strong>TestFailure</strong></a>
           </h4>
           </div>
           

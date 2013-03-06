@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>RunResult class / hop Library / Dart Documentation</title>
+        <title>RunResult class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/RunResult.html">RunResult</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -32,24 +32,45 @@
         
 <button id="show-inherited" class="show-inherited">Hide inherited</button>
 <div class="doc">
+<p>For explanations of exit codes see <a href="http://tldp.org/LDP/abs/html/exitcodes.html">http://tldp.org/LDP/abs/html/exitcodes.html</a></p>
 <pre class="source">
 class RunResult {
- // See http://tldp.org/LDP/abs/html/exitcodes.html
- // Accessed 2012-11-07
 
- /// Ran successfully
+ /**
+  * Ran successfully
+  *
+  * Code 0
+  */
  static final RunResult SUCCESS = const RunResult._internal(0, 'SUCCESS');
 
- /// C/C++ standard for bad usage. Hop was called incorrectly
+ /**
+  * Hop was called with bad arguments.
+  *
+  * Code 64
+  *
+  * See `EX_USAGE` in &lt;http://www.retro11.de/ouxr/211bsd/usr/include/sysexits.h.html&gt;
+  */
  static final RunResult BAD_USAGE = const RunResult._internal(64, 'BAD USAGE');
 
- /// Task was was started and failed gracefully
+ /**
+  * Task was was started and failed gracefully
+  *
+  * Code 80
+  */
  static final RunResult FAIL = const RunResult._internal(80, 'FAIL');
 
- /// Task was was started, but threw an exception
+ /**
+  * Task was was started, but threw an exception
+  *
+  * Code 81
+  */
  static final RunResult EXCEPTION = const RunResult._internal(81, 'EXCEPTION');
 
- /// Task misbehaved. Returned null, used TaskContext incorrectly, etc.
+ /**
+  * Task misbehaved. Returned null, used [TaskContext] incorrectly, etc.
+  *
+  * Code 82
+  */
  static final RunResult ERROR = const RunResult._internal(82, 'ERROR');
 
  final int exitCode;

@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>ResourceLoader&lt;T&gt; abstract class / bot_html Library / Dart Documentation</title>
+        <title>ResourceLoader&lt;T&gt; abstract class / bot_html Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_html.html">bot_html</a> &rsaquo; <a href="../bot_html/ResourceLoader.html">ResourceLoader&lt;T&gt;</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -54,9 +54,9 @@ abstract class ResourceLoader&lt;T&gt; {
 
  String get state =&gt; _state;
 
- EventRoot get loaded =&gt; _loadedEvent;
+ Stream get loaded =&gt; _loadedEvent.stream;
 
- EventRoot get progress =&gt; _progressEvent;
+ Stream get progress =&gt; _progressEvent.stream;
 
  T getResource(String url) =&gt; _getByUrl(url).resource;
 
@@ -105,7 +105,7 @@ abstract class ResourceLoader&lt;T&gt; {
 
    if(_entries.every((e) =&gt; e.completed)) {
      _state = StateLoaded;
-     _loadedEvent.fireEvent(EventArgs.empty);
+     _loadedEvent.add(EventArgs.empty);
    }
  }
 
@@ -167,7 +167,7 @@ abstract class ResourceLoader&lt;T&gt; {
    assert(args.position == args.loaded);
 
    if(entry.updateProgress(args.loaded, args.totalSize)) {
-     _progressEvent.fireEvent(EventArgs.empty);
+     _progressEvent.add(EventArgs.empty);
    }
  }
 }
@@ -271,25 +271,25 @@ int get completedCount =&gt; _entries.count((e) =&gt; e.completed);
 </div>
 <div class="field"><h4 id="loaded">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>         <strong>loaded</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>         <strong>loaded</strong> <a class="anchor-link"
             href="#loaded"
             title="Permalink to ResourceLoader&lt;T&gt;.loaded">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot get loaded =&gt; _loadedEvent;
+Stream get loaded =&gt; _loadedEvent.stream;
 </pre>
 </div>
 </div>
 <div class="field"><h4 id="progress">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>         <strong>progress</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>         <strong>progress</strong> <a class="anchor-link"
             href="#progress"
             title="Permalink to ResourceLoader&lt;T&gt;.progress">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot get progress =&gt; _progressEvent;
+Stream get progress =&gt; _progressEvent.stream;
 </pre>
 </div>
 </div>

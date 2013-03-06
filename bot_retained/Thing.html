@@ -2,7 +2,7 @@
         <html>
         <head>
                 <meta charset="utf-8">
-        <title>Thing abstract class / bot_retained Library / Dart Documentation</title>
+        <title>Thing abstract class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
@@ -13,7 +13,7 @@
         <div class="page">
         <div class="header">
           <a href="../index.html"><div class="logo"></div></a>
-          <a href="../index.html">Dart Documentation</a>
+          <a href="../index.html">BOT Documentation</a>
          &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/Thing.html">Thing</a>        <div id="search-box">
           <input type="search" name="q" id="q" autocomplete="off"
               class="search-input" placeholder="Search API">
@@ -95,7 +95,7 @@ abstract class Thing extends AttachableObject {
    }
  }
 
- EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
+ Stream&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle.stream;
 
  AffineTransform getTransform() {
    var tx = new AffineTransform();
@@ -226,7 +226,7 @@ abstract class Thing extends AttachableObject {
 
  void _invalidateParent(){
    assert(this._parent != null);
-   _invalidatedEventHandle.fireEvent(EventArgs.empty);
+   _invalidatedEventHandle.add(EventArgs.empty);
    _parent.childInvalidated(this);
  }
 }
@@ -319,13 +319,13 @@ void set height(num value) {
 </div>
 <div class="field"><h4 id="invalidated">
 <button class="show-code">Code</button>
-final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>invalidated</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/Stream.html">Stream</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>invalidated</strong> <a class="anchor-link"
             href="#invalidated"
             title="Permalink to Thing.invalidated">#</a>
         </h4>
         <div class="doc">
 <pre class="source">
-EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
+Stream&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle.stream;
 </pre>
 </div>
 </div>
