@@ -1,0 +1,173 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>ShellString abstract class / bot_io Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_io" data-type="ShellString">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">BOT Documentation</a>
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/ShellString.html">ShellString</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>ShellString</strong>
+          abstract class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+abstract class ShellString {
+ ShellString._internal();
+
+ factory ShellString(Object value) {
+   value = _convert(value);
+   if(value is ShellString) {
+     return value;
+   } else {
+     assert(value is String);
+     return new _SimpleShellString(value);
+   }
+ }
+
+ factory ShellString.withColor(String value, AnsiColor color) =&gt;
+     new _ColorShellString(value, color);
+
+ factory ShellString.withAlt(String value, AnsiColor color, String alt) =&gt;
+     new _ColorShellStringWithAlt(value, color, alt);
+
+ String format(bool useColor);
+
+ ShellString concat(Object value) =&gt; _join([this, value]);
+
+ @override
+ String toString() =&gt; format(false);
+
+ static ShellString _join(Iterable values) {
+   final vals = values.where((v) =&gt; v != null &amp;&amp; v != '')
+       .map((v) =&gt; ShellString._convert(v))
+       .toList();
+
+   if(vals.isEmpty) {
+     return new ShellString('');
+   } else if(values.length == 1) {
+     return new ShellString(values.single);
+   } else {
+     return new _ListShellString(vals);
+   }
+ }
+
+ static Object _convert(Object value) {
+   requireArgumentNotNull(value, 'value');
+   if(value is ShellString) {
+     return value;
+   } else if(value is String) {
+     return value;
+   } else {
+     return value.toString();
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="ShellString">
+<button class="show-code">Code</button>
+factory <strong>ShellString</strong>(<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> value) <a class="anchor-link" href="#ShellString"
+              title="Permalink to ShellString.ShellString">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory ShellString(Object value) {
+ value = _convert(value);
+ if(value is ShellString) {
+   return value;
+ } else {
+   assert(value is String);
+   return new _SimpleShellString(value);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="ShellString.withAlt">
+<button class="show-code">Code</button>
+factory <strong>ShellString.withAlt</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value, <a href="../bot_io/AnsiColor.html">AnsiColor</a> color, <a href="http://api.dartlang.org/dart_core/String.html">String</a> alt) <a class="anchor-link" href="#ShellString.withAlt"
+              title="Permalink to ShellString.ShellString.withAlt">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory ShellString.withAlt(String value, AnsiColor color, String alt) =&gt;
+   new _ColorShellStringWithAlt(value, color, alt);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="ShellString.withColor">
+<button class="show-code">Code</button>
+factory <strong>ShellString.withColor</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value, <a href="../bot_io/AnsiColor.html">AnsiColor</a> color) <a class="anchor-link" href="#ShellString.withColor"
+              title="Permalink to ShellString.ShellString.withColor">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory ShellString.withColor(String value, AnsiColor color) =&gt;
+   new _ColorShellString(value, color);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="concat">
+<button class="show-code">Code</button>
+<a href="../bot_io/ShellString.html">ShellString</a> <strong>concat</strong>(<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> value) <a class="anchor-link" href="#concat"
+              title="Permalink to ShellString.concat">#</a></h4>
+<div class="doc">
+<pre class="source">
+ShellString concat(Object value) =&gt; _join([this, value]);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="format">
+abstract <a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>format</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> useColor) <a class="anchor-link" href="#format"
+              title="Permalink to ShellString.format">#</a></h4>
+<div class="doc">
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to ShellString.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+@override
+String toString() =&gt; format(false);
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

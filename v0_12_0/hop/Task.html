@@ -1,0 +1,170 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Task class / hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="Task">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/Task.html">Task</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Task</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Task {
+ static const _nullFutureResultEx = 'null-future-result-silly';
+
+ final TaskDefinition _exec;
+ final String description;
+
+ factory Task.sync(Func1&lt;TaskContext, bool&gt; exec, [String description]) {
+   final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
+
+   return new Task.async(futureExec, description);
+ }
+
+ Task.async(this._exec, [String desc = '']) :
+   this.description = (desc == null) ? '' : desc {
+   requireArgumentNotNull(_exec, '_exec');
+ }
+
+ Future&lt;bool&gt; run(TaskContext ctx) {
+   requireArgumentNotNull(ctx, 'ctx');
+
+   Future&lt;bool&gt; f;
+
+   try {
+     f = _exec(ctx);
+   } catch(error, stackTrace) {
+     return new Future.immediateError(error, stackTrace);
+   }
+   if(f == null) {
+     return new Future.immediateError(_nullFutureResultEx);
+   } else {
+     return f;
+   }
+ }
+
+ @override
+ String toString() =&gt; "Task: $description";
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Task.async">
+<button class="show-code">Code</button>
+new <strong>Task.async</strong>(<a href="../hop/TaskDefinition.html">TaskDefinition</a> _exec, [String desc = '']) <a class="anchor-link" href="#Task.async"
+              title="Permalink to Task.Task.async">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task.async(this._exec, [String desc = '']) :
+ this.description = (desc == null) ? '' : desc {
+ requireArgumentNotNull(_exec, '_exec');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="Task.sync">
+<button class="show-code">Code</button>
+factory <strong>Task.sync</strong>(<a href="../bot/Func1.html">Func1</a> exec, [String description]) <a class="anchor-link" href="#Task.sync"
+              title="Permalink to Task.Task.sync">#</a></h4>
+<div class="doc">
+<pre class="source">
+factory Task.sync(Func1&lt;TaskContext, bool&gt; exec, [String description]) {
+ final futureExec = (TaskContext ctx) =&gt; new Future.delayed(0, () =&gt; exec(ctx));
+
+ return new Task.async(futureExec, description);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="description">
+<button class="show-code">Code</button>
+final String         <strong>description</strong> <a class="anchor-link"
+            href="#description"
+            title="Permalink to Task.description">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+description
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="run">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>run</strong>(<a href="../hop/TaskContext.html">TaskContext</a> ctx) <a class="anchor-link" href="#run"
+              title="Permalink to Task.run">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; run(TaskContext ctx) {
+ requireArgumentNotNull(ctx, 'ctx');
+
+ Future&lt;bool&gt; f;
+
+ try {
+   f = _exec(ctx);
+ } catch(error, stackTrace) {
+   return new Future.immediateError(error, stackTrace);
+ }
+ if(f == null) {
+   return new Future.immediateError(_nullFutureResultEx);
+ } else {
+   return f;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Task.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+@override
+String toString() =&gt; "Task: $description";
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

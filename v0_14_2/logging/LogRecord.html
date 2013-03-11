@@ -1,0 +1,179 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>LogRecord class / logging Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="logging" data-type="LogRecord">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../logging.html">logging</a> &rsaquo; <a href="../logging/LogRecord.html">LogRecord</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>LogRecord</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A log entry representation used to propagate information from <a class="crossref" href="../logging/Logger.html">Logger</a> to
+individual <code>Handler</code>s.</p>
+<pre class="source">
+class LogRecord {
+ final Level level;
+ final String message;
+
+ /** Logger where this record is stored. */
+ final String loggerName;
+
+ /** Time when this record was created. */
+ final DateTime time;
+
+ /** Unique sequence number greater than all log records created before it. */
+ final int sequenceNumber;
+
+ static int _nextNumber = 0;
+
+ /** Associated exception (if any) when recording errors messages. */
+ Exception exception;
+
+ /** Associated exception message (if any) when recording errors messages. */
+ String exceptionText;
+
+ LogRecord(
+     this.level, this.message, this.loggerName,
+     [time, this.exception, this.exceptionText]) :
+   this.time = (time == null) ? new DateTime.now() : time,
+   this.sequenceNumber = LogRecord._nextNumber++;
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="LogRecord">
+<button class="show-code">Code</button>
+new <strong>LogRecord</strong>(<a href="../logging/Level.html">Level</a> level, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message, <a href="http://api.dartlang.org/dart_core/String.html">String</a> loggerName, [time, <a href="http://api.dartlang.org/dart_core/Exception.html">Exception</a> exception, <a href="http://api.dartlang.org/dart_core/String.html">String</a> exceptionText]) <a class="anchor-link" href="#LogRecord"
+              title="Permalink to LogRecord.LogRecord">#</a></h4>
+<div class="doc">
+<pre class="source">
+LogRecord(
+   this.level, this.message, this.loggerName,
+   [time, this.exception, this.exceptionText]) :
+ this.time = (time == null) ? new DateTime.now() : time,
+ this.sequenceNumber = LogRecord._nextNumber++;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="exception">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Exception.html">Exception</a>         <strong>exception</strong> <a class="anchor-link"
+            href="#exception"
+            title="Permalink to LogRecord.exception">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+exception
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="exceptionText">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>exceptionText</strong> <a class="anchor-link"
+            href="#exceptionText"
+            title="Permalink to LogRecord.exceptionText">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+exceptionText
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="level">
+<button class="show-code">Code</button>
+final <a href="../logging/Level.html">Level</a>         <strong>level</strong> <a class="anchor-link"
+            href="#level"
+            title="Permalink to LogRecord.level">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+level
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="loggerName">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>loggerName</strong> <a class="anchor-link"
+            href="#loggerName"
+            title="Permalink to LogRecord.loggerName">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+loggerName
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="message">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>message</strong> <a class="anchor-link"
+            href="#message"
+            title="Permalink to LogRecord.message">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+message
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sequenceNumber">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>sequenceNumber</strong> <a class="anchor-link"
+            href="#sequenceNumber"
+            title="Permalink to LogRecord.sequenceNumber">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+sequenceNumber
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="time">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/DateTime.html">DateTime</a>         <strong>time</strong> <a class="anchor-link"
+            href="#time"
+            title="Permalink to LogRecord.time">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+time
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,162 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Console class / bot_io Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_io" data-type="Console">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/Console.html">Console</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Console</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Console {
+
+ static Iterable&lt;String&gt; getTable(List source,
+     List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
+   requireArgumentNotNull(source, 'source');
+   requireArgumentNotNull(columns, 'columns');
+   requireArgument(columns.length &gt; 0, 'columns',
+       'Must have at least one column');
+
+   //
+   // populate cells so we know what data we're dealing with
+   // also keep track of the max width of each column
+   //
+
+   final headerInclude = includeHeader ? 1 : 0;
+
+   final cells = new Array2d&lt;String&gt;(columns.length, source.length + headerInclude);
+   final maxWidths = new List&lt;int&gt;();
+   maxWidths.insertRange(0, columns.length, 0);
+
+   if(includeHeader) {
+     // populate header first
+     for(var i = 0; i &lt; columns.length; i++) {
+       final value = columns[i].name;
+       maxWidths[i] = math.max(maxWidths[i], value.length);
+       cells.set(i, 0, value);
+     }
+   }
+
+   for(int i = 0; i &lt; source.length; i++) {
+     final rowIndex = i + headerInclude;
+     for(var col = 0; col &lt; columns.length; col++) {
+       final column = columns[col];
+       final value = column._mapper(source[i]).trim();
+       maxWidths[col] = math.max(maxWidths[col], value.length);
+       cells.set(col, rowIndex, value);
+     }
+   }
+
+   return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
+ }
+
+ static String _getRow(List&lt;String&gt; row, List&lt;int&gt; columnWidths) {
+   final minBuffer = 3;
+
+   assert(row.length == columnWidths.length);
+   final buffer = new StringBuffer();
+   int targetWidth = 0;
+
+   for(var i = 0; i &lt; row.length; i++) {
+     final value = row[i];
+     final width = columnWidths[i];
+     assert(value.length &lt;= width);
+
+     while(buffer.length &lt; targetWidth) {
+       buffer.write(' ');
+     }
+     buffer.write(value);
+
+     targetWidth += width + minBuffer;
+   }
+
+   return buffer.toString();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="getTable">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; <strong>getTable</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a> source, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_io/ColumnDefinition.html">ColumnDefinition</a>&gt; columns, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> includeHeader: false}) <a class="anchor-link" href="#getTable"
+              title="Permalink to Console.getTable">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Iterable&lt;String&gt; getTable(List source,
+   List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
+ requireArgumentNotNull(source, 'source');
+ requireArgumentNotNull(columns, 'columns');
+ requireArgument(columns.length &gt; 0, 'columns',
+     'Must have at least one column');
+
+ //
+ // populate cells so we know what data we're dealing with
+ // also keep track of the max width of each column
+ //
+
+ final headerInclude = includeHeader ? 1 : 0;
+
+ final cells = new Array2d&lt;String&gt;(columns.length, source.length + headerInclude);
+ final maxWidths = new List&lt;int&gt;();
+ maxWidths.insertRange(0, columns.length, 0);
+
+ if(includeHeader) {
+   // populate header first
+   for(var i = 0; i &lt; columns.length; i++) {
+     final value = columns[i].name;
+     maxWidths[i] = math.max(maxWidths[i], value.length);
+     cells.set(i, 0, value);
+   }
+ }
+
+ for(int i = 0; i &lt; source.length; i++) {
+   final rowIndex = i + headerInclude;
+   for(var col = 0; col &lt; columns.length; col++) {
+     final column = columns[col];
+     final value = column._mapper(source[i]).trim();
+     maxWidths[col] = math.max(maxWidths[col], value.length);
+     cells.set(col, rowIndex, value);
+   }
+ }
+
+ return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

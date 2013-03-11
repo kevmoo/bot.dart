@@ -1,0 +1,229 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>LogEntry class / mock Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="mock" data-type="LogEntry">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../mock.html">mock</a> &rsaquo; <a href="../mock/LogEntry.html">LogEntry</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>LogEntry</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Every call to a <a class="crossref" href="../mock/Mock.html">Mock</a> object method is logged. The logs are
+kept in instances of <a class="crossref" href="../mock/LogEntry.html#LogEntry">LogEntry</a>.</p>
+<pre class="source">
+class LogEntry {
+ /** The time of the event. */
+ DateTime time;
+
+ /** The mock object name, if any. */
+ final String mockName;
+
+ /** The method name. */
+ final String methodName;
+
+ /** The parameters. */
+ final List args;
+
+ /** The behavior that resulted. */
+ final Action action;
+
+ /** The value that was returned (if no throw). */
+ final value;
+
+ LogEntry(this.mockName, this.methodName,
+     this.args, this.action, [this.value]) {
+   time = new DateTime.now();
+ }
+
+ String _pad2(int val) =&gt; (val &gt;= 10 ? '$val' : '0$val');
+
+ String toString([DateTime baseTime]) {
+   Description d = new StringDescription();
+   if (baseTime == null) {
+     // Show absolute time.
+     d.add('${time.hour}:${_pad2(time.minute)}:'
+         '${_pad2(time.second)}.${time.millisecond}&gt;  ');
+   } else {
+     // Show relative time.
+     int delta = time.millisecondsSinceEpoch - baseTime.millisecondsSinceEpoch;
+     int secs = delta ~/ 1000;
+     int msecs = delta % 1000;
+     d.add('$secs.$msecs&gt;  ');
+   }
+   d.add('${_qualifiedName(mockName, methodName)}(');
+   if (args != null) {
+     for (var i = 0; i &lt; args.length; i++) {
+       if (i != 0) d.add(', ');
+       d.addDescriptionOf(args[i]);
+     }
+   }
+   d.add(') ${action == Action.THROW ? "threw" : "returned"} ');
+   d.addDescriptionOf(value);
+   return d.toString();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="LogEntry">
+<button class="show-code">Code</button>
+new <strong>LogEntry</strong>(String mockName, String methodName, List args, <a href="../mock/Action.html">Action</a> action, [value]) <a class="anchor-link" href="#LogEntry"
+              title="Permalink to LogEntry.LogEntry">#</a></h4>
+<div class="doc">
+<pre class="source">
+LogEntry(this.mockName, this.methodName,
+   this.args, this.action, [this.value]) {
+ time = new DateTime.now();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="action">
+<button class="show-code">Code</button>
+final <a href="../mock/Action.html">Action</a>         <strong>action</strong> <a class="anchor-link"
+            href="#action"
+            title="Permalink to LogEntry.action">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+action
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="args">
+<button class="show-code">Code</button>
+final List         <strong>args</strong> <a class="anchor-link"
+            href="#args"
+            title="Permalink to LogEntry.args">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+args
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="methodName">
+<button class="show-code">Code</button>
+final String         <strong>methodName</strong> <a class="anchor-link"
+            href="#methodName"
+            title="Permalink to LogEntry.methodName">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+methodName
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="mockName">
+<button class="show-code">Code</button>
+final String         <strong>mockName</strong> <a class="anchor-link"
+            href="#mockName"
+            title="Permalink to LogEntry.mockName">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+mockName
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="time">
+<button class="show-code">Code</button>
+DateTime         <strong>time</strong> <a class="anchor-link"
+            href="#time"
+            title="Permalink to LogEntry.time">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+time
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="value">
+<button class="show-code">Code</button>
+final         <strong>value</strong> <a class="anchor-link"
+            href="#value"
+            title="Permalink to LogEntry.value">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+value
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>([DateTime baseTime]) <a class="anchor-link" href="#toString"
+              title="Permalink to LogEntry.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString([DateTime baseTime]) {
+ Description d = new StringDescription();
+ if (baseTime == null) {
+   // Show absolute time.
+   d.add('${time.hour}:${_pad2(time.minute)}:'
+       '${_pad2(time.second)}.${time.millisecond}&gt;  ');
+ } else {
+   // Show relative time.
+   int delta = time.millisecondsSinceEpoch - baseTime.millisecondsSinceEpoch;
+   int secs = delta ~/ 1000;
+   int msecs = delta % 1000;
+   d.add('$secs.$msecs&gt;  ');
+ }
+ d.add('${_qualifiedName(mockName, methodName)}(');
+ if (args != null) {
+   for (var i = 0; i &lt; args.length; i++) {
+     if (i != 0) d.add(', ');
+     d.addDescriptionOf(args[i]);
+   }
+ }
+ d.add(') ${action == Action.THROW ? "threw" : "returned"} ');
+ d.addDescriptionOf(value);
+ return d.toString();
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,106 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Description abstract class / matcher Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="matcher" data-type="Description">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../matcher.html">matcher</a> &rsaquo; <a href="../matcher/Description.html">Description</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Description</strong>
+          abstract class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Matchers build up their error messages by appending to
+Description objects. This interface is implemented by
+StringDescription. This interface is unlikely to need
+other implementations, but could be useful to replace in
+some cases - e.g. language conversion.</p>
+<pre class="source">
+abstract class Description {
+ /** Change the value of the description. */
+ Description replace(String text);
+
+ /** This is used to add arbitrary text to the description. */
+ Description add(String text);
+
+ /** This is used to add a meaningful description of a value. */
+ Description addDescriptionOf(value);
+
+ /**
+  * This is used to add a description of an [Iterable] [list],
+  * with appropriate [start] and [end] markers and inter-element [separator].
+  */
+ Description addAll(String start, String separator, String end,
+                    Iterable list);
+}
+</pre>
+</div>
+<h3>Subclasses</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../matcher/StringDescription.html">StringDescription</a></span></p>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="add">
+abstract <a href="../matcher/Description.html">Description</a> <strong>add</strong>(String text) <a class="anchor-link" href="#add"
+              title="Permalink to Description.add">#</a></h4>
+<div class="doc">
+<p>This is used to add arbitrary text to the description. </p>
+</div>
+</div>
+<div class="method"><h4 id="addAll">
+abstract <a href="../matcher/Description.html">Description</a> <strong>addAll</strong>(String start, String separator, String end, Iterable list) <a class="anchor-link" href="#addAll"
+              title="Permalink to Description.addAll">#</a></h4>
+<div class="doc">
+<p>This is used to add a description of an [Iterable] [list],
+with appropriate 
+<span class="param">start</span> and 
+<span class="param">end</span> markers and inter-element 
+<span class="param">separator</span>.</p>
+</div>
+</div>
+<div class="method"><h4 id="addDescriptionOf">
+abstract <a href="../matcher/Description.html">Description</a> <strong>addDescriptionOf</strong>(value) <a class="anchor-link" href="#addDescriptionOf"
+              title="Permalink to Description.addDescriptionOf">#</a></h4>
+<div class="doc">
+<p>This is used to add a meaningful description of a value. </p>
+</div>
+</div>
+<div class="method"><h4 id="replace">
+abstract <a href="../matcher/Description.html">Description</a> <strong>replace</strong>(String text) <a class="anchor-link" href="#replace"
+              title="Permalink to Description.replace">#</a></h4>
+<div class="doc">
+<p>Change the value of the description. </p>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

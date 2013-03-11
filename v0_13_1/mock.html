@@ -1,0 +1,401 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>mock Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="mock">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="mock.html">mock</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>mock</strong> library</h2>
+<div class="doc"><p>A simple mocking/spy library.</p>
+<p>To create a mock objects for some class T, create a new class using:</p>
+<pre><span class="k ">class</span> <span class="t ">MockT</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="i ">T</span> <span class="p ">{</span><span class="p ">}</span><span class="p ">;</span></pre>
+<p>Then specify the <a class="crossref" href="mock/Behavior.html">Behavior</a> of the Mock for different methods using
+<code>when</code> (to select the method and parameters) and then the <a class="crossref" href="mock/Action.html">Action</a>s
+for the <a class="crossref" href="mock/Behavior.html">Behavior</a> by calling <code>thenReturn</code>, <code>alwaysReturn</code>, <code>thenThrow</code>,
+<code>alwaysThrow</code>, <code>thenCall</code> or <code>alwaysCall</code>.</p>
+<p><code>thenReturn</code>, <code>thenThrow</code> and <code>thenCall</code> are one-shot so you would
+typically call these more than once to specify a sequence of actions;
+this can be done with chained calls, e.g.:</p>
+<pre> <span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span>
+     <span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">1</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">2</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p><code>thenCall</code> and <code>alwaysCall</code> allow you to proxy mocked methods, chaining
+to some other implementation. This provides a way to implement 'spies'.</p>
+<p>For getters and setters, use "get foo" and "set foo"-style arguments
+to <a class="crossref" href="mock.html#callsTo">callsTo</a>.</p>
+<p>You can disable logging for a particular <a class="crossref" href="mock/Behavior.html">Behavior</a> easily:</p>
+<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">logging</span> <span class="o ">=</span> <span class="k ">false</span><span class="p ">;</span></pre>
+<p>You can then use the mock object. Once you are done, to verify the
+behavior, use <code>getLogs</code> to extract a relevant subset of method call
+logs and apply <code>Matchers</code> to these through calling <code>verify</code>.</p>
+<p>A Mock can be given a name when constructed. In this case instead of
+keeping its own log, it uses a shared log. This can be useful to get an
+audit trail of interleaved behavior. It is the responsibility of the user
+to ensure that mock names, if used, are unique.</p>
+<p>Limitations:</p><ul><li>only positional parameters are supported (up to 10);</li><li>
+<p>to mock getters you will need to include parentheses in the call
+  (e.g. m.length() will work but not m.length).</p></li></ul>
+<p>Here is a simple example:</p>
+<pre><span class="k ">class</span> <span class="t ">MockList</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="t ">List</span> <span class="p ">{</span><span class="p ">}</span><span class="p ">;</span>
+
+<span class="t ">List</span> <span class="i ">m</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">MockList</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
+
+<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">;</span>
+
+<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">verify</span><span class="p ">(</span><span class="i ">happenedExactly</span><span class="p ">(</span><span class="n ">2</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">verify</span><span class="p ">(</span><span class="i ">happenedOnce</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">getLogs</span><span class="p ">(</span><span class="i ">m</span><span class="p ">,</span> <span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> unterminated string literal</pre>
+<p>Note that we don't need to provide argument matchers for all arguments,
+but we do need to provide arguments for all matchers. So this is allowed:</p>
+<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="n ">1</span><span class="p ">,</span> <span class="n ">2</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>But this is not allowed and will throw an exception:</p>
+<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'add'</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">,</span> <span class="i ">anything</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">;</span>
+<span class="i ">m</span><span class="p ">.</span><span class="i ">add</span><span class="p ">(</span><span class="n ">1</span><span class="p ">)</span><span class="p ">;</span></pre>
+<p>Here is a way to implement a 'spy', which is where we log the call
+but then hand it off to some other function, which is the same
+method in a real instance of the class being mocked:</p>
+<pre><span class="k ">class</span> <span class="t ">Foo</span> <span class="p ">{</span>
+  <span class="i ">bar</span><span class="p ">(</span><span class="i ">a</span><span class="p ">,</span> <span class="i ">b</span><span class="p ">,</span> <span class="i ">c</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">a</span> <span class="o ">+</span> <span class="i ">b</span> <span class="o ">+</span> <span class="i ">c</span><span class="p ">;</span>
+<span class="p ">}</span>
+
+<span class="k ">class</span> <span class="t ">MockFoo</span> <span class="k ">extends</span> <span class="t ">Mock</span> <span class="k ">implements</span> <span class="t ">Foo</span> <span class="p ">{</span>
+  <span class="t ">Foo</span> <span class="i ">real</span><span class="p ">;</span>
+  <span class="t ">MockFoo</span><span class="p ">(</span><span class="p ">)</span> <span class="p ">{</span>
+    <span class="i ">real</span> <span class="o ">=</span> <span class="k ">new</span> <span class="t ">Foo</span><span class="p ">(</span><span class="p ">)</span><span class="p ">;</span>
+    <span class="r ">this</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'bar'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">alwaysCall</span><span class="p ">(</span><span class="i ">real</span><span class="p ">.</span><span class="i ">bar</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="p ">}</span>
+<span class="p ">}</span></pre></div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="happenedAtLeastOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedAtLeastOnce</strong> <a class="anchor-link"
+            href="#happenedAtLeastOnce"
+            title="Permalink to happenedAtLeastOnce">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+happenedAtLeastOnce = const _TimesMatcher(1)
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="happenedAtMostOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedAtMostOnce</strong> <a class="anchor-link"
+            href="#happenedAtMostOnce"
+            title="Permalink to happenedAtMostOnce">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+happenedAtMostOnce = const _TimesMatcher(0, 1)
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="happenedOnce">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>happenedOnce</strong> <a class="anchor-link"
+            href="#happenedOnce"
+            title="Permalink to happenedOnce">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+happenedOnce = const _TimesMatcher(1, 1)
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="neverHappened">
+<button class="show-code">Code</button>
+const <a href="matcher/Matcher.html">Matcher</a>         <strong>neverHappened</strong> <a class="anchor-link"
+            href="#neverHappened"
+            title="Permalink to neverHappened">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+neverHappened = const _TimesMatcher(0, 0)
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sharedLog">
+<button class="show-code">Code</button>
+<a href="mock/LogEntryList.html">LogEntryList</a>         <strong>sharedLog</strong> <a class="anchor-link"
+            href="#sharedLog"
+            title="Permalink to sharedLog">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+sharedLog = null
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="neverThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>neverThrew</strong>(value) <a class="anchor-link" href="#neverThrew"
+              title="Permalink to neverThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#neverThrew">neverThrew</a> asserts that no matching call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher neverThrew(value) =&gt;
+ new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.NONE);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sometimeThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>sometimeThrew</strong>(value) <a class="anchor-link" href="#sometimeThrew"
+              title="Permalink to sometimeThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#sometimeThrew">sometimeThrew</a> asserts that at least one matching call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher sometimeThrew(value) =&gt;
+ new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.SOME);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysThrew">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>alwaysThrew</strong>(value) <a class="anchor-link" href="#alwaysThrew"
+              title="Permalink to alwaysThrew">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#alwaysThrew">alwaysThrew</a> asserts that all matching calls to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher alwaysThrew(value) =&gt;
+   new _ResultSetMatcher(Action.THROW, wrapMatcher(value), _Frequency.ALL);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="neverReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>neverReturned</strong>(value) <a class="anchor-link" href="#neverReturned"
+              title="Permalink to neverReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#neverReturned">neverReturned</a> asserts that no matching calls to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher neverReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.NONE);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="sometimeReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>sometimeReturned</strong>(value) <a class="anchor-link" href="#sometimeReturned"
+              title="Permalink to sometimeReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#sometimeReturned">sometimeReturned</a> asserts that at least one matching call to a method
+returned a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher sometimeReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.SOME);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysReturned">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>alwaysReturned</strong>(value) <a class="anchor-link" href="#alwaysReturned"
+              title="Permalink to alwaysReturned">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#alwaysReturned">alwaysReturned</a> asserts that all matching calls to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher alwaysReturned(value) =&gt;
+   new _ResultSetMatcher(Action.RETURN, wrapMatcher(value), _Frequency.ALL);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="throwing">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>throwing</strong>(value) <a class="anchor-link" href="#throwing"
+              title="Permalink to throwing">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#throwing">throwing</a> matches log entrues where the call to a method threw
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher throwing(value) =&gt;
+   new _ResultMatcher(Action.THROW, wrapMatcher(value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="returning">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>returning</strong>(value) <a class="anchor-link" href="#returning"
+              title="Permalink to returning">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#returning">returning</a> matches log entries where the call to a method returned
+a value that matched 
+<span class="param">value</span>.</p>
+<pre class="source">
+Matcher returning(value) =&gt;
+   new _ResultMatcher(Action.RETURN, wrapMatcher(value));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedAtMost">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedAtMost</strong>(count) <a class="anchor-link" href="#happenedAtMost"
+              title="Permalink to happenedAtMost">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtMost">happenedAtMost</a> matches a maximum number of calls. </p>
+<pre class="source">
+Matcher happenedAtMost(count) {
+ return new _TimesMatcher(0, count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedAtLeast">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedAtLeast</strong>(count) <a class="anchor-link" href="#happenedAtLeast"
+              title="Permalink to happenedAtLeast">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedAtLeast">happenedAtLeast</a> matches a minimum number of calls. </p>
+<pre class="source">
+Matcher happenedAtLeast(count) {
+ return new _TimesMatcher(count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="happenedExactly">
+<button class="show-code">Code</button>
+<a href="matcher/Matcher.html">Matcher</a> <strong>happenedExactly</strong>(count) <a class="anchor-link" href="#happenedExactly"
+              title="Permalink to happenedExactly">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="mock.html#happenedExactly">happenedExactly</a> matches an exact number of calls. </p>
+<pre class="source">
+Matcher happenedExactly(count) {
+ return new _TimesMatcher(count, count);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="callsTo">
+<button class="show-code">Code</button>
+<a href="mock/CallMatcher.html">CallMatcher</a> <strong>callsTo</strong>([method, arg0 = _noArg, arg1 = _noArg, arg2 = _noArg, arg3 = _noArg, arg4 = _noArg, arg5 = _noArg, arg6 = _noArg, arg7 = _noArg, arg8 = _noArg, arg9 = _noArg]) <a class="anchor-link" href="#callsTo"
+              title="Permalink to callsTo">#</a></h4>
+<div class="doc">
+<p>Returns a <a class="crossref" href="mock/CallMatcher.html">CallMatcher</a> for the specified signature. 
+<span class="param">method</span> can be
+null to match anything, or a literal <code>String</code>, a predicate <code>Function</code>,
+or a <code>Matcher</code>. The various arguments can be scalar values or <code>Matcher</code>s.
+To match getters and setters, use "get " and "set " prefixes on the names.
+For example, for a property "foo", you could use "get foo" and "set foo"
+as literal string arguments to callsTo to match the getter and setter
+of "foo".</p>
+<pre class="source">
+CallMatcher callsTo([method,
+                    arg0 = _noArg,
+                    arg1 = _noArg,
+                    arg2 = _noArg,
+                    arg3 = _noArg,
+                    arg4 = _noArg,
+                    arg5 = _noArg,
+                    arg6 = _noArg,
+                    arg7 = _noArg,
+                    arg8 = _noArg,
+                    arg9 = _noArg]) {
+ return new CallMatcher(method, arg0, arg1, arg2, arg3, arg4,
+     arg5, arg6, arg7, arg8, arg9);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="mock/Action.html"><strong>Action</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Behavior.html"><strong>Behavior</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/CallMatcher.html"><strong>CallMatcher</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/LogEntry.html"><strong>LogEntry</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/LogEntryList.html"><strong>LogEntryList</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Mock.html"><strong>Mock</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="mock/Responder.html"><strong>Responder</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Typedefs</h3>
+          <div class="type">
+          <h4>
+            <a href="mock/StepValidator.html"><strong>StepValidator</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

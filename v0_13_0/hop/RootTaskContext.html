@@ -1,0 +1,209 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>RootTaskContext class / hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="RootTaskContext">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/RootTaskContext.html">RootTaskContext</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>RootTaskContext</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class RootTaskContext {
+ final bool _enableColor;
+
+ RootTaskContext([bool enableColor=true]) : _enableColor = enableColor;
+
+ TaskContext getSubContext(String name, Iterable&lt;String&gt; arguments) {
+   return new _SubTaskContext(this, name, arguments);
+ }
+
+ void log(String message, [AnsiColor color = null]) {
+   if(!_enableColor) {
+     color = null;
+   }
+
+   if(color != null) {
+     message = color.wrap(message);
+   }
+
+   printCore(message);
+ }
+
+ void _subTaskLog(_SubTaskContext subTask, Level logLevel, String message) {
+   assert(subTask._parent == this);
+   _logCore([subTask._name], logLevel, message);
+ }
+
+ void _logCore(List&lt;String&gt; titleSections, Level logLevel, String message) {
+   requireArgumentNotNull(message, 'message');
+   assert(!titleSections.isEmpty);
+   assert(titleSections.every((s) =&gt; s != null &amp;&amp; !s.isEmpty));
+
+   final color = _getColor(logLevel);
+
+   var indent = '';
+   var title = titleSections.join(' - ').concat(': ');
+
+   while(indent.length &lt; title.length) {
+     indent =  indent.concat(' ');
+   }
+
+   if(color != null) {
+     title = color.wrap(title);
+   }
+
+   final lines = Util.splitLines(message);
+   var first = true;
+   for(final l in lines) {
+     if(first) {
+       first = false;
+       printCore(title.concat(l));
+     } else {
+       printCore(indent.concat(l));
+     }
+   }
+ }
+
+ @protected
+ void printCore(String message) {
+   print(message);
+ }
+
+ AnsiColor _getColor(Level logLevel) {
+   if(_enableColor) {
+     return getLogColor(logLevel);
+   } else {
+     return null;
+   }
+ }
+
+ static AnsiColor getLogColor(Level logLevel) {
+   requireArgumentNotNull(logLevel, 'logLevel');
+   if(logLevel.value &gt; Level.WARNING.value) {
+     return AnsiColor.RED;
+   } else if(logLevel.value &gt; Level.INFO.value) {
+     return AnsiColor.LIGHT_RED;
+   } else {
+     return AnsiColor.BLUE;
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="getLogColor">
+<button class="show-code">Code</button>
+<a href="../bot_io/AnsiColor.html">AnsiColor</a> <strong>getLogColor</strong>(<a href="../logging/Level.html">Level</a> logLevel) <a class="anchor-link" href="#getLogColor"
+              title="Permalink to RootTaskContext.getLogColor">#</a></h4>
+<div class="doc">
+<pre class="source">
+static AnsiColor getLogColor(Level logLevel) {
+ requireArgumentNotNull(logLevel, 'logLevel');
+ if(logLevel.value &gt; Level.WARNING.value) {
+   return AnsiColor.RED;
+ } else if(logLevel.value &gt; Level.INFO.value) {
+   return AnsiColor.LIGHT_RED;
+ } else {
+   return AnsiColor.BLUE;
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="RootTaskContext">
+<button class="show-code">Code</button>
+new <strong>RootTaskContext</strong>([bool enableColor = true]) <a class="anchor-link" href="#RootTaskContext"
+              title="Permalink to RootTaskContext.RootTaskContext">#</a></h4>
+<div class="doc">
+<pre class="source">
+RootTaskContext([bool enableColor=true]) : _enableColor = enableColor;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="getSubContext">
+<button class="show-code">Code</button>
+<a href="../hop/TaskContext.html">TaskContext</a> <strong>getSubContext</strong>(String name, Iterable&lt;String&gt; arguments) <a class="anchor-link" href="#getSubContext"
+              title="Permalink to RootTaskContext.getSubContext">#</a></h4>
+<div class="doc">
+<pre class="source">
+TaskContext getSubContext(String name, Iterable&lt;String&gt; arguments) {
+ return new _SubTaskContext(this, name, arguments);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="log">
+<button class="show-code">Code</button>
+void <strong>log</strong>(String message, [<a href="../bot_io/AnsiColor.html">AnsiColor</a> color = null]) <a class="anchor-link" href="#log"
+              title="Permalink to RootTaskContext.log">#</a></h4>
+<div class="doc">
+<pre class="source">
+void log(String message, [AnsiColor color = null]) {
+ if(!_enableColor) {
+   color = null;
+ }
+
+ if(color != null) {
+   message = color.wrap(message);
+ }
+
+ printCore(message);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="printCore">
+<button class="show-code">Code</button>
+void <strong>printCore</strong>(String message) <a class="anchor-link" href="#printCore"
+              title="Permalink to RootTaskContext.printCore">#</a></h4>
+<div class="doc">
+<pre class="source">
+@protected
+void printCore(String message) {
+ print(message);
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

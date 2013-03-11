@@ -1,0 +1,193 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Style class / path Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="path" data-type="Style">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">BOT Documentation</a>
+         &rsaquo; <a href="../path.html">path</a> &rsaquo; <a href="../path/Style.html">Style</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Style</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>An enum type describing a "flavor" of path.</p>
+<pre class="source">
+class Style {
+ /// POSIX-style paths use "/" (forward slash) as separators. Absolute paths
+ /// start with "/". Used by UNIX, Linux, Mac OS X, and others.
+ static final posix = new Style._('posix', '/', '/', '/');
+
+ /// Windows paths use "\" (backslash) as separators. Absolute paths start with
+ /// a drive letter followed by a colon (example, "C:") or two backslashes
+ /// ("\\") for UNC paths.
+ // TODO(rnystrom): The UNC root prefix should include the drive name too, not
+ // just the "\\".
+ static final windows = new Style._('windows', '\\', r'[/\\]',
+     r'\\\\|[a-zA-Z]:[/\\]');
+
+ Style._(this.name, this.separator, String separatorPattern,
+     String rootPattern)
+   : separatorPattern = new RegExp(separatorPattern),
+     _rootPattern = new RegExp('^$rootPattern');
+
+ /// The name of this path style. Will be "posix" or "windows".
+ final String name;
+
+ /// The path separator for this style. On POSIX, this is `/`. On Windows,
+ /// it's `\`.
+ final String separator;
+
+ /// The [Pattern] that can be used to match a separator for a path in this
+ /// style. Windows allows both "/" and "\" as path separators even though
+ /// "\" is the canonical one.
+ final Pattern separatorPattern;
+
+ // TODO(nweiz): make this a Pattern when issue 7080 is fixed.
+ /// The [RegExp] that can be used to match the root prefix of an absolute
+ /// path in this style.
+ final RegExp _rootPattern;
+
+ /// Gets the root prefix of [path] if path is absolute. If [path] is relative,
+ /// returns `null`.
+ String getRoot(String path) {
+   var match = _rootPattern.firstMatch(path);
+   if (match == null) return null;
+   return match[0];
+ }
+
+ String toString() =&gt; name;
+}
+</pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="posix">
+<button class="show-code">Code</button>
+final         <strong>posix</strong> <a class="anchor-link"
+            href="#posix"
+            title="Permalink to Style.posix">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+posix = new Style._('posix', '/', '/', '/')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="windows">
+<button class="show-code">Code</button>
+final         <strong>windows</strong> <a class="anchor-link"
+            href="#windows"
+            title="Permalink to Style.windows">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+windows = new Style._('windows', '\\', r'[/\\]',
+r'\\\\|[a-zA-Z]:[/\\]')
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to Style.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="separator">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>separator</strong> <a class="anchor-link"
+            href="#separator"
+            title="Permalink to Style.separator">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+separator
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="separatorPattern">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/Pattern.html">Pattern</a>         <strong>separatorPattern</strong> <a class="anchor-link"
+            href="#separatorPattern"
+            title="Permalink to Style.separatorPattern">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+separatorPattern
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="getRoot">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getRoot</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> path) <a class="anchor-link" href="#getRoot"
+              title="Permalink to Style.getRoot">#</a></h4>
+<div class="doc">
+<p>Gets the root prefix of 
+<span class="param">path</span> if path is absolute. If 
+<span class="param">path</span> is relative,
+returns <code>null</code>.</p>
+<pre class="source">
+String getRoot(String path) {
+ var match = _rootPattern.firstMatch(path);
+ if (match == null) return null;
+ return match[0];
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Style.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+String toString() =&gt; name;
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

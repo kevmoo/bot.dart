@@ -1,0 +1,113 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>bot_git Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="bot_git">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">BOT Documentation</a>
+         &rsaquo; <a href="bot_git.html">bot_git</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>bot_git</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="requireArgumentValidSha1">
+<button class="show-code">Code</button>
+void <strong>requireArgumentValidSha1</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value, <a href="http://api.dartlang.org/dart_core/String.html">String</a> argName) <a class="anchor-link" href="#requireArgumentValidSha1"
+              title="Permalink to requireArgumentValidSha1">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireArgumentValidSha1(String value, String argName) {
+ _metaRequireArgumentNotNullOrEmpty(argName);
+ requireArgumentNotNullOrEmpty(value, argName);
+
+ if(!Git.isValidSha(value)) {
+   final message = 'Not a valid SHA1 value: $value';
+   throw new DetailedArgumentError(argName, message);
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="bot_git/BranchReference.html"><strong>BranchReference</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/Commit.html"><strong>Commit</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/CommitReference.html"><strong>CommitReference</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/Git.html"><strong>Git</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/GitDir.html"><strong>GitDir</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/Tag.html"><strong>Tag</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_git/TreeEntry.html"><strong>TreeEntry</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Typedefs</h3>
+          <div class="type">
+          <h4>
+            <a href="bot_git/PopulateTempDir.html"><strong>PopulateTempDir</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

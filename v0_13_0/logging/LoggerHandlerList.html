@@ -1,0 +1,102 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>LoggerHandlerList class / logging Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="logging" data-type="LoggerHandlerList">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../logging.html">logging</a> &rsaquo; <a href="../logging/LoggerHandlerList.html">LoggerHandlerList</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>LoggerHandlerList</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>List of handlers that will be called on a logger event. </p>
+<pre class="source">
+class LoggerHandlerList {
+ Logger _logger;
+
+ LoggerHandlerList(this._logger);
+
+ void add(LoggerHandler handler) =&gt; _logger._addHandler(handler);
+ void remove(LoggerHandler handler) =&gt; _logger._removeHandler(handler);
+ void clear() =&gt; _logger._clearHandlers();
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="LoggerHandlerList">
+<button class="show-code">Code</button>
+new <strong>LoggerHandlerList</strong>(<a href="../logging/Logger.html">Logger</a> _logger) <a class="anchor-link" href="#LoggerHandlerList"
+              title="Permalink to LoggerHandlerList.LoggerHandlerList">#</a></h4>
+<div class="doc">
+<pre class="source">
+LoggerHandlerList(this._logger);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="add">
+<button class="show-code">Code</button>
+void <strong>add</strong>(<a href="../logging/LoggerHandler.html">LoggerHandler</a> handler) <a class="anchor-link" href="#add"
+              title="Permalink to LoggerHandlerList.add">#</a></h4>
+<div class="doc">
+<pre class="source">
+void add(LoggerHandler handler) =&gt; _logger._addHandler(handler);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="clear">
+<button class="show-code">Code</button>
+void <strong>clear</strong>() <a class="anchor-link" href="#clear"
+              title="Permalink to LoggerHandlerList.clear">#</a></h4>
+<div class="doc">
+<pre class="source">
+void clear() =&gt; _logger._clearHandlers();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="remove">
+<button class="show-code">Code</button>
+void <strong>remove</strong>(<a href="../logging/LoggerHandler.html">LoggerHandler</a> handler) <a class="anchor-link" href="#remove"
+              title="Permalink to LoggerHandlerList.remove">#</a></h4>
+<div class="doc">
+<pre class="source">
+void remove(LoggerHandler handler) =&gt; _logger._removeHandler(handler);
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

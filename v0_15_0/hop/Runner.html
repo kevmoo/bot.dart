@@ -1,0 +1,310 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Runner class / hop Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="Runner">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">BOT Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/Runner.html">Runner</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Runner</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Runner {
+ /**
+  * Runs a [Task] with the specificed [TaskContext].
+  *
+  * [runTask] handles a number of error cases, logs appropriate messages
+  * to [context] and returns a corresponding [RunResult] when completed.
+  */
+ static Future&lt;RunResult&gt; runTask(TaskContext context, Task task) {
+   requireArgumentNotNull(context, 'context');
+   requireArgumentNotNull(task, 'task');
+   requireArgument(!context.isDisposed, 'context', 'cannot be disposed');
+
+   final start = new DateTime.now();
+   context.finest('Started at $start');
+
+   return task.run(context)
+       .then((bool didComplete) {
+         if(didComplete == null) {
+           context.severe('${didComplete} returned from task');
+           context.severe('Return value from task must be true or false');
+           return RunResult.ERROR;
+         } else if(didComplete) {
+           return RunResult.SUCCESS;
+         } else {
+           return RunResult.FAIL;
+         }
+       })
+       .catchError((AsyncError asyncError) {
+         if(asyncError.error == Task._nullFutureResultEx) {
+           context.severe('The provided task returned null instead of a future');
+           return RunResult.ERROR;
+         } else if(asyncError.error is _TaskFailError) {
+           final _TaskFailError e = asyncError.error;
+           context.severe(e.message);
+           return RunResult.FAIL;
+         }
+         else {
+           // has as exception, need to test this
+           context.severe('Exception thrown by task');
+           context.severe(asyncError.error.toString());
+           if(asyncError.stackTrace != null) {
+             context.severe(asyncError.stackTrace.toString());
+           }
+           return RunResult.EXCEPTION;
+         }
+       })
+       .whenComplete(() {
+         final end = new DateTime.now();
+         context.finest('Finished at $end');
+         final duration = end.difference(start);
+         context.fine('Run time: $duration');
+         context.dispose();
+       });
+ }
+
+ /**
+  * [run] exists primarily for testing [Task] implementations.
+  *
+  * If you want to use Hop in an app, see [runHop].
+  *
+  * If you want to run a specific [Task] in isolation, see [runTask].
+  */
+ static Future&lt;RunResult&gt; run(HopConfig config) {
+   requireArgumentNotNull(config, 'config');
+
+   final ctx = _getContext(config);
+
+   if(config.args.command != null) {
+     // we're executing a command
+     final subCommandArgResults = config.args.command;
+     final taskName = subCommandArgResults.name;
+
+     var subCtx = ctx.getSubContext(taskName, subCommandArgResults);
+
+     final task = config.taskRegistry._getTask(taskName);
+     return runTask(subCtx, task)
+         .then((RunResult result) =&gt; _logExitCode(ctx, result));
+
+   } else if(config.args.rest.length == 0) {
+     _printHelp(config.doPrint, config.taskRegistry, config.parser);
+     return new Future.immediate(RunResult.SUCCESS);
+   } else {
+     final taskName = config.args.rest[0];
+     ctx.log('No task named "$taskName".');
+     return new Future.immediate(RunResult.BAD_USAGE);
+   }
+ }
+
+ static RootTaskContext _getContext(HopConfig config) {
+   final bool preFixEnabled = config.args[_prefixFlag];
+   final String logLevelOption = config.args[_logLevelOption];
+
+   final Level logLevel = _getLogLevels()
+       .singleMatching((Level l) =&gt; l.name.toLowerCase() == logLevelOption);
+
+   return new RootTaskContext(config.doPrint,
+       prefixEnabled: preFixEnabled, minLogLevel: logLevel);
+ }
+
+ static void _runShell(TaskRegistry registry, String helpTaskName) {
+
+   // a bit ugly
+   // the help task needs the parser and a print method
+   // we can't get those until the help task is created
+   // so we use this dummy object which the help task closure holds onto
+   // then we update the values before the help task could ever be called
+   // sorry. Weird, I know
+   final helpArgs = new _HelpArgs(registry);
+
+   // wire up help task
+   if(helpTaskName != null) {
+     registry.addTask(helpTaskName, _getHelpTask(helpArgs));
+   }
+
+   registry._freeze();
+
+   final parser = _getParser(registry, Level.INFO);
+   helpArgs.parser = parser;
+
+   ArgResults args;
+   try {
+     args = tryArgsCompletion(parser);
+   } on FormatException catch(ex, stack) {
+     // TODO: try to guess if --no-color was passed in here?
+     print("There was an error parsing the provided arguments");
+     print(ex.message);
+     print('');
+     _printHelp(print, registry, parser);
+
+     _libLogger.severe(ex.message);
+     _libLogger.severe(Error.safeToString(stack));
+
+     io.exit(RunResult.BAD_USAGE.exitCode);
+   }
+
+   final bool useColor = args[_colorFlag];
+   final Printer printer = useColor ? _colorPrinter : print;
+
+   final config = new HopConfig._internal(registry, parser, args, printer);
+   helpArgs.printer = config.doPrint;
+
+   final future = Runner.run(config);
+
+   future.then((RunResult rr) {
+     _libLogger.info('Exit with $rr');
+     io.exit(rr.exitCode);
+   });
+ }
+
+ static void _colorPrinter(Object value) {
+   if(value is ShellString) {
+     value = value.format(true);
+   }
+   print(value);
+ }
+
+ static RunResult _logExitCode(RootTaskContext ctx, RunResult result) {
+   if(!result.success) {
+     final msg = 'Task did not complete - ${result.name} (${result.exitCode})';
+     ctx.log(new ShellString.withColor(msg, AnsiColor.RED));
+   }
+   return result;
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="runTask">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../hop/RunResult.html">RunResult</a>&gt; <strong>runTask</strong>(<a href="../hop/TaskContext.html">TaskContext</a> context, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#runTask"
+              title="Permalink to Runner.runTask">#</a></h4>
+<div class="doc">
+<p>Runs a <a class="crossref" href="../hop/Task.html">Task</a> with the specificed <a class="crossref" href="../hop/TaskContext.html">TaskContext</a>.</p>
+<p><a class="crossref" href="../hop/Runner.html#runTask">runTask</a> handles a number of error cases, logs appropriate messages
+to 
+<span class="param">context</span> and returns a corresponding <a class="crossref" href="../hop/RunResult.html">RunResult</a> when completed.</p>
+<pre class="source">
+static Future&lt;RunResult&gt; runTask(TaskContext context, Task task) {
+ requireArgumentNotNull(context, 'context');
+ requireArgumentNotNull(task, 'task');
+ requireArgument(!context.isDisposed, 'context', 'cannot be disposed');
+
+ final start = new DateTime.now();
+ context.finest('Started at $start');
+
+ return task.run(context)
+     .then((bool didComplete) {
+       if(didComplete == null) {
+         context.severe('${didComplete} returned from task');
+         context.severe('Return value from task must be true or false');
+         return RunResult.ERROR;
+       } else if(didComplete) {
+         return RunResult.SUCCESS;
+       } else {
+         return RunResult.FAIL;
+       }
+     })
+     .catchError((AsyncError asyncError) {
+       if(asyncError.error == Task._nullFutureResultEx) {
+         context.severe('The provided task returned null instead of a future');
+         return RunResult.ERROR;
+       } else if(asyncError.error is _TaskFailError) {
+         final _TaskFailError e = asyncError.error;
+         context.severe(e.message);
+         return RunResult.FAIL;
+       }
+       else {
+         // has as exception, need to test this
+         context.severe('Exception thrown by task');
+         context.severe(asyncError.error.toString());
+         if(asyncError.stackTrace != null) {
+           context.severe(asyncError.stackTrace.toString());
+         }
+         return RunResult.EXCEPTION;
+       }
+     })
+     .whenComplete(() {
+       final end = new DateTime.now();
+       context.finest('Finished at $end');
+       final duration = end.difference(start);
+       context.fine('Run time: $duration');
+       context.dispose();
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="run">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../hop/RunResult.html">RunResult</a>&gt; <strong>run</strong>(<a href="../hop/HopConfig.html">HopConfig</a> config) <a class="anchor-link" href="#run"
+              title="Permalink to Runner.run">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="../hop/Runner.html#run">run</a> exists primarily for testing <a class="crossref" href="../hop/Task.html">Task</a> implementations.</p>
+<p>If you want to use Hop in an app, see <a class="crossref" href="../hop.html#runHop">runHop</a>.</p>
+<p>If you want to run a specific <a class="crossref" href="../hop/Task.html">Task</a> in isolation, see <a class="crossref" href="../hop/Runner.html#runTask">runTask</a>.</p>
+<pre class="source">
+static Future&lt;RunResult&gt; run(HopConfig config) {
+ requireArgumentNotNull(config, 'config');
+
+ final ctx = _getContext(config);
+
+ if(config.args.command != null) {
+   // we're executing a command
+   final subCommandArgResults = config.args.command;
+   final taskName = subCommandArgResults.name;
+
+   var subCtx = ctx.getSubContext(taskName, subCommandArgResults);
+
+   final task = config.taskRegistry._getTask(taskName);
+   return runTask(subCtx, task)
+       .then((RunResult result) =&gt; _logExitCode(ctx, result));
+
+ } else if(config.args.rest.length == 0) {
+   _printHelp(config.doPrint, config.taskRegistry, config.parser);
+   return new Future.immediate(RunResult.SUCCESS);
+ } else {
+   final taskName = config.args.rest[0];
+   ctx.log('No task named "$taskName".');
+   return new Future.immediate(RunResult.BAD_USAGE);
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

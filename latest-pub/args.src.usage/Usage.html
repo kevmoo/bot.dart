@@ -1,0 +1,602 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Usage class / args.src.usage Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="args.src.usage" data-type="Usage">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">BOT Documentation</a>
+         &rsaquo; <a href="../args.src.usage.html">args.src.usage</a> &rsaquo; <a href="../args.src.usage/Usage.html">Usage</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Usage</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Takes an <code>ArgParser</code> and generates a string of usage (i.e. help) text for its
+defined options. Internally, it works like a tabular printer. The output is
+divided into three horizontal columns, like so:</p>
+<pre><code>-h, --help  Prints the usage information
+|  |        |                                 |
+</code></pre>
+<p>It builds the usage text up one column at a time and handles padding with
+spaces and wrapping to the next line to keep the cells correctly lined up.</p>
+<pre class="source">
+class Usage {
+ static const NUM_COLUMNS = 3; // Abbreviation, long name, help.
+
+ /** The parser this is generating usage for. */
+ final ArgParser args;
+
+ /** The working buffer for the generated usage text. */
+ StringBuffer buffer;
+
+ /**
+  * The column that the "cursor" is currently on. If the next call to
+  * [write()] is not for this column, it will correctly handle advancing to
+  * the next column (and possibly the next row).
+  */
+ int currentColumn = 0;
+
+ /** The width in characters of each column. */
+ List&lt;int&gt; columnWidths;
+
+ /**
+  * The number of sequential lines of text that have been written to the last
+  * column (which shows help info). We track this so that help text that spans
+  * multiple lines can be padded with a blank line after it for separation.
+  * Meanwhile, sequential options with single-line help will be compacted next
+  * to each other.
+  */
+ int numHelpLines = 0;
+
+ /**
+  * How many newlines need to be rendered before the next bit of text can be
+  * written. We do this lazily so that the last bit of usage doesn't have
+  * dangling newlines. We only write newlines right *before* we write some
+  * real content.
+  */
+ int newlinesNeeded = 0;
+
+ Usage(this.args);
+
+ /**
+  * Generates a string displaying usage information for the defined options.
+  * This is basically the help text shown on the command line.
+  */
+ String generate() {
+   buffer = new StringBuffer();
+
+   calculateColumnWidths();
+
+   args.options.forEach((name, option) {
+     write(0, getAbbreviation(option));
+     write(1, getLongOption(option));
+
+     if (option.help != null) write(2, option.help);
+
+     if (option.allowedHelp != null) {
+       var allowedNames = option.allowedHelp.keys.toList(growable: false);
+       allowedNames.sort();
+       newline();
+       for (var name in allowedNames) {
+         write(1, getAllowedTitle(name));
+         write(2, option.allowedHelp[name]);
+       }
+       newline();
+     } else if (option.allowed != null) {
+       write(2, buildAllowedList(option));
+     } else if (option.defaultValue != null) {
+       if (option.isFlag &amp;&amp; option.defaultValue == true) {
+         write(2, '(defaults to on)');
+       } else if (!option.isFlag) {
+         write(2, '(defaults to "${option.defaultValue}")');
+       }
+     }
+
+     // If any given option displays more than one line of text on the right
+     // column (i.e. help, default value, allowed options, etc.) then put a
+     // blank line after it. This gives space where it's useful while still
+     // keeping simple one-line options clumped together.
+     if (numHelpLines &gt; 1) newline();
+   });
+
+   return buffer.toString();
+ }
+
+ String getAbbreviation(Option option) {
+   if (option.abbreviation != null) {
+     return '-${option.abbreviation}, ';
+   } else {
+     return '';
+   }
+ }
+
+ String getLongOption(Option option) {
+   if (option.negatable) {
+     return '--[no-]${option.name}';
+   } else {
+     return '--${option.name}';
+   }
+ }
+
+ String getAllowedTitle(String allowed) {
+   return '      [$allowed]';
+ }
+
+ void calculateColumnWidths() {
+   int abbr = 0;
+   int title = 0;
+   args.options.forEach((name, option) {
+     // Make room in the first column if there are abbreviations.
+     abbr = max(abbr, getAbbreviation(option).length);
+
+     // Make room for the option.
+     title = max(title, getLongOption(option).length);
+
+     // Make room for the allowed help.
+     if (option.allowedHelp != null) {
+       for (var allowed in option.allowedHelp.keys) {
+         title = max(title, getAllowedTitle(allowed).length);
+       }
+     }
+   });
+
+   // Leave a gutter between the columns.
+   title += 4;
+   columnWidths = [abbr, title];
+ }
+
+ newline() {
+   newlinesNeeded++;
+   currentColumn = 0;
+   numHelpLines = 0;
+ }
+
+ write(int column, String text) {
+   var lines = text.split('\n');
+
+   // Strip leading and trailing empty lines.
+   while (lines.length &gt; 0 &amp;&amp; lines[0].trim() == '') {
+     lines.removeRange(0, 1);
+   }
+
+   while (lines.length &gt; 0 &amp;&amp; lines[lines.length - 1].trim() == '') {
+     lines.removeLast();
+   }
+
+   for (var line in lines) {
+     writeLine(column, line);
+   }
+ }
+
+ writeLine(int column, String text) {
+   // Write any pending newlines.
+   while (newlinesNeeded &gt; 0) {
+     buffer.write('\n');
+     newlinesNeeded--;
+   }
+
+   // Advance until we are at the right column (which may mean wrapping around
+   // to the next line.
+   while (currentColumn != column) {
+     if (currentColumn &lt; NUM_COLUMNS - 1) {
+       buffer.write(padRight('', columnWidths[currentColumn]));
+     } else {
+       buffer.write('\n');
+     }
+     currentColumn = (currentColumn + 1) % NUM_COLUMNS;
+   }
+
+   if (column &lt; columnWidths.length) {
+     // Fixed-size column, so pad it.
+     buffer.write(padRight(text, columnWidths[column]));
+   } else {
+     // The last column, so just write it.
+     buffer.write(text);
+   }
+
+   // Advance to the next column.
+   currentColumn = (currentColumn + 1) % NUM_COLUMNS;
+
+   // If we reached the last column, we need to wrap to the next line.
+   if (column == NUM_COLUMNS - 1) newlinesNeeded++;
+
+   // Keep track of how many consecutive lines we've written in the last
+   // column.
+   if (column == NUM_COLUMNS - 1) {
+     numHelpLines++;
+   } else {
+     numHelpLines = 0;
+   }
+ }
+
+ buildAllowedList(Option option) {
+   var allowedBuffer = new StringBuffer();
+   allowedBuffer.write('[');
+   bool first = true;
+   for (var allowed in option.allowed) {
+     if (!first) allowedBuffer.write(', ');
+     allowedBuffer.write(allowed);
+     if (allowed == option.defaultValue) {
+       allowedBuffer.write(' (default)');
+     }
+     first = false;
+   }
+   allowedBuffer.write(']');
+   return allowedBuffer.toString();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="NUM_COLUMNS">
+<button class="show-code">Code</button>
+const         <strong>NUM_COLUMNS</strong> <a class="anchor-link"
+            href="#NUM_COLUMNS"
+            title="Permalink to Usage.NUM_COLUMNS">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+NUM_COLUMNS = 3
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Usage">
+<button class="show-code">Code</button>
+new <strong>Usage</strong>(<a href="../args/ArgParser.html">ArgParser</a> args) <a class="anchor-link" href="#Usage"
+              title="Permalink to Usage.Usage">#</a></h4>
+<div class="doc">
+<pre class="source">
+Usage(this.args);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="args">
+<button class="show-code">Code</button>
+final <a href="../args/ArgParser.html">ArgParser</a>         <strong>args</strong> <a class="anchor-link"
+            href="#args"
+            title="Permalink to Usage.args">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+args
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="buffer">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/StringBuffer.html">StringBuffer</a>         <strong>buffer</strong> <a class="anchor-link"
+            href="#buffer"
+            title="Permalink to Usage.buffer">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+buffer
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="columnWidths">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>&gt;         <strong>columnWidths</strong> <a class="anchor-link"
+            href="#columnWidths"
+            title="Permalink to Usage.columnWidths">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+columnWidths
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="currentColumn">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>currentColumn</strong> <a class="anchor-link"
+            href="#currentColumn"
+            title="Permalink to Usage.currentColumn">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+currentColumn = 0
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="newlinesNeeded">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>newlinesNeeded</strong> <a class="anchor-link"
+            href="#newlinesNeeded"
+            title="Permalink to Usage.newlinesNeeded">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+newlinesNeeded = 0
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="numHelpLines">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/int.html">int</a>         <strong>numHelpLines</strong> <a class="anchor-link"
+            href="#numHelpLines"
+            title="Permalink to Usage.numHelpLines">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+numHelpLines = 0
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="buildAllowedList">
+<button class="show-code">Code</button>
+<strong>buildAllowedList</strong>(<a href="../args/Option.html">Option</a> option) <a class="anchor-link" href="#buildAllowedList"
+              title="Permalink to Usage.buildAllowedList">#</a></h4>
+<div class="doc">
+<pre class="source">
+buildAllowedList(Option option) {
+ var allowedBuffer = new StringBuffer();
+ allowedBuffer.write('[');
+ bool first = true;
+ for (var allowed in option.allowed) {
+   if (!first) allowedBuffer.write(', ');
+   allowedBuffer.write(allowed);
+   if (allowed == option.defaultValue) {
+     allowedBuffer.write(' (default)');
+   }
+   first = false;
+ }
+ allowedBuffer.write(']');
+ return allowedBuffer.toString();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="calculateColumnWidths">
+<button class="show-code">Code</button>
+void <strong>calculateColumnWidths</strong>() <a class="anchor-link" href="#calculateColumnWidths"
+              title="Permalink to Usage.calculateColumnWidths">#</a></h4>
+<div class="doc">
+<pre class="source">
+void calculateColumnWidths() {
+ int abbr = 0;
+ int title = 0;
+ args.options.forEach((name, option) {
+   // Make room in the first column if there are abbreviations.
+   abbr = max(abbr, getAbbreviation(option).length);
+
+   // Make room for the option.
+   title = max(title, getLongOption(option).length);
+
+   // Make room for the allowed help.
+   if (option.allowedHelp != null) {
+     for (var allowed in option.allowedHelp.keys) {
+       title = max(title, getAllowedTitle(allowed).length);
+     }
+   }
+ });
+
+ // Leave a gutter between the columns.
+ title += 4;
+ columnWidths = [abbr, title];
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="generate">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>generate</strong>() <a class="anchor-link" href="#generate"
+              title="Permalink to Usage.generate">#</a></h4>
+<div class="doc">
+<p>Generates a string displaying usage information for the defined options.
+This is basically the help text shown on the command line.</p>
+<pre class="source">
+String generate() {
+ buffer = new StringBuffer();
+
+ calculateColumnWidths();
+
+ args.options.forEach((name, option) {
+   write(0, getAbbreviation(option));
+   write(1, getLongOption(option));
+
+   if (option.help != null) write(2, option.help);
+
+   if (option.allowedHelp != null) {
+     var allowedNames = option.allowedHelp.keys.toList(growable: false);
+     allowedNames.sort();
+     newline();
+     for (var name in allowedNames) {
+       write(1, getAllowedTitle(name));
+       write(2, option.allowedHelp[name]);
+     }
+     newline();
+   } else if (option.allowed != null) {
+     write(2, buildAllowedList(option));
+   } else if (option.defaultValue != null) {
+     if (option.isFlag &amp;&amp; option.defaultValue == true) {
+       write(2, '(defaults to on)');
+     } else if (!option.isFlag) {
+       write(2, '(defaults to "${option.defaultValue}")');
+     }
+   }
+
+   // If any given option displays more than one line of text on the right
+   // column (i.e. help, default value, allowed options, etc.) then put a
+   // blank line after it. This gives space where it's useful while still
+   // keeping simple one-line options clumped together.
+   if (numHelpLines &gt; 1) newline();
+ });
+
+ return buffer.toString();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getAbbreviation">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getAbbreviation</strong>(<a href="../args/Option.html">Option</a> option) <a class="anchor-link" href="#getAbbreviation"
+              title="Permalink to Usage.getAbbreviation">#</a></h4>
+<div class="doc">
+<pre class="source">
+String getAbbreviation(Option option) {
+ if (option.abbreviation != null) {
+   return '-${option.abbreviation}, ';
+ } else {
+   return '';
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getAllowedTitle">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getAllowedTitle</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> allowed) <a class="anchor-link" href="#getAllowedTitle"
+              title="Permalink to Usage.getAllowedTitle">#</a></h4>
+<div class="doc">
+<pre class="source">
+String getAllowedTitle(String allowed) {
+ return '      [$allowed]';
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getLongOption">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getLongOption</strong>(<a href="../args/Option.html">Option</a> option) <a class="anchor-link" href="#getLongOption"
+              title="Permalink to Usage.getLongOption">#</a></h4>
+<div class="doc">
+<pre class="source">
+String getLongOption(Option option) {
+ if (option.negatable) {
+   return '--[no-]${option.name}';
+ } else {
+   return '--${option.name}';
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="newline">
+<button class="show-code">Code</button>
+<strong>newline</strong>() <a class="anchor-link" href="#newline"
+              title="Permalink to Usage.newline">#</a></h4>
+<div class="doc">
+<pre class="source">
+newline() {
+ newlinesNeeded++;
+ currentColumn = 0;
+ numHelpLines = 0;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="write">
+<button class="show-code">Code</button>
+<strong>write</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> column, <a href="http://api.dartlang.org/dart_core/String.html">String</a> text) <a class="anchor-link" href="#write"
+              title="Permalink to Usage.write">#</a></h4>
+<div class="doc">
+<pre class="source">
+write(int column, String text) {
+ var lines = text.split('\n');
+
+ // Strip leading and trailing empty lines.
+ while (lines.length &gt; 0 &amp;&amp; lines[0].trim() == '') {
+   lines.removeRange(0, 1);
+ }
+
+ while (lines.length &gt; 0 &amp;&amp; lines[lines.length - 1].trim() == '') {
+   lines.removeLast();
+ }
+
+ for (var line in lines) {
+   writeLine(column, line);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="writeLine">
+<button class="show-code">Code</button>
+<strong>writeLine</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> column, <a href="http://api.dartlang.org/dart_core/String.html">String</a> text) <a class="anchor-link" href="#writeLine"
+              title="Permalink to Usage.writeLine">#</a></h4>
+<div class="doc">
+<pre class="source">
+writeLine(int column, String text) {
+ // Write any pending newlines.
+ while (newlinesNeeded &gt; 0) {
+   buffer.write('\n');
+   newlinesNeeded--;
+ }
+
+ // Advance until we are at the right column (which may mean wrapping around
+ // to the next line.
+ while (currentColumn != column) {
+   if (currentColumn &lt; NUM_COLUMNS - 1) {
+     buffer.write(padRight('', columnWidths[currentColumn]));
+   } else {
+     buffer.write('\n');
+   }
+   currentColumn = (currentColumn + 1) % NUM_COLUMNS;
+ }
+
+ if (column &lt; columnWidths.length) {
+   // Fixed-size column, so pad it.
+   buffer.write(padRight(text, columnWidths[column]));
+ } else {
+   // The last column, so just write it.
+   buffer.write(text);
+ }
+
+ // Advance to the next column.
+ currentColumn = (currentColumn + 1) % NUM_COLUMNS;
+
+ // If we reached the last column, we need to wrap to the next line.
+ if (column == NUM_COLUMNS - 1) newlinesNeeded++;
+
+ // Keep track of how many consecutive lines we've written in the last
+ // column.
+ if (column == NUM_COLUMNS - 1) {
+   numHelpLines++;
+ } else {
+   numHelpLines = 0;
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

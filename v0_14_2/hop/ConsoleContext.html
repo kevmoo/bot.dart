@@ -1,0 +1,298 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>ConsoleContext class / hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="ConsoleContext">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/ConsoleContext.html">ConsoleContext</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>ConsoleContext</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class ConsoleContext extends TaskContext {
+ final Task task;
+ final ArgResults arguments;
+ bool _isDisposed = false;
+
+ ConsoleContext.raw(this.arguments, this.task);
+
+ void log(Level logLevel, String message) {
+   _assertNotDisposed();
+   print(message);
+ }
+
+ /**
+  * At the moment [getSubLogger] returns [this].
+  */
+ TaskLogger getSubLogger(String name) {
+   // TODO: should actualy support sub loggers
+   return this;
+ }
+
+ bool get isDisposed =&gt; _isDisposed;
+
+ void dispose() {
+   _assertNotDisposed();
+   _isDisposed = true;
+ }
+
+ static void runTaskAsProcess(Task task) {
+   assert(task != null);
+
+   final parser = new ArgParser();
+   task.configureArgParser(parser);
+
+   ArgResults args;
+   try {
+     args = tryArgsCompletion(parser);
+   } on FormatException catch (ex, stack) {
+     print('There was a problem parsing the provided arguments.');
+     print(ex.message);
+     print(parser.getUsage());
+     io.exit(RunResult.BAD_USAGE.exitCode);
+   }
+   final ctx = new ConsoleContext.raw(args, task);
+
+   Runner.runTask(ctx, task)
+     .then((RunResult rr) {
+       ctx.dispose();
+       io.exit(rr.exitCode);
+     });
+ }
+
+ void _assertNotDisposed() {
+   if(_isDisposed) {
+     throw 'already disposed';
+   }
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../hop/TaskLogger.html">TaskLogger</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../hop/TaskContext.html">TaskContext</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>ConsoleContext</strong></span></p>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="runTaskAsProcess">
+<button class="show-code">Code</button>
+void <strong>runTaskAsProcess</strong>(<a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#runTaskAsProcess"
+              title="Permalink to ConsoleContext.runTaskAsProcess">#</a></h4>
+<div class="doc">
+<pre class="source">
+static void runTaskAsProcess(Task task) {
+ assert(task != null);
+
+ final parser = new ArgParser();
+ task.configureArgParser(parser);
+
+ ArgResults args;
+ try {
+   args = tryArgsCompletion(parser);
+ } on FormatException catch (ex, stack) {
+   print('There was a problem parsing the provided arguments.');
+   print(ex.message);
+   print(parser.getUsage());
+   io.exit(RunResult.BAD_USAGE.exitCode);
+ }
+ final ctx = new ConsoleContext.raw(args, task);
+
+ Runner.runTask(ctx, task)
+   .then((RunResult rr) {
+     ctx.dispose();
+     io.exit(rr.exitCode);
+   });
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="ConsoleContext.raw">
+<button class="show-code">Code</button>
+new <strong>ConsoleContext.raw</strong>(<a href="../args/ArgResults.html">ArgResults</a> arguments, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#ConsoleContext.raw"
+              title="Permalink to ConsoleContext.ConsoleContext.raw">#</a></h4>
+<div class="doc">
+<pre class="source">
+ConsoleContext.raw(this.arguments, this.task);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="arguments">
+<button class="show-code">Code</button>
+final <a href="../args/ArgResults.html">ArgResults</a>         <strong>arguments</strong> <a class="anchor-link"
+            href="#arguments"
+            title="Permalink to ConsoleContext.arguments">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+arguments
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isDisposed">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isDisposed</strong> <a class="anchor-link"
+            href="#isDisposed"
+            title="Permalink to ConsoleContext.isDisposed">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool get isDisposed =&gt; _isDisposed;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="task">
+<button class="show-code">Code</button>
+final <a href="../hop/Task.html">Task</a>         <strong>task</strong> <a class="anchor-link"
+            href="#task"
+            title="Permalink to ConsoleContext.task">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+task
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="dispose">
+<button class="show-code">Code</button>
+void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
+              title="Permalink to ConsoleContext.dispose">#</a></h4>
+<div class="doc">
+<pre class="source">
+void dispose() {
+ _assertNotDisposed();
+ _isDisposed = true;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="fail">
+<button class="show-code">Code</button>
+void <strong>fail</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fail"
+              title="Permalink to ConsoleContext.fail">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskContext.html">TaskContext</a> </div><div class="doc">
+<p>Terminates the current <a class="crossref" href="../hop/Task.html">Task</a> with a failure, explained by 
+<span class="param">message</span>.</p>
+<pre class="source">
+void fail(String message) {
+ throw new _TaskFailError(message);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="fine">
+<button class="show-code">Code</button>
+void <strong>fine</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#fine"
+              title="Permalink to ConsoleContext.fine">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void fine(String message) {
+ log(Level.FINE, message);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getSubLogger">
+<button class="show-code">Code</button>
+<a href="../hop/TaskLogger.html">TaskLogger</a> <strong>getSubLogger</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#getSubLogger"
+              title="Permalink to ConsoleContext.getSubLogger">#</a></h4>
+<div class="doc">
+<p>At the moment <a class="crossref" href="../hop/ConsoleContext.html#getSubLogger">getSubLogger</a> returns <code>this</code>.</p>
+<pre class="source">
+TaskLogger getSubLogger(String name) {
+ // TODO: should actualy support sub loggers
+ return this;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="info">
+<button class="show-code">Code</button>
+void <strong>info</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#info"
+              title="Permalink to ConsoleContext.info">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void info(String message) {
+ log(Level.INFO, message);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="log">
+<button class="show-code">Code</button>
+void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#log"
+              title="Permalink to ConsoleContext.log">#</a></h4>
+<div class="doc">
+<pre class="source">
+void log(Level logLevel, String message) {
+ _assertNotDisposed();
+ print(message);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="severe">
+<button class="show-code">Code</button>
+void <strong>severe</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#severe"
+              title="Permalink to ConsoleContext.severe">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void severe(String message) {
+ log(Level.SEVERE, message);
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="warning">
+<button class="show-code">Code</button>
+void <strong>warning</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#warning"
+              title="Permalink to ConsoleContext.warning">#</a></h4>
+<div class="inherited-from">inherited from <a href="../hop/TaskLogger.html">TaskLogger</a> </div><div class="doc">
+<pre class="source">
+void warning(String message) {
+ log(Level.WARNING, message);
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

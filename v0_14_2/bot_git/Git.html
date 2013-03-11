@@ -1,0 +1,129 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Git class / bot_git Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_git" data-type="Git">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_git.html">bot_git</a> &rsaquo; <a href="../bot_git/Git.html">Git</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Git</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Git {
+ static const _shaRegexPattern = '[a-f0-9]{40}';
+ static final _shaRegEx = new RegExp(r'^'.concat(_shaRegexPattern).concat(r'$'));
+
+ static bool isValidSha(String value) {
+   return _shaRegEx.hasMatch(value);
+ }
+
+ static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args,
+     {bool throwOnError: true, String processWorkingDir}) {
+
+   final processOptions = new ProcessOptions();
+   if(processWorkingDir != null) {
+     final nativeDir = new Path(processWorkingDir).toNativePath();
+     processOptions.workingDirectory = nativeDir;
+   }
+
+   return Process.run('git', args, processOptions)
+       .then((ProcessResult pr) {
+         if(throwOnError) {
+           _throwIfProcessFailed(pr, 'git', args);
+         }
+         return pr;
+       });
+ }
+
+ static void _throwIfProcessFailed(ProcessResult pr, String process, List&lt;String&gt; args) {
+   assert(pr != null);
+   if(pr.exitCode != 0) {
+
+     final message =
+'''
+
+stdout:
+${pr.stdout}
+stderr:
+${pr.stderr}''';
+
+     throw new ProcessException('git', args, message, pr.exitCode);
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="isValidSha">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>isValidSha</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> value) <a class="anchor-link" href="#isValidSha"
+              title="Permalink to Git.isValidSha">#</a></h4>
+<div class="doc">
+<pre class="source">
+static bool isValidSha(String value) {
+ return _shaRegEx.hasMatch(value);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="runGit">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_io/ProcessResult.html">ProcessResult</a>&gt; <strong>runGit</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> throwOnError: true, <a href="http://api.dartlang.org/dart_core/String.html">String</a> processWorkingDir}) <a class="anchor-link" href="#runGit"
+              title="Permalink to Git.runGit">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Future&lt;ProcessResult&gt; runGit(List&lt;String&gt; args,
+   {bool throwOnError: true, String processWorkingDir}) {
+
+ final processOptions = new ProcessOptions();
+ if(processWorkingDir != null) {
+   final nativeDir = new Path(processWorkingDir).toNativePath();
+   processOptions.workingDirectory = nativeDir;
+ }
+
+ return Process.run('git', args, processOptions)
+     .then((ProcessResult pr) {
+       if(throwOnError) {
+         _throwIfProcessFailed(pr, 'git', args);
+       }
+       return pr;
+     });
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

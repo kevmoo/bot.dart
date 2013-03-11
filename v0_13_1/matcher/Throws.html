@@ -1,0 +1,255 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Throws class / matcher Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="matcher" data-type="Throws">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../matcher.html">matcher</a> &rsaquo; <a href="../matcher/Throws.html">Throws</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Throws</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Throws extends BaseMatcher {
+ final Matcher _matcher;
+
+ const Throws([Matcher matcher]) :
+   this._matcher = matcher;
+
+ bool matches(item, MatchState matchState) {
+   if (item is Future) {
+     var done = wrapAsync((fn) =&gt; fn());
+
+     // Queue up an asynchronous expectation that validates when the future
+     // completes.
+     item.then((value) {
+       done(() =&gt; expect(false, isTrue, reason:
+           "Expected future to fail, but succeeded with '$value'."));
+     }, onError: (e) {
+       done(() {
+         if (_matcher == null) return;
+         var reason;
+         if (e.stackTrace != null) {
+           var stackTrace = e.stackTrace.toString();
+           stackTrace = "  ${stackTrace.replaceAll("\n", "\n  ")}";
+           reason = "Actual exception trace:\n$stackTrace";
+         }
+         expect(e.error, _matcher, reason: reason);
+       });
+     });
+
+     // It hasn't failed yet.
+     return true;
+   }
+
+   try {
+     item();
+     return false;
+   } catch (e, s) {
+     if (_matcher == null ||_matcher.matches(e, matchState)) {
+       return true;
+     } else {
+       matchState.state = {
+           'exception' :e,
+           'stack': s
+       };
+       return false;
+     }
+   }
+ }
+
+ Description describe(Description description) {
+   if (_matcher == null) {
+     return description.add("throws an exception");
+   } else {
+     return description.add('throws an exception which matches ').
+         addDescriptionOf(_matcher);
+   }
+ }
+
+ Description describeMismatch(item, Description mismatchDescription,
+                              MatchState matchState,
+                              bool verbose) {
+   if (_matcher == null ||  matchState.state == null) {
+     return mismatchDescription.add(' no exception');
+   } else {
+     mismatchDescription.
+         add(' exception ').addDescriptionOf(matchState.state['exception']);
+     if (verbose) {
+         mismatchDescription.add(' at ').
+         add(matchState.state['stack'].toString());
+     }
+      mismatchDescription.add(' does not match ').addDescriptionOf(_matcher);
+      return mismatchDescription;
+   }
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../matcher/BaseMatcher.html">BaseMatcher</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>Throws</strong></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Throws">
+<button class="show-code">Code</button>
+const <strong>Throws</strong>([<a href="../matcher/Matcher.html">Matcher</a> matcher]) <a class="anchor-link" href="#Throws"
+              title="Permalink to Throws.Throws">#</a></h4>
+<div class="doc">
+<pre class="source">
+const Throws([Matcher matcher]) :
+ this._matcher = matcher;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="describe">
+<button class="show-code">Code</button>
+<a href="../matcher/Description.html">Description</a> <strong>describe</strong>(<a href="../matcher/Description.html">Description</a> description) <a class="anchor-link" href="#describe"
+              title="Permalink to Throws.describe">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Creates a textual description of a matcher,
+by appending to <code>mismatchDescription</code>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+Description describe(Description description) {
+ if (_matcher == null) {
+   return description.add("throws an exception");
+ } else {
+   return description.add('throws an exception which matches ').
+       addDescriptionOf(_matcher);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="describeMismatch">
+<button class="show-code">Code</button>
+<a href="../matcher/Description.html">Description</a> <strong>describeMismatch</strong>(item, <a href="../matcher/Description.html">Description</a> mismatchDescription, <a href="../matcher/MatchState.html">MatchState</a> matchState, bool verbose) <a class="anchor-link" href="#describeMismatch"
+              title="Permalink to Throws.describeMismatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Generates a description of the matcher failed for a particular
+
+<span class="param">item</span>, by appending the description to 
+<span class="param">mismatchDescription</span>.
+It does not check whether the 
+<span class="param">item</span> fails the match, as it is
+only called after a failed match. There may be additional info
+about the mismatch in 
+<span class="param">matchState</span>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+Description describeMismatch(item, Description mismatchDescription,
+                            MatchState matchState,
+                            bool verbose) {
+ if (_matcher == null ||  matchState.state == null) {
+   return mismatchDescription.add(' no exception');
+ } else {
+   mismatchDescription.
+       add(' exception ').addDescriptionOf(matchState.state['exception']);
+   if (verbose) {
+       mismatchDescription.add(' at ').
+       add(matchState.state['stack'].toString());
+   }
+    mismatchDescription.add(' does not match ').addDescriptionOf(_matcher);
+    return mismatchDescription;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="matches">
+<button class="show-code">Code</button>
+bool <strong>matches</strong>(item, <a href="../matcher/MatchState.html">MatchState</a> matchState) <a class="anchor-link" href="#matches"
+              title="Permalink to Throws.matches">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Tests the matcher against a given 
+<span class="param">item</span>
+and return true if the match succeeds; false otherwise.
+
+<span class="param">matchState</span> may be used to return additional info for
+the use of <a class="crossref" href="../matcher/Throws.html#describeMismatch">describeMismatch</a>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+bool matches(item, MatchState matchState) {
+ if (item is Future) {
+   var done = wrapAsync((fn) =&gt; fn());
+
+   // Queue up an asynchronous expectation that validates when the future
+   // completes.
+   item.then((value) {
+     done(() =&gt; expect(false, isTrue, reason:
+         "Expected future to fail, but succeeded with '$value'."));
+   }, onError: (e) {
+     done(() {
+       if (_matcher == null) return;
+       var reason;
+       if (e.stackTrace != null) {
+         var stackTrace = e.stackTrace.toString();
+         stackTrace = "  ${stackTrace.replaceAll("\n", "\n  ")}";
+         reason = "Actual exception trace:\n$stackTrace";
+       }
+       expect(e.error, _matcher, reason: reason);
+     });
+   });
+
+   // It hasn't failed yet.
+   return true;
+ }
+
+ try {
+   item();
+   return false;
+ } catch (e, s) {
+   if (_matcher == null ||_matcher.matches(e, matchState)) {
+     return true;
+   } else {
+     matchState.state = {
+         'exception' :e,
+         'stack': s
+     };
+     return false;
+   }
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

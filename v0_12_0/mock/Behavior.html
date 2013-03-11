@@ -1,0 +1,295 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Behavior class / mock Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="mock" data-type="Behavior">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../mock.html">mock</a> &rsaquo; <a href="../mock/Behavior.html">Behavior</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Behavior</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A <a class="crossref" href="../mock/Behavior.html#Behavior">Behavior</a> represents how a <a class="crossref" href="../mock/Mock.html">Mock</a> will respond to one particular
+type of method call.</p>
+<pre class="source">
+class Behavior {
+ CallMatcher matcher; // The method call matcher.
+ List&lt;Responder&gt; actions; // The values to return/throw or proxies to call.
+ bool logging = true;
+
+ Behavior (this.matcher) {
+   actions = new List&lt;Responder&gt;();
+ }
+
+ /**
+  * Adds a [Responder] that returns a [value] for [count] calls
+  * (1 by default).
+  */
+ Behavior thenReturn(value, [count = 1]) {
+   actions.add(new Responder(value, count, Action.RETURN));
+   return this; // For chaining calls.
+ }
+
+ /** Adds a [Responder] that repeatedly returns a [value]. */
+ Behavior alwaysReturn(value) {
+   return thenReturn(value, 0);
+ }
+
+ /**
+  * Adds a [Responder] that throws [value] [count]
+  * times (1 by default).
+  */
+ Behavior thenThrow(value, [count = 1]) {
+   actions.add(new Responder(value, count, Action.THROW));
+   return this; // For chaining calls.
+ }
+
+ /** Adds a [Responder] that throws [value] endlessly. */
+ Behavior alwaysThrow(value) {
+   return thenThrow(value, 0);
+ }
+
+ /**
+  * [thenCall] creates a proxy Responder, that is called [count]
+  * times (1 by default; 0 is used for unlimited calls, and is
+  * exposed as [alwaysCall]). [value] is the function that will
+  * be called with the same arguments that were passed to the
+  * mock. Proxies can be used to wrap real objects or to define
+  * more complex return/throw behavior. You could even (if you
+  * wanted) use proxies to emulate the behavior of thenReturn;
+  * e.g.:
+  *
+  *     m.when(callsTo('foo')).thenReturn(0)
+  *
+  * is equivalent to:
+  *
+  *     m.when(callsTo('foo')).thenCall(() =&gt; 0)
+  */
+ Behavior thenCall(value, [count = 1]) {
+   actions.add(new Responder(value, count, Action.PROXY));
+   return this; // For chaining calls.
+ }
+
+ /** Creates a repeating proxy call. */
+ Behavior alwaysCall(value) {
+   return thenCall(value, 0);
+ }
+
+ /** Returns true if a method call matches the [Behavior]. */
+ bool matches(String method, List args) =&gt; matcher.matches(method, args);
+
+ /** Returns the [matcher]'s representation. */
+ String toString() =&gt; matcher.toString();
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Behavior">
+<button class="show-code">Code</button>
+new <strong>Behavior</strong>(<a href="../mock/CallMatcher.html">CallMatcher</a> matcher) <a class="anchor-link" href="#Behavior"
+              title="Permalink to Behavior.Behavior">#</a></h4>
+<div class="doc">
+<pre class="source">
+Behavior (this.matcher) {
+ actions = new List&lt;Responder&gt;();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="actions">
+<button class="show-code">Code</button>
+List&lt;<a href="../mock/Responder.html">Responder</a>&gt;         <strong>actions</strong> <a class="anchor-link"
+            href="#actions"
+            title="Permalink to Behavior.actions">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+actions
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="logging">
+<button class="show-code">Code</button>
+bool         <strong>logging</strong> <a class="anchor-link"
+            href="#logging"
+            title="Permalink to Behavior.logging">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+logging = true
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="matcher">
+<button class="show-code">Code</button>
+<a href="../mock/CallMatcher.html">CallMatcher</a>         <strong>matcher</strong> <a class="anchor-link"
+            href="#matcher"
+            title="Permalink to Behavior.matcher">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+matcher
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="alwaysCall">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>alwaysCall</strong>(value) <a class="anchor-link" href="#alwaysCall"
+              title="Permalink to Behavior.alwaysCall">#</a></h4>
+<div class="doc">
+<p>Creates a repeating proxy call. </p>
+<pre class="source">
+Behavior alwaysCall(value) {
+ return thenCall(value, 0);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysReturn">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>alwaysReturn</strong>(value) <a class="anchor-link" href="#alwaysReturn"
+              title="Permalink to Behavior.alwaysReturn">#</a></h4>
+<div class="doc">
+<p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that repeatedly returns a 
+<span class="param">value</span>. </p>
+<pre class="source">
+Behavior alwaysReturn(value) {
+ return thenReturn(value, 0);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="alwaysThrow">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>alwaysThrow</strong>(value) <a class="anchor-link" href="#alwaysThrow"
+              title="Permalink to Behavior.alwaysThrow">#</a></h4>
+<div class="doc">
+<p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that throws 
+<span class="param">value</span> endlessly. </p>
+<pre class="source">
+Behavior alwaysThrow(value) {
+ return thenThrow(value, 0);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="matches">
+<button class="show-code">Code</button>
+bool <strong>matches</strong>(String method, List args) <a class="anchor-link" href="#matches"
+              title="Permalink to Behavior.matches">#</a></h4>
+<div class="doc">
+<p>Returns true if a method call matches the <a class="crossref" href="../mock/Behavior.html#Behavior">Behavior</a>. </p>
+<pre class="source">
+bool matches(String method, List args) =&gt; matcher.matches(method, args);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="thenCall">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>thenCall</strong>(value, [count = 1]) <a class="anchor-link" href="#thenCall"
+              title="Permalink to Behavior.thenCall">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="../mock/Behavior.html#thenCall">thenCall</a> creates a proxy Responder, that is called 
+<span class="param">count</span>
+times (1 by default; 0 is used for unlimited calls, and is
+exposed as <a class="crossref" href="../mock/Behavior.html#alwaysCall">alwaysCall</a>). 
+<span class="param">value</span> is the function that will
+be called with the same arguments that were passed to the
+mock. Proxies can be used to wrap real objects or to define
+more complex return/throw behavior. You could even (if you
+wanted) use proxies to emulate the behavior of thenReturn;
+e.g.:</p>
+<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenReturn</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span></pre>
+<p>is equivalent to:</p>
+<pre><span class="i ">m</span><span class="p ">.</span><span class="i ">when</span><span class="p ">(</span><span class="i ">callsTo</span><span class="p ">(</span><span class="s si">'foo'</span><span class="p ">)</span><span class="p ">)</span><span class="p ">.</span><span class="i ">thenCall</span><span class="p ">(</span><span class="p ">(</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="n ">0</span><span class="p ">)</span></pre>
+<pre class="source">
+Behavior thenCall(value, [count = 1]) {
+ actions.add(new Responder(value, count, Action.PROXY));
+ return this; // For chaining calls.
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="thenReturn">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>thenReturn</strong>(value, [count = 1]) <a class="anchor-link" href="#thenReturn"
+              title="Permalink to Behavior.thenReturn">#</a></h4>
+<div class="doc">
+<p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that returns a 
+<span class="param">value</span> for 
+<span class="param">count</span> calls
+(1 by default).</p>
+<pre class="source">
+Behavior thenReturn(value, [count = 1]) {
+ actions.add(new Responder(value, count, Action.RETURN));
+ return this; // For chaining calls.
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="thenThrow">
+<button class="show-code">Code</button>
+<a href="../mock/Behavior.html">Behavior</a> <strong>thenThrow</strong>(value, [count = 1]) <a class="anchor-link" href="#thenThrow"
+              title="Permalink to Behavior.thenThrow">#</a></h4>
+<div class="doc">
+<p>Adds a <a class="crossref" href="../mock/Responder.html">Responder</a> that throws [value] [count]
+times (1 by default).</p>
+<pre class="source">
+Behavior thenThrow(value, [count = 1]) {
+ actions.add(new Responder(value, count, Action.THROW));
+ return this; // For chaining calls.
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to Behavior.toString">#</a></h4>
+<div class="doc">
+<p>Returns the <a class="crossref" href="../mock/Behavior.html#matcher">matcher</a>'s representation. </p>
+<pre class="source">
+String toString() =&gt; matcher.toString();
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

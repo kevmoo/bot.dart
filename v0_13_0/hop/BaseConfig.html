@@ -1,0 +1,243 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>BaseConfig class / hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="BaseConfig">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/BaseConfig.html">BaseConfig</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>BaseConfig</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class BaseConfig {
+ static final RegExp _validNameRegExp = new RegExp(r'^[a-z][a-z0-9_]*$');
+ static const _reservedTasks = const[Runner.RAW_TASK_LIST_CMD];
+ final Map&lt;String, Task&gt; _tasks = new Map();
+ ReadOnlyCollection&lt;String&gt; _sortedTaskNames;
+
+ BaseConfig();
+
+ /// Can only be accessed when frozen
+ /// Always sorted
+ List&lt;String&gt; get taskNames {
+   requireFrozen();
+   return _sortedTaskNames;
+ }
+
+ bool hasTask(String taskName) {
+   requireFrozen();
+   return _tasks.containsKey(taskName);
+ }
+
+ Task _getTask(String taskName) {
+   return _tasks[taskName];
+ }
+
+ void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
+   addTask(name, new Task.sync(func));
+ }
+
+ void addAsync(String name, TaskDefinition execFuture) {
+   addTask(name, new Task.async(execFuture));
+ }
+
+ void addTask(String name, Task task) {
+   require(!isFrozen, "Cannot add a task. Frozen.");
+   requireArgumentNotNullOrEmpty(name, 'name');
+   requireArgument(_validNameRegExp.hasMatch(name), 'name',
+       '"$name" is not a valid name');
+   requireArgument(!_reservedTasks.contains(name), 'task',
+       'The provided task has a reserved name');
+   requireArgument(!_tasks.containsKey(name), 'task',
+       'A task with name ${name} already exists');
+
+   requireArgumentNotNull(task, 'task');
+   _tasks[name] = task;
+ }
+
+ void requireFrozen() {
+   if(!isFrozen) {
+     throw "not frozen!";
+   }
+ }
+
+ void freeze() {
+   require(!isFrozen, "Already frozen.");
+   final list = new List&lt;String&gt;.from(_tasks.keys);
+   list.sort();
+   _sortedTaskNames = new ReadOnlyCollection&lt;String&gt;.wrap(list);
+ }
+
+ bool get isFrozen =&gt; _sortedTaskNames != null;
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="BaseConfig">
+<button class="show-code">Code</button>
+new <strong>BaseConfig</strong>() <a class="anchor-link" href="#BaseConfig"
+              title="Permalink to BaseConfig.BaseConfig">#</a></h4>
+<div class="doc">
+<pre class="source">
+BaseConfig();
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="isFrozen">
+<button class="show-code">Code</button>
+final bool         <strong>isFrozen</strong> <a class="anchor-link"
+            href="#isFrozen"
+            title="Permalink to BaseConfig.isFrozen">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool get isFrozen =&gt; _sortedTaskNames != null;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="taskNames">
+<button class="show-code">Code</button>
+final List&lt;String&gt;         <strong>taskNames</strong> <a class="anchor-link"
+            href="#taskNames"
+            title="Permalink to BaseConfig.taskNames">#</a>
+        </h4>
+        <div class="doc">
+<p>Can only be accessed when frozen
+Always sorted</p>
+<pre class="source">
+List&lt;String&gt; get taskNames {
+ requireFrozen();
+ return _sortedTaskNames;
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="addAsync">
+<button class="show-code">Code</button>
+void <strong>addAsync</strong>(String name, <a href="../hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsync"
+              title="Permalink to BaseConfig.addAsync">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addAsync(String name, TaskDefinition execFuture) {
+ addTask(name, new Task.async(execFuture));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addSync">
+<button class="show-code">Code</button>
+void <strong>addSync</strong>(String name, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#addSync"
+              title="Permalink to BaseConfig.addSync">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
+ addTask(name, new Task.sync(func));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addTask">
+<button class="show-code">Code</button>
+void <strong>addTask</strong>(String name, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
+              title="Permalink to BaseConfig.addTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addTask(String name, Task task) {
+ require(!isFrozen, "Cannot add a task. Frozen.");
+ requireArgumentNotNullOrEmpty(name, 'name');
+ requireArgument(_validNameRegExp.hasMatch(name), 'name',
+     '"$name" is not a valid name');
+ requireArgument(!_reservedTasks.contains(name), 'task',
+     'The provided task has a reserved name');
+ requireArgument(!_tasks.containsKey(name), 'task',
+     'A task with name ${name} already exists');
+
+ requireArgumentNotNull(task, 'task');
+ _tasks[name] = task;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="freeze">
+<button class="show-code">Code</button>
+void <strong>freeze</strong>() <a class="anchor-link" href="#freeze"
+              title="Permalink to BaseConfig.freeze">#</a></h4>
+<div class="doc">
+<pre class="source">
+void freeze() {
+ require(!isFrozen, "Already frozen.");
+ final list = new List&lt;String&gt;.from(_tasks.keys);
+ list.sort();
+ _sortedTaskNames = new ReadOnlyCollection&lt;String&gt;.wrap(list);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hasTask">
+<button class="show-code">Code</button>
+bool <strong>hasTask</strong>(String taskName) <a class="anchor-link" href="#hasTask"
+              title="Permalink to BaseConfig.hasTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+bool hasTask(String taskName) {
+ requireFrozen();
+ return _tasks.containsKey(taskName);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="requireFrozen">
+<button class="show-code">Code</button>
+void <strong>requireFrozen</strong>() <a class="anchor-link" href="#requireFrozen"
+              title="Permalink to BaseConfig.requireFrozen">#</a></h4>
+<div class="doc">
+<pre class="source">
+void requireFrozen() {
+ if(!isFrozen) {
+   throw "not frozen!";
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

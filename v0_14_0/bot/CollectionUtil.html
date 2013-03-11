@@ -1,0 +1,288 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>CollectionUtil class / bot Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot" data-type="CollectionUtil">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot.html">bot</a> &rsaquo; <a href="../bot/CollectionUtil.html">CollectionUtil</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>CollectionUtil</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class CollectionUtil {
+ static bool allUnique(List items) {
+   requireArgumentNotNull(items, 'items');
+
+   for(int i = 0; i &lt; items.length; i++) {
+     for(int j = i + 1; j &lt; items.length; j++) {
+       if(items[i] == items[j]) {
+         return false;
+       }
+     }
+   }
+   return true;
+ }
+
+ /**
+  * Use [source.expand] instead.
+  */
+ @deprecated
+ static Enumerable selectMany(Iterable source, Func1&lt;dynamic, Iterable&gt; func) =&gt;
+     $(source.expand(func));
+
+ static int count(Iterable source, Func1&lt;dynamic, bool&gt; test) {
+   return source.reduce(0, (int previous, dynamic element) {
+     if(test(element)) {
+       return previous + 1;
+     } else {
+       return previous;
+     }
+   });
+ }
+
+ static Iterable exclude(Iterable source, Iterable itemsToExclude) {
+   requireArgumentNotNull(itemsToExclude, 'itemsToExclude');
+   Func1&lt;dynamic, bool&gt; f = (e) =&gt; !itemsToExclude.contains(e);
+   return $(IterableMixinWorkaround.where(source, f));
+ }
+
+ static Iterable distinct(Iterable source, [Func2&lt;dynamic, dynamic, bool&gt; comparer = null]) {
+   if(comparer == null) {
+     comparer = (a,b) =&gt; a == b;
+   }
+   return new _FuncEnumerable(source, (Iterable s) =&gt;
+       new _DistinctIterator(s.iterator, comparer));
+ }
+
+ static void forEachWithIndex(Iterable source, Action2&lt;dynamic, int&gt; f) {
+   int i = 0;
+   for(final e in source) {
+     f(e, i++);
+   }
+ }
+
+ /**
+  * Use [toMap] instead.
+  */
+ @deprecated
+ static Map toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) =&gt;
+     toMap(source, valueFunc, keyFunc);
+
+ static Map toMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
+   if(keyFunc == null) {
+     keyFunc = (a) =&gt; a;
+   }
+
+   final map = new Map();
+   for(final e in source) {
+     final k = keyFunc(e);
+     if(map.containsKey(k)) {
+       throw new UnsupportedError("The key '$k' is duplicated");
+     }
+     map[k] = valueFunc(e);
+   }
+   return map;
+ }
+
+ /**
+  * Use `Iterable.map(...).toSet()` instead.
+  */
+ @deprecated
+ static Set toHashSet(Iterable source, [Func1 f]) {
+   if(f == null) {
+     return new Set.from(source);
+   } else {
+     return new Set.from(source.map(f));
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="allUnique">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>allUnique</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a> items) <a class="anchor-link" href="#allUnique"
+              title="Permalink to CollectionUtil.allUnique">#</a></h4>
+<div class="doc">
+<pre class="source">
+static bool allUnique(List items) {
+ requireArgumentNotNull(items, 'items');
+
+ for(int i = 0; i &lt; items.length; i++) {
+   for(int j = i + 1; j &lt; items.length; j++) {
+     if(items[i] == items[j]) {
+       return false;
+     }
+   }
+ }
+ return true;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="selectMany">
+<button class="show-code">Code</button>
+<a href="../bot/Enumerable.html">Enumerable</a> <strong>selectMany</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#selectMany"
+              title="Permalink to CollectionUtil.selectMany">#</a></h4>
+<div class="doc">
+<p>Use <code>source.expand</code> instead.</p>
+<pre class="source">
+@deprecated
+static Enumerable selectMany(Iterable source, Func1&lt;dynamic, Iterable&gt; func) =&gt;
+   $(source.expand(func));
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="count">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/int.html">int</a> <strong>count</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="../bot/Func1.html">Func1</a> test) <a class="anchor-link" href="#count"
+              title="Permalink to CollectionUtil.count">#</a></h4>
+<div class="doc">
+<pre class="source">
+static int count(Iterable source, Func1&lt;dynamic, bool&gt; test) {
+ return source.reduce(0, (int previous, dynamic element) {
+   if(test(element)) {
+     return previous + 1;
+   } else {
+     return previous;
+   }
+ });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="exclude">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> <strong>exclude</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> itemsToExclude) <a class="anchor-link" href="#exclude"
+              title="Permalink to CollectionUtil.exclude">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Iterable exclude(Iterable source, Iterable itemsToExclude) {
+ requireArgumentNotNull(itemsToExclude, 'itemsToExclude');
+ Func1&lt;dynamic, bool&gt; f = (e) =&gt; !itemsToExclude.contains(e);
+ return $(IterableMixinWorkaround.where(source, f));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="distinct">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> <strong>distinct</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, [<a href="../bot/Func2.html">Func2</a> comparer = null]) <a class="anchor-link" href="#distinct"
+              title="Permalink to CollectionUtil.distinct">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Iterable distinct(Iterable source, [Func2&lt;dynamic, dynamic, bool&gt; comparer = null]) {
+ if(comparer == null) {
+   comparer = (a,b) =&gt; a == b;
+ }
+ return new _FuncEnumerable(source, (Iterable s) =&gt;
+     new _DistinctIterator(s.iterator, comparer));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="forEachWithIndex">
+<button class="show-code">Code</button>
+void <strong>forEachWithIndex</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="../bot/Action2.html">Action2</a> f) <a class="anchor-link" href="#forEachWithIndex"
+              title="Permalink to CollectionUtil.forEachWithIndex">#</a></h4>
+<div class="doc">
+<pre class="source">
+static void forEachWithIndex(Iterable source, Action2&lt;dynamic, int&gt; f) {
+ int i = 0;
+ for(final e in source) {
+   f(e, i++);
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toHashMap">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a> <strong>toHashMap</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toHashMap"
+              title="Permalink to CollectionUtil.toHashMap">#</a></h4>
+<div class="doc">
+<p>Use <a class="crossref" href="../bot/CollectionUtil.html#toMap">toMap</a> instead.</p>
+<pre class="source">
+@deprecated
+static Map toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) =&gt;
+   toMap(source, valueFunc, keyFunc);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toMap">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Map.html">Map</a> <strong>toMap</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="../bot/Func1.html">Func1</a> valueFunc, [<a href="../bot/Func1.html">Func1</a> keyFunc]) <a class="anchor-link" href="#toMap"
+              title="Permalink to CollectionUtil.toMap">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Map toMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
+ if(keyFunc == null) {
+   keyFunc = (a) =&gt; a;
+ }
+
+ final map = new Map();
+ for(final e in source) {
+   final k = keyFunc(e);
+   if(map.containsKey(k)) {
+     throw new UnsupportedError("The key '$k' is duplicated");
+   }
+   map[k] = valueFunc(e);
+ }
+ return map;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toHashSet">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/Set.html">Set</a> <strong>toHashSet</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, [<a href="../bot/Func1.html">Func1</a> f]) <a class="anchor-link" href="#toHashSet"
+              title="Permalink to CollectionUtil.toHashSet">#</a></h4>
+<div class="doc">
+<p>Use <code>Iterable.map(...).toSet()</code> instead.</p>
+<pre class="source">
+@deprecated
+static Set toHashSet(Iterable source, [Func1 f]) {
+ if(f == null) {
+   return new Set.from(source);
+ } else {
+   return new Set.from(source.map(f));
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

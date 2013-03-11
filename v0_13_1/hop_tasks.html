@@ -1,0 +1,372 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>hop_tasks Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="hop_tasks">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="hop_tasks.html">hop_tasks</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>hop_tasks</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="createUnitTestTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createUnitTestTask</strong>(<a href="bot/Action1.html">Action1</a> unitTestAction) <a class="anchor-link" href="#createUnitTestTask"
+              title="Permalink to createUnitTestTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createUnitTestTask(Action1&lt;unittest.Configuration&gt; unitTestAction) {
+ return new Task.async((TaskContext ctx) {
+   final config = new _HopTestConfiguration(ctx);
+   unitTestAction(config);
+
+   unittest.filterTests((unittest.TestCase tc) {
+     return ctx.arguments.every((arg) =&gt; tc.description.contains(arg));
+   });
+
+   unittest.runTests();
+   return config.future;
+ }, 'Run unit tests in the console');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="pipeProcess">
+<button class="show-code">Code</button>
+Future&lt;int&gt; <strong>pipeProcess</strong>(Process process, {<a href="bot/Action1.html">Action1</a> stdOutWriter, <a href="bot/Action1.html">Action1</a> stdErrWriter}) <a class="anchor-link" href="#pipeProcess"
+              title="Permalink to pipeProcess">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;int&gt; pipeProcess(Process process,
+   {Action1&lt;String&gt; stdOutWriter, Action1&lt;String&gt; stdErrWriter}) {
+ final completer = new Completer&lt;int&gt;();
+
+ bool finished = false;
+
+ bool validateNotFinished(String message) {
+   if(finished) {
+     print('Error in hop_tasks - pipeProcess');
+     print("Received signal from $process after exit signal");
+     print(message);
+     print("Tracked at http://code.google.com/p/dart/issues/detail?id=8422");
+     return false;
+   }
+   return true;
+ }
+
+ if(stdOutWriter != null) {
+   process.stdout.onData = () {
+     final data = process.stdout.read();
+     final str = new String.fromCharCodes(data).trim();
+
+     if(validateNotFinished('stdout - $str')) {
+       stdOutWriter(str);
+     }
+   };
+ }
+
+ if(stdErrWriter != null) {
+   process.stderr.onData = () {
+     final data = process.stderr.read();
+     assert(data != null);
+     final str = new String.fromCharCodes(data).trim();
+
+     if(validateNotFinished('stderr - $str')) {
+       stdErrWriter(str);
+     }
+
+   };
+ }
+
+ process.onExit = (int exitCode){
+   if(validateNotFinished('onExit')) {
+     finished = true;
+     completer.complete(exitCode);
+   }
+ };
+
+ return completer.future;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="startProcess">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>startProcess</strong>(<a href="hop/TaskLogger.html">TaskLogger</a> ctx, String command, [List&lt;String&gt; args = null]) <a class="anchor-link" href="#startProcess"
+              title="Permalink to startProcess">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; startProcess(TaskLogger ctx, String command,
+   [List&lt;String&gt; args = null]) {
+
+ requireArgumentNotNull(ctx, 'ctx');
+ requireArgumentNotNull(command, 'command');
+ if(args == null) {
+   args = [];
+ }
+
+ ctx.fine("Starting process:");
+ ctx.fine("$command ${args.join(' ')}");
+ return Process.start(command, args)
+     .then((process) {
+       return pipeProcess(process,
+           stdOutWriter: ctx.fine,
+           stdErrWriter: ctx.severe);
+     })
+     .then((int exitCode) {
+       return exitCode == 0;
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createProcessTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createProcessTask</strong>(String command, {List&lt;String&gt; args: null, String description: ''}) <a class="anchor-link" href="#createProcessTask"
+              title="Permalink to createProcessTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createProcessTask(String command, {List&lt;String&gt; args: null, String description: ''}) {
+ return new Task.async((ctx) =&gt; startProcess(ctx, command, args), description);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="branchForDir">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>branchForDir</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String sourceBranch, String sourceDir, String targetBranch, {String workingDir}) <a class="anchor-link" href="#branchForDir"
+              title="Permalink to branchForDir">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; branchForDir(TaskContext ctx, String sourceBranch, String sourceDir,
+   String targetBranch, {String workingDir}) {
+
+ if(workingDir == null) {
+   workingDir = new Directory.current().path;
+ }
+
+ GitDir gitDir;
+
+ List&lt;String&gt; gitArgs;
+ String sourceDirTreeSha;
+
+ return GitDir.fromExisting(workingDir)
+     .then((GitDir value) {
+       gitDir = value;
+
+       return gitDir.lsTree(sourceBranch, subTreesOnly: true, path: sourceDir);
+     })
+     .then((List&lt;TreeEntry&gt; entries) {
+       assert(entries.length &lt;= 1);
+       if(entries.isEmpty) {
+         throw 'Could not find a matching dir on the provided branch';
+       }
+
+       final tree = entries.single;
+
+       sourceDirTreeSha = tree.sha;
+
+       gitArgs = ['commit-tree', sourceDirTreeSha];
+
+       return gitDir.getBranchReference(targetBranch);
+     })
+     .then((BranchReference branchRef) {
+
+       if(branchRef == null) {
+         // branch does not exist. New branch!
+         return _doCommit(ctx, 'created', gitArgs, sourceBranch, sourceDir,
+             targetBranch, gitDir);
+       } else {
+         // existing branch, need to find the tree info so we can create
+         // a valid commit w/ the right parent
+         return _withExistingBranch(ctx, branchRef, sourceDirTreeSha, sourceDir,
+             gitArgs, sourceBranch, targetBranch, gitDir);
+       }
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="compileDocs">
+<button class="show-code">Code</button>
+Future&lt;bool&gt; <strong>compileDocs</strong>(<a href="hop/TaskContext.html">TaskContext</a> ctx, String targetBranch, <a href="bot/Func.html">Func</a> libGetter, String packageDir) <a class="anchor-link" href="#compileDocs"
+              title="Permalink to compileDocs">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; compileDocs(TaskContext ctx, String targetBranch,
+   Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter, String packageDir) {
+
+ final parser = _getDartDocParser();
+ final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
+ final bool allowDirty = parseResult['allow-dirty'];
+
+ final currentWorkingDir = new Directory.current().path;
+
+ GitDir gitDir;
+ List&lt;String&gt; libs;
+
+ return GitDir.fromExisting(currentWorkingDir)
+     .then((GitDir value) {
+       gitDir = value;
+
+       return gitDir.isWorkingTreeClean();
+     })
+     .then((bool isClean) {
+       if(!allowDirty &amp;&amp; !isClean) {
+         ctx.fail('Working tree is dirty. Cannot generate docs.');
+       }
+
+       return libGetter();
+     })
+     .then((List&lt;String&gt; value) {
+       assert(value != null);
+       libs = value;
+
+       return _getCommitMessageFuture(gitDir);
+     })
+     .then((String commitMessage) {
+
+       return gitDir.populateBranch(targetBranch,
+           (TempDir td) =&gt; _doDocsPopulate(ctx, td, libs, packageDir),
+           commitMessage);
+     })
+     .then((Commit value) {
+       if(value == null) {
+         ctx.info('No commit. Nothing changed.');
+       } else {
+         ctx.info('New commit created at branch $targetBranch');
+         ctx.info('Message: ${value.message}');
+       }
+
+       return true;
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getCompileDocsFunc">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>getCompileDocsFunc</strong>(String targetBranch, String packageDir, <a href="bot/Func.html">Func</a> libGetter) <a class="anchor-link" href="#getCompileDocsFunc"
+              title="Permalink to getCompileDocsFunc">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task getCompileDocsFunc(String targetBranch, String packageDir,
+                       Func&lt;Future&lt;List&lt;String&gt;&gt;&gt; libGetter) {
+ return new Task.async((ctx) =&gt; compileDocs(ctx, targetBranch, libGetter, packageDir),
+     'Generate documentation for the provided libraries.');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createDart2JsTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createDart2JsTask</strong>(List&lt;String&gt; inputs, {String output: null, String packageRoot: null, bool minify: false, bool allowUnsafeEval: true, bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) <a class="anchor-link" href="#createDart2JsTask"
+              title="Permalink to createDart2JsTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createDart2JsTask(List&lt;String&gt; inputs, {String output: null,
+ String packageRoot: null, bool minify: false, bool allowUnsafeEval: true,
+ bool liveTypeAnalysis: true, bool rejectDeprecatedFeatures: false}) {
+ return new Task.async((context) {
+   final futureFuncs = inputs
+       .map((p) =&gt; () =&gt; _dart2js(context, p,
+           output: output,
+           minify: minify,
+           allowUnsafeEval: allowUnsafeEval,
+           packageRoot: packageRoot,
+           liveTypeAnalysis: liveTypeAnalysis,
+           rejectDeprecatedFeatures: rejectDeprecatedFeatures))
+       .toList();
+   return _chainTasks(futureFuncs);
+ }, 'Run Dart-to-Javascript compiler');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createDartAnalyzerTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createDartAnalyzerTask</strong>(Iterable&lt;String&gt; files) <a class="anchor-link" href="#createDartAnalyzerTask"
+              title="Permalink to createDartAnalyzerTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createDartAnalyzerTask(Iterable&lt;String&gt; files) {
+ return new Task.async((context) {
+
+   final parser = _getDartAnalyzerParser();
+   final parseResult = _helpfulParseArgs(context, parser, context.arguments);
+
+   final bool enableTypeChecks = parseResult['enable_type_checks'];
+   final bool verbose = parseResult['verbose'];
+
+   final fileList = files.map((f) =&gt; new Path(f)).toList();
+
+   return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
+ }, 'Running dart analyzer');
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="createBenchTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>createBenchTask</strong>() <a class="anchor-link" href="#createBenchTask"
+              title="Permalink to createBenchTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task createBenchTask() {
+ return new Task.async((ctx) {
+
+   final parser = _getBenchParser();
+   final parseResult = _helpfulParseArgs(ctx, parser, ctx.arguments);
+
+   final count = int.parse(parseResult['run_count'], onError: (s) =&gt; _defaultRunCount);
+
+   if(parseResult.rest.isEmpty) {
+     ctx.fail('No command provided.');
+   }
+
+   final processName = parseResult.rest.first;
+   final args = parseResult.rest.getRange(1, parseResult.rest.length-1);
+
+   return _runMany(ctx, count, processName, args)
+       .then((list) {
+         final values = list.map((brr) =&gt; brr.executionDuration.inMilliseconds);
+         final stats = new _Stats(values);
+         ctx.info(stats.toString());
+         return true;
+       });
+
+ }, 'Run a benchmark against the provided task');
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

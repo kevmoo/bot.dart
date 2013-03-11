@@ -1,0 +1,293 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Runner class / hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="Runner">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/Runner.html">Runner</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Runner</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class Runner {
+ static const String _colorParam = 'color';
+ static const String RAW_TASK_LIST_CMD = 'print_raw_task_list';
+ static final ArgParser _parser = _getParser();
+ final ArgResults _args;
+ final BaseConfig _state;
+
+ Runner(this._state, this._args) {
+   assert(_args != null);
+   _state.requireFrozen();
+ }
+
+ Future&lt;RunResult&gt; run() {
+   _state.requireFrozen();
+
+   final ctx = getContext();
+
+   if(_args.rest.length == 0) {
+     _printHelp(ctx);
+     return new Future.immediate(RunResult.SUCCESS);
+   }
+
+   final taskName = _args.rest[0];
+   final subArgs = _args.rest.getRange(1, _args.rest.length - 1);
+   if(_state.hasTask(taskName)) {
+     var subCtx = ctx.getSubContext(taskName, subArgs);
+     return _runTask(subCtx, taskName)
+         .then((RunResult result) =&gt; _logExitCode(ctx, result));
+   } else if(taskName == RAW_TASK_LIST_CMD) {
+     _printRawTasks(ctx);
+     return new Future.immediate(RunResult.SUCCESS);
+   }
+   else {
+     ctx.log('No task named "$taskName".');
+     return new Future.immediate(RunResult.BAD_USAGE);
+   }
+ }
+
+ @protected
+ RootTaskContext getContext() {
+   final bool colorEnabled = _args[_colorParam];
+   return new RootTaskContext(colorEnabled);
+ }
+
+ Future&lt;RunResult&gt; _runTask(TaskContext context, String taskName) {
+   final task = _state._getTask(taskName);
+   assert(task != null);
+
+   return task.run(context)
+       .then((bool didComplete) {
+         if(didComplete == null) {
+           context.severe('${didComplete} returned from task');
+           context.severe('Return value from task must be true or false');
+           return RunResult.ERROR;
+         } else if(didComplete) {
+           return RunResult.SUCCESS;
+         } else {
+           context.severe('Failed');
+           return RunResult.FAIL;
+         }
+       })
+       .catchError((AsyncError asyncError) {
+       if(asyncError.error == Task._nullFutureResultEx) {
+         context.severe('The provided task returned null instead of a future');
+         return RunResult.ERROR;
+       } else if(asyncError.error is TaskFailError) {
+         final TaskFailError e = asyncError.error;
+         context.severe(e.message);
+         return RunResult.FAIL;
+       }
+       else {
+         // has as exception, need to test this
+         context.severe('Exception thrown by task');
+         context.severe(asyncError.error.toString());
+         if(asyncError.stackTrace != null) {
+           context.severe(asyncError.stackTrace.toString());
+         }
+         return RunResult.EXCEPTION;
+       }
+     }).whenComplete(() =&gt; context.dispose());
+ }
+
+ void _printHelp(RootTaskContext ctx) {
+   ctx.log('Welcome to HOP', AnsiColor.BLUE);
+   ctx.log('');
+   ctx.log('Tasks:', AnsiColor.BLUE);
+   _printTaskTable(ctx);
+   ctx.log('');
+   ctx.log(getUsage());
+ }
+
+ void _printRawTasks(RootTaskContext ctx) {
+   for(final t in _state.taskNames) {
+     ctx.log(t);
+   }
+ }
+
+ void _printTaskTable(RootTaskContext ctx) {
+   final columns = [
+                    new ColumnDefinition('name', (name) =&gt; name),
+                    new ColumnDefinition('description', (name) {
+                      final task = _state._getTask(name);
+                      return task.description;
+                    })
+                    ];
+   final rows = Console.getTable(_state.taskNames, columns);
+   for(final r in rows) {
+     ctx.log(r);
+   }
+ }
+
+ static ArgResults parseArgs(List&lt;String&gt; args) =&gt;
+     _parser.parse(args);
+
+ static String getUsage() =&gt; _parser.getUsage();
+
+ static RunResult _logExitCode(RootTaskContext ctx, RunResult result) {
+   if(result.success) {
+     ctx.log('Finished', AnsiColor.GREEN);
+   } else {
+     ctx.log('Failed', AnsiColor.RED);
+   }
+   return result;
+ }
+
+ static ArgParser _getParser() {
+   final parser = new ArgParser();
+
+   parser.addFlag(_colorParam, defaultsTo: true);
+
+
+   // TODO: put help in a const
+   // parser.addFlag('help', abbr: '?', help: 'print help text', negatable: false);
+
+   // TODO: other global flag ideas
+   // verbose - show a lot of output
+   // trace - show stack dump on fail?
+
+   return parser;
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="RAW_TASK_LIST_CMD">
+<button class="show-code">Code</button>
+const String         <strong>RAW_TASK_LIST_CMD</strong> <a class="anchor-link"
+            href="#RAW_TASK_LIST_CMD"
+            title="Permalink to Runner.RAW_TASK_LIST_CMD">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+RAW_TASK_LIST_CMD = 'print_raw_task_list'
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="parseArgs">
+<button class="show-code">Code</button>
+<a href="../args/ArgResults.html">ArgResults</a> <strong>parseArgs</strong>(List&lt;String&gt; args) <a class="anchor-link" href="#parseArgs"
+              title="Permalink to Runner.parseArgs">#</a></h4>
+<div class="doc">
+<pre class="source">
+static ArgResults parseArgs(List&lt;String&gt; args) =&gt;
+   _parser.parse(args);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getUsage">
+<button class="show-code">Code</button>
+String <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+              title="Permalink to Runner.getUsage">#</a></h4>
+<div class="doc">
+<pre class="source">
+static String getUsage() =&gt; _parser.getUsage();
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Runner">
+<button class="show-code">Code</button>
+new <strong>Runner</strong>(<a href="../hop/BaseConfig.html">BaseConfig</a> _state, <a href="../args/ArgResults.html">ArgResults</a> _args) <a class="anchor-link" href="#Runner"
+              title="Permalink to Runner.Runner">#</a></h4>
+<div class="doc">
+<pre class="source">
+Runner(this._state, this._args) {
+ assert(_args != null);
+ _state.requireFrozen();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="getContext">
+<button class="show-code">Code</button>
+<a href="../hop/RootTaskContext.html">RootTaskContext</a> <strong>getContext</strong>() <a class="anchor-link" href="#getContext"
+              title="Permalink to Runner.getContext">#</a></h4>
+<div class="doc">
+<pre class="source">
+@protected
+RootTaskContext getContext() {
+ final bool colorEnabled = _args[_colorParam];
+ return new RootTaskContext(colorEnabled);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="run">
+<button class="show-code">Code</button>
+Future&lt;<a href="../hop/RunResult.html">RunResult</a>&gt; <strong>run</strong>() <a class="anchor-link" href="#run"
+              title="Permalink to Runner.run">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;RunResult&gt; run() {
+ _state.requireFrozen();
+
+ final ctx = getContext();
+
+ if(_args.rest.length == 0) {
+   _printHelp(ctx);
+   return new Future.immediate(RunResult.SUCCESS);
+ }
+
+ final taskName = _args.rest[0];
+ final subArgs = _args.rest.getRange(1, _args.rest.length - 1);
+ if(_state.hasTask(taskName)) {
+   var subCtx = ctx.getSubContext(taskName, subArgs);
+   return _runTask(subCtx, taskName)
+       .then((RunResult result) =&gt; _logExitCode(ctx, result));
+ } else if(taskName == RAW_TASK_LIST_CMD) {
+   _printRawTasks(ctx);
+   return new Future.immediate(RunResult.SUCCESS);
+ }
+ else {
+   ctx.log('No task named "$taskName".');
+   return new Future.immediate(RunResult.BAD_USAGE);
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

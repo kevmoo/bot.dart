@@ -1,0 +1,695 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>NavThing class / bot_retained Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_retained" data-type="NavThing">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_retained.html">bot_retained</a> &rsaquo; <a href="../bot_retained/NavThing.html">NavThing</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>NavThing</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class NavThing extends ParentThing {
+ static final Property&lt;AffineTransform&gt; _navLayerTransformProp =
+     new Property&lt;AffineTransform&gt;("navLayerTxProp");
+
+ final VerticalAlignment verticalAlignment = VerticalAlignment.MIDDLE;
+ final HorizontalAlignment horizontalAlignment = HorizontalAlignment.CENTER;
+
+ Thing _child;
+ _NavLayerTxPanel _txPanel;
+ Vector _childOffset;
+
+ NavThing(num width, num height) :
+   super(width, height);
+
+ int get visualChildCount {
+   if(_txPanel != null) {
+     return 1;
+   } else if (_child != null) {
+     return 1;
+   } else {
+     return 0;
+   }
+ }
+
+ Thing getVisualChild(int index) {
+   if(index == 0) {
+     if(_txPanel != null) {
+       return _txPanel;
+     } else if(_child != null) {
+       return _child;
+     }
+   }
+   throw new ArgumentError();
+ }
+
+ bool get canForward =&gt; _txPanel == null;
+
+ void forward(Thing thing, AffineTransform tx, [int frameCount = 30]) {
+   requireArgumentNotNull(thing, 'thing');
+   requireArgumentNotNull(tx, 'tx');
+   requireArgumentNotNull(frameCount, 'frameCount');
+   require(canForward, 'Forward cannot be called');
+
+   if(_child != null) {
+     assert(_txPanel == null); // I guess we don't allow stacked forwards yet
+     final ghost = this._child;
+
+     _child.unregisterParent(this);
+     final existingTx = _navLayerTransformProp.get(_child);
+     assert(existingTx != null);
+     _child.removeTransform(existingTx);
+     _child = null;
+
+     final tempCanvas = new CanvasElement(
+         width: ghost.width.toInt(), height: ghost.height.toInt());
+
+     final tempCtx = tempCanvas.context2d;
+     ghost.drawOverride(tempCtx);
+
+     this._txPanel = new _NavLayerTxPanel(this.width, this.height, tempCanvas,
+         thing, tx, existingTx, frameCount, horizontalAlignment,
+         verticalAlignment, _childOffset);
+     this._txPanel.registerParent(this);
+   }
+
+   assert(_child == null);
+   _child = thing;
+
+   if(_txPanel == null) {
+     _claimChild();
+   }
+
+   invalidateDraw();
+ }
+
+ void update() {
+   super.update();
+   if(_txPanel != null) {
+     assert(_child != null);
+     assert(_child.parent == _txPanel);
+     if(_txPanel.isDone) {
+       _txPanel.unregisterParent(this);
+       final removed = _txPanel.remove(_child);
+       assert(removed);
+       _txPanel = null;
+       _claimChild();
+     }
+   }
+ }
+
+ void _claimChild() {
+   assert(_txPanel == null);
+   assert(_child != null);
+   assert(!_navLayerTransformProp.isSet(_child));
+
+   final tx = _child.addTransform();
+   _navLayerTransformProp.set(_child, tx);
+   _child.registerParent(this);
+ }
+
+ void _updateChildLocation() {
+   throw 'not impld';
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot/AttachableObject.html">AttachableObject</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/Thing.html">Thing</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../bot_retained/ParentThing.html">ParentThing</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>NavThing</strong></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="NavThing">
+<button class="show-code">Code</button>
+new <strong>NavThing</strong>(num width, num height) <a class="anchor-link" href="#NavThing"
+              title="Permalink to NavThing.NavThing">#</a></h4>
+<div class="doc">
+<pre class="source">
+NavThing(num width, num height) :
+ super(width, height);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field inherited"><h4 id="alpha">
+<button class="show-code">Code</button>
+num         <strong>alpha</strong> <a class="anchor-link"
+            href="#alpha"
+            title="Permalink to NavThing.alpha">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+num get alpha =&gt; _alpha;
+</pre>
+<pre class="source">
+void set alpha(num value) {
+ requireArgument(isValidNumber(value), 'value');
+ requireArgument(value &gt;= 0 &amp;&amp; value &lt;= 1, 'value');
+ _alpha = value;
+ if(parent != null) {
+   _invalidateParent();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="cacheEnabled">
+<button class="show-code">Code</button>
+bool         <strong>cacheEnabled</strong> <a class="anchor-link"
+            href="#cacheEnabled"
+            title="Permalink to NavThing.cacheEnabled">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+bool get cacheEnabled =&gt; _cacheEnabled;
+</pre>
+<pre class="source">
+void set cacheEnabled(bool value) {
+ requireArgumentNotNull(value, 'value');
+ if(value != _cacheEnabled) {
+   _cacheEnabled = value;
+   if(!_cacheEnabled) {
+     _cacheCanvas = null;
+   }
+ }
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="canForward">
+<button class="show-code">Code</button>
+final bool         <strong>canForward</strong> <a class="anchor-link"
+            href="#canForward"
+            title="Permalink to NavThing.canForward">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool get canForward =&gt; _txPanel == null;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="height">
+<button class="show-code">Code</button>
+num         <strong>height</strong> <a class="anchor-link"
+            href="#height"
+            title="Permalink to NavThing.height">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+num get height =&gt; _height;
+</pre>
+<pre class="source">
+void set height(num value) {
+ assert(isValidNumber(value));
+ _height = value;
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="horizontalAlignment">
+<button class="show-code">Code</button>
+final <a href="../bot_retained/HorizontalAlignment.html">HorizontalAlignment</a>         <strong>horizontalAlignment</strong> <a class="anchor-link"
+            href="#horizontalAlignment"
+            title="Permalink to NavThing.horizontalAlignment">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+horizontalAlignment = HorizontalAlignment.CENTER
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="invalidated">
+<button class="show-code">Code</button>
+final <a href="../bot/EventRoot.html">EventRoot</a>&lt;<a href="../bot/EventArgs.html">EventArgs</a>&gt;         <strong>invalidated</strong> <a class="anchor-link"
+            href="#invalidated"
+            title="Permalink to NavThing.invalidated">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+EventRoot&lt;EventArgs&gt; get invalidated =&gt; _invalidatedEventHandle;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="isDisposed">
+<button class="show-code">Code</button>
+final bool         <strong>isDisposed</strong> <a class="anchor-link"
+            href="#isDisposed"
+            title="Permalink to NavThing.isDisposed">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+bool get isDisposed =&gt; _disposed;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="parent">
+<button class="show-code">Code</button>
+final <a href="../bot_retained/ThingParent.html">ThingParent</a>         <strong>parent</strong> <a class="anchor-link"
+            href="#parent"
+            title="Permalink to NavThing.parent">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+ThingParent get parent =&gt; _parent;
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="size">
+<button class="show-code">Code</button>
+<a href="../bot/Size.html">Size</a>         <strong>size</strong> <a class="anchor-link"
+            href="#size"
+            title="Permalink to NavThing.size">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+Size get size =&gt; new Size(_width, _height);
+</pre>
+<pre class="source">
+void set size(Size value) {
+ assert(value.isValid);
+ _width = value.width;
+ _height = value.height;
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="verticalAlignment">
+<button class="show-code">Code</button>
+final <a href="../bot_retained/VerticalAlignment.html">VerticalAlignment</a>         <strong>verticalAlignment</strong> <a class="anchor-link"
+            href="#verticalAlignment"
+            title="Permalink to NavThing.verticalAlignment">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+verticalAlignment = VerticalAlignment.MIDDLE
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="visualChildCount">
+<button class="show-code">Code</button>
+final int         <strong>visualChildCount</strong> <a class="anchor-link"
+            href="#visualChildCount"
+            title="Permalink to NavThing.visualChildCount">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+int get visualChildCount {
+ if(_txPanel != null) {
+   return 1;
+ } else if (_child != null) {
+   return 1;
+ } else {
+   return 0;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="width">
+<button class="show-code">Code</button>
+num         <strong>width</strong> <a class="anchor-link"
+            href="#width"
+            title="Permalink to NavThing.width">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+num get width =&gt; _width;
+</pre>
+<pre class="source">
+void set width(num value) {
+ assert(isValidNumber(value));
+ _width = value;
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method inherited"><h4 id="addTransform">
+<button class="show-code">Code</button>
+<a href="../bot/AffineTransform.html">AffineTransform</a> <strong>addTransform</strong>() <a class="anchor-link" href="#addTransform"
+              title="Permalink to NavThing.addTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+AffineTransform addTransform(){
+ validateNotDisposed();
+ var tx = new AffineTransform();
+ _transforms.add(tx);
+ return tx;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="childInvalidated">
+<button class="show-code">Code</button>
+void <strong>childInvalidated</strong>(<a href="../bot_retained/Thing.html">Thing</a> child) <a class="anchor-link" href="#childInvalidated"
+              title="Permalink to NavThing.childInvalidated">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/ParentThing.html">ParentThing</a> </div><div class="doc">
+<pre class="source">
+void childInvalidated(Thing child){
+ assert(hasVisualChild(child));
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="dispose">
+<button class="show-code">Code</button>
+void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
+              title="Permalink to NavThing.dispose">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+void dispose(){
+ validateNotDisposed();
+ // Set disposed_ to true first, in case during the chain of disposal this
+ // gets disposed recursively.
+ this._disposed = true;
+ this.disposeInternal();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="disposeInternal">
+<button class="show-code">Code</button>
+void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
+              title="Permalink to NavThing.disposeInternal">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<div class="inherited">
+<p>Do not call this method directly. Call <code>dispose</code> instead.
+Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
+<pre class="source">
+@protected
+void disposeInternal(){
+ super.disposeInternal();
+ _invalidatedEventHandle.dispose();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="drawCore">
+<button class="show-code">Code</button>
+void <strong>drawCore</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawCore"
+              title="Permalink to NavThing.drawCore">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+@protected
+void drawCore(CanvasRenderingContext2D ctx){
+ ctx.save();
+ final tx = this.getTransform();
+ CanvasUtil.transform(ctx, tx);
+ assert(_alpha != null);
+ assert(_alpha &gt;= 0);
+ assert(_alpha &lt;= 1);
+ ctx.globalAlpha = ctx.globalAlpha * _alpha;
+
+ if(_cacheEnabled) {
+   _drawCached(ctx);
+ } else {
+   _drawNormal(ctx);
+ }
+
+ ctx.restore();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="drawOverride">
+<button class="show-code">Code</button>
+void <strong>drawOverride</strong>(CanvasRenderingContext2D ctx) <a class="anchor-link" href="#drawOverride"
+              title="Permalink to NavThing.drawOverride">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/ParentThing.html">ParentThing</a> </div><div class="doc">
+<pre class="source">
+void drawOverride(CanvasRenderingContext2D ctx) {
+ _forEach((e) =&gt; e.drawCore(ctx));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="forward">
+<button class="show-code">Code</button>
+void <strong>forward</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing, <a href="../bot/AffineTransform.html">AffineTransform</a> tx, [int frameCount = 30]) <a class="anchor-link" href="#forward"
+              title="Permalink to NavThing.forward">#</a></h4>
+<div class="doc">
+<pre class="source">
+void forward(Thing thing, AffineTransform tx, [int frameCount = 30]) {
+ requireArgumentNotNull(thing, 'thing');
+ requireArgumentNotNull(tx, 'tx');
+ requireArgumentNotNull(frameCount, 'frameCount');
+ require(canForward, 'Forward cannot be called');
+
+ if(_child != null) {
+   assert(_txPanel == null); // I guess we don't allow stacked forwards yet
+   final ghost = this._child;
+
+   _child.unregisterParent(this);
+   final existingTx = _navLayerTransformProp.get(_child);
+   assert(existingTx != null);
+   _child.removeTransform(existingTx);
+   _child = null;
+
+   final tempCanvas = new CanvasElement(
+       width: ghost.width.toInt(), height: ghost.height.toInt());
+
+   final tempCtx = tempCanvas.context2d;
+   ghost.drawOverride(tempCtx);
+
+   this._txPanel = new _NavLayerTxPanel(this.width, this.height, tempCanvas,
+       thing, tx, existingTx, frameCount, horizontalAlignment,
+       verticalAlignment, _childOffset);
+   this._txPanel.registerParent(this);
+ }
+
+ assert(_child == null);
+ _child = thing;
+
+ if(_txPanel == null) {
+   _claimChild();
+ }
+
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="getTransform">
+<button class="show-code">Code</button>
+<a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransform</strong>() <a class="anchor-link" href="#getTransform"
+              title="Permalink to NavThing.getTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+AffineTransform getTransform() {
+ var tx = new AffineTransform();
+ _transforms.forEach(tx.concatenate);
+ return tx;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="getTransformToRoot">
+<button class="show-code">Code</button>
+<a href="../bot/AffineTransform.html">AffineTransform</a> <strong>getTransformToRoot</strong>() <a class="anchor-link" href="#getTransformToRoot"
+              title="Permalink to NavThing.getTransformToRoot">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+AffineTransform getTransformToRoot(){
+ var tx = new AffineTransform();
+ if(_parent != null){
+   tx.concatenate(_parent.getTransformToRoot());
+ }
+ tx.concatenate(getTransform());
+ return tx;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getVisualChild">
+<button class="show-code">Code</button>
+<a href="../bot_retained/Thing.html">Thing</a> <strong>getVisualChild</strong>(int index) <a class="anchor-link" href="#getVisualChild"
+              title="Permalink to NavThing.getVisualChild">#</a></h4>
+<div class="doc">
+<pre class="source">
+Thing getVisualChild(int index) {
+ if(index == 0) {
+   if(_txPanel != null) {
+     return _txPanel;
+   } else if(_child != null) {
+     return _child;
+   }
+ }
+ throw new ArgumentError();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="hasVisualChild">
+<button class="show-code">Code</button>
+bool <strong>hasVisualChild</strong>(<a href="../bot_retained/Thing.html">Thing</a> thing) <a class="anchor-link" href="#hasVisualChild"
+              title="Permalink to NavThing.hasVisualChild">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/ParentThing.html">ParentThing</a> </div><div class="doc">
+<pre class="source">
+bool hasVisualChild(Thing thing){
+ var length = visualChildCount;
+ for(var i=0;i&lt;length;i++){
+   if(identical(thing, getVisualChild(i))){
+     return true;
+   }
+ }
+ return false;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="invalidateDraw">
+<button class="show-code">Code</button>
+void <strong>invalidateDraw</strong>() <a class="anchor-link" href="#invalidateDraw"
+              title="Permalink to NavThing.invalidateDraw">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+void invalidateDraw(){
+ validateNotDisposed();
+ if(_lastDrawTime != null) {
+   _lastDrawTime = null;
+   _invalidateParent();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="onChildrenChanged">
+<button class="show-code">Code</button>
+void <strong>onChildrenChanged</strong>() <a class="anchor-link" href="#onChildrenChanged"
+              title="Permalink to NavThing.onChildrenChanged">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/ParentThing.html">ParentThing</a> </div><div class="doc">
+<pre class="source">
+void onChildrenChanged(){
+ invalidateDraw();
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="registerParent">
+<button class="show-code">Code</button>
+void <strong>registerParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#registerParent"
+              title="Permalink to NavThing.registerParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+void registerParent(ThingParent parent) {
+ require(_parent == null, 'parent already set');
+ requireArgumentNotNull(parent, 'parent');
+ _parent = parent;
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="removeTransform">
+<button class="show-code">Code</button>
+bool <strong>removeTransform</strong>(<a href="../bot/AffineTransform.html">AffineTransform</a> tx) <a class="anchor-link" href="#removeTransform"
+              title="Permalink to NavThing.removeTransform">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+bool removeTransform(AffineTransform tx) {
+ requireArgumentNotNull(tx, 'tx');
+ final index = _transforms.indexOf(tx);
+ if(index &lt; 0) {
+   return false;
+ } else {
+   _transforms.removeAt(index);
+   return true;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="unregisterParent">
+<button class="show-code">Code</button>
+void <strong>unregisterParent</strong>(<a href="../bot_retained/ThingParent.html">ThingParent</a> parent) <a class="anchor-link" href="#unregisterParent"
+              title="Permalink to NavThing.unregisterParent">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot_retained/Thing.html">Thing</a> </div><div class="doc">
+<pre class="source">
+void unregisterParent(ThingParent parent) {
+ requireArgumentNotNull(parent, 'parent');
+ requireArgument(parent == _parent, 'parent');
+ _parent = null;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="update">
+<button class="show-code">Code</button>
+void <strong>update</strong>() <a class="anchor-link" href="#update"
+              title="Permalink to NavThing.update">#</a></h4>
+<div class="doc">
+<pre class="source">
+void update() {
+ super.update();
+ if(_txPanel != null) {
+   assert(_child != null);
+   assert(_child.parent == _txPanel);
+   if(_txPanel.isDone) {
+     _txPanel.unregisterParent(this);
+     final removed = _txPanel.remove(_child);
+     assert(removed);
+     _txPanel = null;
+     _claimChild();
+   }
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="validateNotDisposed">
+<button class="show-code">Code</button>
+void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#validateNotDisposed"
+              title="Permalink to NavThing.validateNotDisposed">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+void validateNotDisposed() {
+ if(_disposed) {
+   throw const DisposedError();
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

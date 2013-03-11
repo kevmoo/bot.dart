@@ -1,0 +1,186 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>CustomMatcher class / matcher Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="matcher" data-type="CustomMatcher">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../matcher.html">matcher</a> &rsaquo; <a href="../matcher/CustomMatcher.html">CustomMatcher</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>CustomMatcher</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A useful utility class for implementing other matchers through inheritance.
+Derived classes should call the base constructor with a feature name and
+description, and an instance matcher, and should implement the
+<a class="crossref" href="../matcher/CustomMatcher.html#featureValueOf">featureValueOf</a> abstract method.</p>
+<p>The feature description will typically describe the item and the feature,
+while the feature name will just name the feature. For example, we may
+have a Widget class where each Widget has a price; we could make a
+FeatureMatcher that can make assertions about prices with:</p>
+<pre><span class="k ">class</span> <span class="t ">HasPrice</span> <span class="k ">extends</span> <span class="t ">FeatureMatcher</span> <span class="p ">{</span>
+  <span class="k ">const</span> <span class="t ">HasPrice</span><span class="p ">(</span><span class="i ">matcher</span><span class="p ">)</span> <span class="p ">:</span>
+      <span class="r ">super</span><span class="p ">(</span><span class="s si">"Widget with price that is"</span><span class="p ">,</span> <span class="s si">"price"</span><span class="p ">,</span> <span class="i ">matcher</span><span class="p ">)</span><span class="p ">;</span>
+  <span class="i ">featureValueOf</span><span class="p ">(</span><span class="i ">actual</span><span class="p ">)</span> <span class="a ">=&gt;</span> <span class="i ">actual</span><span class="p ">.</span><span class="i ">price</span><span class="p ">;</span>
+<span class="p ">}</span></pre>
+<p>and then use this for example like:</p>
+<pre> <span class="i ">expect</span><span class="p ">(</span><span class="i ">inventoryItem</span><span class="p ">,</span> <span class="k ">new</span> <span class="t ">HasPrice</span><span class="p ">(</span><span class="i ">greaterThan</span><span class="p ">(</span><span class="n ">0</span><span class="p ">)</span><span class="p ">)</span><span class="p ">)</span><span class="p ">;</span></pre>
+<pre class="source">
+class CustomMatcher extends BaseMatcher {
+ final String _featureDescription;
+ final String _featureName;
+ final Matcher _matcher;
+
+ const CustomMatcher(this._featureDescription, this._featureName,
+     this._matcher);
+
+ /** Override this to extract the interesting feature.*/
+ featureValueOf(actual) =&gt; actual;
+
+ bool matches(item, MatchState matchState) {
+   var f = featureValueOf(item);
+   if (_matcher.matches(f, matchState)) return true;
+   matchState.state = { 'innerState': matchState.state, 'feature': f };
+   return false;
+ }
+
+ Description describe(Description description) =&gt;
+     description.add(_featureDescription).add(' ').addDescriptionOf(_matcher);
+
+ Description describeMismatch(item, Description mismatchDescription,
+                              MatchState matchState, bool verbose) {
+   mismatchDescription.add(_featureName).add(' ');
+   _matcher.describeMismatch(matchState.state['feature'], mismatchDescription,
+       matchState.state['innerState'], verbose);
+   return mismatchDescription;
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../matcher/BaseMatcher.html">BaseMatcher</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>CustomMatcher</strong></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="CustomMatcher">
+<button class="show-code">Code</button>
+const <strong>CustomMatcher</strong>(String _featureDescription, String _featureName, <a href="../matcher/Matcher.html">Matcher</a> _matcher) <a class="anchor-link" href="#CustomMatcher"
+              title="Permalink to CustomMatcher.CustomMatcher">#</a></h4>
+<div class="doc">
+<pre class="source">
+const CustomMatcher(this._featureDescription, this._featureName,
+   this._matcher);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="describe">
+<button class="show-code">Code</button>
+<a href="../matcher/Description.html">Description</a> <strong>describe</strong>(<a href="../matcher/Description.html">Description</a> description) <a class="anchor-link" href="#describe"
+              title="Permalink to CustomMatcher.describe">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Creates a textual description of a matcher,
+by appending to <code>mismatchDescription</code>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+Description describe(Description description) =&gt;
+   description.add(_featureDescription).add(' ').addDescriptionOf(_matcher);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="describeMismatch">
+<button class="show-code">Code</button>
+<a href="../matcher/Description.html">Description</a> <strong>describeMismatch</strong>(item, <a href="../matcher/Description.html">Description</a> mismatchDescription, <a href="../matcher/MatchState.html">MatchState</a> matchState, bool verbose) <a class="anchor-link" href="#describeMismatch"
+              title="Permalink to CustomMatcher.describeMismatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Generates a description of the matcher failed for a particular
+
+<span class="param">item</span>, by appending the description to 
+<span class="param">mismatchDescription</span>.
+It does not check whether the 
+<span class="param">item</span> fails the match, as it is
+only called after a failed match. There may be additional info
+about the mismatch in 
+<span class="param">matchState</span>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+Description describeMismatch(item, Description mismatchDescription,
+                            MatchState matchState, bool verbose) {
+ mismatchDescription.add(_featureName).add(' ');
+ _matcher.describeMismatch(matchState.state['feature'], mismatchDescription,
+     matchState.state['innerState'], verbose);
+ return mismatchDescription;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="featureValueOf">
+<button class="show-code">Code</button>
+<strong>featureValueOf</strong>(actual) <a class="anchor-link" href="#featureValueOf"
+              title="Permalink to CustomMatcher.featureValueOf">#</a></h4>
+<div class="doc">
+<p>Override this to extract the interesting feature.</p>
+<pre class="source">
+featureValueOf(actual) =&gt; actual;
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="matches">
+<button class="show-code">Code</button>
+bool <strong>matches</strong>(item, <a href="../matcher/MatchState.html">MatchState</a> matchState) <a class="anchor-link" href="#matches"
+              title="Permalink to CustomMatcher.matches">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Tests the matcher against a given 
+<span class="param">item</span>
+and return true if the match succeeds; false otherwise.
+
+<span class="param">matchState</span> may be used to return additional info for
+the use of <a class="crossref" href="../matcher/CustomMatcher.html#describeMismatch">describeMismatch</a>.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../matcher/BaseMatcher.html">BaseMatcher</a> </div></div>
+<pre class="source">
+bool matches(item, MatchState matchState) {
+ var f = featureValueOf(item);
+ if (_matcher.matches(f, matchState)) return true;
+ matchState.state = { 'innerState': matchState.state, 'feature': f };
+ return false;
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,189 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>CommitReference class / bot_git Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_git" data-type="CommitReference">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_git.html">bot_git</a> &rsaquo; <a href="../bot_git/CommitReference.html">CommitReference</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>CommitReference</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>Represents the output from <code>git show-ref</code></p>
+<pre class="source">
+class CommitReference {
+ static final RegExp _lsRemoteRegExp = new RegExp('^(${Git._shaRegexPattern}) (.+)\$');
+
+ final String sha;
+ final String reference;
+
+ CommitReference(this.sha, this.reference) {
+   requireArgumentValidSha1(this.sha, 'sha');
+
+   assert(reference != null);
+   // TODO: probably a better way to verify...but this is fine for now
+   assert(reference.startsWith(r'refs/') || reference == 'HEAD');
+ }
+
+ static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
+   assert(input != null);
+   final lines = Util.splitLines(input).toList();
+
+   // last line should be empty
+   assert(lines.last.length == 0);
+
+   return lines.getRange(0, lines.length-1)
+       .map((line) {
+         final match = _lsRemoteRegExp.allMatches(line).single;
+         assert(match.groupCount == 2);
+
+         return new CommitReference(match[1], match[2]);
+
+       }).toList();
+ }
+
+ BranchReference toBranchReference() =&gt;
+     new BranchReference(this.sha, this.reference);
+
+ String toString() =&gt;
+     'GitReference: $reference  $sha';
+}
+</pre>
+</div>
+<h3>Subclasses</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot_git/BranchReference.html">BranchReference</a></span></p>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="fromShowRefOutput">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_git/CommitReference.html">CommitReference</a>&gt; <strong>fromShowRefOutput</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> input) <a class="anchor-link" href="#fromShowRefOutput"
+              title="Permalink to CommitReference.fromShowRefOutput">#</a></h4>
+<div class="doc">
+<pre class="source">
+static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
+ assert(input != null);
+ final lines = Util.splitLines(input).toList();
+
+ // last line should be empty
+ assert(lines.last.length == 0);
+
+ return lines.getRange(0, lines.length-1)
+     .map((line) {
+       final match = _lsRemoteRegExp.allMatches(line).single;
+       assert(match.groupCount == 2);
+
+       return new CommitReference(match[1], match[2]);
+
+     }).toList();
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="CommitReference">
+<button class="show-code">Code</button>
+new <strong>CommitReference</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> sha, <a href="http://api.dartlang.org/dart_core/String.html">String</a> reference) <a class="anchor-link" href="#CommitReference"
+              title="Permalink to CommitReference.CommitReference">#</a></h4>
+<div class="doc">
+<pre class="source">
+CommitReference(this.sha, this.reference) {
+ requireArgumentValidSha1(this.sha, 'sha');
+
+ assert(reference != null);
+ // TODO: probably a better way to verify...but this is fine for now
+ assert(reference.startsWith(r'refs/') || reference == 'HEAD');
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="reference">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>reference</strong> <a class="anchor-link"
+            href="#reference"
+            title="Permalink to CommitReference.reference">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+reference
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="sha">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>sha</strong> <a class="anchor-link"
+            href="#sha"
+            title="Permalink to CommitReference.sha">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+sha
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toBranchReference">
+<button class="show-code">Code</button>
+<a href="../bot_git/BranchReference.html">BranchReference</a> <strong>toBranchReference</strong>() <a class="anchor-link" href="#toBranchReference"
+              title="Permalink to CommitReference.toBranchReference">#</a></h4>
+<div class="doc">
+<pre class="source">
+BranchReference toBranchReference() =&gt;
+   new BranchReference(this.sha, this.reference);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to CommitReference.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+String toString() =&gt;
+   'GitReference: $reference  $sha';
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

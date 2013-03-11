@@ -1,0 +1,181 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>IoHelpers class / bot_io Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_io" data-type="IoHelpers">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/IoHelpers.html">IoHelpers</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>IoHelpers</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class IoHelpers {
+ static final Object _dirPlaceHolder = new Object();
+
+ static Future&lt;bool&gt; verifyContents(Directory dir, Map&lt;String, dynamic&gt; content) {
+   assert(dir != null);
+   assert(content != null);
+   return dir.exists()
+       .then((bool doesExist) {
+         if(!doesExist) {
+           return new Future.immediate(false);
+         } else {
+           return _verifyContents(dir, content);
+         }
+       });
+ }
+
+ static Future&lt;bool&gt; isEmpty(Directory dir) {
+   assert(dir != null);
+   return verifyContents(dir, {});
+ }
+
+ static Future&lt;Map&gt; _mapContents(Directory dir) {
+
+   return dir.list()
+       .toList()
+       .then((List&lt;FileSystemEntity&gt; entities) {
+         final map = new Map&lt;String, dynamic&gt;();
+         for(final e in entities) {
+           if(e is File) {
+             final file = e as File;
+             final name = new Path(file.name).filename;
+             map[name] = file.readAsStringSync();
+           } else {
+             final dir = e as Directory;
+             final name = new Path(dir.path).filename;
+             map[name] = _dirPlaceHolder;
+           }
+         }
+
+         return map;
+       });
+ }
+
+ static Future&lt;bool&gt; _verifyContents(Directory dir, Map&lt;String, dynamic&gt; content) {
+   return _mapContents(dir)
+       .then((Map&lt;String, dynamic&gt; map) {
+         if(map.length != content.length) {
+           return false;
+         }
+
+         final missing = new Set&lt;String&gt;.from(content.keys);
+         final extra = new Set&lt;String&gt;();
+         for(final item in map.keys) {
+           if(!missing.remove(item)) {
+             extra.add(item);
+           }
+         }
+
+         if(!missing.isEmpty) {
+           // items is missing were not found! sad!
+           print('missing: $missing');
+           return false;
+         } else if(!extra.isEmpty) {
+           // too many items!
+           print('extra: $extra');
+           return false;
+         }
+
+         final futures = content.keys.map((name) {
+           return _verifyChildContent(dir, name, content[name], map[name]);
+         });
+
+         return Future.wait(futures)
+             .then((List&lt;bool&gt; results){
+               return results.every((v) =&gt; v);
+             });
+       });
+ }
+
+
+ static Future&lt;bool&gt; _verifyChildContent(Directory parentDir, String name,
+     dynamic expectedContent, dynamic foundContent) {
+   assert(parentDir != null);
+   assert(parentDir.existsSync());
+   if(expectedContent is String) {
+     return new Future.immediate(expectedContent == foundContent);
+   } else if(expectedContent is Map) {
+     final subDirPath = new Path(parentDir.path).append(name);
+     final subDir = new Directory.fromPath(subDirPath);
+
+     assert(foundContent == _dirPlaceHolder);
+
+     return _verifyContents(subDir, expectedContent);
+   } else {
+     throw 'no clue what to do w/ that';
+   }
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="verifyContents">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>verifyContents</strong>(<a href="http://api.dartlang.org/dart_io/Directory.html">Directory</a> dir, <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
+              title="Permalink to IoHelpers.verifyContents">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Future&lt;bool&gt; verifyContents(Directory dir, Map&lt;String, dynamic&gt; content) {
+ assert(dir != null);
+ assert(content != null);
+ return dir.exists()
+     .then((bool doesExist) {
+       if(!doesExist) {
+         return new Future.immediate(false);
+       } else {
+         return _verifyContents(dir, content);
+       }
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isEmpty">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>isEmpty</strong>(<a href="http://api.dartlang.org/dart_io/Directory.html">Directory</a> dir) <a class="anchor-link" href="#isEmpty"
+              title="Permalink to IoHelpers.isEmpty">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Future&lt;bool&gt; isEmpty(Directory dir) {
+ assert(dir != null);
+ return verifyContents(dir, {});
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

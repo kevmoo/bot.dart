@@ -1,0 +1,214 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>hop Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="hop">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">Dart Documentation</a>
+         &rsaquo; <a href="hop.html">hop</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>hop</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="getHelpTask">
+<button class="show-code">Code</button>
+<a href="hop/Task.html">Task</a> <strong>getHelpTask</strong>() <a class="anchor-link" href="#getHelpTask"
+              title="Permalink to getHelpTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+Task getHelpTask() {
+ return new Task.sync((TaskContext ctx) {
+   final args = ctx.arguments;
+
+   if(args.command != null) {
+     _printHelpForTask(_sharedConfig, args.command.name);
+     return true;
+   } else {
+
+     _printHelp(_sharedConfig);
+
+     if(!args.rest.isEmpty) {
+       ctx.severe('Not sure how to give help for: ${args.rest}');
+       return false;
+     }
+
+     return true;
+   }
+ },
+ description: 'Print help information about available tasks',
+ config: (parser) =&gt; _helpParserConfig(_sharedConfig, parser),
+ extendedArgs: [new TaskArgument('task-name')]);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addAsyncTask">
+<button class="show-code">Code</button>
+void <strong>addAsyncTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsyncTask"
+              title="Permalink to addAsyncTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addAsyncTask(String name, TaskDefinition execFuture) {
+ _sharedConfig.addAsync(name, execFuture);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addSyncTask">
+<button class="show-code">Code</button>
+void <strong>addSyncTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="bot/Func1.html">Func1</a> execFunc) <a class="anchor-link" href="#addSyncTask"
+              title="Permalink to addSyncTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addSyncTask(String name, Func1&lt;TaskContext, bool&gt; execFunc) {
+ _sharedConfig.addSync(name, execFunc);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addTask">
+<button class="show-code">Code</button>
+void <strong>addTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
+              title="Permalink to addTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addTask(String name, Task task) {
+ _sharedConfig.addTask(name, task);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="runHopCore">
+<button class="show-code">Code</button>
+void <strong>runHopCore</strong>() <a class="anchor-link" href="#runHopCore"
+              title="Permalink to runHopCore">#</a></h4>
+<div class="doc">
+<p><a class="crossref" href="hop.html#runHopCore">runHopCore</a> calls <code>io.exit</code> which terminates the application.</p>
+<p><a class="crossref" href="hop.html#runHopCore">runHopCore</a> should be the last method you call in an application.</p>
+<pre class="source">
+void runHopCore() {
+ _sharedConfig.freeze();
+ Runner.runCore(_sharedConfig);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Abstract Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="hop/TaskContext.html"><strong>TaskContext</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/TaskLogger.html"><strong>TaskLogger</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="hop/BaseConfig.html"><strong>BaseConfig</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/ConsoleContext.html"><strong>ConsoleContext</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/HopConfig.html"><strong>HopConfig</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/RootTaskContext.html"><strong>RootTaskContext</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/Runner.html"><strong>Runner</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/RunResult.html"><strong>RunResult</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/Task.html"><strong>Task</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/TaskArgument.html"><strong>TaskArgument</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Typedefs</h3>
+          <div class="type">
+          <h4>
+            <a href="hop/ArgParserConfigure.html"><strong>ArgParserConfigure</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="hop/TaskDefinition.html"><strong>TaskDefinition</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Exceptions</h3>
+          <div class="type">
+          <h4>
+            <a href="hop/TaskFailError.html"><strong>TaskFailError</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        

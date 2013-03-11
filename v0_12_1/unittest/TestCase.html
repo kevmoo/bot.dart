@@ -1,0 +1,436 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>TestCase class / unittest Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="unittest" data-type="TestCase">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../unittest.html">unittest</a> &rsaquo; <a href="../unittest/TestCase.html">TestCase</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>TestCase</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>testcase.dart: this file is sourced by unittest.dart. It defines <a class="crossref" href="../unittest/TestCase.html#TestCase">TestCase</a>
+and assumes unittest defines the type <a class="crossref" href="../unittest/TestFunction.html">TestFunction</a>.</p>
+<p>Summarizes information about a single test case. </p>
+<pre class="source">
+class TestCase {
+ /** Identifier for this test. */
+ final int id;
+
+ /** A description of what the test is specifying. */
+ final String description;
+
+ /** The setup function to call before the test, if any. */
+ Function _setUp;
+
+ Function get setUp =&gt; _setUp;
+ set setUp(Function value) =&gt; _setUp = value;
+
+ /** The teardown function to call after the test, if any. */
+ Function _tearDown;
+
+ Function get tearDown =&gt; _tearDown;
+ set tearDown(Function value) =&gt; _tearDown = value;
+
+ /** The body of the test case. */
+ TestFunction test;
+
+ /**
+  * Remaining number of callbacks functions that must reach a 'done' state
+  * to wait for before the test completes.
+  */
+ int callbackFunctionsOutstanding;
+
+ /** Error or failure message. */
+ String message = '';
+
+ /**
+  * One of [PASS], [FAIL], [ERROR], or [null] if the test hasn't run yet.
+  */
+ String result;
+
+ /** Stack trace associated with this test, or null if it succeeded. */
+ String stackTrace;
+
+ /** The group (or groups) under which this test is running. */
+ final String currentGroup;
+
+ DateTime startTime;
+
+ Duration runningTime;
+
+ bool enabled = true;
+
+ bool _doneTeardown = false;
+
+ TestCase(this.id, this.description, this.test,
+          this.callbackFunctionsOutstanding)
+ : currentGroup = _currentGroup,
+   _setUp = _testSetup,
+   _tearDown = _testTeardown;
+
+ bool get isComplete =&gt; !enabled || result != null;
+
+ void run() {
+   if (enabled) {
+     result = stackTrace = null;
+     message = '';
+     _doneTeardown = false;
+     if (_setUp != null) {
+       _setUp();
+     }
+     _config.onTestStart(this);
+     startTime = new DateTime.now();
+     runningTime = null;
+     test();
+   }
+ }
+
+ void _complete() {
+   if (runningTime == null) {
+     // TODO(gram): currently the duration measurement code is blocked
+     // by issue 4437. When that is fixed replace the line below with:
+     //    runningTime = new DateTime.now().difference(startTime);
+     runningTime = new Duration(milliseconds: 0);
+   }
+   if (!_doneTeardown) {
+     if (_tearDown != null) {
+       _tearDown();
+     }
+     _doneTeardown = true;
+   }
+   _config.onTestResult(this);
+ }
+
+ void pass() {
+   result = PASS;
+   _complete();
+ }
+
+ void fail(String messageText, [String stack = '']) {
+   if (result != null) {
+     if (result == PASS) {
+       error('Test failed after initially passing: $messageText', stack);
+     } else if (result == FAIL) {
+       error('Test failed more than once: $messageText', stack);
+     }
+   } else {
+     result = FAIL;
+     message = messageText;
+     stackTrace = stack;
+     _complete();
+   }
+ }
+
+ void error(String messageText, [String stack = '']) {
+   result = ERROR;
+   message = messageText;
+   stackTrace = stack;
+   _complete();
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="TestCase">
+<button class="show-code">Code</button>
+new <strong>TestCase</strong>(int id, String description, <a href="../unittest/TestFunction.html">TestFunction</a> test, int callbackFunctionsOutstanding) <a class="anchor-link" href="#TestCase"
+              title="Permalink to TestCase.TestCase">#</a></h4>
+<div class="doc">
+<pre class="source">
+TestCase(this.id, this.description, this.test,
+        this.callbackFunctionsOutstanding)
+: currentGroup = _currentGroup,
+ _setUp = _testSetup,
+ _tearDown = _testTeardown;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="callbackFunctionsOutstanding">
+<button class="show-code">Code</button>
+int         <strong>callbackFunctionsOutstanding</strong> <a class="anchor-link"
+            href="#callbackFunctionsOutstanding"
+            title="Permalink to TestCase.callbackFunctionsOutstanding">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+callbackFunctionsOutstanding
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="currentGroup">
+<button class="show-code">Code</button>
+final String         <strong>currentGroup</strong> <a class="anchor-link"
+            href="#currentGroup"
+            title="Permalink to TestCase.currentGroup">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+currentGroup
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="description">
+<button class="show-code">Code</button>
+final String         <strong>description</strong> <a class="anchor-link"
+            href="#description"
+            title="Permalink to TestCase.description">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+description
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="enabled">
+<button class="show-code">Code</button>
+bool         <strong>enabled</strong> <a class="anchor-link"
+            href="#enabled"
+            title="Permalink to TestCase.enabled">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+enabled = true
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="id">
+<button class="show-code">Code</button>
+final int         <strong>id</strong> <a class="anchor-link"
+            href="#id"
+            title="Permalink to TestCase.id">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+id
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isComplete">
+<button class="show-code">Code</button>
+final bool         <strong>isComplete</strong> <a class="anchor-link"
+            href="#isComplete"
+            title="Permalink to TestCase.isComplete">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool get isComplete =&gt; !enabled || result != null;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="message">
+<button class="show-code">Code</button>
+String         <strong>message</strong> <a class="anchor-link"
+            href="#message"
+            title="Permalink to TestCase.message">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+message = ''
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="result">
+<button class="show-code">Code</button>
+String         <strong>result</strong> <a class="anchor-link"
+            href="#result"
+            title="Permalink to TestCase.result">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+result
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="runningTime">
+<button class="show-code">Code</button>
+Duration         <strong>runningTime</strong> <a class="anchor-link"
+            href="#runningTime"
+            title="Permalink to TestCase.runningTime">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+runningTime
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="setUp">
+<button class="show-code">Code</button>
+Function         <strong>setUp</strong> <a class="anchor-link"
+            href="#setUp"
+            title="Permalink to TestCase.setUp">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Function get setUp =&gt; _setUp;
+</pre>
+<pre class="source">
+set setUp(Function value) =&gt; _setUp = value;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="stackTrace">
+<button class="show-code">Code</button>
+String         <strong>stackTrace</strong> <a class="anchor-link"
+            href="#stackTrace"
+            title="Permalink to TestCase.stackTrace">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+stackTrace
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="startTime">
+<button class="show-code">Code</button>
+DateTime         <strong>startTime</strong> <a class="anchor-link"
+            href="#startTime"
+            title="Permalink to TestCase.startTime">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+startTime
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="tearDown">
+<button class="show-code">Code</button>
+Function         <strong>tearDown</strong> <a class="anchor-link"
+            href="#tearDown"
+            title="Permalink to TestCase.tearDown">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Function get tearDown =&gt; _tearDown;
+</pre>
+<pre class="source">
+set tearDown(Function value) =&gt; _tearDown = value;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="test">
+<button class="show-code">Code</button>
+<a href="../unittest/TestFunction.html">TestFunction</a>         <strong>test</strong> <a class="anchor-link"
+            href="#test"
+            title="Permalink to TestCase.test">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+test
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="error">
+<button class="show-code">Code</button>
+void <strong>error</strong>(String messageText, [String stack = '']) <a class="anchor-link" href="#error"
+              title="Permalink to TestCase.error">#</a></h4>
+<div class="doc">
+<pre class="source">
+void error(String messageText, [String stack = '']) {
+ result = ERROR;
+ message = messageText;
+ stackTrace = stack;
+ _complete();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="fail">
+<button class="show-code">Code</button>
+void <strong>fail</strong>(String messageText, [String stack = '']) <a class="anchor-link" href="#fail"
+              title="Permalink to TestCase.fail">#</a></h4>
+<div class="doc">
+<pre class="source">
+void fail(String messageText, [String stack = '']) {
+ if (result != null) {
+   if (result == PASS) {
+     error('Test failed after initially passing: $messageText', stack);
+   } else if (result == FAIL) {
+     error('Test failed more than once: $messageText', stack);
+   }
+ } else {
+   result = FAIL;
+   message = messageText;
+   stackTrace = stack;
+   _complete();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="pass">
+<button class="show-code">Code</button>
+void <strong>pass</strong>() <a class="anchor-link" href="#pass"
+              title="Permalink to TestCase.pass">#</a></h4>
+<div class="doc">
+<pre class="source">
+void pass() {
+ result = PASS;
+ _complete();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="run">
+<button class="show-code">Code</button>
+void <strong>run</strong>() <a class="anchor-link" href="#run"
+              title="Permalink to TestCase.run">#</a></h4>
+<div class="doc">
+<pre class="source">
+void run() {
+ if (enabled) {
+   result = stackTrace = null;
+   message = '';
+   _doneTeardown = false;
+   if (_setUp != null) {
+     _setUp();
+   }
+   _config.onTestStart(this);
+   startTime = new DateTime.now();
+   runningTime = null;
+   test();
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

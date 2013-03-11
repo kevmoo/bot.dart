@@ -1,0 +1,252 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>AnsiColor class / bot_io Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_io" data-type="AnsiColor">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/AnsiColor.html">AnsiColor</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>AnsiColor</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p><a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">More details</a></p>
+<pre class="source">
+class AnsiColor {
+ const String _NO_COLOR = '\u001b[0m';
+ static const AnsiColor BLACK = const AnsiColor._internal(0, 'black');
+ static const AnsiColor RED = const AnsiColor._internal(1, 'red');
+ static const AnsiColor GREEN = const AnsiColor._internal(2, 'green');
+ static const AnsiColor YELLOW = const AnsiColor._internal(3, 'yellow');
+ static const AnsiColor BLUE = const AnsiColor._internal(4, 'blue');
+ static const AnsiColor MAGENTA = const AnsiColor._internal(5, 'magenta');
+ static const AnsiColor CYAN = const AnsiColor._internal(6, 'cyan');
+ static const AnsiColor GRAY = const AnsiColor._internal(7, 'gray');
+ static const AnsiColor LIGHT_RED = const AnsiColor._internal(91, 'light red');
+
+ final int id;
+ final String name;
+
+ const AnsiColor._internal(this.id, this.name);
+
+ String toString() =&gt; "$name ($id)";
+
+ String wrap(String input) {
+   assert(input != null);
+   return "${shellValue}$input${_NO_COLOR}";
+ }
+
+ String get shellValue =&gt; '\u001b[3${id}m';
+}
+</pre>
+</div>
+<div>
+<h3>Static Properties</h3>
+<div class="field"><h4 id="BLACK">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>BLACK</strong> <a class="anchor-link"
+            href="#BLACK"
+            title="Permalink to AnsiColor.BLACK">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+BLACK = const AnsiColor._internal(0, 'black')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="BLUE">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>BLUE</strong> <a class="anchor-link"
+            href="#BLUE"
+            title="Permalink to AnsiColor.BLUE">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+BLUE = const AnsiColor._internal(4, 'blue')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="CYAN">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>CYAN</strong> <a class="anchor-link"
+            href="#CYAN"
+            title="Permalink to AnsiColor.CYAN">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+CYAN = const AnsiColor._internal(6, 'cyan')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="GRAY">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>GRAY</strong> <a class="anchor-link"
+            href="#GRAY"
+            title="Permalink to AnsiColor.GRAY">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+GRAY = const AnsiColor._internal(7, 'gray')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="GREEN">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>GREEN</strong> <a class="anchor-link"
+            href="#GREEN"
+            title="Permalink to AnsiColor.GREEN">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+GREEN = const AnsiColor._internal(2, 'green')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="LIGHT_RED">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>LIGHT_RED</strong> <a class="anchor-link"
+            href="#LIGHT_RED"
+            title="Permalink to AnsiColor.LIGHT_RED">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+LIGHT_RED = const AnsiColor._internal(91, 'light red')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="MAGENTA">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>MAGENTA</strong> <a class="anchor-link"
+            href="#MAGENTA"
+            title="Permalink to AnsiColor.MAGENTA">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+MAGENTA = const AnsiColor._internal(5, 'magenta')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="RED">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>RED</strong> <a class="anchor-link"
+            href="#RED"
+            title="Permalink to AnsiColor.RED">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+RED = const AnsiColor._internal(1, 'red')
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="YELLOW">
+<button class="show-code">Code</button>
+const <a href="../bot_io/AnsiColor.html">AnsiColor</a>         <strong>YELLOW</strong> <a class="anchor-link"
+            href="#YELLOW"
+            title="Permalink to AnsiColor.YELLOW">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+YELLOW = const AnsiColor._internal(3, 'yellow')
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="id">
+<button class="show-code">Code</button>
+final int         <strong>id</strong> <a class="anchor-link"
+            href="#id"
+            title="Permalink to AnsiColor.id">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+id
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+final String         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to AnsiColor.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="shellValue">
+<button class="show-code">Code</button>
+final String         <strong>shellValue</strong> <a class="anchor-link"
+            href="#shellValue"
+            title="Permalink to AnsiColor.shellValue">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String get shellValue =&gt; '\u001b[3${id}m';
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+String <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to AnsiColor.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+String toString() =&gt; "$name ($id)";
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="wrap">
+<button class="show-code">Code</button>
+String <strong>wrap</strong>(String input) <a class="anchor-link" href="#wrap"
+              title="Permalink to AnsiColor.wrap">#</a></h4>
+<div class="doc">
+<pre class="source">
+String wrap(String input) {
+ assert(input != null);
+ return "${shellValue}$input${_NO_COLOR}";
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

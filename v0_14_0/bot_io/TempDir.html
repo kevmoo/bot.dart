@@ -1,0 +1,251 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>TempDir class / bot_io Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="bot_io" data-type="TempDir">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../bot_io.html">bot_io</a> &rsaquo; <a href="../bot_io/TempDir.html">TempDir</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>TempDir</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class TempDir extends DisposableImpl {
+ final Directory dir;
+
+ static Future&lt;TempDir&gt; create() {
+   final startDir = new Directory('');
+   return startDir.createTemp()
+       .then((newDir) =&gt; new TempDir._internal(newDir));
+ }
+
+ TempDir._internal(this.dir) {
+   assert(this.dir != null);
+   assert(this.dir.existsSync());
+ }
+
+ String get path =&gt; dir.path;
+
+ Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
+   return populater.populate(dir)
+       .then((Directory outputDir) {
+         assert(dir == outputDir);
+         return this;
+       });
+ }
+
+ Future&lt;bool&gt; verifyContents(Map&lt;String, dynamic&gt; content) {
+   return IoHelpers.verifyContents(dir, content);
+ }
+
+ Future&lt;bool&gt; isEmpty() {
+   return IoHelpers.isEmpty(dir);
+ }
+
+ String toString() =&gt; "TempDir: $path";
+
+ @protected
+ void disposeInternal() {
+   assert(dir.existsSync());
+   dir.deleteSync(recursive: true);
+   assert(!dir.existsSync());
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../bot/DisposableImpl.html">DisposableImpl</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>TempDir</strong></span></p>
+<div>
+<h3>Static Methods</h3>
+<div class="method"><h4 id="create">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>create</strong>() <a class="anchor-link" href="#create"
+              title="Permalink to TempDir.create">#</a></h4>
+<div class="doc">
+<pre class="source">
+static Future&lt;TempDir&gt; create() {
+ final startDir = new Directory('');
+ return startDir.createTemp()
+     .then((newDir) =&gt; new TempDir._internal(newDir));
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="dir">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_io/Directory.html">Directory</a>         <strong>dir</strong> <a class="anchor-link"
+            href="#dir"
+            title="Permalink to TempDir.dir">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+dir
+</pre>
+</div>
+</div>
+<div class="field inherited"><h4 id="isDisposed">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isDisposed</strong> <a class="anchor-link"
+            href="#isDisposed"
+            title="Permalink to TempDir.isDisposed">#</a>
+        </h4>
+        <div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+bool get isDisposed =&gt; _disposed;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="path">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>path</strong> <a class="anchor-link"
+            href="#path"
+            title="Permalink to TempDir.path">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String get path =&gt; dir.path;
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method inherited"><h4 id="dispose">
+<button class="show-code">Code</button>
+void <strong>dispose</strong>() <a class="anchor-link" href="#dispose"
+              title="Permalink to TempDir.dispose">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+void dispose(){
+ validateNotDisposed();
+ // Set disposed_ to true first, in case during the chain of disposal this
+ // gets disposed recursively.
+ this._disposed = true;
+ this.disposeInternal();
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="disposeInternal">
+<button class="show-code">Code</button>
+void <strong>disposeInternal</strong>() <a class="anchor-link" href="#disposeInternal"
+              title="Permalink to TempDir.disposeInternal">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Do not call this method directly. Call <code>dispose</code> instead.
+Subclasses should override this method to implement <code>Disposable</code> behavior.</p>
+<div class="docs-inherited-from">docs inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div></div>
+<pre class="source">
+@protected
+void disposeInternal() {
+ assert(dir.existsSync());
+ dir.deleteSync(recursive: true);
+ assert(!dir.existsSync());
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="isEmpty">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>isEmpty</strong>() <a class="anchor-link" href="#isEmpty"
+              title="Permalink to TempDir.isEmpty">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; isEmpty() {
+ return IoHelpers.isEmpty(dir);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="populate">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="../bot_io/TempDir.html">TempDir</a>&gt; <strong>populate</strong>(<a href="../bot_io/DirectoryPopulater.html">DirectoryPopulater</a> populater) <a class="anchor-link" href="#populate"
+              title="Permalink to TempDir.populate">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;TempDir&gt; populate(DirectoryPopulater populater) {
+ return populater.populate(dir)
+     .then((Directory outputDir) {
+       assert(dir == outputDir);
+       return this;
+     });
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="toString">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>toString</strong>() <a class="anchor-link" href="#toString"
+              title="Permalink to TempDir.toString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a string representation of this object.</p>
+<div class="docs-inherited-from">docs inherited from <a href="http://api.dartlang.org/dart_core/Object.html">Object</a> </div></div>
+<pre class="source">
+String toString() =&gt; "TempDir: $path";
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="validateNotDisposed">
+<button class="show-code">Code</button>
+void <strong>validateNotDisposed</strong>() <a class="anchor-link" href="#validateNotDisposed"
+              title="Permalink to TempDir.validateNotDisposed">#</a></h4>
+<div class="inherited-from">inherited from <a href="../bot/DisposableImpl.html">DisposableImpl</a> </div><div class="doc">
+<pre class="source">
+void validateNotDisposed() {
+ if(_disposed) {
+   throw const DisposedError();
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="verifyContents">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/bool.html">bool</a>&gt; <strong>verifyContents</strong>(<a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, dynamic&gt; content) <a class="anchor-link" href="#verifyContents"
+              title="Permalink to TempDir.verifyContents">#</a></h4>
+<div class="doc">
+<pre class="source">
+Future&lt;bool&gt; verifyContents(Map&lt;String, dynamic&gt; content) {
+ return IoHelpers.verifyContents(dir, content);
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

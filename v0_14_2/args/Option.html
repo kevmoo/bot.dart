@@ -1,0 +1,201 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>Option class / args Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="args" data-type="Option">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../args.html">args</a> &rsaquo; <a href="../args/Option.html">Option</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>Option</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A command-line option. Includes both flags and options which take a value.</p>
+<pre class="source">
+class Option {
+ final String name;
+ final String abbreviation;
+ final List allowed;
+ final defaultValue;
+ final Function callback;
+ final String help;
+ final Map&lt;String, String&gt; allowedHelp;
+ final bool isFlag;
+ final bool negatable;
+ final bool allowMultiple;
+
+ Option(this.name, this.abbreviation, this.help, this.allowed,
+     this.allowedHelp, this.defaultValue, this.callback, {this.isFlag,
+     this.negatable, this.allowMultiple: false});
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="Option">
+<button class="show-code">Code</button>
+new <strong>Option</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="http://api.dartlang.org/dart_core/String.html">String</a> abbreviation, <a href="http://api.dartlang.org/dart_core/String.html">String</a> help, <a href="http://api.dartlang.org/dart_core/List.html">List</a> allowed, <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; allowedHelp, defaultValue, <a href="http://api.dartlang.org/dart_core/Function.html">Function</a> callback, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> isFlag, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> negatable, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowMultiple: false}) <a class="anchor-link" href="#Option"
+              title="Permalink to Option.Option">#</a></h4>
+<div class="doc">
+<pre class="source">
+Option(this.name, this.abbreviation, this.help, this.allowed,
+   this.allowedHelp, this.defaultValue, this.callback, {this.isFlag,
+   this.negatable, this.allowMultiple: false});
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="abbreviation">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>abbreviation</strong> <a class="anchor-link"
+            href="#abbreviation"
+            title="Permalink to Option.abbreviation">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+abbreviation
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="allowed">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>         <strong>allowed</strong> <a class="anchor-link"
+            href="#allowed"
+            title="Permalink to Option.allowed">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+allowed
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="allowedHelp">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>allowedHelp</strong> <a class="anchor-link"
+            href="#allowedHelp"
+            title="Permalink to Option.allowedHelp">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+allowedHelp
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="allowMultiple">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>allowMultiple</strong> <a class="anchor-link"
+            href="#allowMultiple"
+            title="Permalink to Option.allowMultiple">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+allowMultiple
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="callback">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/Function.html">Function</a>         <strong>callback</strong> <a class="anchor-link"
+            href="#callback"
+            title="Permalink to Option.callback">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+callback
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="defaultValue">
+<button class="show-code">Code</button>
+final         <strong>defaultValue</strong> <a class="anchor-link"
+            href="#defaultValue"
+            title="Permalink to Option.defaultValue">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+defaultValue
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="help">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>help</strong> <a class="anchor-link"
+            href="#help"
+            title="Permalink to Option.help">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+help
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isFlag">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isFlag</strong> <a class="anchor-link"
+            href="#isFlag"
+            title="Permalink to Option.isFlag">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+isFlag
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="name">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/String.html">String</a>         <strong>name</strong> <a class="anchor-link"
+            href="#name"
+            title="Permalink to Option.name">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+name
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="negatable">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>negatable</strong> <a class="anchor-link"
+            href="#negatable"
+            title="Permalink to Option.negatable">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+negatable
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

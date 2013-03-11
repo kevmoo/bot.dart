@@ -1,0 +1,201 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>TaskRegistry class / hop Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="hop" data-type="TaskRegistry">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">BOT Documentation</a>
+         &rsaquo; <a href="../hop.html">hop</a> &rsaquo; <a href="../hop/TaskRegistry.html">TaskRegistry</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>TaskRegistry</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class TaskRegistry {
+ static final RegExp _validNameRegExp = new RegExp(r'^[a-z]([a-z0-9_\-]*[a-z0-9])?$');
+ static const _reservedTasks = const[COMPLETION_COMMAND_NAME];
+ final Map&lt;String, Task&gt; _tasks = new Map&lt;String, Task&gt;();
+
+ String _helpTaskName;
+ ReadOnlyCollection&lt;String&gt; _sortedTaskNames;
+
+ /// Can only be accessed when frozen
+ /// Always sorted
+ List&lt;String&gt; get taskNames {
+   _requireFrozen();
+   return _sortedTaskNames;
+ }
+
+ bool hasTask(String taskName) {
+   _requireFrozen();
+   return _tasks.containsKey(taskName);
+ }
+
+ void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
+   addTask(name, new Task.sync(func));
+ }
+
+ void addAsync(String name, TaskDefinition execFuture) {
+   addTask(name, new Task.async(execFuture));
+ }
+
+ void addTask(String name, Task task) {
+   require(!isFrozen, "Cannot add a task. Frozen.");
+   requireArgumentNotNullOrEmpty(name, 'name');
+   requireArgumentContainsPattern(_validNameRegExp, name, 'name');
+   requireArgument(!_reservedTasks.contains(name), 'task',
+       'The provided task has a reserved name');
+   requireArgument(!_tasks.containsKey(name), 'task',
+       'A task with name ${name} already exists');
+
+   requireArgumentNotNull(task, 'task');
+   _tasks[name] = task;
+ }
+
+ void _requireFrozen() {
+   if(!isFrozen) {
+     throw "not frozen!";
+   }
+ }
+
+ void _freeze() {
+   if(!isFrozen) {
+     final list = _tasks.keys
+         .toList()
+         ..sort();
+     _sortedTaskNames = new ReadOnlyCollection&lt;String&gt;.wrap(list);
+   }
+ }
+
+ bool get isFrozen =&gt; _sortedTaskNames != null;
+
+ Task _getTask(String taskName) {
+   return _tasks[taskName];
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="isFrozen">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/bool.html">bool</a>         <strong>isFrozen</strong> <a class="anchor-link"
+            href="#isFrozen"
+            title="Permalink to TaskRegistry.isFrozen">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+bool get isFrozen =&gt; _sortedTaskNames != null;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="taskNames">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>taskNames</strong> <a class="anchor-link"
+            href="#taskNames"
+            title="Permalink to TaskRegistry.taskNames">#</a>
+        </h4>
+        <div class="doc">
+<p>Can only be accessed when frozen
+Always sorted</p>
+<pre class="source">
+List&lt;String&gt; get taskNames {
+ _requireFrozen();
+ return _sortedTaskNames;
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="addAsync">
+<button class="show-code">Code</button>
+void <strong>addAsync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/TaskDefinition.html">TaskDefinition</a> execFuture) <a class="anchor-link" href="#addAsync"
+              title="Permalink to TaskRegistry.addAsync">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addAsync(String name, TaskDefinition execFuture) {
+ addTask(name, new Task.async(execFuture));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addSync">
+<button class="show-code">Code</button>
+void <strong>addSync</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../bot/Func1.html">Func1</a> func) <a class="anchor-link" href="#addSync"
+              title="Permalink to TaskRegistry.addSync">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addSync(String name, Func1&lt;TaskContext, bool&gt; func) {
+ addTask(name, new Task.sync(func));
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addTask">
+<button class="show-code">Code</button>
+void <strong>addTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, <a href="../hop/Task.html">Task</a> task) <a class="anchor-link" href="#addTask"
+              title="Permalink to TaskRegistry.addTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+void addTask(String name, Task task) {
+ require(!isFrozen, "Cannot add a task. Frozen.");
+ requireArgumentNotNullOrEmpty(name, 'name');
+ requireArgumentContainsPattern(_validNameRegExp, name, 'name');
+ requireArgument(!_reservedTasks.contains(name), 'task',
+     'The provided task has a reserved name');
+ requireArgument(!_tasks.containsKey(name), 'task',
+     'A task with name ${name} already exists');
+
+ requireArgumentNotNull(task, 'task');
+ _tasks[name] = task;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hasTask">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>hasTask</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> taskName) <a class="anchor-link" href="#hasTask"
+              title="Permalink to TaskRegistry.hasTask">#</a></h4>
+<div class="doc">
+<pre class="source">
+bool hasTask(String taskName) {
+ _requireFrozen();
+ return _tasks.containsKey(taskName);
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

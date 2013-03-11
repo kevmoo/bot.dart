@@ -1,0 +1,324 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>ArgParser class / args Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="args" data-type="ArgParser">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../args.html">args</a> &rsaquo; <a href="../args/ArgParser.html">ArgParser</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>ArgParser</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<p>A class for taking a list of raw command line arguments and parsing out
+options and flags from them.</p>
+<pre class="source">
+class ArgParser {
+ /**
+  * The options that have been defined for this parser.
+  */
+ final Map&lt;String, Option&gt; options = &lt;String, Option&gt;{};
+
+ /**
+  * The commands that have been defined for this parser.
+  */
+ final Map&lt;String, ArgParser&gt; commands = &lt;String, ArgParser&gt;{};
+
+ /** Creates a new ArgParser. */
+ ArgParser();
+
+ /**
+  * Defines a command. A command is a named argument which may in turn
+  * define its own options and subcommands. Returns an [ArgParser] that can
+  * be used to define the command's options.
+  */
+ ArgParser addCommand(String name) {
+   // Make sure the name isn't in use.
+   if (commands.containsKey(name)) {
+     throw new ArgumentError('Duplicate command "$name".');
+   }
+
+   var command = new ArgParser();
+   commands[name] = command;
+   return command;
+ }
+
+ /**
+  * Defines a flag. Throws an [ArgumentError] if:
+  *
+  * * There is already an option named [name].
+  * * There is already an option using abbreviation [abbr].
+  */
+ void addFlag(String name, {String abbr, String help, bool defaultsTo: false,
+     bool negatable: true, void callback(bool value)}) {
+   _addOption(name, abbr, help, null, null, defaultsTo, callback,
+       isFlag: true, negatable: negatable);
+ }
+
+ /**
+  * Defines a value-taking option. Throws an [ArgumentError] if:
+  *
+  * * There is already an option with name [name].
+  * * There is already an option using abbreviation [abbr].
+  */
+ void addOption(String name, {String abbr, String help, List&lt;String&gt; allowed,
+     Map&lt;String, String&gt; allowedHelp, String defaultsTo,
+     void callback(value), bool allowMultiple: false}) {
+   _addOption(name, abbr, help, allowed, allowedHelp, defaultsTo,
+       callback, isFlag: false, allowMultiple: allowMultiple);
+ }
+
+ void _addOption(String name, String abbr, String help, List&lt;String&gt; allowed,
+     Map&lt;String, String&gt; allowedHelp, defaultsTo,
+     void callback(value), {bool isFlag, bool negatable: false,
+     bool allowMultiple: false}) {
+   // Make sure the name isn't in use.
+   if (options.containsKey(name)) {
+     throw new ArgumentError('Duplicate option "$name".');
+   }
+
+   // Make sure the abbreviation isn't too long or in use.
+   if (abbr != null) {
+     if (abbr.length &gt; 1) {
+       throw new ArgumentError(
+           'Abbreviation "$abbr" is longer than one character.');
+     }
+
+     var existing = findByAbbreviation(abbr);
+     if (existing != null) {
+       throw new ArgumentError(
+           'Abbreviation "$abbr" is already used by "${existing.name}".');
+     }
+   }
+
+   options[name] = new Option(name, abbr, help, allowed, allowedHelp,
+       defaultsTo, callback, isFlag: isFlag, negatable: negatable,
+       allowMultiple: allowMultiple);
+ }
+
+ /**
+  * Parses [args], a list of command-line arguments, matches them against the
+  * flags and options defined by this parser, and returns the result.
+  */
+ ArgResults parse(List&lt;String&gt; args) =&gt;
+     new Parser(null, this, args.toList()).parse();
+
+ /**
+  * Generates a string displaying usage information for the defined options.
+  * This is basically the help text shown on the command line.
+  */
+ String getUsage() =&gt; new Usage(this).generate();
+
+ /**
+  * Get the default value for an option. Useful after parsing to test
+  * if the user specified something other than the default.
+  */
+ getDefault(String option) {
+   if (!options.containsKey(option)) {
+     throw new ArgumentError('No option named $option');
+   }
+   return options[option].defaultValue;
+ }
+
+ /**
+  * Finds the option whose abbreviation is [abbr], or `null` if no option has
+  * that abbreviation.
+  */
+ Option findByAbbreviation(String abbr) {
+   return options.values.firstMatching((option) =&gt; option.abbreviation == abbr,
+       orElse: () =&gt; null);
+ }
+}
+</pre>
+</div>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="ArgParser">
+<button class="show-code">Code</button>
+new <strong>ArgParser</strong>() <a class="anchor-link" href="#ArgParser"
+              title="Permalink to ArgParser.ArgParser">#</a></h4>
+<div class="doc">
+<p>Creates a new ArgParser. </p>
+<pre class="source">
+ArgParser();
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="commands">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../args/ArgParser.html">ArgParser</a>&gt;         <strong>commands</strong> <a class="anchor-link"
+            href="#commands"
+            title="Permalink to ArgParser.commands">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+commands = &lt;String, ArgParser&gt;{}
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="options">
+<button class="show-code">Code</button>
+final <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="../args/Option.html">Option</a>&gt;         <strong>options</strong> <a class="anchor-link"
+            href="#options"
+            title="Permalink to ArgParser.options">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+options = &lt;String, Option&gt;{}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="addCommand">
+<button class="show-code">Code</button>
+<a href="../args/ArgParser.html">ArgParser</a> <strong>addCommand</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name) <a class="anchor-link" href="#addCommand"
+              title="Permalink to ArgParser.addCommand">#</a></h4>
+<div class="doc">
+<p>Defines a command. A command is a named argument which may in turn
+define its own options and subcommands. Returns an <a class="crossref" href="../args/ArgParser.html#ArgParser">ArgParser</a> that can
+be used to define the command's options.</p>
+<pre class="source">
+ArgParser addCommand(String name) {
+ // Make sure the name isn't in use.
+ if (commands.containsKey(name)) {
+   throw new ArgumentError('Duplicate command "$name".');
+ }
+
+ var command = new ArgParser();
+ commands[name] = command;
+ return command;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addFlag">
+<button class="show-code">Code</button>
+void <strong>addFlag</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr, <a href="http://api.dartlang.org/dart_core/String.html">String</a> help, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> defaultsTo: false, <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> negatable: true, void callback(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> value)}) <a class="anchor-link" href="#addFlag"
+              title="Permalink to ArgParser.addFlag">#</a></h4>
+<div class="doc">
+<p>Defines a flag. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option named 
+<span class="param">name</span>.</li><li>There is already an option using abbreviation 
+<span class="param">abbr</span>.</li></ul>
+<pre class="source">
+void addFlag(String name, {String abbr, String help, bool defaultsTo: false,
+   bool negatable: true, void callback(bool value)}) {
+ _addOption(name, abbr, help, null, null, defaultsTo, callback,
+     isFlag: true, negatable: negatable);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="addOption">
+<button class="show-code">Code</button>
+void <strong>addOption</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> name, {<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr, <a href="http://api.dartlang.org/dart_core/String.html">String</a> help, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; allowed, <a href="http://api.dartlang.org/dart_core/Map.html">Map</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>, <a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; allowedHelp, <a href="http://api.dartlang.org/dart_core/String.html">String</a> defaultsTo, void callback(value), <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> allowMultiple: false}) <a class="anchor-link" href="#addOption"
+              title="Permalink to ArgParser.addOption">#</a></h4>
+<div class="doc">
+<p>Defines a value-taking option. Throws an <code>ArgumentError</code> if:</p><ul><li>There is already an option with name 
+<span class="param">name</span>.</li><li>There is already an option using abbreviation 
+<span class="param">abbr</span>.</li></ul>
+<pre class="source">
+void addOption(String name, {String abbr, String help, List&lt;String&gt; allowed,
+   Map&lt;String, String&gt; allowedHelp, String defaultsTo,
+   void callback(value), bool allowMultiple: false}) {
+ _addOption(name, abbr, help, allowed, allowedHelp, defaultsTo,
+     callback, isFlag: false, allowMultiple: allowMultiple);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="findByAbbreviation">
+<button class="show-code">Code</button>
+<a href="../args/Option.html">Option</a> <strong>findByAbbreviation</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> abbr) <a class="anchor-link" href="#findByAbbreviation"
+              title="Permalink to ArgParser.findByAbbreviation">#</a></h4>
+<div class="doc">
+<p>Finds the option whose abbreviation is 
+<span class="param">abbr</span>, or <code>null</code> if no option has
+that abbreviation.</p>
+<pre class="source">
+Option findByAbbreviation(String abbr) {
+ return options.values.firstMatching((option) =&gt; option.abbreviation == abbr,
+     orElse: () =&gt; null);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getDefault">
+<button class="show-code">Code</button>
+<strong>getDefault</strong>(<a href="http://api.dartlang.org/dart_core/String.html">String</a> option) <a class="anchor-link" href="#getDefault"
+              title="Permalink to ArgParser.getDefault">#</a></h4>
+<div class="doc">
+<p>Get the default value for an option. Useful after parsing to test
+if the user specified something other than the default.</p>
+<pre class="source">
+getDefault(String option) {
+ if (!options.containsKey(option)) {
+   throw new ArgumentError('No option named $option');
+ }
+ return options[option].defaultValue;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getUsage">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_core/String.html">String</a> <strong>getUsage</strong>() <a class="anchor-link" href="#getUsage"
+              title="Permalink to ArgParser.getUsage">#</a></h4>
+<div class="doc">
+<p>Generates a string displaying usage information for the defined options.
+This is basically the help text shown on the command line.</p>
+<pre class="source">
+String getUsage() =&gt; new Usage(this).generate();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="parse">
+<button class="show-code">Code</button>
+<a href="../args/ArgResults.html">ArgResults</a> <strong>parse</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; args) <a class="anchor-link" href="#parse"
+              title="Permalink to ArgParser.parse">#</a></h4>
+<div class="doc">
+<p>Parses 
+<span class="param">args</span>, a list of command-line arguments, matches them against the
+flags and options defined by this parser, and returns the result.</p>
+<pre class="source">
+ArgResults parse(List&lt;String&gt; args) =&gt;
+   new Parser(null, this, args.toList()).parse();
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
