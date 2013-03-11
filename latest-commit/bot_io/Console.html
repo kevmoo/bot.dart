@@ -49,7 +49,7 @@ class Console {
   */
  static bool get supportsColor =&gt; Platform.environment.containsKey('CLICOLOR');
 
- static Iterable&lt;String&gt; getTable(Iterable source,
+ static Iterable&lt;String&gt; getTable(List source,
      List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
    requireArgumentNotNull(source, 'source');
    requireArgumentNotNull(columns, 'columns');
@@ -76,20 +76,20 @@ class Console {
      }
    }
 
-   $(source).forEachWithIndex((item, i) {
+   for(int i = 0; i &lt; source.length; i++) {
      final rowIndex = i + headerInclude;
      for(var col = 0; col &lt; columns.length; col++) {
        final column = columns[col];
-       final value = column._mapper(item).trim();
+       final value = column._mapper(source[i]).trim();
        maxWidths[col] = math.max(maxWidths[col], value.length);
        cells.set(col, rowIndex, value);
      }
-   });
+   }
 
    return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
  }
 
- static String _getRow(Sequence&lt;String&gt; row, List&lt;int&gt; columnWidths) {
+ static String _getRow(List&lt;String&gt; row, List&lt;int&gt; columnWidths) {
    final minBuffer = 3;
 
    assert(row.length == columnWidths.length);
@@ -140,11 +140,11 @@ static bool get supportsColor =&gt; Platform.environment.containsKey('CLICOLOR')
 <h3>Static Methods</h3>
 <div class="method"><h4 id="getTable">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; <strong>getTable</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> source, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_io/ColumnDefinition.html">ColumnDefinition</a>&gt; columns, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> includeHeader: false}) <a class="anchor-link" href="#getTable"
+<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt; <strong>getTable</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a> source, <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../bot_io/ColumnDefinition.html">ColumnDefinition</a>&gt; columns, {<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> includeHeader: false}) <a class="anchor-link" href="#getTable"
               title="Permalink to Console.getTable">#</a></h4>
 <div class="doc">
 <pre class="source">
-static Iterable&lt;String&gt; getTable(Iterable source,
+static Iterable&lt;String&gt; getTable(List source,
    List&lt;ColumnDefinition&gt; columns, {bool includeHeader: false}) {
  requireArgumentNotNull(source, 'source');
  requireArgumentNotNull(columns, 'columns');
@@ -171,15 +171,15 @@ static Iterable&lt;String&gt; getTable(Iterable source,
    }
  }
 
- $(source).forEachWithIndex((item, i) {
+ for(int i = 0; i &lt; source.length; i++) {
    final rowIndex = i + headerInclude;
    for(var col = 0; col &lt; columns.length; col++) {
      final column = columns[col];
-     final value = column._mapper(item).trim();
+     final value = column._mapper(source[i]).trim();
      maxWidths[col] = math.max(maxWidths[col], value.length);
      cells.set(col, rowIndex, value);
    }
- });
+ }
 
  return cells.rows.map((r) =&gt; _getRow(r, maxWidths));
 }

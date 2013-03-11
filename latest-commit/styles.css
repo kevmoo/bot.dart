@@ -448,6 +448,18 @@ pre.source.expanded {
 .doc pre .i.si, pre.source .i.si { color: hsl(40, 30%, 30%); }
 .doc pre .p.si, pre.source .p.si { color: hsl(40, 60%, 40%); }
 
+.nav > h2 > a {
+  opacity: 0.2;
+}
+
+.nav > h2 > a:hover {
+  opacity: inherit;
+}
+
+.nav > h2 > a[href^='bot'], .nav > h2 > a[href^='hop'] {
+  opacity: inherit;
+}
+
 /* Enable these to debug the grid: */
 
 /*

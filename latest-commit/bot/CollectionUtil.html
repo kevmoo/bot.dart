@@ -34,12 +34,12 @@
 <div class="doc">
 <pre class="source">
 class CollectionUtil {
- static bool allUnique(Iterable items) {
+ static bool allUnique(List items) {
    requireArgumentNotNull(items, 'items');
 
    for(int i = 0; i &lt; items.length; i++) {
      for(int j = i + 1; j &lt; items.length; j++) {
-       if(items.elementAt(i) == items.elementAt(j)) {
+       if(items[i] == items[j]) {
          return false;
        }
      }
@@ -126,16 +126,16 @@ class CollectionUtil {
 <h3>Static Methods</h3>
 <div class="method"><h4 id="allUnique">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>allUnique</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> items) <a class="anchor-link" href="#allUnique"
+<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>allUnique</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a> items) <a class="anchor-link" href="#allUnique"
               title="Permalink to CollectionUtil.allUnique">#</a></h4>
 <div class="doc">
 <pre class="source">
-static bool allUnique(Iterable items) {
+static bool allUnique(List items) {
  requireArgumentNotNull(items, 'items');
 
  for(int i = 0; i &lt; items.length; i++) {
    for(int j = i + 1; j &lt; items.length; j++) {
-     if(items.elementAt(i) == items.elementAt(j)) {
+     if(items[i] == items[j]) {
        return false;
      }
    }

@@ -41,11 +41,9 @@ class TaskRegistry {
  String _helpTaskName;
  ReadOnlyCollection&lt;String&gt; _sortedTaskNames;
 
- /**
-  * Can only be accessed when frozen
-  * Always sorted
-  */
- Sequence&lt;String&gt; get taskNames {
+ /// Can only be accessed when frozen
+ /// Always sorted
+ List&lt;String&gt; get taskNames {
    _requireFrozen();
    return _sortedTaskNames;
  }
@@ -115,7 +113,7 @@ bool get isFrozen =&gt; _sortedTaskNames != null;
 </div>
 <div class="field"><h4 id="taskNames">
 <button class="show-code">Code</button>
-final <a href="../bot/Sequence.html">Sequence</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>taskNames</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="http://api.dartlang.org/dart_core/String.html">String</a>&gt;         <strong>taskNames</strong> <a class="anchor-link"
             href="#taskNames"
             title="Permalink to TaskRegistry.taskNames">#</a>
         </h4>
@@ -123,7 +121,7 @@ final <a href="../bot/Sequence.html">Sequence</a>&lt;<a href="http://api.dartlan
 <p>Can only be accessed when frozen
 Always sorted</p>
 <pre class="source">
-Sequence&lt;String&gt; get taskNames {
+List&lt;String&gt; get taskNames {
  _requireFrozen();
  return _sortedTaskNames;
 }

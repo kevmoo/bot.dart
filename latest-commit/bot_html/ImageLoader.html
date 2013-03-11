@@ -36,20 +36,13 @@
 class ImageLoader extends ResourceLoader&lt;ImageElement&gt; {
  ImageLoader(Iterable&lt;String&gt; urls) : super(urls);
 
- @override
- Future&lt;ImageElement&gt; _doLoad(String blobUrl) {
+ void _doLoad(String blobUrl) {
    final img = new ImageElement(src: blobUrl);
    assert(!img.complete);
-
-   final completer = new Completer&lt;ImageElement&gt;();
-
    img.onLoad.listen((args) {
      assert(args.type == 'load');
-     completer.complete(img);
+     _loadResourceSucceed(blobUrl, img);
    });
-
-   return completer.future;
-
  }
 }
 </pre>
@@ -169,20 +162,16 @@ T getResource(String url) =&gt; _getByUrl(url).resource;
 </div>
 <div class="method inherited"><h4 id="load">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_async/Future.html">Future</a> <strong>load</strong>() <a class="anchor-link" href="#load"
+void <strong>load</strong>() <a class="anchor-link" href="#load"
               title="Permalink to ImageLoader.load">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot_html/ResourceLoader.html">ResourceLoader</a> </div><div class="doc">
 <pre class="source">
-Future load() {
+void load() {
  assert(_state == StateUnloaded);
  _state = StateLoading;
- return Future.wait(_entries.map((e) =&gt; _httpLoad(e)))
-     .then((_) {
-       if(_entries.every((e) =&gt; e.completed)) {
-         _state = StateLoaded;
-         _loadedEvent.add(EventArgs.empty);
-       }
-     });
+ for(final e in _entries) {
+   _httpLoad(e.url);
+ }
 }
 </pre>
 </div>
