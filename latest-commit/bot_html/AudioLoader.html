@@ -39,37 +39,22 @@ class AudioLoader extends ResourceLoader&lt;AudioBuffer&gt; {
  AudioLoader(this.context, Iterable&lt;String&gt; urlList) :
    super(urlList);
 
- void _doLoad(String blobUrl) {
-   // Load buffer asynchronously
-   final HttpRequest arrayBufferRequest = new HttpRequest();
-   arrayBufferRequest.open("GET", blobUrl, true);
-   arrayBufferRequest.responseType = "arraybuffer";
-
-   arrayBufferRequest.onLoad.listen((args) {
-     // Asynchronously decode the audio file data in request.response
-     context.decodeAudioData(
-       arrayBufferRequest.response,
-       (buffer) =&gt; _saveBuffer(blobUrl, buffer),
-       (buffer) =&gt; _onAudioLoadError(blobUrl, 'decode error', buffer));
-   });
-
-   arrayBufferRequest.onError.listen((args) {
-     _onAudioLoadError(blobUrl, 'BufferLoader: XHR error', args);
-   });
-
-   arrayBufferRequest.send();
+ @override
+ Future&lt;AudioBuffer&gt; _doLoad(String blobUrl) {
+   return HttpRequest.request(blobUrl, responseType: 'arraybuffer')
+       .then((HttpRequest request) {
+         return _decode(request.response);
+       });
  }
 
- void _onAudioLoadError(String blobUrl, String description, error) {
-   print(['Error!', description, error]);
-   _loadResourceFailed(blobUrl);
- }
+ Future&lt;AudioBuffer&gt; _decode(ArrayBuffer audioData) {
+   final completer = new Completer&lt;AudioBuffer&gt;();
 
- void _saveBuffer(String blobUrl, AudioBuffer buffer) {
-   if (buffer == null) {
-     _onAudioLoadError(blobUrl, 'null buffer', '');
-   }
-   _loadResourceSucceed(blobUrl, buffer);
+   context.decodeAudioData(audioData,
+       (buffer) =&gt; completer.complete(buffer),
+       (buffer) =&gt; completer.completeError('There was an error decoding the audio'));
+
+   return completer.future;
  }
 }
 </pre>
@@ -202,16 +187,20 @@ T getResource(String url) =&gt; _getByUrl(url).resource;
 </div>
 <div class="method inherited"><h4 id="load">
 <button class="show-code">Code</button>
-void <strong>load</strong>() <a class="anchor-link" href="#load"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a> <strong>load</strong>() <a class="anchor-link" href="#load"
               title="Permalink to AudioLoader.load">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot_html/ResourceLoader.html">ResourceLoader</a> </div><div class="doc">
 <pre class="source">
-void load() {
+Future load() {
  assert(_state == StateUnloaded);
  _state = StateLoading;
- for(final e in _entries) {
-   _httpLoad(e.url);
- }
+ return Future.wait(_entries.map((e) =&gt; _httpLoad(e)))
+     .then((_) {
+       if(_entries.every((e) =&gt; e.completed)) {
+         _state = StateLoaded;
+         _loadedEvent.add(EventArgs.empty);
+       }
+     });
 }
 </pre>
 </div>

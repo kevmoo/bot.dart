@@ -46,12 +46,12 @@ class TaskArgument {
    requireArgumentContainsPattern(nameRegex, name, 'name');
  }
 
- static void validateArgs(List&lt;TaskArgument&gt; args) {
+ static void validateArgs(Iterable&lt;TaskArgument&gt; args) {
    requireArgumentNotNull(args, 'args');
 
    bool finishRequired = false;
-   for(var i = 0; i &lt; args.length; i++) {
-     final arg = args[i];
+
+   $(args).forEachWithIndex((arg, i) {
      final argName = 'args[$i]';
      requireArgumentNotNull(arg, argName);
 
@@ -70,7 +70,7 @@ class TaskArgument {
      for(final other in args.take(i)) {
        requireArgument(arg.name != other.name, argName, 'name ${arg.name} has already been defined');
      }
-   }
+   });
  }
 }
 </pre>
@@ -94,16 +94,16 @@ nameRegex = new RegExp(r'^[a-z](([a-z]|-)*[a-z])?$')
 <h3>Static Methods</h3>
 <div class="method"><h4 id="validateArgs">
 <button class="show-code">Code</button>
-void <strong>validateArgs</strong>(<a href="http://api.dartlang.org/dart_core/List.html">List</a>&lt;<a href="../hop/TaskArgument.html">TaskArgument</a>&gt; args) <a class="anchor-link" href="#validateArgs"
+void <strong>validateArgs</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../hop/TaskArgument.html">TaskArgument</a>&gt; args) <a class="anchor-link" href="#validateArgs"
               title="Permalink to TaskArgument.validateArgs">#</a></h4>
 <div class="doc">
 <pre class="source">
-static void validateArgs(List&lt;TaskArgument&gt; args) {
+static void validateArgs(Iterable&lt;TaskArgument&gt; args) {
  requireArgumentNotNull(args, 'args');
 
  bool finishRequired = false;
- for(var i = 0; i &lt; args.length; i++) {
-   final arg = args[i];
+
+ $(args).forEachWithIndex((arg, i) {
    final argName = 'args[$i]';
    requireArgumentNotNull(arg, argName);
 
@@ -122,7 +122,7 @@ static void validateArgs(List&lt;TaskArgument&gt; args) {
    for(final other in args.take(i)) {
      requireArgument(arg.name != other.name, argName, 'name ${arg.name} has already been defined');
    }
- }
+ });
 }
 </pre>
 </div>
