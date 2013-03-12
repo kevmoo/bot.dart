@@ -1,0 +1,140 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>bot_html Library / BOT Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="styles.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        </head>
+        <body data-library="bot_html">
+        <div class="page">
+        <div class="header">
+          <a href="index.html"><div class="logo"></div></a>
+          <a href="index.html">BOT Documentation</a>
+         &rsaquo; <a href="bot_html.html">bot_html</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+<h2><strong>bot_html</strong> library</h2>
+<div>
+<h3>Functions</h3>
+<div class="method"><h4 id="getImmediateFuture">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a> <strong>getImmediateFuture</strong>() <a class="anchor-link" href="#getImmediateFuture"
+              title="Permalink to getImmediateFuture">#</a></h4>
+<div class="doc">
+<p>Get a <code>Future</code> that completes after a call to <code>window.setImmediate</code>.</p>
+<pre class="source">
+Future getImmediateFuture() {
+ final completer = new Completer();
+
+ window.setImmediate(() =&gt; completer.complete(null));
+
+ return completer.future;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getTimeoutFuture">
+<button class="show-code">Code</button>
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a>&lt;<a href="http://api.dartlang.org/dart_core/int.html">int</a>&gt; <strong>getTimeoutFuture</strong>(<a href="http://api.dartlang.org/dart_core/int.html">int</a> milliseconds) <a class="anchor-link" href="#getTimeoutFuture"
+              title="Permalink to getTimeoutFuture">#</a></h4>
+<div class="doc">
+<p>Get a <code>Future</code> that completes after a call to <code>window.setTimeout</code> with the
+provided value. If 
+<span class="param">milliseconds</span> is less than or equal to zero, the value of
+<a class="crossref" href="bot_html.html#getImmediateFuture">getImmediateFuture</a> is returned instead.</p>
+<p><strong>DEPRECATED</strong></p>
+<p>Use <code>new Timer()</code> instead. We might add something similiar that's not
+html-specific to the <code>bot</code> library soon.</p>
+<pre class="source">
+@deprecated
+Future&lt;int&gt; getTimeoutFuture(int milliseconds) {
+ if(milliseconds &lt; 0) {
+   return getImmediateFuture();
+ } else {
+   final completer = new Completer();
+
+   new Timer(new Duration(milliseconds: milliseconds), () =&gt; completer.complete(milliseconds));
+
+   return completer.future;
+ }
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="getMouseEventCoordinate">
+<button class="show-code">Code</button>
+<a href="bot/Coordinate.html">Coordinate</a> <strong>getMouseEventCoordinate</strong>(<a href="http://api.dartlang.org/dart_html/MouseEvent.html">MouseEvent</a> event) <a class="anchor-link" href="#getMouseEventCoordinate"
+              title="Permalink to getMouseEventCoordinate">#</a></h4>
+<div class="doc">
+<pre class="source">
+Coordinate getMouseEventCoordinate(MouseEvent event) {
+ return new Coordinate(event.offsetX, event.offsetY);
+}
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Abstract Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="bot_html/HtmlView.html"><strong>HtmlView</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_html/ResourceLoader.html"><strong>ResourceLoader&lt;T&gt;</strong></a>
+          </h4>
+          </div>
+          
+</div>
+<div>
+<h3>Classes</h3>
+          <div class="type">
+          <h4>
+            <a href="bot_html/AudioLoader.html"><strong>AudioLoader</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_html/CanvasUtil.html"><strong>CanvasUtil</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_html/Dragger.html"><strong>Dragger</strong></a>
+          </h4>
+          </div>
+          
+          <div class="type">
+          <h4>
+            <a href="bot_html/ImageLoader.html"><strong>ImageLoader</strong></a>
+          </h4>
+          </div>
+          
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          
+        </div>
+        <script async src="client-live-nav.js"></script>
+        </body></html>
+        
