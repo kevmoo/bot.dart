@@ -5,7 +5,7 @@
         <title>RootTaskContext class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -66,7 +66,7 @@ class RootTaskContext {
    assert(!titleSections.isEmpty);
    assert(titleSections.every((s) =&gt; s != null &amp;&amp; !s.isEmpty));
 
-   final title = titleSections.join(' - ').concat(': ');
+   final title = titleSections.join(' - ') + ': ';
 
    if(logLevel &gt;= _minLogLevel) {
      if(_prefixEnabled) {
@@ -76,7 +76,7 @@ class RootTaskContext {
        var indent = '';
 
        while(indent.length &lt; title.length) {
-         indent =  indent.concat(' ');
+         indent =  indent + ' ';
        }
 
        final lines = Util.splitLines(message);

@@ -5,7 +5,7 @@
         <title>MouseManager class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -176,7 +176,7 @@ class MouseManager {
    //       Mouse capture anyone?
 
    final hits = _updateMouseLocation(getMouseEventCoordinate(e));
-   final thing = hits.firstMatching((e) =&gt; getClickable(e), orElse: () =&gt; null);
+   final thing = hits.firstWhere((e) =&gt; getClickable(e), orElse: () =&gt; null);
 
    if(thing != null) {
      _doMouseUp(thing, e);
@@ -241,7 +241,7 @@ class MouseManager {
    _dragStartingEvent.fireEvent(thing, args);
    if(!args.isCanceled) {
      e.preventDefault();
-     _dragCoordinate = new Coordinate(e.clientX, e.clientY);
+     _dragCoordinate = new Coordinate(e.client.x, e.client.y);
    }
  }
 

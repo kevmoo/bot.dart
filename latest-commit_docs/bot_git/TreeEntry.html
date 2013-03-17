@@ -5,7 +5,7 @@
         <title>TreeEntry class / bot_git Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -35,8 +35,8 @@
 <pre class="source">
 class TreeEntry {
  static final _lsTreeLine = r'^([0-9]{6}) (blob|tree) ('
-     .concat(Git._shaRegexPattern)
-     .concat(')\t(\\S.*\\S)\$');
+     + Git._shaRegexPattern
+     + ')\t(\\S.*\\S)\$';
 
  static final _lsTreeRegEx = new RegExp(_lsTreeLine);
 

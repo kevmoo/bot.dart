@@ -5,7 +5,7 @@
         <title>bot_io Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="favicon.ico">
         
         </head>
@@ -281,7 +281,7 @@ ArgResults tryArgsCompletion(ArgParser parser) {
 </div>
 <div class="method"><h4 id="tryCompletion">
 <button class="show-code">Code</button>
-<a href="http://api.dartlang.org/dart_core/Options.html">Options</a> <strong>tryCompletion</strong>(<a href="bot_io/ArgCompleter.html">ArgCompleter</a> completer) <a class="anchor-link" href="#tryCompletion"
+<a href="http://api.dartlang.org/dart_io/Options.html">Options</a> <strong>tryCompletion</strong>(<a href="bot_io/ArgCompleter.html">ArgCompleter</a> completer) <a class="anchor-link" href="#tryCompletion"
               title="Permalink to tryCompletion">#</a></h4>
 <div class="doc">
 <pre class="source">
@@ -360,14 +360,14 @@ void enableScriptLogListener() {
    final options = new Options();
 
    final script = options.script;
-   _scriptLogListenerPath = new Path(script).toNativePath().concat('.log');
+   _scriptLogListenerPath = new Path(script).toNativePath() + '.log';
 
-   final logging.Logger rootLogger = logging.Logger.root;
+   final rootLogger = logging.Logger.root;
    rootLogger.level = logging.Level.ALL;
 
    rootLogger.onRecord.listen(_doLog);
 
-   final logging.Logger logger = logging.Logger.root;
+   final logger = logging.Logger.root;
 
    logger.info('Starting log for $script at $_scriptLogListenerPath');
  }

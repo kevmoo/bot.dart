@@ -5,7 +5,7 @@
         <title>hop_tasks Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="favicon.ico">
         
         </head>
@@ -413,7 +413,7 @@ Task createBenchTask() {
    }
 
    final processName = parseResult.rest.first;
-   final args = parseResult.rest.getRange(1, parseResult.rest.length-1);
+   final args = parseResult.rest.sublist(1);
 
    return _runMany(ctx, count, processName, args)
        .then((list) {

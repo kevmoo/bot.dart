@@ -5,7 +5,7 @@
         <title>SubCanvasThing class / bot_retained Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -39,8 +39,10 @@ class SubCanvasThing extends Thing {
  SubCanvasThing(num width, num height, this._canvas) :
    super(width, height);
 
+ @override
  void drawOverride(CanvasRenderingContext2D ctx) {
-   ctx.drawImage(_canvas, 0, 0, width, height);
+   final rect = new Rect(0,0,width,height);
+   ctx.drawImageAtScale(_canvas, rect);
  }
 }
 </pre>
@@ -288,8 +290,10 @@ void <strong>drawOverride</strong>(<a href="http://api.dartlang.org/dart_html/Ca
               title="Permalink to SubCanvasThing.drawOverride">#</a></h4>
 <div class="doc">
 <pre class="source">
+@override
 void drawOverride(CanvasRenderingContext2D ctx) {
- ctx.drawImage(_canvas, 0, 0, width, height);
+ final rect = new Rect(0,0,width,height);
+ ctx.drawImageAtScale(_canvas, rect);
 }
 </pre>
 </div>

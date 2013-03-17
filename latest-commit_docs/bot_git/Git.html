@@ -5,7 +5,7 @@
         <title>Git class / bot_git Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -35,7 +35,7 @@
 <pre class="source">
 class Git {
  static const _shaRegexPattern = '[a-f0-9]{40}';
- static final _shaRegEx = new RegExp(r'^'.concat(_shaRegexPattern).concat(r'$'));
+ static final _shaRegEx = new RegExp(r'^' + _shaRegexPattern + r'$');
 
  static bool isValidSha(String value) {
    return _shaRegEx.hasMatch(value);

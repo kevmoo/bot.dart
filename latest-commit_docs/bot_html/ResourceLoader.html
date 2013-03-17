@@ -5,7 +5,7 @@
         <title>ResourceLoader&lt;T&gt; abstract class / bot_html Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -92,12 +92,12 @@ abstract class ResourceLoader&lt;T&gt; {
 
  _ResourceEntry&lt;T&gt; _getByUrl(String url) {
    assert(url != null);
-   return _entries.singleMatching((e) =&gt; e.url == url);
+   return _entries.singleWhere((e) =&gt; e.url == url);
  }
 
  _ResourceEntry&lt;T&gt; _getByBlobUrl(String blobUrl) {
    assert(blobUrl != null);
-   return _entries.singleMatching((e) =&gt; e.matchesBlobUrl(blobUrl));
+   return _entries.singleWhere((e) =&gt; e.matchesBlobUrl(blobUrl));
  }
 
  Future _httpLoad(_ResourceEntry&lt;T&gt; entry) {

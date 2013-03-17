@@ -5,7 +5,7 @@
         <title>Configuration class / unittest Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -184,8 +184,8 @@ class Configuration {
  /** Handle errors that happen outside the tests. */
  // TODO(vsm): figure out how to expose the stack trace here
  // Currently e.message works in dartium, but not in dartc.
- void handleExternalError(e, String message) =&gt;
-     _reportTestError('$message\nCaught $e', '');
+ void handleExternalError(e, String message, [String stack = '']) =&gt;
+     _reportTestError('$message\nCaught $e', stack);
 
  _postMessage(String message) {
    // In dart2js browser tests, the JavaScript-based test controller
@@ -231,13 +231,13 @@ String get name =&gt; 'Configuration';
 <h3>Methods</h3>
 <div class="method"><h4 id="handleExternalError">
 <button class="show-code">Code</button>
-void <strong>handleExternalError</strong>(e, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message) <a class="anchor-link" href="#handleExternalError"
+void <strong>handleExternalError</strong>(e, <a href="http://api.dartlang.org/dart_core/String.html">String</a> message, [<a href="http://api.dartlang.org/dart_core/String.html">String</a> stack = '']) <a class="anchor-link" href="#handleExternalError"
               title="Permalink to Configuration.handleExternalError">#</a></h4>
 <div class="doc">
 <p>Handle errors that happen outside the tests. </p>
 <pre class="source">
-void handleExternalError(e, String message) =&gt;
-   _reportTestError('$message\nCaught $e', '');
+void handleExternalError(e, String message, [String stack = '']) =&gt;
+   _reportTestError('$message\nCaught $e', stack);
 </pre>
 </div>
 </div>

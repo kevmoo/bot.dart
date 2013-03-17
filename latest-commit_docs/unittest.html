@@ -5,7 +5,7 @@
         <title>unittest Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="favicon.ico">
         
         </head>
@@ -28,8 +28,8 @@
 <div class="content">
 <h2><strong>unittest</strong> library</h2>
 <div class="doc"><p>A library for writing dart unit tests.</p>
-<p>To import this library, install the 
-<a href="http://pub.dartlang.org/packages/unittest">unittest package</a> via the pub 
+<p>To import this library, install the
+<a href="http://pub.dartlang.org/packages/unittest">unittest package</a> via the pub
 package manager. See the <a href="http://pub.dartlang.org/doc">Getting Started</a>
 guide for more details.</p>
 <h2>Concepts</h2><ul><li>
@@ -705,7 +705,7 @@ void solo_test(String spec, TestFunction body) {
 
  ensureInitialized();
 
- _soloTest = new TestCase(_tests.length + 1, _fullSpec(spec), body, 0);
+ _soloTest = new TestCase._internal(_tests.length + 1, _fullSpec(spec), body);
  _tests.add(_soloTest);
 }
 </pre>
@@ -722,7 +722,7 @@ calls.</p>
 <pre class="source">
 void test(String spec, TestFunction body) {
  ensureInitialized();
- _tests.add(new TestCase(_tests.length + 1, _fullSpec(spec), body, 0));
+ _tests.add(new TestCase._internal(_tests.length + 1, _fullSpec(spec), body));
 }
 </pre>
 </div>

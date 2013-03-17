@@ -5,7 +5,7 @@
         <title>Enumerable&lt;T&gt; abstract class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -65,6 +65,9 @@ abstract class Enumerable&lt;T&gt; extends Iterable&lt;T&gt; {
  Grouping&lt;dynamic, T&gt; group([Func1&lt;T, Object&gt; keyFunc = null]) {
    return new Grouping(this, keyFunc);
  }
+
+ Enumerable&lt;T&gt; concat(Iterable&lt;T&gt; source) =&gt;
+     $([this, source]).expand((e) =&gt; e);
 
  ReadOnlyCollection&lt;T&gt; toReadOnlyCollection() =&gt; new ReadOnlyCollection&lt;T&gt;(this);
 
@@ -254,6 +257,17 @@ bool any(bool f(E element)) {
 </pre>
 </div>
 </div>
+<div class="method"><h4 id="concat">
+<button class="show-code">Code</button>
+<a href="../bot/Enumerable.html">Enumerable</a>&lt;<a href="../bot/Enumerable.html">T</a>&gt; <strong>concat</strong>(<a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a>&lt;<a href="../bot/Enumerable.html">T</a>&gt; source) <a class="anchor-link" href="#concat"
+              title="Permalink to Enumerable&lt;T&gt;.concat">#</a></h4>
+<div class="doc">
+<pre class="source">
+Enumerable&lt;T&gt; concat(Iterable&lt;T&gt; source) =&gt;
+   $([this, source]).expand((e) =&gt; e);
+</pre>
+</div>
+</div>
 <div class="method inherited"><h4 id="contains">
 <button class="show-code">Code</button>
 <a href="http://api.dartlang.org/dart_core/bool.html">bool</a> <strong>contains</strong>(<a href="../bot/Enumerable.html">E</a> element) <a class="anchor-link" href="#contains"
@@ -370,10 +384,10 @@ Enumerable expand(Func1&lt;T, Iterable&gt; f) =&gt;
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="firstMatching">
+<div class="method inherited"><h4 id="firstWhere">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">E</a> <strong>firstMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value), {<a href="../bot/Enumerable.html">E</a> orElse()}) <a class="anchor-link" href="#firstMatching"
-              title="Permalink to Enumerable&lt;T&gt;.firstMatching">#</a></h4>
+<a href="../bot/Enumerable.html">E</a> <strong>firstWhere</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value), {<a href="../bot/Enumerable.html">E</a> orElse()}) <a class="anchor-link" href="#firstWhere"
+              title="Permalink to Enumerable&lt;T&gt;.firstWhere">#</a></h4>
 <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the first element that satisfies the given predicate <code>f</code>.</p>
 <p>If none matches, the result of invoking the 
@@ -382,7 +396,7 @@ returned. By default, when
 <span class="param">orElse</span> is <code>null</code>, a <code>StateError</code> is
 thrown.</p>
 <pre class="source">
-E firstMatching(bool test(E value), { E orElse() }) {
+E firstWhere(bool test(E value), { E orElse() }) {
  // TODO(floitsch): check that arguments are of correct type?
  for (E element in this) {
    if (test(element)) return element;
@@ -451,13 +465,13 @@ String join([String separator]) {
  StringBuffer buffer = new StringBuffer();
  if (separator == null || separator == "") {
    do {
-     buffer.add("${iterator.current}");
+     buffer.write("${iterator.current}");
    } while (iterator.moveNext());
  } else {
-   buffer.add("${iterator.current}");
+   buffer.write("${iterator.current}");
    while (iterator.moveNext()) {
-     buffer.add(separator);
-     buffer.add("${iterator.current}");
+     buffer.write(separator);
+     buffer.write("${iterator.current}");
    }
  }
  return buffer.toString();
@@ -465,10 +479,10 @@ String join([String separator]) {
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="lastMatching">
+<div class="method inherited"><h4 id="lastWhere">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">E</a> <strong>lastMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value), {<a href="../bot/Enumerable.html">E</a> orElse()}) <a class="anchor-link" href="#lastMatching"
-              title="Permalink to Enumerable&lt;T&gt;.lastMatching">#</a></h4>
+<a href="../bot/Enumerable.html">E</a> <strong>lastWhere</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value), {<a href="../bot/Enumerable.html">E</a> orElse()}) <a class="anchor-link" href="#lastWhere"
+              title="Permalink to Enumerable&lt;T&gt;.lastWhere">#</a></h4>
 <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the last element that satisfies the given predicate <code>f</code>.</p>
 <p>If none matches, the result of invoking the 
@@ -477,7 +491,7 @@ returned. By default, when
 <span class="param">orElse</span> is <code>null</code>, a <code>StateError</code> is
 thrown.</p>
 <pre class="source">
-E lastMatching(bool test(E value), {E orElse()}) {
+E lastWhere(bool test(E value), {E orElse()}) {
  // TODO(floitsch): check that arguments are of correct type?
  E result = null;
  bool foundMatching = false;
@@ -531,7 +545,9 @@ other elements <code>y</code> in the iterable.</p>
 <span class="param">compare</span> function must be a proper [Comparator<T>]. If a function is
 not provided, 
 <span class="param">compare</span> defaults to <code>Comparable.compare</code>.</p>
+<p><em>Deprecated</em>. Use <code>reduce</code> with a binary max method if needed.</p>
 <pre class="source">
+@deprecated
 E max([int compare(E a, E b)]) {
  if (compare == null) compare = Comparable.compare;
  Iterator it = iterator;
@@ -560,7 +576,9 @@ other elements <code>y</code> in the iterable.</p>
 <span class="param">compare</span> function must be a proper [Comparator<T>]. If a function is
 not provided, 
 <span class="param">compare</span> defaults to <code>Comparable.compare</code>.</p>
+<p><em>Deprecated</em>. Use <code>reduce</code> with a binary min method if needed.</p>
 <pre class="source">
+@deprecated
 E min([int compare(E a, E b)]) {
  if (compare == null) compare = Comparable.compare;
  Iterator it = iterator;
@@ -609,15 +627,15 @@ NumberEnumerable selectNumbers(Func1&lt;T, num&gt; f) =&gt;
 </pre>
 </div>
 </div>
-<div class="method inherited"><h4 id="singleMatching">
+<div class="method inherited"><h4 id="singleWhere">
 <button class="show-code">Code</button>
-<a href="../bot/Enumerable.html">E</a> <strong>singleMatching</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value)) <a class="anchor-link" href="#singleMatching"
-              title="Permalink to Enumerable&lt;T&gt;.singleMatching">#</a></h4>
+<a href="../bot/Enumerable.html">E</a> <strong>singleWhere</strong>(<a href="http://api.dartlang.org/dart_core/bool.html">bool</a> test(<a href="../bot/Enumerable.html">E</a> value)) <a class="anchor-link" href="#singleWhere"
+              title="Permalink to Enumerable&lt;T&gt;.singleWhere">#</a></h4>
 <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_core/Iterable.html">Iterable</a> </div><div class="doc">
 <p>Returns the single element that satisfies <code>f</code>. If no or more than one
 element match then a <code>StateError</code> is thrown.</p>
 <pre class="source">
-E singleMatching(bool test(E value)) {
+E singleWhere(bool test(E value)) {
  // TODO(floitsch): check that argument is of correct type?
  E result = null;
  bool foundMatching = false;
