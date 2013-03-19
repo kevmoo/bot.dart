@@ -5,7 +5,7 @@
         <title>Runner class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -83,8 +83,7 @@ class Runner {
          final end = new DateTime.now();
          context.finest('Finished at $end');
          final duration = end.difference(start);
-         context.fine('Run time: $duration');
-         context.dispose();
+         context.finer('Run time: $duration');
        });
  }
 
@@ -109,7 +108,10 @@ class Runner {
 
      final task = config.taskRegistry._getTask(taskName);
      return runTask(subCtx, task)
-         .then((RunResult result) =&gt; _logExitCode(ctx, result));
+         .then((RunResult result) =&gt; _logExitCode(ctx, result))
+         .whenComplete(() {
+           subCtx.dispose();
+         });
 
    } else if(config.args.rest.length == 0) {
      _printHelp(config.doPrint, config.taskRegistry, config.parser);
@@ -126,7 +128,7 @@ class Runner {
    final String logLevelOption = config.args[_logLevelOption];
 
    final Level logLevel = _getLogLevels()
-       .singleMatching((Level l) =&gt; l.name.toLowerCase() == logLevelOption);
+       .singleWhere((Level l) =&gt; l.name.toLowerCase() == logLevelOption);
 
    return new RootTaskContext(config.doPrint,
        prefixEnabled: preFixEnabled, minLogLevel: logLevel);
@@ -254,8 +256,7 @@ static Future&lt;RunResult&gt; runTask(TaskContext context, Task task) {
        final end = new DateTime.now();
        context.finest('Finished at $end');
        final duration = end.difference(start);
-       context.fine('Run time: $duration');
-       context.dispose();
+       context.finer('Run time: $duration');
      });
 }
 </pre>
@@ -284,7 +285,10 @@ static Future&lt;RunResult&gt; run(HopConfig config) {
 
    final task = config.taskRegistry._getTask(taskName);
    return runTask(subCtx, task)
-       .then((RunResult result) =&gt; _logExitCode(ctx, result));
+       .then((RunResult result) =&gt; _logExitCode(ctx, result))
+       .whenComplete(() {
+         subCtx.dispose();
+       });
 
  } else if(config.args.rest.length == 0) {
    _printHelp(config.doPrint, config.taskRegistry, config.parser);

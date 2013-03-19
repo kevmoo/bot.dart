@@ -5,7 +5,7 @@
         <title>ArgParser class / args Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -101,11 +101,6 @@ class ArgParser {
 
    // Make sure the abbreviation isn't too long or in use.
    if (abbr != null) {
-     if (abbr.length &gt; 1) {
-       throw new ArgumentError(
-           'Abbreviation "$abbr" is longer than one character.');
-     }
-
      var existing = findByAbbreviation(abbr);
      if (existing != null) {
        throw new ArgumentError(
@@ -147,7 +142,7 @@ class ArgParser {
   * that abbreviation.
   */
  Option findByAbbreviation(String abbr) {
-   return options.values.firstMatching((option) =&gt; option.abbreviation == abbr,
+   return options.values.firstWhere((option) =&gt; option.abbreviation == abbr,
        orElse: () =&gt; null);
  }
 }
@@ -263,7 +258,7 @@ void addOption(String name, {String abbr, String help, List&lt;String&gt; allowe
 that abbreviation.</p>
 <pre class="source">
 Option findByAbbreviation(String abbr) {
- return options.values.firstMatching((option) =&gt; option.abbreviation == abbr,
+ return options.values.firstWhere((option) =&gt; option.abbreviation == abbr,
      orElse: () =&gt; null);
 }
 </pre>

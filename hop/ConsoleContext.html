@@ -5,7 +5,7 @@
         <title>ConsoleContext class / hop Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -42,7 +42,9 @@ class ConsoleContext extends TaskContext {
 
  void log(Level logLevel, String message) {
    _assertNotDisposed();
-   print(message);
+   if(logLevel &gt;= Level.FINE) {
+     print(message);
+   }
  }
 
  /**
@@ -293,7 +295,9 @@ void <strong>log</strong>(<a href="../logging/Level.html">Level</a> logLevel, <a
 <pre class="source">
 void log(Level logLevel, String message) {
  _assertNotDisposed();
- print(message);
+ if(logLevel &gt;= Level.FINE) {
+   print(message);
+ }
 }
 </pre>
 </div>

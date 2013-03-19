@@ -5,7 +5,7 @@
         <title>unittest Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="favicon.ico">
         
         </head>
@@ -28,24 +28,20 @@
 <div class="content">
 <h2><strong>unittest</strong> library</h2>
 <div class="doc"><p>A library for writing dart unit tests.</p>
-<p>To import this library, use the pub package manager.
-Create a pubspec.yaml file in your project and add
-a dependency on unittest with the following lines:</p>
-<pre><code>dependencies:
-  unittest: any
-</code></pre>
-<p>Then run 'pub install' from your project directory or using
-the DartEditor.</p>
-<p>Please see <a href="http://pub.dartlang.org/doc">Pub Getting Started</a>
-for more details about the pub package manager.</p>
+<p>To import this library, install the
+<a href="http://pub.dartlang.org/packages/unittest">unittest package</a> via the pub
+package manager. See the <a href="http://pub.dartlang.org/doc">Getting Started</a>
+guide for more details.</p>
 <h2>Concepts</h2><ul><li>
-<p>Tests: Tests are specified via the top-level function <a class="crossref" href="unittest.html#test">test</a>, they can be
-   organized together using <a class="crossref" href="unittest.html#group">group</a>.</p></li><li>Checks: Test expectations can be specified via <code>expect</code></li><li>Matchers: <code>expect</code> assertions are written declaratively using <code>Matcher</code>s</li><li>
-<p>Configuration: The framework can be adapted by calling <a class="crossref" href="unittest.html#configure">configure</a> with a
-   <a class="crossref" href="unittest/Configuration.html">Configuration</a>.  Common configurations can be found in this package
-   under: 'dom\<em>config.dart' (deprecated), 'html\</em>config.dart' (for running
-   tests compiled to Javascript in a browser), and 'vm\_config.dart' (for
-   running native Dart tests on the VM).</p></li></ul>
+<p><strong>Tests</strong>: Tests are specified via the top-level function <a class="crossref" href="unittest.html#test">test</a>, they can be
+   organized together using <a class="crossref" href="unittest.html#group">group</a>.</p></li><li><strong>Checks</strong>: Test expectations can be specified via <code>expect</code></li><li>
+<p><strong>Matchers</strong>: <code>expect</code> assertions are written declaratively using the
+   <code>Matcher</code> class.</p></li><li>
+<p><strong>Configuration</strong>: The framework can be adapted by calling <a class="crossref" href="unittest.html#configure">configure</a> with a
+   <a class="crossref" href="unittest/Configuration.html">Configuration</a>. See the other libraries in the <code>unittest</code> package for
+   alternative implementations of <a class="crossref" href="unittest/Configuration.html">Configuration</a> including
+   <code>compact_vm_config.dart</code>, <code>html_config.dart</code> and
+   <code>html_enhanced_config.dart</code>.</p></li></ul>
 <h2>Examples</h2>
 <p>A trivial test:</p>
 <pre><code>import 'package:unittest/unittest.dart';
@@ -416,7 +412,7 @@ void filterTests(testFilter) {
  } else if (testFilter is Function) {
    filterFunction = testFilter;
  }
- _tests.retainMatching(filterFunction);
+ _tests.retainWhere(filterFunction);
 }
 </pre>
 </div>
@@ -709,7 +705,7 @@ void solo_test(String spec, TestFunction body) {
 
  ensureInitialized();
 
- _soloTest = new TestCase(_tests.length + 1, _fullSpec(spec), body, 0);
+ _soloTest = new TestCase._internal(_tests.length + 1, _fullSpec(spec), body);
  _tests.add(_soloTest);
 }
 </pre>
@@ -726,7 +722,7 @@ calls.</p>
 <pre class="source">
 void test(String spec, TestFunction body) {
  ensureInitialized();
- _tests.add(new TestCase(_tests.length + 1, _fullSpec(spec), body, 0));
+ _tests.add(new TestCase._internal(_tests.length + 1, _fullSpec(spec), body));
 }
 </pre>
 </div>

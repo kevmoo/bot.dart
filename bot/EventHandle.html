@@ -5,7 +5,7 @@
         <title>EventHandle&lt;T&gt; class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -55,7 +55,7 @@ class EventHandle&lt;T&gt; extends async.StreamController&lt;T&gt; implements Di
 </div>
 <h3>Extends</h3>
 <p>
-<span class="type-box"><span class="icon-class"></span><a href="../dart_async/StreamController.html">StreamController&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>EventHandle&lt;T&gt;</strong></span></p>
+<span class="type-box"><span class="icon-class"></span><a href="../dart_async/EventSink.html">EventSink&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../dart_async/StreamSink.html">StreamSink&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><a href="../dart_async/StreamController.html">StreamController&lt;T&gt;</a></span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>EventHandle&lt;T&gt;</strong></span></p>
 <h3>Implements</h3>
 <p>
 <span class="type-box"><span class="icon-class"></span><a href="../bot/Disposable.html">Disposable</a></span></p>
@@ -130,14 +130,14 @@ bool get isPaused =&gt; stream._isInputPaused;
 </div>
 <div class="field inherited"><h4 id="sink">
 <button class="show-code">Code</button>
-final <a href="http://api.dartlang.org/dart_async/StreamSink.html">StreamSink</a>&lt;<a href="../bot/EventHandle.html">T</a>&gt;         <strong>sink</strong> <a class="anchor-link"
+final <a href="http://api.dartlang.org/dart_async/EventSink.html">EventSink</a>&lt;<a href="../bot/EventHandle.html">T</a>&gt;         <strong>sink</strong> <a class="anchor-link"
             href="#sink"
             title="Permalink to EventHandle&lt;T&gt;.sink">#</a>
         </h4>
         <div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_async/StreamController.html">StreamController</a> </div><div class="doc">
-<p>Returns a view of this object that only exposes the <code>StreamSink</code> interface.</p>
+<p>Returns a view of this object that only exposes the <code>EventSink</code> interface.</p>
 <pre class="source">
-StreamSink&lt;T&gt; get sink =&gt; new StreamSinkView&lt;T&gt;(this);
+EventSink&lt;T&gt; get sink =&gt; new EventSinkView&lt;T&gt;(this);
 </pre>
 </div>
 </div>
@@ -164,6 +164,36 @@ void <strong>add</strong>(<a href="../bot/EventHandle.html">T</a> value) <a clas
 <p>Send or queue a data event.</p>
 <pre class="source">
 void add(T value) =&gt; stream._add(value);
+</pre>
+</div>
+</div>
+<div class="method inherited"><h4 id="addError">
+<button class="show-code">Code</button>
+void <strong>addError</strong>(<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> error, [<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> stackTrace]) <a class="anchor-link" href="#addError"
+              title="Permalink to EventHandle&lt;T&gt;.addError">#</a></h4>
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_async/StreamController.html">StreamController</a> </div><div class="doc">
+<p>Send or enqueue an error event.</p>
+<p>If 
+<span class="param">error</span> is not an <code>AsyncError</code>, 
+<span class="param">error</span> and an optional 
+<span class="param">stackTrace</span>
+is combined into an <code>AsyncError</code> and sent this stream's listeners.</p>
+<p>Otherwise, if 
+<span class="param">error</span> is an <code>AsyncError</code>, it is used directly as the
+error object reported to listeners, and the 
+<span class="param">stackTrace</span> is ignored.</p>
+<p>If a subscription has requested to be unsubscribed on errors,
+it will be unsubscribed after receiving this event.</p>
+<pre class="source">
+void addError(Object error, [Object stackTrace]) {
+ AsyncError asyncError;
+ if (error is AsyncError) {
+   asyncError = error;
+ } else {
+   asyncError = new AsyncError(error, stackTrace);
+ }
+ stream._addError(asyncError);
+}
 </pre>
 </div>
 </div>
@@ -200,31 +230,12 @@ void dispose(){
 </div>
 <div class="method inherited"><h4 id="signalError">
 <button class="show-code">Code</button>
-void <strong>signalError</strong>(<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> error, [<a href="http://api.dartlang.org/dart_core/Object.html">Object</a> stackTrace]) <a class="anchor-link" href="#signalError"
+void <strong>signalError</strong>(<a href="http://api.dartlang.org/dart_async/AsyncError.html">AsyncError</a> errorEvent) <a class="anchor-link" href="#signalError"
               title="Permalink to EventHandle&lt;T&gt;.signalError">#</a></h4>
-<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_async/StreamController.html">StreamController</a> </div><div class="doc">
-<p>Send or enqueue an error event.</p>
-<p>If 
-<span class="param">error</span> is not an <code>AsyncError</code>, 
-<span class="param">error</span> and an optional 
-<span class="param">stackTrace</span>
-is combined into an <code>AsyncError</code> and sent this stream's listeners.</p>
-<p>Otherwise, if 
-<span class="param">error</span> is an <code>AsyncError</code>, it is used directly as the
-error object reported to listeners, and the 
-<span class="param">stackTrace</span> is ignored.</p>
-<p>If a subscription has requested to be unsubscribed on errors,
-it will be unsubscribed after receiving this event.</p>
+<div class="inherited-from">inherited from <a href="http://api.dartlang.org/dart_async/StreamSink.html">StreamSink</a> </div><div class="doc">
+<p><em>Deprecated</em>. Use <code>EventSink.addError</code> instead.</p>
 <pre class="source">
-void signalError(Object error, [Object stackTrace]) {
- AsyncError asyncError;
- if (error is AsyncError) {
-   asyncError = error;
- } else {
-   asyncError = new AsyncError(error, stackTrace);
- }
- stream._signalError(asyncError);
-}
+void signalError(AsyncError errorEvent) { addError(errorEvent); }
 </pre>
 </div>
 </div>

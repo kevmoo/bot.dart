@@ -5,7 +5,7 @@
         <title>hop_tasks Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="favicon.ico">
         
         </head>
@@ -383,11 +383,13 @@ Task createDartAnalyzerTask(dynamic delayedFileList) {
 
    final bool enableTypeChecks = parseResult[_enableTypeChecksArgName];
    final bool verbose = parseResult[_verboseArgName];
+   final bool formatMachine = parseResult[_formatMachineArgName];
 
    return getDelayedResult(delayedFileList)
        .then((List&lt;String&gt; files) {
          final fileList = files.map((f) =&gt; new Path(f)).toList();
-         return _processAnalyzerFile(context, fileList, enableTypeChecks, verbose);
+         return _processAnalyzerFile(context, fileList, enableTypeChecks,
+             verbose, formatMachine);
        });
  },
  description: 'Run "dart_analyzer" for the provided dart files.',
@@ -413,7 +415,7 @@ Task createBenchTask() {
    }
 
    final processName = parseResult.rest.first;
-   final args = parseResult.rest.getRange(1, parseResult.rest.length-1);
+   final args = parseResult.rest.sublist(1);
 
    return _runMany(ctx, count, processName, args)
        .then((list) {

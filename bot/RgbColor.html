@@ -5,7 +5,7 @@
         <title>RgbColor class / bot Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -49,9 +49,9 @@ class RgbColor {
  factory RgbColor.fromHex(String hexColor) {
    requireArgumentNotNull(hexColor, 'hexColor');
    hexColor = _normalizeHex(hexColor);
-   var r = int.parse('0x'.concat(hexColor.substring(1, 3)));
-   var g = int.parse('0x'.concat(hexColor.substring(3, 5)));
-   var b = int.parse('0x'.concat(hexColor.substring(5, 7)));
+   var r = int.parse('0x' + hexColor.substring(1, 3));
+   var g = int.parse('0x' + hexColor.substring(3, 5));
+   var b = int.parse('0x' + hexColor.substring(5, 7));
 
    return new RgbColor(r,g,b);
  }
@@ -114,7 +114,7 @@ class RgbColor {
  }
 
  static String _prependZeroIfNecessaryHelper(String hex) {
-   return hex.length == 1 ? '0'.concat(hex) : hex;
+   return hex.length == 1 ? '0' + hex : hex;
  }
 
  // TODO: support colors in the format #rgb
@@ -161,9 +161,9 @@ factory <strong>RgbColor.fromHex</strong>(<a href="http://api.dartlang.org/dart_
 factory RgbColor.fromHex(String hexColor) {
  requireArgumentNotNull(hexColor, 'hexColor');
  hexColor = _normalizeHex(hexColor);
- var r = int.parse('0x'.concat(hexColor.substring(1, 3)));
- var g = int.parse('0x'.concat(hexColor.substring(3, 5)));
- var b = int.parse('0x'.concat(hexColor.substring(5, 7)));
+ var r = int.parse('0x' + hexColor.substring(1, 3));
+ var g = int.parse('0x' + hexColor.substring(3, 5));
+ var b = int.parse('0x' + hexColor.substring(5, 7));
 
  return new RgbColor(r,g,b);
 }

@@ -5,7 +5,7 @@
         <title>Logger class / logging Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -115,6 +115,17 @@ class Logger {
      _rootLevel = value;
    }
  }
+
+ /**
+  * Returns an event manager for this [Logger]. You can listen for log messages
+  * by adding a [LoggerHandler] to an event from the event manager, for
+  * instance:
+  *    logger.on.record.add((record) { ... });
+  *
+  * This API is Deprecated. Use [onRecord] instead.
+  */
+ @deprecated
+ LoggerEvents get on =&gt; new LoggerEvents(this);
 
  /**
   * Returns an stream of messages added to this [Logger]. You can listen for
@@ -359,6 +370,24 @@ final <a href="http://api.dartlang.org/dart_core/String.html">String</a>        
         <div class="doc">
 <pre class="source">
 name
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="on">
+<button class="show-code">Code</button>
+final <a href="../logging/LoggerEvents.html">LoggerEvents</a>         <strong>on</strong> <a class="anchor-link"
+            href="#on"
+            title="Permalink to Logger.on">#</a>
+        </h4>
+        <div class="doc">
+<p>Returns an event manager for this <a class="crossref" href="../logging/Logger.html#Logger">Logger</a>. You can listen for log messages
+by adding a <a class="crossref" href="../logging/LoggerHandler.html">LoggerHandler</a> to an event from the event manager, for
+instance:
+   logger.on.record.add((record) { ... });</p>
+<p>This API is Deprecated. Use <a class="crossref" href="../logging/Logger.html#onRecord">onRecord</a> instead.</p>
+<pre class="source">
+@deprecated
+LoggerEvents get on =&gt; new LoggerEvents(this);
 </pre>
 </div>
 </div>

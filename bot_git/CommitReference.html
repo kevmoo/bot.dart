@@ -5,7 +5,7 @@
         <title>CommitReference class / bot_git Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -55,7 +55,7 @@ class CommitReference {
    // last line should be empty
    assert(lines.last.length == 0);
 
-   return lines.getRange(0, lines.length-1)
+   return lines.sublist(0, lines.length-1)
        .map((line) {
          final match = _lsRemoteRegExp.allMatches(line).single;
          assert(match.groupCount == 2);
@@ -91,7 +91,7 @@ static List&lt;CommitReference&gt; fromShowRefOutput(String input) {
  // last line should be empty
  assert(lines.last.length == 0);
 
- return lines.getRange(0, lines.length-1)
+ return lines.sublist(0, lines.length-1)
      .map((line) {
        final match = _lsRemoteRegExp.allMatches(line).single;
        assert(match.groupCount == 2);

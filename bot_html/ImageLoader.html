@@ -5,7 +5,7 @@
         <title>ImageLoader class / bot_html Library / BOT Documentation</title>
         <link rel="stylesheet" type="text/css"
             href="../styles.css">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="../favicon.ico">
         
         </head>
@@ -36,13 +36,20 @@
 class ImageLoader extends ResourceLoader&lt;ImageElement&gt; {
  ImageLoader(Iterable&lt;String&gt; urls) : super(urls);
 
- void _doLoad(String blobUrl) {
+ @override
+ Future&lt;ImageElement&gt; _doLoad(String blobUrl) {
    final img = new ImageElement(src: blobUrl);
    assert(!img.complete);
+
+   final completer = new Completer&lt;ImageElement&gt;();
+
    img.onLoad.listen((args) {
      assert(args.type == 'load');
-     _loadResourceSucceed(blobUrl, img);
+     completer.complete(img);
    });
+
+   return completer.future;
+
  }
 }
 </pre>
@@ -162,16 +169,20 @@ T getResource(String url) =&gt; _getByUrl(url).resource;
 </div>
 <div class="method inherited"><h4 id="load">
 <button class="show-code">Code</button>
-void <strong>load</strong>() <a class="anchor-link" href="#load"
+<a href="http://api.dartlang.org/dart_async/Future.html">Future</a> <strong>load</strong>() <a class="anchor-link" href="#load"
               title="Permalink to ImageLoader.load">#</a></h4>
 <div class="inherited-from">inherited from <a href="../bot_html/ResourceLoader.html">ResourceLoader</a> </div><div class="doc">
 <pre class="source">
-void load() {
+Future load() {
  assert(_state == StateUnloaded);
  _state = StateLoading;
- for(final e in _entries) {
-   _httpLoad(e.url);
- }
+ return Future.wait(_entries.map((e) =&gt; _httpLoad(e)))
+     .then((_) {
+       if(_entries.every((e) =&gt; e.completed)) {
+         _state = StateLoaded;
+         _loadedEvent.add(EventArgs.empty);
+       }
+     });
 }
 </pre>
 </div>
