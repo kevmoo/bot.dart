@@ -42,7 +42,7 @@ class SubCanvasThing extends Thing {
  @override
  void drawOverride(CanvasRenderingContext2D ctx) {
    final rect = new Rect(0,0,width,height);
-   ctx.drawImageAtScale(_canvas, rect);
+   ctx.drawImageToRect(_canvas, rect);
  }
 }
 </pre>
@@ -293,7 +293,7 @@ void <strong>drawOverride</strong>(<a href="http://api.dartlang.org/dart_html/Ca
 @override
 void drawOverride(CanvasRenderingContext2D ctx) {
  final rect = new Rect(0,0,width,height);
- ctx.drawImageAtScale(_canvas, rect);
+ ctx.drawImageToRect(_canvas, rect);
 }
 </pre>
 </div>

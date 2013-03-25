@@ -108,9 +108,8 @@ class TestCase {
    var f = testFunction();
    --_callbackFunctionsOutstanding;
    if (f is Future) {
-     f.then((_) =&gt; _finishTest())
+     return f.then((_) =&gt; _finishTest())
       .catchError((e) =&gt; fail("${e.error}"));
-     return f;
    } else {
      _finishTest();
      return null;
