@@ -8,11 +8,9 @@ environment:
   sdk: '>=0.4.5+1.r21094'
 dependencies:
   unittest: '>=0.4.5+1'
-  args: '>=0.4.5+1'
-  logging: '>=0.4.5+1'
   pathos: '>=0.4.5+1'
   meta: '>=0.4.5+1'
 dev_dependencies:
   html5lib: '>=0.4.1'
   browser: '>=0.4.5+1'
-  hop: any
+  hop: '>=0.20.0+1'
