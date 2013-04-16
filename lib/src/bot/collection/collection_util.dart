@@ -111,6 +111,9 @@ class _DistinctIterator<T> implements Iterator<T> {
     }
     return false;
   }
+
+  /** True if target list is null OR empty */
+  static bool isNullOrEmpty(Collection c) => c == null || c.isEmpty;
 }
 
 class _SequenceIterator<E> implements Iterator<E> {
