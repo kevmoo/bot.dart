@@ -1,8 +1,12 @@
 # Changelog - Dart Bag of Tricks
 
-## 0.20.0-dev *pre-release*
+## 0.20.0 2013-04-17 (SDK 0.4.7+3 r21604)
 
-* The big [HOP](https://github.com/kevmoo/hop.dart) migration.
+* Removal of a lot of `@deprecated` members.
+* The big library split up. Libraries have been moved into seperate packages.
+    * [HOP](https://github.com/kevmoo/hop.dart)
+    * [bot_io](https://github.com/kevmoo/bot_io.dart)
+    * [bot_web](https://github.com/kevmoo/bot_web.dart)    
 
 ## 0.16.3+1 2013-04-09 (SDK 0.4.5+1 r21094)
 
