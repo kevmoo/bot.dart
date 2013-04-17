@@ -53,7 +53,9 @@ abstract class Sequence<E> extends Enumerable<E> {
   List<E> asList() => new _SequenceList(this);
 }
 
-class _SequenceList<E> extends Sequence<E> with ListMixin<E> {
+class _SequenceList<E> extends Sequence<E> with ListMixin<E>
+  implements List<E> {
+
   final Sequence _source;
 
   _SequenceList(this._source);
@@ -80,13 +82,6 @@ class _SequenceList<E> extends Sequence<E> with ListMixin<E> {
     }
     return result;
   }
-
-  @override
-  void insert(int, E item) {
-    throw new UnsupportedError(
-    "Cannot modify an unmodifiable list");
-  }
-
   @override
   void operator []=(int index, E value) {
     throw new UnsupportedError(
@@ -99,88 +94,5 @@ class _SequenceList<E> extends Sequence<E> with ListMixin<E> {
         "Cannot change the length of an unmodifiable list");
   }
 
-  @override
-  void add(E value) {
-    throw new UnsupportedError(
-        "Cannot add to an unmodifiable list");
-  }
-
-  @override
-  void addAll(Iterable<E> iterable) {
-    throw new UnsupportedError(
-        "Cannot add to an unmodifiable list");
-  }
-
-  @override
-  void remove(E element) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void removeAll(Iterable elements) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void retainAll(Iterable elements) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void retainWhere(Func1<E, bool> test) {
-    throw new UnsupportedError(
-    "Cannot modify an unmodifiable list");
-  }
-
-  @override
-  void removeWhere(bool test(E element)) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void sort([Comparator<E> compare]) {
-    throw new UnsupportedError(
-        "Cannot modify an unmodifiable list");
-  }
-
-  @override
-  void clear() {
-    throw new UnsupportedError(
-        "Cannot clear an unmodifiable list");
-  }
-
-  @override
-  E removeAt(int index) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  E removeLast() {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void setRange(int start, int length, List<E> from, [int startFrom]) {
-    throw new UnsupportedError(
-        "Cannot modify an unmodifiable list");
-  }
-
-  @override
-  void removeRange(int start, int length) {
-    throw new UnsupportedError(
-        "Cannot remove from an unmodifiable list");
-  }
-
-  @override
-  void insertRange(int start, int length, [E initialValue]) {
-    throw new UnsupportedError(
-        "Cannot insert range in an unmodifiable list");
-  }
 }
 
