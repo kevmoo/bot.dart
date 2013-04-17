@@ -37,7 +37,7 @@ class TarjanCycleDetect<TNode> {
     v.index = _index;
     v.lowlink = _index;
     _index++;
-    _stack.insertRange(0, 1, v);
+    _stack.insert(0, v);
     for(final n in _list.getAdjacent(v)){
       if(n.index == -1){
         _tarjan(n);

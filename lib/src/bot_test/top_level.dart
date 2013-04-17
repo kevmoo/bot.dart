@@ -13,7 +13,7 @@ final Matcher throwsNullArgumentError =
 final Matcher throwsAssertionError =
   const Throws(const _AssertionErrorMatcher());
 
-void expectFutureFail(Future future, [Action1<AsyncError> onException]) {
+void expectFutureFail(Future future, [void onException(error)]) {
   assert(future != null);
 
   final testWait = expectAsync2((bool isError, result) {
@@ -86,8 +86,8 @@ class _Finishes extends BaseMatcher {
 
     item.then((value) {
       done(() { if (_matcher != null) expect(value, _matcher); });
-    }, onError: (e) {
-      done(() => registerException(e.error, e.stackTrace));
+    }, onError: (error) {
+      done(() => registerException(error, getAttachedStackTrace(error)));
     });
 
     return true;

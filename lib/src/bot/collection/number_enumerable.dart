@@ -4,7 +4,7 @@ NumberEnumerable n$(Iterable<num> source) {
   return new NumberEnumerable.from(source);
 }
 
-abstract class NumberEnumerable<T extends num> extends Iterable<T> {
+abstract class NumberEnumerable<T extends num> extends IterableBase<T> {
 
   const NumberEnumerable() : super();
 
@@ -16,6 +16,10 @@ abstract class NumberEnumerable<T extends num> extends Iterable<T> {
   factory NumberEnumerable.fromRange(int start, int count) {
     return new _RangeEnumerable(start, count);
   }
+
+  num max() => this.reduce((num a, num b) => math.max(a, b));
+
+  num min() => this.reduce((num a, num b) => math.min(a, b));
 
   num sum() {
     num theSum = 0;

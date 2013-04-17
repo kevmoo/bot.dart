@@ -14,14 +14,7 @@ class CollectionUtil {
     return true;
   }
 
-  /**
-   * Use [source.expand] instead.
-   */
-  @deprecated
-  static Enumerable selectMany(Iterable source, Func1<dynamic, Iterable> func) =>
-      $(source.expand(func));
-
-  static int count(Iterable source, Func1<dynamic, bool> test) {
+  static int count(Iterable source, bool test(dynamic)) {
     return source.fold(0, (int previous, dynamic element) {
       if(test(element)) {
         return previous + 1;
@@ -34,10 +27,11 @@ class CollectionUtil {
   static Iterable exclude(Iterable source, Iterable itemsToExclude) {
     requireArgumentNotNull(itemsToExclude, 'itemsToExclude');
     Func1<dynamic, bool> f = (e) => !itemsToExclude.contains(e);
-    return $(IterableMixinWorkaround.where(source, f));
+    return $(source.where(f));
   }
 
-  static Iterable distinct(Iterable source, [Func2<dynamic, dynamic, bool> comparer = null]) {
+  static Iterable distinct(Iterable source,
+                           [bool comparer(dynamic a, dynamic b) = null]) {
     if(comparer == null) {
       comparer = (a,b) => a == b;
     }
@@ -52,14 +46,7 @@ class CollectionUtil {
     }
   }
 
-  /**
-   * Use [toMap] instead.
-   */
-  @deprecated
-  static Map toHashMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) =>
-      toMap(source, valueFunc, keyFunc);
-
-  static Map toMap(Iterable source, Func1 valueFunc, [Func1 keyFunc]) {
+  static Map toMap(Iterable source, Func1 valueFunc, [dynamic keyFunc(dynamic)]) {
     if(keyFunc == null) {
       keyFunc = (a) => a;
     }
@@ -73,18 +60,6 @@ class CollectionUtil {
       map[k] = valueFunc(e);
     }
     return map;
-  }
-
-  /**
-   * Use `Iterable.map(...).toSet()` instead.
-   */
-  @deprecated
-  static Set toHashSet(Iterable source, [Func1 f]) {
-    if(f == null) {
-      return new Set.from(source);
-    } else {
-      return new Set.from(source.map(f));
-    }
   }
 }
 

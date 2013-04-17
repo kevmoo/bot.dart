@@ -34,9 +34,9 @@ class TestEvents {
       target.fireTestEvent('foo');
       expect(watcher.lastArgs, equals('foo'));
 
-      expect(target._testEventHandle.hasSubscribers, isTrue);
+      expect(target._testEventHandle.hasListener, isTrue);
       eventId.cancel();
-      expect(target._testEventHandle.hasSubscribers, isFalse);
+      expect(target._testEventHandle.hasListener, isFalse);
 
       // after removing, event should not change value
       target.fireTestEvent('bar');

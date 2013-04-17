@@ -53,7 +53,7 @@ abstract class Sequence<E> extends Enumerable<E> {
   List<E> asList() => new _SequenceList(this);
 }
 
-class _SequenceList<E> extends Sequence<E> implements List<E> {
+class _SequenceList<E> extends Sequence<E> with ListMixin<E> {
   final Sequence _source;
 
   _SequenceList(this._source);
@@ -63,10 +63,6 @@ class _SequenceList<E> extends Sequence<E> implements List<E> {
 
   @override
   int get length => _source.length;
-
-  @override
-  @deprecated
-  List<E> getRange(int start, int length) => sublist(start, start + length);
 
   @override
   List<E> sublist(int start, [int end]) {
@@ -84,12 +80,6 @@ class _SequenceList<E> extends Sequence<E> implements List<E> {
     }
     return result;
   }
-
-  @override
-  Map<int, E> asMap() => IterableMixinWorkaround.asMapList(this);
-
-  @override
-  List<E> get reversed => IterableMixinWorkaround.reversedList(this);
 
   @override
   void insert(int, E item) {

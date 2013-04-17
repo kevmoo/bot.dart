@@ -12,9 +12,9 @@ void registerDelayedResultTests() {
       return () => 3;
     }, 3);
 
-    _drTest('future to obj', new Future.immediate(4), 4);
+    _drTest('future to obj', new Future.value(4), 4);
 
-    _drTest('func to future to obj', () => new Future.immediate(5), 5);
+    _drTest('func to future to obj', () => new Future.value(5), 5);
 
     [false, true].forEach((v) {
       _testSilly([], v);
@@ -65,7 +65,7 @@ _returnSilly(List<bool> values, finalVal, bool doThrow) {
 
   final doFuture = values.removeAt(0);
   if(doFuture) {
-    return new Future.immediate(_returnSilly(values, finalVal, doThrow));
+    return new Future.value(_returnSilly(values, finalVal, doThrow));
   } else {
     return () => _returnSilly(values, finalVal, doThrow);
   }

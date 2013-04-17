@@ -33,14 +33,6 @@ void requireArgumentNotNullOrEmpty(String argument, String argName) {
   }
 }
 
-@deprecated
-/**
- * Use [requireArgumentContainsPattern] instead.
- */
-void requireArgumentMatches(RegExp regex, String argValue, String argName) {
-  requireArgumentContainsPattern(regex, argValue, argName);
-}
-
 void requireArgumentContainsPattern(Pattern pattern, String argValue, String argName) {
   if(pattern == null) {
     throw new InvalidOperationError("That's just sad. No null pattern");

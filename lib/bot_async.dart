@@ -23,12 +23,12 @@ part 'src/bot_async/send_value_port.dart';
  */
 Future<dynamic> getDelayedResult(dynamic input) {
   if(input is Function) {
-    input = new Future.of(input);
+    input = new Future(input);
   }
 
   if(input is Future) {
     return input.then((value) => getDelayedResult(value));
   } else {
-    return new Future.immediate(input);
+    return new Future.value(input);
   }
 }

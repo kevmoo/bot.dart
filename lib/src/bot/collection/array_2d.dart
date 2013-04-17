@@ -23,8 +23,7 @@ class Array2d<T> extends Sequence<T> {
     requireArgumentNotNull(height, 'height');
     requireArgument(width >= 0, 'width');
     requireArgument(height >= 0, 'height');
-    final s = new List<T>();
-    s.insertRange(0, width * height, initialValue);
+    final s = new List<T>.filled(width * height, initialValue);
     assert(s.length == width * height);
     if(width == 0) {
       return new Array2d._skinny(height);

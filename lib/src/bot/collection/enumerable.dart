@@ -8,7 +8,7 @@ Enumerable $(Iterable source) {
   }
 }
 
-abstract class Enumerable<T> extends Iterable<T> {
+abstract class Enumerable<T> extends IterableBase<T> {
   const Enumerable();
 
   factory Enumerable.fromIterable(Iterable<T> source) {

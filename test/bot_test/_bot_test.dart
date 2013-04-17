@@ -39,8 +39,8 @@ void _testExpectFutureException() {
 }
 
 void _testExpectFutureExceptionWithComplete() {
-  final onFail = expectAsync1((AsyncError value) {
-    expect(value.error, _failMessage);
+  final onFail = expectAsync1((error) {
+    expect(error, _failMessage);
   });
   expectFutureFail(_getFuture(true), onFail);
 
