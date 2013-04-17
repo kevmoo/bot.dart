@@ -36,8 +36,8 @@ void expectFutureComplete(Future future, [Action1 onComplete]) {
     assert(isError != null);
 
     if(isError) {
-      final AsyncError err = result;
-      registerException(err.error, err.stackTrace);
+      final err = result;
+      registerException(err, getAttachedStackTrace(err));
     }
 
     if(onComplete != null) {
