@@ -19,28 +19,28 @@ class TestEnumerable {
   }
 
   static void _testConcat() {
-    final enum = $([0,1,2]).concat([3,4,5]);
-    expect(enum, orderedEquals([0,1,2,3,4,5]));
+    final enumValue = $([0,1,2]).concat([3,4,5]);
+    expect(enumValue, orderedEquals([0,1,2,3,4,5]));
   }
 
   static void _testExclude() {
-    final enum = $([0,1,2,3,4]);
-    expect(enum.exclude([]), orderedEquals(enum));
-    expect(enum.exclude([5, -1]), orderedEquals(enum));
-    expect(enum.exclude([1,3]), orderedEquals([0,2,4]));
+    final enumValue = $([0,1,2,3,4]);
+    expect(enumValue.exclude([]), orderedEquals(enumValue));
+    expect(enumValue.exclude([5, -1]), orderedEquals(enumValue));
+    expect(enumValue.exclude([1,3]), orderedEquals([0,2,4]));
   }
 
   static void _testDistinct() {
-    final enum = $([0,0,1,1,2,2,0,1,2,3,4,5]);
-    expect(enum.distinct(), unorderedEquals([0,1,2,3,4,5]));
+    final enumValue = $([0,0,1,1,2,2,0,1,2,3,4,5]);
+    expect(enumValue.distinct(), unorderedEquals([0,1,2,3,4,5]));
 
-    final oddsAndEvens = enum.distinct((a,b) => a % 2 == b % 2);
+    final oddsAndEvens = enumValue.distinct((a,b) => a % 2 == b % 2);
     expect(oddsAndEvens, unorderedEquals([0,1]));
   }
 
   static void _testForEachWithIndex() {
-    final enum = $([0,1,2,3]);
-    enum.forEachWithIndex((e,i) {
+    final enumValue = $([0,1,2,3]);
+    enumValue.forEachWithIndex((e,i) {
       expect(i, equals(e));
     });
   }
