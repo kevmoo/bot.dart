@@ -22,12 +22,8 @@ void main() {
   //
   addTask('analyze_libs', createDartAnalyzerTask(_getLibs));
 
-  addTask('analyze_test_libs', createDartAnalyzerTask(['test/harness_browser.dart',
-                                                       'test/test_console.dart',
-                                                       'test/harness_console.dart',
-                                                       'test/test_dump_render_tree.dart',
-                                                       'test/test_browser.dart',
-                                                       'test/test_shared.dart']));
+  addTask('analyze_test_libs', createDartAnalyzerTask(
+      ['test/harness_browser.dart', 'test/harness_console.dart']));
 
   //
   // Dart2js
