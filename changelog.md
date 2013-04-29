@@ -1,5 +1,9 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.20.1 2013-04-29 (SDK 0.5.1.0 r22072)
+
+* Just some tiny nits.
+
 ## 0.20.0 2013-04-17 (SDK 0.4.7+3 r21604)
 
 * Removal of a lot of `@deprecated` members.

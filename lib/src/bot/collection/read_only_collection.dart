@@ -30,7 +30,7 @@ class ReadOnlyCollection<T> extends Sequence<T> {
 
   /**
    * Returns the element at the given [index] in the list or throws
-   * an [IndexOutOfRangeException] if [index] is out of bounds.
+   * an [RangeError] if [index] is out of bounds.
    */
   @override
   T operator [](int index) => _items[index];

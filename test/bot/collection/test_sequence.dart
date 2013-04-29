@@ -15,10 +15,6 @@ class TestSequence extends Sequence<int> {
    */
   int get length => flip ? _length * 2 : _length;
 
-  /**
-   * Returns the element at the given [index] in the list or throws
-   * an [IndexOutOfRangeException] if [index] is out of bounds.
-   */
   int operator [](int index) {
     assert(index >= 0 && index < length);
 

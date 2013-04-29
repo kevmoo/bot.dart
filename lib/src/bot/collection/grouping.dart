@@ -20,12 +20,6 @@ class Grouping<K, V> {
    */
   bool containsKey(K key) => _values.containsKey(key);
 
-  /**
-   * Returns the value for the given [key] or null if [key] is not
-   * in the map. Because null values are supported, one should either
-   * use containsKey to distinguish between an absent key and a null
-   * value, or use the [putIfAbsent] method.
-   */
   List<V> operator [](K key) => _values[key];
 
   /**
