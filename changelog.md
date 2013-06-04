@@ -1,5 +1,12 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.21.0 2013-06-04 (SDK 0.5.13.1 r23552)
+
+### bot
+
+* **BREAKING** `EventHandle` no longer extends `StreamController`
+    *  Should not affect most usage, though.
+
 ## 0.20.1 2013-04-29 (SDK 0.5.1.0 r22072)
 
 * Just some tiny nits.

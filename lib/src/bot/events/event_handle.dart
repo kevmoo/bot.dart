@@ -1,13 +1,13 @@
 part of bot;
 
-// TODO: ponder wrapping StreamController instead of extending
-// so there is no weirdness with the asBroadcast magic
-
-class EventHandle<T> extends async.StreamController<T> implements Disposable {
+class EventHandle<T> implements Disposable {
+  final async.StreamController<T> _controller;
   bool _disposed = false;
-  async.Stream _broadcastCache;
 
-  EventHandle({void onCancel()}) : super(onCancel: onCancel);
+  EventHandle({void onCancel()}) :
+    this._controller = new async.StreamController.broadcast(onCancel: onCancel, sync: true);
+
+  void add(T event) => _controller.add(event);
 
   void dispose(){
     if(_disposed) {
@@ -16,15 +16,12 @@ class EventHandle<T> extends async.StreamController<T> implements Disposable {
     // Set disposed_ to true first, in case during the chain of disposal this
     // gets disposed recursively.
     this._disposed = true;
-    super.close();
+    _controller.close();
   }
 
-  async.Stream get stream {
-    if(_broadcastCache == null) {
-      _broadcastCache = super.stream.asBroadcastStream();
-    }
-    return _broadcastCache;
-  }
+  async.Stream get stream => _controller.stream;
+
+  bool get hasListener => _controller.hasListener;
 
   bool get isDisposed => _disposed;
 }
