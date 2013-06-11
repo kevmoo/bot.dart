@@ -20,7 +20,7 @@ void main() {
 Future _runDrt(String htmlFile) {
   final allPassedRegExp = new RegExp('All \\d+ tests passed');
 
-  return Process.run('Content Shell', ['--dump-render-tree', htmlFile])
+  return Process.run('content_shell', ['--dump-render-tree', htmlFile])
       .then((ProcessResult pr) {
         expect(pr.exitCode, 0, reason: 'DumpRenderTree should return exit code 0 - success');
 
