@@ -80,6 +80,7 @@ class _Finishes extends BaseMatcher {
 
   const _Finishes(this._matcher);
 
+  @override
   bool matches(item, MatchState matchState) {
     if (item is! Future) return false;
     var done = wrapAsync((fn) => fn());
@@ -93,6 +94,7 @@ class _Finishes extends BaseMatcher {
     return true;
   }
 
+  @override
   Description describe(Description description) {
     if (_matcher == null) {
       description.add('completes successfully');
@@ -105,20 +107,28 @@ class _Finishes extends BaseMatcher {
 
 class _AssertionErrorMatcher extends TypeMatcher {
   const _AssertionErrorMatcher() : super("AssertMatcher");
+
+  @override
   bool matches(item, MatchState matchState) => item is AssertionError;
 }
 
 class _StateErrorMatcher extends TypeMatcher {
   const _StateErrorMatcher() : super("StateErrorMatcher");
+
+  @override
   bool matches(item, MatchState matchState) => item is StateError;
 }
 
 class _InvalidOperationError extends TypeMatcher {
   const _InvalidOperationError() : super("InvalidOperationException");
+
+  @override
   bool matches(item, MatchState matchState) => item is InvalidOperationError;
 }
 
 class _NullArgumentError extends TypeMatcher {
   const _NullArgumentError() : super("NullArgumentException");
+
+  @override
   bool matches(item, MatchState matchState) => item is NullArgumentError;
 }
