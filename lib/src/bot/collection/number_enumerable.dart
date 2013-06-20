@@ -14,7 +14,8 @@ abstract class NumberEnumerable<T extends num> extends IterableBase<T> {
   }
 
   factory NumberEnumerable.fromRange(int start, int count) {
-    return new _RangeEnumerable(start, count);
+    return new NumberEnumerable<int>.from(
+        new Iterable.generate(count, (i) => i + start));
   }
 
   num max() => this.reduce((num a, num b) => math.max(a, b));
@@ -61,36 +62,4 @@ class _FuncNumEnumerable<TSource> extends NumberEnumerable {
   const _FuncNumEnumerable(this._source, this._func) : super();
 
   Iterator<num> get iterator => _func(_source.iterator);
-}
-
-class _RangeEnumerable extends NumberEnumerable<int> {
-  final int _start;
-  final int _count;
-
-  const _RangeEnumerable(this._start, this._count);
-
-  Iterator<int> get iterator => new _RangeIterator(_start, _count);
-}
-
-class _RangeIterator implements Iterator<int> {
-  final int _start;
-  final int _count;
-  int _current = null;
-
-  _RangeIterator(this._start, this._count);
-
-  bool moveNext() {
-    if(_current == null) {
-      _current = _start - 1;
-    }
-
-    if(_current < _start + _count - 1) {
-      _current++;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  int get current => _current;
 }
