@@ -2,6 +2,7 @@
 
 ## 0.22.0 2013-06-20 (SDK 0.5.20.3 r24216)
 
+* [Changes Since v0.21.0](https://github.com/kevmoo/bot.dart/compare/v0.21.0...v0.22.0)
 * Fixes for latest SDK
 
 ## 0.21.0 2013-06-04 (SDK 0.5.13.1 r23552)
