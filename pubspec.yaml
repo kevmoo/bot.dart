@@ -1,16 +1,16 @@
 name: bot
-version: 0.21.1-dev
+version: 0.22.0
 author: Kevin Moore <kevin@thinkpixellab.com>
 description: A collection of (mostly) general libraries to make working with Dart more productive.
 homepage: https://github.com/kevmoo/bot.dart
 documentation: http://kevmoo.github.io/bot.dart
 environment:
-  sdk: '>=0.5.16'
+  sdk: '>=0.5.20'
 dependencies:
-  meta: '>=0.5.16'
-  pathos: '>=0.5.16'
-  unittest: '>=0.5.16'
+  meta: '>=0.5.20'
+  pathos: '>=0.5.20'
+  unittest: '>=0.5.20'
 dev_dependencies:
-  browser: '>=0.5.16'
+  browser: '>=0.5.20'
   hop: '>=0.22.2'
   html5lib: '>=0.4.3'

@@ -3,6 +3,7 @@ library test_bot_test;
 import 'dart:async';
 import 'dart:isolate';
 import 'package:unittest/unittest.dart';
+import 'package:bot/bot.dart';
 import 'package:bot/bot_test.dart';
 
 const _failMessage = 'failing, per request';
@@ -14,6 +15,19 @@ void main() {
     test('expectFutureComplete with complete', _testExpectFutureCompleteWithComplete);
     test('expectFutureException', _testExpectFutureException);
     test('expectFutureException with complete', _testExpectFutureExceptionWithComplete);
+
+    test('throwsNullArgumentError', () {
+      expect(() {
+        throw new NullArgumentError('foo');
+      }, throwsNullArgumentError);
+    });
+
+    test('throwsAssertionError', () {
+      expect(() {
+        throw new AssertionError();
+      }, throwsAssertionError);
+    });
+
   });
 }
 

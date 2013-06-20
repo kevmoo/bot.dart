@@ -1,6 +1,8 @@
 # Changelog - Dart Bag of Tricks
 
-## 0.21.1-dev *pre-release* (0.5.16.0 r23799)
+## 0.22.0 2013-06-20 (SDK 0.5.20.3 r24216)
+
+* Fixes for latest SDK
 
 ## 0.21.0 2013-06-04 (SDK 0.5.13.1 r23552)
 
@@ -19,7 +21,7 @@
 * The big library split up. Libraries have been moved into seperate packages.
     * [HOP](https://github.com/kevmoo/hop.dart)
     * [bot_io](https://github.com/kevmoo/bot_io.dart)
-    * [bot_web](https://github.com/kevmoo/bot_web.dart)    
+    * [bot_web](https://github.com/kevmoo/bot_web.dart)
 
 ## 0.16.3+1 2013-04-09 (SDK 0.4.5+1 r21094)
 
@@ -220,7 +222,7 @@ but it does have an get indexer `[int index]`.
 
 * __BREAKING__ Renamed all completion scripts to extension `.sh`. Breaks folks who may be sourcing `tool/hop-completion.bash`
 * `Task`
-    * __BREAKING__ `description` argument to `Task` constructors is now named (not positional) 
+    * __BREAKING__ `description` argument to `Task` constructors is now named (not positional)
     * __NEW!__ Easy to wire up `ArgParser` to allow completion of task flags.
     * __NEW!__ Can provide `List<TaskArgument> extendedArgs` to fully document command line usage.
 * __BREAKING!__ `ConsoleContext` ctor now takes ArgResults and a Task.
@@ -276,7 +278,7 @@ Works on Windows now.
 ### bot_test
 
 * Added `Matcher` `finishes` and `finishesWith`. These correspond to `completes`
-and `completion` in `dart:matcher` __except__ instances of `ExpectException` are 
+and `completion` in `dart:matcher` __except__ instances of `ExpectException` are
 thrown directly without being wrapped
 
 ### hop
@@ -420,7 +422,7 @@ updated SDK._
 
 ### hop_tasks
 
-* __BREAKING__ `dartdoc` now requires `packageDir` param. With recent SDK updates, 
+* __BREAKING__ `dartdoc` now requires `packageDir` param. With recent SDK updates,
 one can now generate docs for libraries that use external packages.
 * dart2js: added optional packageRoot, output, allowUnsafeEval args
 
@@ -431,7 +433,7 @@ __BREAKING__ Moved dependencies on SDK libraries to versions on pub.dartlang.org
 ### bot
 
 * __NEW__ Added `lerp` to top-level math functions.
-* `AffineTransform` 
+* `AffineTransform`
     * __NEW__ learned a new constructor - `fromTranslate`
     * __NEW__ learned `lerpTx` function
 
@@ -442,7 +444,7 @@ __BREAKING__ Moved dependencies on SDK libraries to versions on pub.dartlang.org
     * __NEW__ learned `alpha` -- or at least uses it now
     * __BREAKING__ a tiny change to how dirty state is tracked to allow things to effectively request animation in `drawOverride`.
 	* __BREAKING__ Eliminated 'cacheEnabled' ctor argument.
-	* __BREAKING__ Removed `clip` property. It wasn't doing anything. 
+	* __BREAKING__ Removed `clip` property. It wasn't doing anything.
 * __BREAKING__ `ShapeThing` constructor now uses named arguments.
 * __NEW__ `NavLayer` -- copied from the Javascript library. Pretty fun.
 * __NEW__ `HorizontalAlignment` and `VerticalAlignment`
@@ -450,7 +452,7 @@ __BREAKING__ Moved dependencies on SDK libraries to versions on pub.dartlang.org
 * __NEW__ `SubCanvasThing` -- similar to `ImageThing`, but for drawing contents of a canvas.
 * __NEW__ `TextThing` An element to display text. Lot's of work to do, but a good start.
 * __NEW__ `StageWrapper` - handles requesting frames and drawing them when the stage updates.
-* Added nifty `_RetainedEnum` as a relatively safe, private subclass for other enum types. 
+* Added nifty `_RetainedEnum` as a relatively safe, private subclass for other enum types.
 
 ## 0.7.0 - 27 Nov 2012 (SDK r15355)
 
@@ -495,7 +497,7 @@ __BREAKING__ Moved dependencies on SDK libraries to versions on pub.dartlang.org
 
 ## 0.3.0 -- 24 October 2012 (SDK r13851)
 
-* __BREAKING__ Changes to align with Dart integration build v13851 
+* __BREAKING__ Changes to align with Dart integration build v13851
 
 ## 0.2.1 -- 22 October 2012  (SDK r13679, M1)
 
