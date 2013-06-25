@@ -47,7 +47,7 @@ class FutureValueResult<TOutput> {
         value.containsKey(_stackTraceKey);
   }
 
-  bool operator ==(FutureValueResult other) {
+  bool operator ==(other) {
     return other != null &&
         other.value == value &&
         other.error == error &&
