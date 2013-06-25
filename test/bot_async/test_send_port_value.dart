@@ -1,5 +1,17 @@
 part of test_bot_async;
 
+Serialization _getSerial() {
+  var serial = new Serialization();
+
+  var t2 = new Tuple<int, int>(0,0);
+  serial.addRuleFor(t2, constructorFields: ['item1', 'item2']);
+
+  var t3 = new Tuple3<int, int, int>(0,0,0);
+  serial.addRuleFor(t3, constructorFields: ['item1', 'item2', 'item3']);
+
+  return serial;
+}
+
 class TestSendPortValue {
   static void run() {
     group('SendPortValue', () {
@@ -63,32 +75,22 @@ void _testIsolate() {
 
 class _ComplexTestValue extends SendPortValue<Tuple<int, int>, Tuple3<int, int, int>> {
   _ComplexTestValue() : super(spawnFunction(_complexTestIsolate),
-      inputSerializer: _t2ToList, outputDeserializer: _listToT3);
+      inputSerializer: _inputSerializer, outputDeserializer: _outputSerializer);
 }
 
-dynamic _t2ToList(Tuple<int, int> input) {
-  if(input == null) {
-    return null;
-  } else {
-    return [input.item1, input.item2 ];
-  }
+final _serial = _getSerial();
+final _format = const SimpleJsonFormat(storeRoundTripInfo: true);
+
+dynamic _inputSerializer(input) {
+  var writer = _serial.newWriter(_format);
+  var output = writer.write(input);
+  return output;
 }
 
-Tuple<int, int> _listToT2(List input) {
-  if(input == null) {
-    return null;
-  } else {
-    assert(input.length == 2);
-    return new Tuple<int, int>(input[0], input[1]);
-  }
-}
-
-dynamic _t3ToList(Tuple3<int, int, int> input) {
-  return [input.item1, input.item2, input.item3];
-}
-
-Tuple3<int, int, int> _listToT3(List input) {
-  return new Tuple3<int, int, int>(input[0], input[1], input[2]);
+dynamic _outputSerializer(dynamic input) {
+  var reader = _serial.newReader(_format);
+  var output = reader.read(input);
+  return output;
 }
 
 void _complexTestIsolate() {
@@ -101,5 +103,5 @@ void _complexTestIsolate() {
         input.item1,
         input.item2,
         input.item1 + input.item2);
-  }, inputDeserializer:_listToT2, outputSerializer:_t3ToList);
+  }, inputDeserializer:_outputSerializer, outputSerializer:_inputSerializer);
 }

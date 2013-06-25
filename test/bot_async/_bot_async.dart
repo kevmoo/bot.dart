@@ -7,6 +7,8 @@ import 'package:bot/bot_async.dart';
 import 'package:bot/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
+import 'package:serialization/serialization.dart';
+
 part 'test_send_port_value.dart';
 part 'test_future_value_result.dart';
 part 'test_delayed_result.dart';

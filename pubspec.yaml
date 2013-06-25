@@ -14,3 +14,4 @@ dev_dependencies:
   browser: '>=0.5.20'
   hop: '>=0.22.2'
   html5lib: '>=0.4.3'
+  serialization: '>=0.5.20'
