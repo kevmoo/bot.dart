@@ -32,6 +32,9 @@ part 'attached/test_properties.dart';
 
 part 'attached/test_attached_events.dart';
 
+part 'language/test_objects.dart';
+part 'language/test_strings.dart';
+
 void main() {
   group('bot', (){
     TestTuple.run();

@@ -53,3 +53,6 @@ part 'src/bot/math/math_functions.dart';
 part 'src/bot/math/size.dart';
 part 'src/bot/math/tarjan_cycle_detect.dart';
 part 'src/bot/math/vector.dart';
+
+part 'src/bot/language/objects.dart';
+part 'src/bot/language/strings.dart';
