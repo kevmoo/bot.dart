@@ -65,6 +65,9 @@ void main() {
       TestProperties.run();
       TestPropertyEventIntegration.run();
     });
+    
+    TestObjects.run();
+    TestStrings.run();
   });
 }
 
