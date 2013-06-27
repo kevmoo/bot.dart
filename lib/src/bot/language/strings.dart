@@ -33,6 +33,11 @@ class Strings {
     return null;
   }
   
+  /**
+   * Returns a new string where the last occurence of [from] in this string is replaced with [to].
+   * 
+   * If [from] does not match any part of the string, then the original string is returned unmodified.
+   */
   static String replaceLast(String source, Pattern from, String to) {
     if (source == null) {
       throw new ArgumentError("source String cannot be null");
@@ -43,10 +48,6 @@ class Strings {
     if (to == null) {
       throw new ArgumentError("to String cannot be null");
     }
-    
-//    if (from == "") {
-//      return "$source$to";
-//    }
     
     Iterable<Match> matches = from.allMatches(source);
     
