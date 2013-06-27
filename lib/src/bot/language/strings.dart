@@ -32,4 +32,38 @@ class Strings {
     }
     return null;
   }
+  
+  static String replaceLast(String source, Pattern from, String to) {
+    if (source == null) {
+      throw new ArgumentError("source String cannot be null");
+    }
+    if (from == null) {
+      throw new ArgumentError("from Pattern cannot be null");
+    }
+    if (to == null) {
+      throw new ArgumentError("to String cannot be null");
+    }
+    
+//    if (from == "") {
+//      return "$source$to";
+//    }
+    
+    Iterable<Match> matches = from.allMatches(source);
+    
+    if (matches.isEmpty) {
+      return source;
+    }
+      
+    Match match = matches.last;
+    String matchedString = match.group(match.groupCount);
+    
+    int lastIndex = source.lastIndexOf(matchedString);
+    if (lastIndex == -1) {
+      return source;
+    }
+    
+    String firstPart = source.substring(0, lastIndex);
+    String secondPart = source.substring(lastIndex + matchedString.length, source.length);
+    return "$firstPart$to$secondPart";
+  }
 }
