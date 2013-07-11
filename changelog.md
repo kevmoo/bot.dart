@@ -1,5 +1,11 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.22.1 2013-07-11 (SDK 0.6.3.3 r24898)
+
+* Fixes for 0.6 SDK rev.
+* Error constructors
+* Warnings on `hashCode` with `==`
+
 ## 0.22.0 2013-06-20 (SDK 0.5.20.3 r24216)
 
 * [Changes Since v0.21.0](https://github.com/kevmoo/bot.dart/compare/v0.21.0...v0.22.0)
