@@ -39,7 +39,7 @@ dependencies:
 
 * We're going to try to keep __BOT__ in line with the [latest integration build](https://gsdview.appspot.com/dart-editor-archive-integration/latest/) of the Dart SDK and Editor.
 * At this point, each SDK release tends to introduce breaking changes, which usually require breaking changes in __BOT__.
-* Keep an eye on the [changelog](https://github.com/kevmoo/bot.dart/blob/master/changelog.md) to see how __BOT__ aligns with each SDK release. 
+* Keep an eye on the [changelog](https://github.com/kevmoo/bot.dart/blob/master/changelog.md) to see how __BOT__ aligns with each SDK release.
 
 # The libraries
 
@@ -63,7 +63,6 @@ dependencies:
  * `RgbColor`, `HslColor` with associated conversions back and forth
  * `RgbColor` supports to/from hex
 
-
 ### events
  * Easily raise and subscribe to events with custom, type-safe event objects.
 
@@ -74,9 +73,6 @@ dependencies:
 ## bot_async
   * `FutureValue`: an abstract model for async conversions via `Future<T>`
   * `SendPortValue`: an implementation of `FutureValue` using isolates.
-
-## bot_retained
-  * A library for creating interactive content using HTML5 Canvas.
 
 # Authors
  * [Kevin Moore](https://github.com/kevmoo) ([+Kevin Moore](https://plus.google.com/110066012384188006594/), [@kevmoo](http://twitter.com/kevmoo))
