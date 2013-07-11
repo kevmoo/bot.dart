@@ -1,6 +1,6 @@
 part of bot;
 
-class DetailedArgumentError implements ArgumentError {
+class DetailedArgumentError extends ArgumentError {
   final argument;
   final details;
 

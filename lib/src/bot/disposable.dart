@@ -5,8 +5,6 @@ abstract class Disposable {
   bool get isDisposed;
 }
 
-class DisposedError implements StateError {
-  const DisposedError();
-
-  final String message = 'Invalid operation on disposed object';
+class DisposedError extends StateError {
+  DisposedError() : super('Invalid operation on disposed object');
 }

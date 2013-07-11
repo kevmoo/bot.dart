@@ -13,7 +13,7 @@ class DisposableImpl implements Disposable {
 
   void validateNotDisposed() {
     if(_disposed) {
-      throw const DisposedError();
+      throw new DisposedError();
     }
   }
 

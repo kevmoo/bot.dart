@@ -11,7 +11,7 @@ class EventHandle<T> implements Disposable {
 
   void dispose(){
     if(_disposed) {
-      throw const DisposedError();
+      throw new DisposedError();
     }
     // Set disposed_ to true first, in case during the chain of disposal this
     // gets disposed recursively.
