@@ -14,7 +14,7 @@ abstract class NumberEnumerable<T extends num> extends IterableBase<T> {
   }
 
   factory NumberEnumerable.fromRange(int start, int count) {
-    return new NumberEnumerable<int>.from(
+    return new NumberEnumerable<T>.from(
         new Iterable.generate(count, (i) => i + start));
   }
 
