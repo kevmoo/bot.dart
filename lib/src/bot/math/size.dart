@@ -8,6 +8,7 @@ class Size {
 
   const Size(this.width, this.height);
 
+  @override
   bool operator ==(Size other) {
     return other != null && width == other.width && height == other.height;
   }
@@ -60,5 +61,8 @@ class Size {
    * Returns a nice string representing size.
    * Returns in the form (50 x 73).
    */
+  @override
   String toString() => "(${width} x ${height})";
+
+  int get hashCode => Util.getHashCode([width, height]);
 }

@@ -126,6 +126,8 @@ class _Array2dRows<T> extends Sequence<Sequence<T>> {
   bool operator ==(other) {
     return other is _Array2dRows && other.source == this.source;
   }
+
+  int get hashCode => source.hashCode;
 }
 
 class _Array2dRow<T> extends Sequence<T> {
@@ -145,4 +147,6 @@ class _Array2dRow<T> extends Sequence<T> {
     return other is _Array2dRow && other.source == this.source &&
         other.row == this.row;
   }
+
+  int get hashCode => Util.getHashCode([source.hashCode, row]);
 }

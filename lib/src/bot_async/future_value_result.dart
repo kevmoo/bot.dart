@@ -54,6 +54,8 @@ class FutureValueResult<TOutput> {
         other.stackTrace == stackTrace;
   }
 
+  int get hashCode => Util.getHashCode([value, error, stackTrace]);
+
   dynamic _serialize(TOutput output) {
     if(_outputSerializer == null) {
       return output;

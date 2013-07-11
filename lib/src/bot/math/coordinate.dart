@@ -24,6 +24,7 @@ class Coordinate {
 
   Size toSize() => new Size(x, y);
 
+  @override
   bool operator ==(Coordinate other) {
     return other != null && x == other.x && y == other.y;
   }
@@ -32,7 +33,11 @@ class Coordinate {
     return new Vector(a.x - b.x, a.y - b.y);
   }
 
+  @override
   String toString() => '{x:${x}, y:${y}}';
 
+  int get hashCode => Util.getHashCode([x, y]);
+
+  @deprecated
   dynamic toJson() => { 'x' : x, 'y' : y };
 }
