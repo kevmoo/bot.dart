@@ -1,5 +1,10 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.22.2 2013-07-18 (SDK 0.6.5.0 r25017)
+
+* Updated SDK to 0.6.5
+* Moved from `pathos` to `path` and moved to a dev dependency
+
 ## 0.22.1 2013-07-11 (SDK 0.6.3.3 r24898)
 
 * Fixes for 0.6 SDK rev.
