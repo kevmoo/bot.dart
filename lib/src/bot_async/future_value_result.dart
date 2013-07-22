@@ -34,8 +34,9 @@ class FutureValueResult<TOutput> {
   bool get isException => error != null;
 
   Map toMap() {
-    // would love to use consts here, but the analyzer doesn't like it
-    // DARTBUG: http://code.google.com/p/dart/issues/detail?id=4207
+    // would love to use consts here, but the analyzer doesn't like it DARTBUG
+    // https://code.google.com/p/dart/issues/detail?id=10471
+    // https://code.google.com/p/dart/issues/detail?id=10472
     final rawValue = _serialize(value);
     return { 'value' : rawValue, 'error' : error, 'stackTrace' : stackTrace };
   }
