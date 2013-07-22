@@ -30,7 +30,7 @@ void main() {
   //
   final paths = ['test/harness_browser.dart'];
 
-  addTask('dart2js', createDart2JsTask(paths,
+  addTask('dart2js', createDartCompilerTask(paths,
       liveTypeAnalysis: true, rejectDeprecatedFeatures: true));
 
   runHop();
