@@ -4,7 +4,7 @@ import 'dart:isolate';
 import 'dart:async';
 import 'package:bot/bot.dart';
 import 'package:bot/bot_async.dart';
-import 'package:bot/bot_test.dart';
+import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
 import 'package:serialization/serialization.dart';

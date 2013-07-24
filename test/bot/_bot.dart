@@ -3,7 +3,7 @@ library test_bot;
 import 'dart:async' as async;
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
-import 'package:bot/bot_test.dart';
+import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
 part 'test_cloneable.dart';
