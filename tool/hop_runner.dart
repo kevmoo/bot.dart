@@ -2,7 +2,6 @@ library hop_runner;
 
 import 'dart:async';
 import 'dart:io';
-import 'package:bot/bot.dart';
 import 'package:hop/hop.dart';
 import 'package:hop/hop_tasks.dart';
 import '../test/harness_console.dart' as test_console;
@@ -10,9 +9,6 @@ import '../test/harness_console.dart' as test_console;
 import 'package:hop/src/hop_tasks_experimental.dart' as dartdoc;
 
 void main() {
-  // Easy to enable hop-wide logging
-  // enableScriptLogListener();
-
   addTask('test', createUnitTestTask(test_console.testCore));
 
   addTask('docs', createDartDocTask(_getLibs, linkApi: true, postBuild: dartdoc.createPostBuild(_cfg)));
@@ -31,7 +27,7 @@ void main() {
   final paths = ['test/harness_browser.dart'];
 
   addTask('dart2js', createDartCompilerTask(paths,
-      liveTypeAnalysis: true, rejectDeprecatedFeatures: true));
+      liveTypeAnalysis: true));
 
   runHop();
 }
