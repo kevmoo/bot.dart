@@ -17,9 +17,10 @@ class EventHandle<T> implements Disposable {
     // gets disposed recursively.
     this._disposed = true;
     _controller.close();
+    assert(_controller.isClosed);
   }
 
-  async.Stream get stream => _controller.stream;
+  async.Stream<T> get stream => _controller.stream;
 
   bool get hasListener => _controller.hasListener;
 
