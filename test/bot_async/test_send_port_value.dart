@@ -27,8 +27,8 @@ class TestSendPortValue {
       expect(tv.output, equals(25));
     });
 
-    final onError = expectAsync1((error) {
-      expect(error, equals('wah?'));
+    final onError = expectAsync1((IsolateUnhandledException error) {
+      expect(error.source, equals('wah?'));
     });
 
     tv.outputChanged.listen(callback);
@@ -45,8 +45,8 @@ class TestSendPortValue {
       expect(tv.output, equals(new Tuple3(5,6,11)));
     });
 
-    final onError = expectAsync1((error) {
-      expect(error, equals('wah?'));
+    final onError = expectAsync1((IsolateUnhandledException error) {
+      expect(error.source, equals('wah?'));
     });
 
     tv.outputChanged.listen(callback);
