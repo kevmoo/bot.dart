@@ -1,6 +1,6 @@
 part of bot;
 
-// TODO
+// TODO: many...
 // ponder implementing other mutation methods
 // implement equals
 // toString
