@@ -178,6 +178,11 @@ class AffineTransform implements Cloneable<AffineTransform> {
         _shY == other._shY && _scY == other._scY && _tY == other._tY;
   }
 
+  // NOTE: AffineTransform is mutable and also implements ==
+  // returning a 0 from hashCode ensures instances don't get lost in hash
+  // implementations. These really shouldn't be used for keys anyway.
+  int get hashCode => 0;
+
   String toString() =>
     [scaleX, shearY, shearX, scaleY, translateX, translateY].join(', ');
 }
