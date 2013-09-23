@@ -1,9 +1,9 @@
 part of bot_async;
 
 class FutureValueResult<TOutput> {
-  static const String _valueKey = 'value';
-  static const String _errorKey = 'error';
-  static const String _stackTraceKey = 'stackTrace';
+  static const String _VALUE_KEY = 'value';
+  static const String _ERROR_KEY = 'error';
+  static const String _STACK_TRACE_KEY = 'stackTrace';
 
   final TOutput value;
   final error;
@@ -22,30 +22,31 @@ class FutureValueResult<TOutput> {
     requireArgumentNotNull(value, 'value');
     requireArgument(isMyMap(value), 'value');
 
-    final ex = value[_errorKey];
+    final ex = value[_ERROR_KEY];
     if(ex != null) {
-      final stack = value[_stackTraceKey];
+      final stack = value[_STACK_TRACE_KEY];
       return new FutureValueResult.fromException(ex, stack);
     } else {
-      return new FutureValueResult(value[_valueKey]);
+      return new FutureValueResult(value[_VALUE_KEY]);
     }
   }
 
   bool get isException => error != null;
 
   Map toMap() {
-    // would love to use consts here, but the analyzer doesn't like it DARTBUG
-    // https://code.google.com/p/dart/issues/detail?id=10471
-    // https://code.google.com/p/dart/issues/detail?id=10472
     final rawValue = _serialize(value);
-    return { 'value' : rawValue, 'error' : error, 'stackTrace' : stackTrace };
+    return {
+      _VALUE_KEY : rawValue,
+      _ERROR_KEY : error,
+      _STACK_TRACE_KEY : stackTrace
+    };
   }
 
   static bool isMyMap(Map value) {
     return value != null && value.length == 3 &&
-        value.containsKey(_valueKey) &&
-        value.containsKey(_errorKey) &&
-        value.containsKey(_stackTraceKey);
+        value.containsKey(_VALUE_KEY) &&
+        value.containsKey(_ERROR_KEY) &&
+        value.containsKey(_STACK_TRACE_KEY);
   }
 
   bool operator ==(other) {
