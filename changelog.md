@@ -1,5 +1,10 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.23.1 2013-09-24 (SDK 0.7.5.3 r27776)
+
+* Latest SDK
+* Tiny tweaks and cleanup to `bot_async`
+
 ## 0.23.0 2013-07-24 (SDK 0.6.9.2 r25388)
 
 * Latest SDK
