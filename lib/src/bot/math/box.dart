@@ -1,9 +1,8 @@
 part of bot;
 
-class Box {
-  final num left, top, width, height;
+class Box<T extends num> extends math.Rectangle<T> {
 
-  const Box(this.left, this.top, this.width, this.height);
+  const Box(T left, T top, T width, T height): super(left, top, width, height);
 
   factory Box.fromCoordSize(Coordinate topLeft, Size size) {
     return new Box(topLeft.x, topLeft.y, size.width, size.height);
@@ -14,17 +13,6 @@ class Box {
   Size get size => new Size(width, height);
 
   bool get isValid => topLeft.isValid && size.isValid;
-
-  num get right => left + width;
-
-  num get bottom => top + height;
-
-  bool contains(Coordinate point){
-    return point.x >= left &&
-        point.x <= left + width &&
-        point.y >= top &&
-        point.y <= top + height;
-  }
 
   // TODO: test!!
   Coordinate constrain(Coordinate value) {
@@ -46,13 +34,4 @@ class Box {
       new Coordinate(left, top + height)
     ];
   }
-
-  bool operator ==(Box other) {
-    return other != null && other.left == left && other.top == top &&
-        other.width == width && other.height == height;
-  }
-
-  String toString() => "Location: $topLeft, Size: $size";
-
-  int get hashCode => Util.getHashCode([left, top, width, height]);
 }

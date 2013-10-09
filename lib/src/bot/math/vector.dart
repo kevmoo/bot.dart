@@ -3,37 +3,45 @@ part of bot;
 /**
  * Class reperesenting a 2d vector.
  **/
-class Vector extends Coordinate {
-  const Vector([num x = 0, num y = 0]) : super(x,y);
+class Vector<T extends num> extends Coordinate<T> {
+  const Vector([T x = 0, T y = 0]) : super(x,y);
 
   /**
    * Computes the length of this [Vector].
+   *
+   * Use [magnitude] instead.
    **/
-  num get length => math.sqrt(x * x + y * y);
+  @deprecated
+  double get length => this.magnitude;
 
-  Vector get normal => this.scale(1 / this.length);
+  Vector get normal => this.scale(1 / this.magnitude);
 
   /**
    * Returns the angle between the positive x-axis and the [Vector].
    * Angle zero points in the +X direction, 90 degrees points in the +Y
    * direction (down) and from there we grow clockwise.
    **/
-  num get angle => math.atan2(y, x);
+  double get angle => math.atan2(y, x);
 
   /**
    * Adds a [Coordinate] and returns the result as new [Vector].
    **/
-  Vector operator +(Coordinate other) => new Vector(x + other.x, y + other.y);
+  @override
+  Vector<T> operator +(math.Point<T> other) =>
+      new Vector<T>(x + other.x, y + other.y);
 
   /**
    * Multiplies each dimensions by the provided magnitude and returns a new [Vector].
    **/
-  Vector operator *(num magnitude) => this.scale(magnitude);
+  @override
+  Vector<T> operator *(num magnitude) =>
+      this.scale(magnitude);
 
   /**
    * Multiplies each dimensions by the provided magnitude and returns a new [Vector].
    **/
-  Vector scale(num magnitude) => new Vector(x * magnitude, y * magnitude);
+  Vector<T> scale(num magnitude) =>
+      new Vector<T>(x * magnitude, y * magnitude);
 
   /**
    * Computes the dot product with the given [Vector].
