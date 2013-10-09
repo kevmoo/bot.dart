@@ -1,5 +1,11 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.24.0 2013-10-09 (SDK 0.8.1+2 r28355)
+
+* Latest SDK
+* **BREAKING** `Box`, `Vector`, and `Coordinate` now align with the new `Rectangle` and `Point` classes in `dart:math`
+    * `Box.contains` is now inherited from `Rectangle` and expects a `Rectangle`. Use `Box.containsPoint` instead.
+
 ## 0.23.1 2013-09-24 (SDK 0.7.5.3 r27776)
 
 * Latest SDK
