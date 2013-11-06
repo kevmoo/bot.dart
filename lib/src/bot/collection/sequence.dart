@@ -68,16 +68,16 @@ class _SequenceList<E> extends Sequence<E> with ListMixin<E>
 
   @override
   List<E> sublist(int start, [int end]) {
-    if (end == null) end = length;
+    if (end == null) end = this.length;
     if (start < 0 || start > this.length) {
       throw new RangeError.range(start, 0, this.length);
     }
     if (end < start || end > this.length) {
       throw new RangeError.range(end, start, this.length);
     }
-    int length = end - start;
-    List<E> result = new List<E>()..length = length;
-    for (int i = 0; i < length; i++) {
+    int newLength = end - start;
+    List<E> result = new List<E>(newLength);
+    for (int i = 0; i < newLength; i++) {
       result[i] = this[start + i];
     }
     return result;
