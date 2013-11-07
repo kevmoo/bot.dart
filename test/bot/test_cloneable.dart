@@ -24,7 +24,6 @@ class TestCloneable implements Cloneable<TestCloneable> {
 
   static void run(){
     test('Cloneable', () {
-      logMessage("hi!");
       var val = new TestCloneable();
 
       expect(val, equals(val));
