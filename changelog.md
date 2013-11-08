@@ -1,5 +1,11 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.25.0 2013-11-07 (SDK 0.8.10+6 r30036)
+
+* Lastest SDK
+* Aligned with [Dart V1 Pubspec Recommendations](https://plus.google.com/+SethLadd/posts/9JQJVz78R97).
+* **BREAKING** Removed most of `dart_async`. Recent changes to `dart:isolate` make this code unusable. Will need a major refactoring.
+
 ## 0.24.0 2013-10-09 (SDK 0.8.1+2 r28355)
 
 * Latest SDK
