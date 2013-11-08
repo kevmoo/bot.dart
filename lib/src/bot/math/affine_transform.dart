@@ -137,7 +137,7 @@ class AffineTransform implements Cloneable<AffineTransform> {
     return this;
   }
 
-  Coordinate transformCoordinate([Coordinate point = const Coordinate()]){
+  Coordinate transformCoordinate([math.Point point = const Coordinate()]){
     num x = point.x * _scX + point.y * _shX + _tX;
     num y = point.x * _shY + point.y * _scY + _tY;
 

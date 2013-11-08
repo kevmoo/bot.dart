@@ -31,6 +31,9 @@ class Coordinate<T extends num> extends math.Point<T> {
   static Vector difference(math.Point a, math.Point b) =>
     new Vector(a.x - b.x, a.y - b.y);
 
+  static bool valid(math.Point point) =>
+      isValidNumber(point.x) && isValidNumber(point.y);
+
   @deprecated
   dynamic toJson() => { 'x' : x, 'y' : y };
 }

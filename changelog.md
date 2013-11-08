@@ -1,5 +1,9 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.25.1 2013-11-08 (SDK 0.8.10+10_r30107)
+
+* Tiny additions for `bot_web`
+
 ## 0.25.0 2013-11-07 (SDK 0.8.10+6 r30036)
 
 * Lastest SDK
