@@ -36,3 +36,27 @@ class Util {
     return text;
   }
 }
+
+/**
+ * Designed to allow methods to support a variety of "delayed" inputs.
+ *
+ * If the [input] is a [Future], [getDelayedResult] waits for a result.
+ *
+ * If the [input] is a [Function], [getDelayedResult] evaluates it for a result.
+ *
+ * The result in both cases is provided back to [getDelayedResult] evaluated again.
+ *
+ * If the original [input]--or once a recursive [input]--is neigther a [Future]
+ * nor a [Function] that value is returned wrapped in a [Future].
+ */
+async.Future<dynamic> getDelayedResult(dynamic input) {
+  if(input is Function) {
+    input = new async.Future(input);
+  }
+
+  if(input is async.Future) {
+    return input.then((value) => getDelayedResult(value));
+  } else {
+    return new async.Future.value(input);
+  }
+}
