@@ -1,5 +1,10 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.25.2 2013-11-24 (SDK 1.0.0.3 r30188)
+
+* **DEPRECATED** Removed `bot_async`. Everything is just in `bot` now.
+* **NEW!** Added `ThrottledStream` which basically replaces code removed for `v0.25.0`
+
 ## 0.25.1 2013-11-08 (SDK 0.8.10+10_r30107)
 
 * Tiny additions for `bot_web`
