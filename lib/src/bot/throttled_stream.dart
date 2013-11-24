@@ -1,4 +1,4 @@
-library bot.async;
+library bot.throttled_stream;
 
 import 'dart:async';
 

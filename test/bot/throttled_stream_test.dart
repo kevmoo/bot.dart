@@ -1,4 +1,4 @@
-library test.util;
+library test.bot.throttled_stream;
 
 import 'dart:async';
 import 'package:unittest/unittest.dart';
