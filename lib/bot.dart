@@ -4,6 +4,8 @@ import 'dart:collection';
 import 'dart:async' as async;
 import 'dart:math' as math;
 
+export 'src/bot/throttled_stream.dart';
+
 part 'src/bot/annotations.dart';
 part 'src/bot/requires.dart';
 part 'src/bot/string_line_reader.dart';
