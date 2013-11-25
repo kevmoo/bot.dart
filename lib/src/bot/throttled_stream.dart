@@ -11,6 +11,7 @@ class ThrottledStream<S, T> {
   S _sendingSource;
   T _outputValue;
   Future<T> _outputFuture;
+  bool _forceUpdate = false;
 
   ThrottledStream(dynamic asyncMethod(S source)) :
     this._asyncMethod = asyncMethod;
@@ -28,13 +29,21 @@ class ThrottledStream<S, T> {
 
   Future close() => _controller.close();
 
+  void refresh() {
+    _forceUpdate = true;
+    _tryUpdate();
+  }
+
+  bool get _shouldUpdate => (_source != _sendingSource) || _forceUpdate;
+
   void _tryUpdate() {
     if(!_controller.isClosed &&
         _outputFuture == null &&
-        _source != _sendingSource) {
+        _shouldUpdate) {
       _sendingSource = _source;
       _outputFuture = new Future(() => _asyncMethod(_sendingSource))
         .then((T output) {
+          _forceUpdate = false;
           _outputValue = output;
           _controller.add(output);
         })

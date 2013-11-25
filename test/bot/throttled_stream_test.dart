@@ -17,6 +17,8 @@ void main() {
     ts.source = [-2, 3];
     expect(ts.source, [-2, 3]);
 
+    final simple = const [1,2,3];
+
     return ts.outputStream
         .first.then((int sum) {
           expect(sum, 1);
@@ -51,6 +53,30 @@ void main() {
         })
         .catchError((error) {
           expect(error, const isInstanceOf<ArgumentError>());
+        })
+        .then((_) {
+
+          ts.source = simple;
+
+          return ts.outputStream.first;
+        })
+        .then((int sum) {
+          expect(sum, 6);
+
+          ts.refresh();
+          return ts.outputStream.first;
+        })
+        .then((int sum) {
+          expect(sum, 6);
+
+          // this should be ignored, since it's the current value
+          ts.source = simple;
+          ts.source = [1];
+
+          return ts.outputStream.first;
+        })
+        .then((int sum) {
+          expect(sum, 1);
         });
   });
 
