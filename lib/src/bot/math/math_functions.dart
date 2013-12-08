@@ -12,7 +12,7 @@ bool isValidNumber(num value) {
  * between a and b proportional to x (when x is between 0 and 1. When x is
  * outside this range, the return value is a linear extrapolation).
  */
-lerp(num a, num b, num x) {
+num lerp(num a, num b, num x) {
   requireArgument(isValidNumber(a), 'a');
   requireArgument(isValidNumber(b), 'b');
   requireArgument(isValidNumber(x), 'x');
