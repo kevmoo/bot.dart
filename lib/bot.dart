@@ -4,10 +4,11 @@ import 'dart:collection';
 import 'dart:async' as async;
 import 'dart:math' as math;
 
-export 'src/bot/throttled_stream.dart';
-
 import 'src/bot/typedefs.dart';
 export 'src/bot/typedefs.dart';
+
+export 'src/bot/throttled_stream.dart';
+export 'src/bot/expand_stream.dart';
 
 part 'src/bot/annotations.dart';
 part 'src/bot/requires.dart';
@@ -46,7 +47,6 @@ part 'src/bot/events/event_handle.dart';
 part 'src/bot/exceptions/detailed_argument_error.dart';
 part 'src/bot/exceptions/invalid_operation_error.dart';
 part 'src/bot/exceptions/null_argument_error.dart';
-
 
 part 'src/bot/math/affine_transform.dart';
 part 'src/bot/math/box.dart';

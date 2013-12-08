@@ -6,8 +6,9 @@ import 'package:bot/bot.dart';
 import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
-import 'throttled_stream_test.dart' as throttled_stream;
-import 'test_delayed_result.dart' as delayed_result;
+import 'test_expand_stream.dart' as expand_stream;
+import 'test_get_delayed_result.dart' as get_delayed_result;
+import 'test_throttled_stream.dart' as throttled_stream;
 
 part 'test_cloneable.dart';
 part 'test_tuple.dart';
@@ -37,8 +38,9 @@ part 'attached/test_attached_events.dart';
 
 void main() {
   group('bot', () {
+    group('expandStream', expand_stream.main);
+    group('getDelayedResult', get_delayed_result.main);
     group('ThrottledStream', throttled_stream.main);
-    group('getDelayedResult', delayed_result.main);
     TestTuple.run();
     TestEnumerable.run();
     TestSequence.run();
