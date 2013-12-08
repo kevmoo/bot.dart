@@ -1,4 +1,4 @@
-part of bot;
+library bot.typedefs;
 
 typedef void Action0();
 typedef void Action1<T>(T param);
