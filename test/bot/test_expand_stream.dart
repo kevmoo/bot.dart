@@ -6,6 +6,133 @@ import 'package:unittest/unittest.dart';
 
 void main() {
 
+  group('streamForEachAsync', () {
+    test('simple sync', () {
+      var items = new List.generate(10, (i) => i);
+      var stream = new Stream.fromIterable(items);
+
+      int count = 0;
+      return streamForEachAsync(stream, (int item) {
+        expect(item, lessThan(items.length));
+        expect(item, count);
+        count++;
+      }).then((_) {
+        expect(count, items.length);
+      });
+
+    });
+
+    test('simple async', () {
+      var items = new List.generate(10, (i) => i);
+      var stream = new Stream.fromIterable(items);
+
+      int count = 0;
+      return streamForEachAsync(stream, (int item) {
+        expect(item, lessThan(items.length));
+        expect(item, count);
+        count++;
+        return new Future.value();
+      }).then((_) {
+        expect(count, items.length);
+      });
+
+    });
+
+    test('stream has error', () {
+      var canceled = false;
+      var controller = new StreamController(onCancel: () {
+        canceled = true;
+      });
+      controller.add(0);
+
+      int count = 0;
+
+      var errorCaught = false;
+
+      return streamForEachAsync(controller.stream, (int item) {
+        expect(item, count);
+        if(item < 5) {
+          count++;
+          controller.add(item+1);
+        } else {
+          controller.addError('never 5');
+        }
+      })
+      .catchError((err) {
+        expect(err, 'never 5');
+        errorCaught = true;
+      })
+      .then((_) {
+        expect(errorCaught, isTrue);
+        expect(canceled, isTrue);
+      });
+    });
+
+    test('action throws error directly', () {
+      var canceled = false;
+      var controller = new StreamController(onCancel: () {
+        canceled = true;
+      });
+      controller.add(0);
+
+      int count = 0;
+
+      var errorCaught = false;
+
+      return streamForEachAsync(controller.stream, (int item) {
+        expect(item, count);
+        if(item < 5) {
+          count++;
+          controller.add(item+1);
+        } else {
+          throw 'never 5';
+        }
+      })
+      .catchError((err) {
+        expect(err, 'never 5');
+        errorCaught = true;
+      })
+      .then((_) {
+        expect(errorCaught, isTrue);
+        expect(canceled, isTrue);
+      });
+    });
+
+    test('action throws error directly', () {
+      var canceled = false;
+      var controller = new StreamController(onCancel: () {
+        canceled = true;
+      });
+      controller.add(0);
+
+      int count = 0;
+
+      var errorCaught = false;
+
+      return streamForEachAsync(controller.stream, (int item) {
+        expect(item, count);
+        if(item < 5) {
+          count++;
+          controller.add(item+1);
+        } else {
+          return new Future.error('never 5');
+        }
+      })
+      .catchError((err) {
+        expect(err, 'never 5');
+        errorCaught = true;
+      })
+      .then((_) {
+        expect(errorCaught, isTrue);
+        expect(canceled, isTrue);
+      });
+    });
+  });
+
+  // source stream is paused during future
+  // non-future value just works -- return value ignored
+  // thrown exception immediately or from future cancels substription
+
   test('simple', () {
     var inputs = [7, 11, 13, 17, 19];
 
@@ -17,7 +144,6 @@ void main() {
           });
   });
 }
-
 
 Stream<int> _fromNumber(int input) =>
     _slowFromList([input, input * 2]);
