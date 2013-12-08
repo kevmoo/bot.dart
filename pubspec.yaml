@@ -9,5 +9,5 @@ environment:
 dev_dependencies:
   bot_test: '>=0.1.5'
   browser: '>=0.9.0 <0.10.0'
-  hop: '>=0.28.1+2'
+  hop: '>=0.28.1+3'
   unittest: '>=0.9.0 <0.10.0'
