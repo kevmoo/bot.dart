@@ -4,14 +4,6 @@ class Coordinate<T extends num> extends math.Point<T> {
 
   const Coordinate([T x = 0, T y = 0]) : super(x, y);
 
-  /**
-   * Computes the distance to another [Coordinate].
-   *
-   * Use [distanceTo] instead.
-   **/
-  @deprecated
-  double getDistance (math.Point other) => distanceTo(other);
-
   bool get isValid => isValidNumber(x) && isValidNumber(y);
 
   /**

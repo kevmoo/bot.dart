@@ -1,38 +1,41 @@
-part of test_bot_async;
+library test.bot.delayed_result;
 
-void registerDelayedResultTests() {
-  group('delayedResult', () {
+import 'dart:async';
+import 'package:bot/bot.dart';
+import 'package:bot_test/bot_test.dart';
+import 'package:unittest/unittest.dart';
 
-    _drTest('null', null, null);
+void main() {
 
-    _drTest('obj', 1, 1);
+  _drTest('null', null, null);
 
-    _drTest('func to obj', () => 2, 2);
-    _drTest('func to func to obj', () {
-      return () => 3;
-    }, 3);
+  _drTest('obj', 1, 1);
 
-    _drTest('future to obj', new Future.value(4), 4);
+  _drTest('func to obj', () => 2, 2);
+  _drTest('func to func to obj', () {
+    return () => 3;
+  }, 3);
 
-    _drTest('func to future to obj', () => new Future.value(5), 5);
+  _drTest('future to obj', new Future.value(4), 4);
 
-    [false, true].forEach((v) {
-      _testSilly([], v);
-      _testSilly([true], v);
-      _testSilly([false], v);
-      _testSilly([true, true], v);
-      _testSilly([true, false], v);
-      _testSilly([false, true], v);
-      _testSilly([false, false], v);
-      _testSilly([true,true, true], v);
-      _testSilly([true, true, false], v);
-      _testSilly([true, false, true], v);
-      _testSilly([true, false, false], v);
-      _testSilly([false, true, true], v);
-      _testSilly([false, true, false], v);
-      _testSilly([false, false, true], v);
-      _testSilly([false, false, false], v);
-    });
+  _drTest('func to future to obj', () => new Future.value(5), 5);
+
+  [false, true].forEach((v) {
+    _testSilly([], v);
+    _testSilly([true], v);
+    _testSilly([false], v);
+    _testSilly([true, true], v);
+    _testSilly([true, false], v);
+    _testSilly([false, true], v);
+    _testSilly([false, false], v);
+    _testSilly([true,true, true], v);
+    _testSilly([true, true, false], v);
+    _testSilly([true, false, true], v);
+    _testSilly([true, false, false], v);
+    _testSilly([false, true, true], v);
+    _testSilly([false, true, false], v);
+    _testSilly([false, false, true], v);
+    _testSilly([false, false, false], v);
   });
 }
 

@@ -6,14 +6,6 @@ part of bot;
 class Vector<T extends num> extends Coordinate<T> {
   const Vector([T x = 0, T y = 0]) : super(x,y);
 
-  /**
-   * Computes the length of this [Vector].
-   *
-   * Use [magnitude] instead.
-   **/
-  @deprecated
-  double get length => this.magnitude;
-
   Vector get normal => this.scale(1 / this.magnitude);
 
   /**

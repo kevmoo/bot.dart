@@ -31,8 +31,8 @@ class TestVector {
         expect(const Vector(2,2), same(const Vector(2,2)));
       });
 
-      test('should get length of the vector', (){
-        expect(5, new Vector(3, 4).length);
+      test('should get magnitude of the vector', (){
+        expect(5, new Vector(3, 4).magnitude);
       });
 
       test('should calc the dot product', (){
@@ -45,8 +45,8 @@ class TestVector {
 
       test('should have valid normal', (){
         var n = new Vector(4, 4);
-        expect(n.length, closeTo(4 * math.SQRT2, 0.001));
-        expect(n.normal.length, closeTo(1, 0.001));
+        expect(n.magnitude, closeTo(4 * math.SQRT2, 0.001));
+        expect(n.normal.magnitude, closeTo(1, 0.001));
       });
 
       test('getAngle', () {

@@ -21,7 +21,7 @@ class TestCoordinate {
       });
 
       test('should get the distance to another point', (){
-        expect(5, new Coordinate(0, 0).getDistance(new Coordinate(3, 4)));
+        expect(5, new Coordinate(0, 0).distanceTo(new Coordinate(3, 4)));
       });
     });
   }

@@ -2,7 +2,7 @@ library harness_console;
 
 import 'package:unittest/unittest.dart';
 import 'package:unittest/vm_config.dart';
-import 'test_shared.dart' as shared;
+import 'bot/_bot.dart' as bot;
 import 'test_dump_render_tree.dart' as drt;
 
 main() {
@@ -13,6 +13,6 @@ void testCore(Configuration config) {
   unittestConfiguration = config;
   groupSep = ' - ';
 
-  shared.main();
+  bot.main();
   drt.main();
 }
