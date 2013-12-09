@@ -9,7 +9,8 @@ import 'package:unittest/unittest.dart';
 import 'test_expand_stream.dart' as expand_stream;
 import 'test_get_delayed_result.dart' as get_delayed_result;
 import 'test_throttled_stream.dart' as throttled_stream;
-import 'topo_sort_test.dart' as topological;
+import 'graph/topo_sort_test.dart' as topological;
+import 'graph/tarjan_test.dart' as tarjan;
 
 part 'test_cloneable.dart';
 part 'test_tuple.dart';
@@ -27,7 +28,6 @@ part 'math/test_coordinate.dart';
 part 'math/test_vector.dart';
 part 'math/test_affine_transform.dart';
 part 'math/test_rect.dart';
-part 'graph/test_tarjan.dart';
 
 part 'color/test_rgb_color.dart';
 part 'color/test_hsl_color.dart';
@@ -42,7 +42,10 @@ void main() {
     group('expandStream', expand_stream.main);
     group('getDelayedResult', get_delayed_result.main);
     group('ThrottledStream', throttled_stream.main);
-    group('topological', topological.main);
+    group('graph', () {
+      group('topological', topological.main);
+      group('tarjan', tarjan.main);
+    });
     TestTuple.run();
     TestEnumerable.run();
     TestSequence.run();
@@ -58,8 +61,6 @@ void main() {
     TestUtil.run();
     TestCloneable.run();
     TestEvents.run();
-
-    TestTarjanCycleDetect.run();
 
     TestRgbColor.run();
     TestHslColor.run();
