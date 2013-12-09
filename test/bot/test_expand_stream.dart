@@ -6,6 +6,24 @@ import 'package:unittest/unittest.dart';
 
 void main() {
 
+  group('expandStream', () {
+    // source stream is paused during future
+    // non-future value just works -- return value ignored
+    // thrown exception immediately or from future cancels substription
+
+    test('simple', () {
+      var inputs = [7, 11, 13, 17, 19];
+
+      return expandStream(_slowFromList(inputs), _fromNumber, onDone: _final)
+          .toList()
+            .then((List<int> items) {
+              expect(items,
+                  orderedEquals([7, 14, 11, 22, 13, 26, 17, 34, 19, 38, 0, 1, 2, 3]));
+            });
+    });
+
+  });
+
   group('streamForEachAsync', () {
     test('simple sync', () {
       var items = new List.generate(10, (i) => i);
@@ -127,21 +145,6 @@ void main() {
         expect(canceled, isTrue);
       });
     });
-  });
-
-  // source stream is paused during future
-  // non-future value just works -- return value ignored
-  // thrown exception immediately or from future cancels substription
-
-  test('simple', () {
-    var inputs = [7, 11, 13, 17, 19];
-
-    return expandStream(_slowFromList(inputs), _fromNumber, onDone: _final)
-        .toList()
-          .then((List<int> items) {
-            expect(items, orderedEquals(
-                                        [7, 14, 11, 22, 13, 26, 17, 34, 19, 38, 0, 1, 2, 3]));
-          });
   });
 }
 
