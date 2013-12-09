@@ -9,6 +9,7 @@ import 'package:unittest/unittest.dart';
 import 'test_expand_stream.dart' as expand_stream;
 import 'test_get_delayed_result.dart' as get_delayed_result;
 import 'test_throttled_stream.dart' as throttled_stream;
+import 'topo_sort_test.dart' as topological;
 
 part 'test_cloneable.dart';
 part 'test_tuple.dart';
@@ -41,6 +42,7 @@ void main() {
     group('expandStream', expand_stream.main);
     group('getDelayedResult', get_delayed_result.main);
     group('ThrottledStream', throttled_stream.main);
+    group('topological', topological.main);
     TestTuple.run();
     TestEnumerable.run();
     TestSequence.run();

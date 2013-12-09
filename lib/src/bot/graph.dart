@@ -1,6 +1,10 @@
 library bot.graph;
 
 import 'dart:math' as math;
+import 'dart:collection';
+import 'require.dart';
+
+part 'graph/topo_sort.dart';
 
 // http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm
 
