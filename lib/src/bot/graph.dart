@@ -88,21 +88,21 @@ class _TarjanNode<TNode> {
   bool operator ==(_TarjanNode<TNode> other) => other.value == value;
 }
 
-class _TarjanList<TNode> {
-  final Map<_TarjanNode<TNode>, Set<_TarjanNode<TNode>>> _nodes;
+class _TarjanList<T> {
+  final Map<_TarjanNode<T>, Set<_TarjanNode<T>>> _nodes;
 
   _TarjanList._internal(this._nodes);
 
-  factory _TarjanList(Map<TNode, Set<TNode>> source) {
+  factory _TarjanList(Map<T, Set<T>> source) {
     assert(source != null);
 
-    var map = new Map<TNode, _TarjanNode<TNode>>();
+    var map = new Map<T, _TarjanNode<T>>();
 
-    var nodes = new Map<_TarjanNode<TNode>, Set<_TarjanNode<TNode>>>();
+    var nodes = new Map<_TarjanNode<T>, Set<_TarjanNode<T>>>();
 
     source.forEach((k,v) {
       final tKey = map.putIfAbsent(k, () => new _TarjanNode(k));
-      var edges = nodes[tKey] = new Set<_TarjanNode<TNode>>();
+      var edges = nodes[tKey] = new Set<_TarjanNode<T>>();
 
       if(v != null) {
         for(final edge in v) {
