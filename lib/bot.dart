@@ -9,6 +9,7 @@ export 'src/bot/typedefs.dart';
 
 export 'src/bot/throttled_stream.dart';
 export 'src/bot/expand_stream.dart';
+export 'src/bot/graph.dart';
 
 part 'src/bot/annotations.dart';
 part 'src/bot/requires.dart';
