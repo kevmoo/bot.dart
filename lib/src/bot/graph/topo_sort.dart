@@ -39,20 +39,17 @@ class _Graph<T> {
 
     var map = new LinkedHashMap<T, _GraphNode<T>>();
 
-    _GraphNode<T> getNode(T value) {
-      return map.putIfAbsent(value, () => new _GraphNode<T>(value));
-    };
+    _GraphNode<T> getNode(T value) =>
+        map.putIfAbsent(value, () => new _GraphNode<T>(value));
 
     items.forEach((T item, Iterable<T> outLinks) {
       if(outLinks == null) outLinks = [];
 
       var node = getNode(item);
-      outLinks.forEach((T outLink) {
-
+      for(T outLink in outLinks) {
         var newItem = node.outNodes.add(getNode(outLink));
-        if(!newItem) throw new ArgumentError('Outlinks must not contain dupes');
-      });
-
+        requireArgument(newItem, 'items', 'Outlinks must not contain dupes');
+      }
 
     });
 
@@ -61,7 +58,7 @@ class _Graph<T> {
 
   _Graph.core(this._map);
 
-  Iterable<_GraphNode> getSourceNodeSet() => _map.values;
+  Iterable<_GraphNode<T>> get nodes => _map.values;
 
   String toString() {
     var sb = new StringBuffer();

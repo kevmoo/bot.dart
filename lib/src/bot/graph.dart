@@ -34,18 +34,16 @@ class _TarjanCycleDetect<T> {
   final _indexExpando = new Expando<int>('index');
   final _linkExpando = new Expando<int>('link');
 
-  int _index = 0;
-  final List<_GraphNode> _stack;
-  final List<List<T>> _scc;
+  final Queue<_GraphNode> _stack = new Queue<_GraphNode<T>>();
+  final List<List<T>> _scc = new List<List<T>>();
   final _Graph<T> _list;
 
-  _TarjanCycleDetect._internal(this._list) :
-    _index = 0,
-    _stack = new List<_GraphNode<T>>(),
-    _scc = new List<List<T>>();
+  int _index = 0;
+
+  _TarjanCycleDetect._internal(this._list);
 
   List<List<T>> _executeTarjan() {
-    for (var node in _list.getSourceNodeSet()) {
+    for (var node in _list.nodes) {
       if(_getIndex(node) == -1) {
         _tarjan(node);
       }
@@ -57,12 +55,12 @@ class _TarjanCycleDetect<T> {
     _setIndex(v, _index);
     _setLowLink(v, _index);
     _index++;
-    _stack.insert(0, v);
+    _stack.addFirst(v);
     for(final n in v.outNodes){
       if(_getIndex(n) == -1){
         _tarjan(n);
         _setLowLink(v, math.min(_getLowLink(v), _getLowLink(n)));
-      } else if(_stack.indexOf(n) >= 0){
+      } else if(_stack.contains(n)){
         _setLowLink(v, math.min(_getLowLink(v), _getIndex(n)));
       }
     }
@@ -70,8 +68,7 @@ class _TarjanCycleDetect<T> {
       _GraphNode n;
       var component = new List<T>();
       do {
-        n = _stack[0];
-        _stack.removeRange(0, 1);
+        n = _stack.removeFirst();
         component.add(n.value);
       } while(n != v);
       _scc.add(component);
