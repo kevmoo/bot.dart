@@ -1,6 +1,5 @@
 part of bot.graph;
 
-// TODO: move this to bot?
 List topologicalSort(Map<dynamic, Iterable<dynamic>> dependencies) {
   requireArgumentNotNull(dependencies, 'dependencies');
 
