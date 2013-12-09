@@ -11,7 +11,7 @@ part 'graph/topo_sort.dart';
 List<List> stronglyConnectedComponents(Map graph) {
   assert(graph != null);
 
-  var nodes = new _TarjanList(graph);
+  var nodes = new _Graph(graph);
   var tarjan = new _TarjanCycleDetect._internal(nodes);
   return tarjan._executeTarjan();
 }
@@ -37,7 +37,7 @@ class _TarjanCycleDetect<T> {
   int _index = 0;
   final List<_GraphNode> _stack;
   final List<List<T>> _scc;
-  final _TarjanList _list;
+  final _Graph<T> _list;
 
   _TarjanCycleDetect._internal(this._list) :
     _index = 0,
@@ -45,8 +45,7 @@ class _TarjanCycleDetect<T> {
     _scc = new List<List<T>>();
 
   List<List<T>> _executeTarjan() {
-    List<_GraphNode> nodeList = new List<_GraphNode>.from(_list.getSourceNodeSet());
-    for (final node in nodeList) {
+    for (var node in _list.getSourceNodeSet()) {
       if(_getIndex(node) == -1) {
         _tarjan(node);
       }
@@ -59,7 +58,7 @@ class _TarjanCycleDetect<T> {
     _setLowLink(v, _index);
     _index++;
     _stack.insert(0, v);
-    for(final n in _list.getAdjacent(v)){
+    for(final n in v.outNodes){
       if(_getIndex(n) == -1){
         _tarjan(n);
         _setLowLink(v, math.min(_getLowLink(v), _getLowLink(n)));
@@ -91,46 +90,4 @@ class _TarjanCycleDetect<T> {
 
   int _setLowLink(_GraphNode<T> node, int value) =>
     _linkExpando[node] = value;
-}
-
-class _TarjanList<T> {
-  final Map<_GraphNode<T>, Set<_GraphNode<T>>> _nodes;
-
-  _TarjanList._internal(this._nodes);
-
-  factory _TarjanList(Map<T, Set<T>> source) {
-    assert(source != null);
-
-    var map = new Map<T, _GraphNode<T>>();
-
-    var nodes = new Map<_GraphNode<T>, Set<_GraphNode<T>>>();
-
-    source.forEach((k,v) {
-      final tKey = map.putIfAbsent(k, () => new _GraphNode(k));
-      var edges = nodes[tKey] = new Set<_GraphNode<T>>();
-
-      if(v != null) {
-        for(final edge in v) {
-          final tEdge = map.putIfAbsent(edge, () => new _GraphNode(edge));
-          edges.add(tEdge);
-        }
-      }
-    });
-
-    return new _TarjanList._internal(nodes);
-  }
-
-  Iterable<_GraphNode> getSourceNodeSet() {
-    return _nodes.keys;
-  }
-
-  Iterable<_GraphNode<T>> getAdjacent(_GraphNode<T> v) {
-    var nodes = _nodes[v];
-    if(nodes == null) {
-      return [];
-    }
-    else {
-      return nodes;
-    }
-  }
 }

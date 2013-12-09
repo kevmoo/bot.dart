@@ -32,7 +32,6 @@ List topologicalSort(Map<dynamic, Iterable<dynamic>> dependencies) {
   return items.toList();
 }
 
-// TODO: align with Tarjan code in bot
 class _Graph<T> {
   final LinkedHashMap<T, _GraphNode<T>> _map;
 
@@ -45,6 +44,8 @@ class _Graph<T> {
     };
 
     items.forEach((T item, Iterable<T> outLinks) {
+      if(outLinks == null) outLinks = [];
+
       var node = getNode(item);
       outLinks.forEach((T outLink) {
 
@@ -59,6 +60,8 @@ class _Graph<T> {
   }
 
   _Graph.core(this._map);
+
+  Iterable<_GraphNode> getSourceNodeSet() => _map.values;
 
   String toString() {
     var sb = new StringBuffer();
