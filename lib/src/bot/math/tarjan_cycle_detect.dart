@@ -2,25 +2,39 @@ part of bot;
 
 // http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm
 
+List<List> stronglyConnectedComponents(Map graph) {
+  assert(graph != null);
+
+  var nodes = new _TarjanList(graph);
+  var tarjan = new _TarjanCycleDetect._internal(nodes);
+  return tarjan._executeTarjan();
+}
+
+/**
+ * Use top-level [stronglyConnectedComponents] instead.
+ */
+@deprecated
 class TarjanCycleDetect<TNode> {
+
+  /**
+   * Use top-level [stronglyConnectedComponents] instead.
+   */
+  @deprecated
+  static List<List> getStronglyConnectedComponents(Map graph) =>
+      stronglyConnectedComponents(graph);
+}
+
+class _TarjanCycleDetect<TNode> {
 
   int _index = 0;
   final List<_TarjanNode> _stack;
   final List<List<TNode>> _scc;
   final _TarjanList _list;
 
-  TarjanCycleDetect._internal(this._list) :
+  _TarjanCycleDetect._internal(this._list) :
     _index = 0,
     _stack = new List<_TarjanNode<TNode>>(),
     _scc = new List<List<TNode>>();
-
-  static List<List> getStronglyConnectedComponents(Map graph) {
-    assert(graph != null);
-
-    var nodes = new _TarjanList(graph);
-    var tarjan = new TarjanCycleDetect._internal(nodes);
-    return tarjan._executeTarjan();
-  }
 
   List<List<TNode>> _executeTarjan() {
     List<_TarjanNode> nodeList = new List<_TarjanNode>.from(_list.getSourceNodeSet());
