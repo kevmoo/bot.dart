@@ -1,4 +1,4 @@
-part of bot;
+part of bot.errors;
 
 class DetailedArgumentError extends ArgumentError {
   final argument;

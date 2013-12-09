@@ -1,4 +1,4 @@
-part of bot;
+part of bot.errors;
 
 class InvalidOperationError implements Exception {
   final String message;

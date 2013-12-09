@@ -7,6 +7,9 @@ import 'dart:math' as math;
 import 'src/bot/typedefs.dart';
 export 'src/bot/typedefs.dart';
 
+import 'src/bot/errors.dart';
+export 'src/bot/errors.dart';
+
 export 'src/bot/throttled_stream.dart';
 export 'src/bot/expand_stream.dart';
 export 'src/bot/graph.dart';
@@ -44,10 +47,6 @@ part 'src/bot/disposable_impl.dart';
 part 'src/bot/events/cancelable_event_args.dart';
 part 'src/bot/events/event_args.dart';
 part 'src/bot/events/event_handle.dart';
-
-part 'src/bot/exceptions/detailed_argument_error.dart';
-part 'src/bot/exceptions/invalid_operation_error.dart';
-part 'src/bot/exceptions/null_argument_error.dart';
 
 part 'src/bot/math/affine_transform.dart';
 part 'src/bot/math/box.dart';
