@@ -7,6 +7,9 @@ import 'dart:math' as math;
 import 'src/bot/typedefs.dart';
 export 'src/bot/typedefs.dart';
 
+import 'src/bot/require.dart';
+export 'src/bot/require.dart';
+
 import 'src/bot/errors.dart';
 export 'src/bot/errors.dart';
 
@@ -15,7 +18,6 @@ export 'src/bot/expand_stream.dart';
 export 'src/bot/graph.dart';
 
 part 'src/bot/annotations.dart';
-part 'src/bot/requires.dart';
 part 'src/bot/string_line_reader.dart';
 part 'src/bot/tuple.dart';
 part 'src/bot/tuple3.dart';

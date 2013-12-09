@@ -1,4 +1,6 @@
-part of bot;
+library bot.require;
+
+import 'errors.dart';
 
 void require(bool truth, [String message]) {
   if(!truth) {
