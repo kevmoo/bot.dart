@@ -6,14 +6,15 @@ import 'require.dart';
 
 part 'graph/topo_sort.dart';
 
-// http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm
-
-List<List> stronglyConnectedComponents(Map graph) {
-  assert(graph != null);
+/**
+ * [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
+ */
+List<List> stronglyConnectedComponents(Map<dynamic, Iterable> graph) {
+  requireArgumentNotNull(graph, 'graph');
 
   var nodes = new _Graph(graph);
-  var tarjan = new _TarjanCycleDetect._internal(nodes);
-  return tarjan._executeTarjan();
+  var tarjan = new _TarjanCycleDetect(nodes);
+  return tarjan.calculate();
 }
 
 /**
@@ -40,9 +41,9 @@ class _TarjanCycleDetect<T> {
 
   int _index = 0;
 
-  _TarjanCycleDetect._internal(this._list);
+  _TarjanCycleDetect(this._list);
 
-  List<List<T>> _executeTarjan() {
+  List<List<T>> calculate() {
     for (var node in _list.nodes) {
       if(_getIndex(node) == -1) {
         _tarjan(node);
