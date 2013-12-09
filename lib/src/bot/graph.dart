@@ -30,19 +30,19 @@ class TarjanCycleDetect<TNode> {
       stronglyConnectedComponents(graph);
 }
 
-class _TarjanCycleDetect<TNode> {
+class _TarjanCycleDetect<T> {
 
   int _index = 0;
   final List<_TarjanNode> _stack;
-  final List<List<TNode>> _scc;
+  final List<List<T>> _scc;
   final _TarjanList _list;
 
   _TarjanCycleDetect._internal(this._list) :
     _index = 0,
-    _stack = new List<_TarjanNode<TNode>>(),
-    _scc = new List<List<TNode>>();
+    _stack = new List<_TarjanNode<T>>(),
+    _scc = new List<List<T>>();
 
-  List<List<TNode>> _executeTarjan() {
+  List<List<T>> _executeTarjan() {
     List<_TarjanNode> nodeList = new List<_TarjanNode>.from(_list.getSourceNodeSet());
     for (final node in nodeList)
     {
@@ -53,7 +53,7 @@ class _TarjanCycleDetect<TNode> {
     return _scc;
   }
 
-  void _tarjan(_TarjanNode<TNode> v){
+  void _tarjan(_TarjanNode<T> v){
     v.index = _index;
     v.lowlink = _index;
     _index++;
@@ -68,7 +68,7 @@ class _TarjanCycleDetect<TNode> {
     }
     if(v.lowlink == v.index){
       _TarjanNode n;
-      var component = new List<TNode>();
+      var component = new List<T>();
       do {
         n = _stack[0];
         _stack.removeRange(0, 1);
@@ -79,8 +79,8 @@ class _TarjanCycleDetect<TNode> {
   }
 }
 
-class _TarjanNode<TNode> {
-  final TNode value;
+class _TarjanNode<T> {
+  final T value;
   int index;
   int lowlink;
 
@@ -89,7 +89,7 @@ class _TarjanNode<TNode> {
 
   int get hashCode => value.hashCode;
 
-  bool operator ==(_TarjanNode<TNode> other) => other.value == value;
+  bool operator ==(_TarjanNode<T> other) => other.value == value;
 }
 
 class _TarjanList<T> {
