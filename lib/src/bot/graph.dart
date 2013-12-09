@@ -31,43 +31,44 @@ class TarjanCycleDetect<TNode> {
 }
 
 class _TarjanCycleDetect<T> {
+  final _indexExpando = new Expando<int>('index');
+  final _linkExpando = new Expando<int>('link');
 
   int _index = 0;
-  final List<_TarjanNode> _stack;
+  final List<_GraphNode> _stack;
   final List<List<T>> _scc;
   final _TarjanList _list;
 
   _TarjanCycleDetect._internal(this._list) :
     _index = 0,
-    _stack = new List<_TarjanNode<T>>(),
+    _stack = new List<_GraphNode<T>>(),
     _scc = new List<List<T>>();
 
   List<List<T>> _executeTarjan() {
-    List<_TarjanNode> nodeList = new List<_TarjanNode>.from(_list.getSourceNodeSet());
-    for (final node in nodeList)
-    {
-      if(node.index == -1) {
+    List<_GraphNode> nodeList = new List<_GraphNode>.from(_list.getSourceNodeSet());
+    for (final node in nodeList) {
+      if(_getIndex(node) == -1) {
         _tarjan(node);
       }
     }
     return _scc;
   }
 
-  void _tarjan(_TarjanNode<T> v){
-    v.index = _index;
-    v.lowlink = _index;
+  void _tarjan(_GraphNode<T> v) {
+    _setIndex(v, _index);
+    _setLowLink(v, _index);
     _index++;
     _stack.insert(0, v);
     for(final n in _list.getAdjacent(v)){
-      if(n.index == -1){
+      if(_getIndex(n) == -1){
         _tarjan(n);
-        v.lowlink = math.min(v.lowlink, n.lowlink);
+        _setLowLink(v, math.min(_getLowLink(v), _getLowLink(n)));
       } else if(_stack.indexOf(n) >= 0){
-        v.lowlink = math.min(v.lowlink, n.index);
+        _setLowLink(v, math.min(_getLowLink(v), _getIndex(n)));
       }
     }
-    if(v.lowlink == v.index){
-      _TarjanNode n;
+    if(_getLowLink(v) == _getIndex(v)){
+      _GraphNode n;
       var component = new List<T>();
       do {
         n = _stack[0];
@@ -77,40 +78,40 @@ class _TarjanCycleDetect<T> {
       _scc.add(component);
     }
   }
-}
 
-class _TarjanNode<T> {
-  final T value;
-  int index;
-  int lowlink;
+  int _getIndex(_GraphNode<T> node) {
+    var value = _indexExpando[node];
+    return (value == null) ? -1 : value;
+  }
 
-  _TarjanNode(this.value):
-    index = -1;
+  int _setIndex(_GraphNode<T> node, int value) =>
+    _indexExpando[node] = value;
 
-  int get hashCode => value.hashCode;
+  int _getLowLink(_GraphNode<T> node) => _linkExpando[node];
 
-  bool operator ==(_TarjanNode<T> other) => other.value == value;
+  int _setLowLink(_GraphNode<T> node, int value) =>
+    _linkExpando[node] = value;
 }
 
 class _TarjanList<T> {
-  final Map<_TarjanNode<T>, Set<_TarjanNode<T>>> _nodes;
+  final Map<_GraphNode<T>, Set<_GraphNode<T>>> _nodes;
 
   _TarjanList._internal(this._nodes);
 
   factory _TarjanList(Map<T, Set<T>> source) {
     assert(source != null);
 
-    var map = new Map<T, _TarjanNode<T>>();
+    var map = new Map<T, _GraphNode<T>>();
 
-    var nodes = new Map<_TarjanNode<T>, Set<_TarjanNode<T>>>();
+    var nodes = new Map<_GraphNode<T>, Set<_GraphNode<T>>>();
 
     source.forEach((k,v) {
-      final tKey = map.putIfAbsent(k, () => new _TarjanNode(k));
-      var edges = nodes[tKey] = new Set<_TarjanNode<T>>();
+      final tKey = map.putIfAbsent(k, () => new _GraphNode(k));
+      var edges = nodes[tKey] = new Set<_GraphNode<T>>();
 
       if(v != null) {
         for(final edge in v) {
-          final tEdge = map.putIfAbsent(edge, () => new _TarjanNode(edge));
+          final tEdge = map.putIfAbsent(edge, () => new _GraphNode(edge));
           edges.add(tEdge);
         }
       }
@@ -119,11 +120,11 @@ class _TarjanList<T> {
     return new _TarjanList._internal(nodes);
   }
 
-  Iterable<_TarjanNode> getSourceNodeSet() {
+  Iterable<_GraphNode> getSourceNodeSet() {
     return _nodes.keys;
   }
 
-  Iterable<_TarjanNode> getAdjacent(_TarjanNode v) {
+  Iterable<_GraphNode<T>> getAdjacent(_GraphNode<T> v) {
     var nodes = _nodes[v];
     if(nodes == null) {
       return [];
