@@ -1,5 +1,17 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.26.0 2013-12-09 (SDK 1.0.2.1 r30821)
+
+* **BREAKING** Removed deprecated functions in math: `Vector.length` and `Coordinate.getDistance`.
+* **DEPRECATED** `TarjanCycleDetect` class. Use top-level `stronglyConnectedComponents` instead.
+* **NEW!** Top-level methods
+    * `topologicalSort`: great for figuring out dependencies.
+    * `streamForEachAsync`: great for running a `Future` for each item in a `Stream` and pausing while the `Future` executes.
+    * `expandStream`: Like `Stream.expand` but allows one to yield a sub-`Stream` for each item in the source.
+* Miscellaneous
+    * Broke a few pieces of `bot` into sub-libraries.
+    * Broke tests into seperate libraries.    
+
 ## 0.25.3 2013-11-24 (SDK 1.0.0.7 r30338)
 
 * **NEW!** Added `refresh` to `ThrottledStream`
