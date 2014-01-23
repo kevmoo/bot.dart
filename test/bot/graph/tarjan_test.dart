@@ -58,7 +58,7 @@ void main() {
 
     var result = TarjanCycleDetect.getStronglyConnectedComponents(graph);
     expect(result.length, equals(1));
-    expect(result[0], unorderedEquals([1,2,3,4,5]));
+    expect(result[0], unorderedEquals([1, 2, 3, 4, 5]));
   });
 
   test('5 random', () {
@@ -71,7 +71,7 @@ void main() {
 
     var result = TarjanCycleDetect.getStronglyConnectedComponents(graph);
     expect(result.length, equals(4));
-    expect(result[0], unorderedEquals([2,3]));
+    expect(result[0], unorderedEquals([2, 3]));
     expect(result[1], unorderedEquals([1]));
     expect(result[2], unorderedEquals([4]));
     expect(result[3], unorderedEquals([5]));

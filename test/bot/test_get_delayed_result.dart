@@ -28,7 +28,7 @@ void main() {
     _testSilly([true, false], v);
     _testSilly([false, true], v);
     _testSilly([false, false], v);
-    _testSilly([true,true, true], v);
+    _testSilly([true, true, true], v);
     _testSilly([true, true, false], v);
     _testSilly([true, false, true], v);
     _testSilly([true, false, false], v);
@@ -46,7 +46,7 @@ void _testSilly(List<bool> values, bool doThrow) {
   final finalVal = _drValue++;
 
   var msg = values.map((v) => v ? 'future' : 'func').join(' to ');
-  if(!msg.isEmpty) {
+  if (!msg.isEmpty) {
     msg = msg + ' to ';
   }
 
@@ -67,7 +67,7 @@ _returnSilly(List<bool> values, finalVal, bool doThrow) {
   }
 
   final doFuture = values.removeAt(0);
-  if(doFuture) {
+  if (doFuture) {
     return new Future.value(_returnSilly(values, finalVal, doThrow));
   } else {
     return () => _returnSilly(values, finalVal, doThrow);
@@ -77,7 +77,7 @@ _returnSilly(List<bool> values, finalVal, bool doThrow) {
 void _drTest(String description, input, expectedOutput, [bool expectThrow = false]) {
   test(description, () {
     final future = getDelayedResult(input);
-    if(expectThrow) {
+    if (expectThrow) {
       expect(future, throwsA("sorry, I don't like $expectedOutput"));
     } else {
       expect(future, finishesWith(same(expectedOutput)));

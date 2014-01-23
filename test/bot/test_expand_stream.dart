@@ -69,9 +69,9 @@ void main() {
 
       return streamForEachAsync(controller.stream, (int item) {
         expect(item, count);
-        if(item < 5) {
+        if (item < 5) {
           count++;
-          controller.add(item+1);
+          controller.add(item + 1);
         } else {
           controller.addError('never 5');
         }
@@ -99,9 +99,9 @@ void main() {
 
       return streamForEachAsync(controller.stream, (int item) {
         expect(item, count);
-        if(item < 5) {
+        if (item < 5) {
           count++;
-          controller.add(item+1);
+          controller.add(item + 1);
         } else {
           throw 'never 5';
         }
@@ -129,9 +129,9 @@ void main() {
 
       return streamForEachAsync(controller.stream, (int item) {
         expect(item, count);
-        if(item < 5) {
+        if (item < 5) {
           count++;
-          controller.add(item+1);
+          controller.add(item + 1);
         } else {
           return new Future.error('never 5');
         }

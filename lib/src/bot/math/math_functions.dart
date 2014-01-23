@@ -20,7 +20,7 @@ num lerp(num a, num b, num x) {
 }
 
 math.Random get rnd {
-  if(_botHelperRandom == null) {
+  if (_botHelperRandom == null) {
     _botHelperRandom = new math.Random();
   }
   return _botHelperRandom;

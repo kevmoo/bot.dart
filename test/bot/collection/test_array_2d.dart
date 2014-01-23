@@ -12,7 +12,7 @@ class TestArray2d {
   }
 
   static void _testGetAdjacent() {
-    final list = ['a','b','c','d','e','f','g','h','i'];
+    final list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
     final a = new Array2d.readonlyFrom(3, list);
     expect(a, orderedEquals(list));
@@ -20,10 +20,10 @@ class TestArray2d {
     //
     // Adjacent indices
     //
-    var adjacent = a.getAdjacentIndices(0,0);
-    expect(adjacent, orderedEquals([1,3,4]));
+    var adjacent = a.getAdjacentIndices(0, 0);
+    expect(adjacent, orderedEquals([1, 3, 4]));
 
-    adjacent = a.getAdjacentIndices(1,1);
+    adjacent = a.getAdjacentIndices(1, 1);
     expect(adjacent, orderedEquals([0, 1, 2, 3, 5, 6, 7, 8]));
 
     adjacent = a.getAdjacentIndices(4, 4);
@@ -32,11 +32,11 @@ class TestArray2d {
     //
     // Adjacent values
     //
-    adjacent = a.getAdjacent(0,0);
-    expect(adjacent, orderedEquals(['b','d','e']));
+    adjacent = a.getAdjacent(0, 0);
+    expect(adjacent, orderedEquals(['b', 'd', 'e']));
 
-    adjacent = a.getAdjacent(1,1);
-    expect(adjacent, orderedEquals(['a','b','c','d','f','g','h','i']));
+    adjacent = a.getAdjacent(1, 1);
+    expect(adjacent, orderedEquals(['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i']));
 
     adjacent = a.getAdjacent(4, 4);
     expect(adjacent, orderedEquals([]));
@@ -44,22 +44,22 @@ class TestArray2d {
 
   static void _testSetGet() {
     final v = 0;
-    final a = new Array2d<int>(3,3,v);
-    expect(a, orderedEquals([v,v,v,v,v,v,v,v,v]));
+    final a = new Array2d<int>(3, 3, v);
+    expect(a, orderedEquals([v, v, v, v, v, v, v, v, v]));
 
-    for(int x = 0; x < 3; x++) {
-      for(int y = 0; y < 3; y++) {
-        expect(a.get(x,y), equals(v));
+    for (int x = 0; x < 3; x++) {
+      for (int y = 0; y < 3; y++) {
+        expect(a.get(x, y), equals(v));
       }
     }
 
     a[3] = 1;
     expect(a[3], equals(1));
-    expect(a.get(0,1), equals(1));
+    expect(a.get(0, 1), equals(1));
 
-    a.set(0,1,2);
+    a.set(0, 1, 2);
     expect(a[3], equals(2));
-    expect(a.get(0,1), equals(2));
+    expect(a.get(0, 1), equals(2));
   }
 
   static void _testDefaultCtor() {
@@ -98,7 +98,7 @@ class TestArray2d {
   }
 
   static void _testCollectionEquals() {
-    final a = new Array2d<int>.readonlyFrom(2, [0,1,2,3]);
-    expect(a, orderedEquals([0,1,2,3]));
+    final a = new Array2d<int>.readonlyFrom(2, [0, 1, 2, 3]);
+    expect(a, orderedEquals([0, 1, 2, 3]));
   }
 }

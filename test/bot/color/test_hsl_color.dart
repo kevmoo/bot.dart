@@ -2,7 +2,7 @@ part of test_bot;
 
 class TestHslColor {
   static void run() {
-    group('HslColor', (){
+    group('HslColor', () {
       test('Equals', _testEquals);
       test('Invalid', _testInvalid);
 
@@ -13,9 +13,9 @@ class TestHslColor {
                                -361, 359,
                                721, 1];
 
-        for(int i = 0; i < values.length; i+=2) {
+        for (int i = 0; i < values.length; i += 2) {
           final color = new HslColor(values[i], 0, 0);
-          expect(color.h, values[i+1]);
+          expect(color.h, values[i + 1]);
         }
 
       });
@@ -34,7 +34,7 @@ class TestHslColor {
     expect(b, equals(a));
     expect(b, isNot(same(a)));
 
-    var c = new HslColor(1,1,0);
+    var c = new HslColor(1, 1, 0);
     expect(c, isNot(equals(a)));
     expect(c, isNot(same(a)));
   }
@@ -42,7 +42,7 @@ class TestHslColor {
   static void _testInvalid() {
     expect(() => new HslColor(0, 0, 0), returnsNormally);
 
-    for(final invalidNumber in const[null, double.INFINITY, double.NEGATIVE_INFINITY, double.NAN]) {
+    for (final invalidNumber in const [null, double.INFINITY, double.NEGATIVE_INFINITY, double.NAN]) {
       expect(() => new HslColor(invalidNumber, 0, 0), throwsArgumentError);
       expect(() => new HslColor(0, invalidNumber, 0), throwsArgumentError);
       expect(() => new HslColor(0, 0, invalidNumber), throwsArgumentError);

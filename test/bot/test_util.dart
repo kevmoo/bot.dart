@@ -31,8 +31,8 @@ class TestUtil {
     _hashCodeFun([null], 0);
     _hashCodeFun([null, null], 0);
     _hashCodeFun([1], 307143837);
-    _hashCodeFun([1,2], 93096440);
-    _hashCodeFun([2,1], 405401106);
+    _hashCodeFun([1, 2], 93096440);
+    _hashCodeFun([2, 1], 405401106);
     _hashCodeFun([null, 1], 307143837);
     _hashCodeFun([null, null, 1], 307143837);
     _hashCodeFun([1, null], 15319219);
@@ -48,7 +48,7 @@ class _SimpleHash {
   final int hashCode;
 
   factory _SimpleHash(int hashCode) {
-    if(hashCode == null) {
+    if (hashCode == null) {
       return null;
     } else {
       return new _SimpleHash._internal(hashCode);

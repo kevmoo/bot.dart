@@ -19,28 +19,28 @@ class TestEnumerable {
   }
 
   static void _testConcat() {
-    final enumValue = $([0,1,2]).concat([3,4,5]);
-    expect(enumValue, orderedEquals([0,1,2,3,4,5]));
+    final enumValue = $([0, 1, 2]).concat([3, 4, 5]);
+    expect(enumValue, orderedEquals([0, 1, 2, 3, 4, 5]));
   }
 
   static void _testExclude() {
-    final enumValue = $([0,1,2,3,4]);
+    final enumValue = $([0, 1, 2, 3, 4]);
     expect(enumValue.exclude([]), orderedEquals(enumValue));
     expect(enumValue.exclude([5, -1]), orderedEquals(enumValue));
-    expect(enumValue.exclude([1,3]), orderedEquals([0,2,4]));
+    expect(enumValue.exclude([1, 3]), orderedEquals([0, 2, 4]));
   }
 
   static void _testDistinct() {
-    final enumValue = $([0,0,1,1,2,2,0,1,2,3,4,5]);
-    expect(enumValue.distinct(), unorderedEquals([0,1,2,3,4,5]));
+    final enumValue = $([0, 0, 1, 1, 2, 2, 0, 1, 2, 3, 4, 5]);
+    expect(enumValue.distinct(), unorderedEquals([0, 1, 2, 3, 4, 5]));
 
-    final oddsAndEvens = enumValue.distinct((a,b) => a % 2 == b % 2);
-    expect(oddsAndEvens, unorderedEquals([0,1]));
+    final oddsAndEvens = enumValue.distinct((a, b) => a % 2 == b % 2);
+    expect(oddsAndEvens, unorderedEquals([0, 1]));
   }
 
   static void _testForEachWithIndex() {
-    final enumValue = $([0,1,2,3]);
-    enumValue.forEachWithIndex((e,i) {
+    final enumValue = $([0, 1, 2, 3]);
+    enumValue.forEachWithIndex((e, i) {
       expect(i, equals(e));
     });
   }
@@ -52,7 +52,7 @@ class TestEnumerable {
     // where the item is the key
     //
     var hashMap = noDupes.toMap((s) => s.length);
-    hashMap.forEach((k,v) {
+    hashMap.forEach((k, v) {
       expect(k.length, equals(v));
     });
     expect(hashMap.keys, unorderedEquals(noDupes));
@@ -61,7 +61,7 @@ class TestEnumerable {
     // where the key is produced by a func, too
     //
     hashMap = noDupes.toMap((s) => s, (s) => s[0]);
-    hashMap.forEach((k,v) {
+    hashMap.forEach((k, v) {
       expect(k, equals(v[0]));
     });
     expect(hashMap.values, unorderedEquals(noDupes));
@@ -78,7 +78,7 @@ class TestEnumerable {
   }
 
   static void _testCount() {
-    final e = $([1,2,3,4,5,6]);
+    final e = $([1, 2, 3, 4, 5, 6]);
 
     expect(e.length, equals(6));
 
@@ -88,7 +88,7 @@ class TestEnumerable {
 
   static void _testSelectNumbers() {
     final e = $(['a', 'cat', 'is', 'super']).selectNumbers((x) => x.length);
-    expect(e, orderedEquals([1,3,2,5]));
+    expect(e, orderedEquals([1, 3, 2, 5]));
 
     final sum = e.sum();
     expect(sum, equals(11));
@@ -96,7 +96,7 @@ class TestEnumerable {
 
   static List<String> _getChars(String input) {
     var list = new List<String>();
-    for(int i = 0; i < input.length; i++) {
+    for (int i = 0; i < input.length; i++) {
       list.add(input[i]);
     }
 

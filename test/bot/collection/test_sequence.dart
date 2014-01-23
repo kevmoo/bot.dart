@@ -26,7 +26,7 @@ class TestSequence extends Sequence<int> {
   }
 
   static void run() {
-    group('ListBase', (){
+    group('ListBase', () {
       test('indexOf', _testIndexOf);
       test('simple', _testSimple);
       test('last', _testLast);
@@ -39,7 +39,7 @@ class TestSequence extends Sequence<int> {
 
   static void _testSimple() {
     expect(instance.length, equals(_length));
-    expect(instance, orderedEquals([5,4,3,2,1]));
+    expect(instance, orderedEquals([5, 4, 3, 2, 1]));
   }
 
   static void _testIndexOf() {

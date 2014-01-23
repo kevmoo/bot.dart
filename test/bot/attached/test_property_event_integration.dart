@@ -23,7 +23,7 @@ class TestPropertyEventIntegration extends AttachableObject {
   //
   String get name => _nameProperty.get(this);
 
-  void set name(String value){
+  void set name(String value) {
     _nameProperty.set(this, value);
   }
 
@@ -34,22 +34,22 @@ class TestPropertyEventIntegration extends AttachableObject {
   //
   int get age => _ageProperty.get(this);
 
-  void set age(int value){
+  void set age(int value) {
     _ageProperty.set(this, value);
   }
 
-  async.Stream<EventArgs> get ageChanged =>_ageChangedEventHandle.stream;
+  async.Stream<EventArgs> get ageChanged => _ageChangedEventHandle.stream;
 
-  void reset(){
+  void reset() {
     _nameProperty.clear(this);
     _ageProperty.clear(this);
   }
 
-  static void run(){
+  static void run() {
     test('PropertyObject, EventHandle', doTest);
   }
 
-  static void doTest(){
+  static void doTest() {
     var nh = new EventWatcher<EventArgs>();
 
     var ah = new EventWatcher<EventArgs>();

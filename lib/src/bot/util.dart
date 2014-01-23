@@ -30,7 +30,7 @@ class Util {
    */
   static String padLeft(String text, int minWidth) {
     requireArgumentNotNull(text, 'text');
-    while(text.length < minWidth) {
+    while (text.length < minWidth) {
       text = ' ' + text;
     }
     return text;
@@ -50,11 +50,11 @@ class Util {
  * nor a [Function] that value is returned wrapped in a [Future].
  */
 async.Future<dynamic> getDelayedResult(dynamic input) {
-  if(input is Function) {
+  if (input is Function) {
     input = new async.Future(input);
   }
 
-  if(input is async.Future) {
+  if (input is async.Future) {
     return input.then((value) => getDelayedResult(value));
   } else {
     return new async.Future.value(input);

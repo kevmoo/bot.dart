@@ -67,7 +67,7 @@ void main() {
 
     test('StringReader', _testStringReader);
 
-    group('attached', (){
+    group('attached', () {
       TestAttachedEvents.run();
       TestProperties.run();
       TestPropertyEventIntegration.run();
@@ -79,14 +79,14 @@ void main() {
 void _testStringReader() {
   _verifyValues('', [''], null);
   _verifyValues('Shanna', ['Shanna'], null);
-  _verifyValues('Shanna\n', ['Shanna',''], null);
-  _verifyValues('\nShanna\n', ['', 'Shanna',''], null);
-  _verifyValues('\r\nShanna\n', ['', 'Shanna',''], null);
-  _verifyValues('\r\nShanna\r\n', ['', 'Shanna',''], null);
-  _verifyValues('\rShanna\r\n', ['\rShanna',''], null);
+  _verifyValues('Shanna\n', ['Shanna', ''], null);
+  _verifyValues('\nShanna\n', ['', 'Shanna', ''], null);
+  _verifyValues('\r\nShanna\n', ['', 'Shanna', ''], null);
+  _verifyValues('\r\nShanna\r\n', ['', 'Shanna', ''], null);
+  _verifyValues('\rShanna\r\n', ['\rShanna', ''], null);
 
   // a bit crazy. \r not before \n is not counted as a newline
-  _verifyValues('\r\n\r\n\r\r\n\n', ['','','\r','',''], null);
+  _verifyValues('\r\n\r\n\r\r\n\n', ['', '', '\r', '', ''], null);
 
   _verifyValues('line1\nline2\n\nthis\nis\the\rest\n',
       ['line1','line2',''], 'this\nis\the\rest\n');
@@ -95,7 +95,7 @@ void _testStringReader() {
 
 void _verifyValues(String input, List<String> output, String rest) {
   final sr = new StringLineReader(input);
-  for(final value in output) {
+  for (final value in output) {
     expect(sr.readNextLine(), value);
   }
   expect(sr.readToEnd(), rest, reason: 'rest did not match');

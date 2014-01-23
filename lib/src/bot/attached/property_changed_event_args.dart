@@ -5,8 +5,10 @@ class PropertyChangedEventArgs<T> extends EventArgs {
   final T newValue;
   final bool cleared;
 
-  PropertyChangedEventArgs(this.property, this.newValue) : cleared = false;
+  PropertyChangedEventArgs(this.property, this.newValue)
+      : cleared = false;
 
   PropertyChangedEventArgs.valueCleared(this.property)
-      : cleared = true, newValue = null;
+      : cleared = true,
+        newValue = null;
 }

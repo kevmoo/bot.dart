@@ -6,11 +6,11 @@ class TestCloneable implements Cloneable<TestCloneable> {
 
   TestCloneable.internal(this._id);
 
-  factory TestCloneable(){
+  factory TestCloneable() {
     return new TestCloneable.internal(_globalId++);
   }
 
-  TestCloneable clone(){
+  TestCloneable clone() {
     return new TestCloneable.internal(_id);
   }
 
@@ -22,7 +22,7 @@ class TestCloneable implements Cloneable<TestCloneable> {
 
   String toString() => 'TestCloneable: ${_id}';
 
-  static void run(){
+  static void run() {
     test('Cloneable', () {
       var val = new TestCloneable();
 

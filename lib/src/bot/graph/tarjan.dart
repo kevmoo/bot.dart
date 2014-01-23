@@ -40,7 +40,7 @@ class _TarjanCycleDetect<T> {
 
   List<List<T>> calculate() {
     for (var node in _list.nodes) {
-      if(_getIndex(node) == -1) {
+      if (_getIndex(node) == -1) {
         _tarjan(node);
       }
     }
@@ -52,21 +52,21 @@ class _TarjanCycleDetect<T> {
     _setLowLink(v, _index);
     _index++;
     _stack.addFirst(v);
-    for(final n in v.outNodes){
-      if(_getIndex(n) == -1){
+    for (final n in v.outNodes) {
+      if (_getIndex(n) == -1) {
         _tarjan(n);
         _setLowLink(v, math.min(_getLowLink(v), _getLowLink(n)));
-      } else if(_stack.contains(n)){
+      } else if (_stack.contains(n)) {
         _setLowLink(v, math.min(_getLowLink(v), _getIndex(n)));
       }
     }
-    if(_getLowLink(v) == _getIndex(v)){
+    if (_getLowLink(v) == _getIndex(v)) {
       _GraphNode n;
       var component = new List<T>();
       do {
         n = _stack.removeFirst();
         component.add(n.value);
-      } while(n != v);
+      } while (n != v);
       _scc.add(component);
     }
   }

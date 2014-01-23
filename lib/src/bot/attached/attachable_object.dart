@@ -44,27 +44,27 @@ class AttachableObject extends DisposableImpl {
   void _fireEvent(Attachable attachable, dynamic args) {
     validateNotDisposed();
     var handle = _eventHandlers[attachable];
-    if(handle != null){
+    if (handle != null) {
       handle.add(args);
     }
   }
 
-  void _set(Property key, Object value){
+  void _set(Property key, Object value) {
     validateNotDisposed();
     assert(!identical(value, Property.Undefined));
     _propertyValues[key] = value;
     _fireChange(key, value, false);
   }
 
-  bool _isSet(Property key){
+  bool _isSet(Property key) {
     validateNotDisposed();
     return _propertyValues.containsKey(key);
   }
 
-  void _remove(Property key){
+  void _remove(Property key) {
     validateNotDisposed();
     var exists = _isSet(key);
-    if(exists){
+    if (exists) {
       // NOTE: remove returns the removed item, which could be null. Bleh.
       // TODO: ponder null-ish value to avoid these double access scenarios? Maybe?
       _propertyValues.remove(key);
@@ -75,15 +75,13 @@ class AttachableObject extends DisposableImpl {
   Object _getValueOrUndefined(Property key, AttachableObject obj,
                               Func1<AttachableObject, Object> ifAbsent){
     validateNotDisposed();
-    if(_isSet(key)){
+    if (_isSet(key)) {
       return _propertyValues[key];
-    }
-    else if(ifAbsent != null){
+    } else if (ifAbsent != null) {
       var value = ifAbsent(obj);
       _set(key, value);
       return value;
-    }
-    else{
+    } else {
       return Property.Undefined;
     }
   }

@@ -3,7 +3,7 @@ part of test_bot;
 // TODO: test lerp
 
 class TestAffineTransform {
-  static void run(){
+  static void run() {
     group('AffineTransform', () {
 
       test('constructors', () {
@@ -23,8 +23,8 @@ class TestAffineTransform {
       });
 
       test('set from transform', () {
-        final tx1 = new AffineTransform(1,2,3,4,5,6);
-        final tx2 = new AffineTransform(6,5,4,3,2,1);
+        final tx1 = new AffineTransform(1, 2, 3, 4, 5, 6);
+        final tx2 = new AffineTransform(6, 5, 4, 3, 2, 1);
 
         expect(tx1, isNot(tx2));
 
@@ -56,7 +56,7 @@ class TestAffineTransform {
         expect(tx.translateY, equals(26));
       });
 
-      test('rotate', (){
+      test('rotate', () {
         var tx = new AffineTransform(1, 2, 3, 4, 5, 6);
         tx.rotate(math.PI / 2, 1, 1);
 
@@ -68,7 +68,7 @@ class TestAffineTransform {
         expect(tx.translateY, closeTo(10, 0.001));
       });
 
-      test('translate', (){
+      test('translate', () {
         var tx = new AffineTransform(1, 2, 3, 4, 5, 6);
         tx.translate(2, 3);
 
@@ -80,7 +80,7 @@ class TestAffineTransform {
         expect(tx.translateY, equals(22));
       });
 
-      test('createInverse', (){
+      test('createInverse', () {
         var tx = new AffineTransform.fromScale(2, 3);
         tx.translate(5, 10);
         tx.rotate(math.PI / 4, 5, 10);
@@ -94,16 +94,16 @@ class TestAffineTransform {
         expect(inverse.translateY, closeTo(2.928932, 0.001));
       });
 
-      test('equals and clone', (){
-        var val = new AffineTransform(1,2,3,4,5,6);
+      test('equals and clone', () {
+        var val = new AffineTransform(1, 2, 3, 4, 5, 6);
         expect(val, equals(val));
         expect(val, same(val));
 
-        var val2 = new AffineTransform(7,8,9,10,11,12);
+        var val2 = new AffineTransform(7, 8, 9, 10, 11, 12);
         expect(val2, isNot(equals(val)));
         expect(val2, isNot(same(val)));
 
-        var val3 = new AffineTransform(1,2,3,4,5,6);
+        var val3 = new AffineTransform(1, 2, 3, 4, 5, 6);
         // values equals
         expect(val3, equals(val));
         // but *not* the same object

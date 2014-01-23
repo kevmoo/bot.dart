@@ -18,7 +18,7 @@ class StringLineReader {
   String peekNextLine() => _peekOrReadNextLine(false);
 
   String readToEnd() {
-    if(_position == null) {
+    if (_position == null) {
       return null;
     }
     final value = source.substring(position, source.length);
@@ -27,27 +27,27 @@ class StringLineReader {
   }
 
   String _peekOrReadNextLine(bool updatePosition) {
-    if(_position == null) {
+    if (_position == null) {
       return null;
     }
     final nextLF = source.indexOf('\n', _position);
 
-    if(nextLF < 0) {
+    if (nextLF < 0) {
       // no more new lines, return what's left and set postion = null
       final value = source.substring(position, source.length);
-      if(updatePosition) {
+      if (updatePosition) {
         _position = null;
       }
       return value;
     }
 
     // to handle Windows newlines, see if the value before nextLF is a Carriage return
-    final isWinNL = nextLF > 0 && source.substring(nextLF-1,nextLF) == '\r';
+    final isWinNL = nextLF > 0 && source.substring(nextLF - 1, nextLF) == '\r';
 
     final value = isWinNL ? source.substring(_position, nextLF-1) :
       source.substring(_position, nextLF);
 
-    if(updatePosition) {
+    if (updatePosition) {
       _position = nextLF + 1;
     }
 

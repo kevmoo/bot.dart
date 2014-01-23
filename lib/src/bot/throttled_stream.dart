@@ -13,8 +13,8 @@ class ThrottledStream<S, T> {
   Future<T> _outputFuture;
   bool _forceUpdate = false;
 
-  ThrottledStream(dynamic asyncMethod(S source)) :
-    this._asyncMethod = asyncMethod;
+  ThrottledStream(dynamic asyncMethod(S source))
+      : this._asyncMethod = asyncMethod;
 
   Stream<T> get outputStream => _controller.stream;
 

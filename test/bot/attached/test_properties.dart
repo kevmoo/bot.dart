@@ -2,9 +2,9 @@ part of test_bot;
 
 class TestProperties extends AttachableObject {
 
-  static void run(){
-    group('PropertyObject', (){
-      test('without default', (){
+  static void run() {
+    group('PropertyObject', () {
+      test('without default', () {
         var testProperty = new Property("Test Property");
 
         var object = new TestProperties();
@@ -22,7 +22,7 @@ class TestProperties extends AttachableObject {
         expect(testProperty.isSet(object), isFalse);
       });
 
-      test('with factories', (){
+      test('with factories', () {
         var prop = new Property<int>("withoutDefault");
         testFactories(prop, 43, 18);
         testFactories(prop, 43, null);
@@ -41,7 +41,7 @@ class TestProperties extends AttachableObject {
         testFactories(prop, 24, null);
       });
 
-      test('with listeners', (){
+      test('with listeners', () {
         var testProperty = new Property<String>("Test Property");
 
         var object = new TestProperties();
@@ -95,7 +95,7 @@ class TestProperties extends AttachableObject {
         expect(h2.eventCount, equals(2));
       });
 
-      test('with default', (){
+      test('with default', () {
         var testProperty = new Property<int>("Test Property", 42);
 
         var object = new TestProperties();
@@ -116,7 +116,7 @@ class TestProperties extends AttachableObject {
     });
   }
 
-  static void testFactories(Property<int> prop, int setValue, int propFactoryValue){
+  static void testFactories(Property<int> prop, int setValue, int propFactoryValue) {
     var wodWatcher = new EventWatcher<PropertyChangedEventArgs>();
 
     var object = new TestProperties();
@@ -141,7 +141,7 @@ class TestProperties extends AttachableObject {
     expect(wodWatcher.eventCount, equals(1));
 
     // get w/ factory should not change the value
-    var propFactory = (AttachableObject obj){
+    var propFactory = (AttachableObject obj) {
       return propFactoryValue;
     };
 

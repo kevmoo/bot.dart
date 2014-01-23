@@ -5,7 +5,8 @@ class Property<T> extends Attachable {
 
   final T defaultValue;
 
-  Property(String name, [T this.defaultValue = null]) : super(name);
+  Property(String name, [T this.defaultValue = null])
+      : super(name);
 
   T get(AttachableObject obj, [Func1<AttachableObject, T> ifAbsent = null]){
     var coreValue = getCore(obj, ifAbsent);
@@ -17,7 +18,7 @@ class Property<T> extends Attachable {
     }
   }
 
-  Object getCore(AttachableObject obj, [Func1<AttachableObject, T> ifAbsent = null]){
+  Object getCore(AttachableObject obj, [Func1<AttachableObject, T> ifAbsent = null]) {
     return obj._getValueOrUndefined(this, obj, ifAbsent);
   }
 

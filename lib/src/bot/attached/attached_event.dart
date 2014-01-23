@@ -2,7 +2,8 @@ part of bot;
 
 class AttachedEvent<T> extends Attachable {
 
-  AttachedEvent(String name) : super(name);
+  AttachedEvent(String name)
+      : super(name);
 
   async.Stream getStream(AttachableObject obj) {
     return obj._getStream(this);

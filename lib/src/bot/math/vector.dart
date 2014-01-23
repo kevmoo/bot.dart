@@ -50,7 +50,7 @@ class Vector<T extends num> extends Coordinate<T> {
    * Angle zero points in the +X direction, 90 degrees points in the +Y
    * direction (down) and from there we grow clockwise.
    **/
-  num getAngle (Vector other) => other.angle - angle;
+  num getAngle(Vector other) => other.angle - angle;
 
   Vector rotate(num angle) {
     var cos = math.cos(angle);
