@@ -23,12 +23,12 @@ class RgbColor {
     var g = int.parse('0x' + hexColor.substring(3, 5));
     var b = int.parse('0x' + hexColor.substring(5, 7));
 
-    return new RgbColor(r,g,b);
+    return new RgbColor(r, g, b);
   }
 
   String toHex() {
     final buffer = new StringBuffer('#');
-    [r,g,b].forEach((c) {
+    [r, g, b].forEach((c) {
       buffer.write(_prependZeroIfNecessaryHelper(c.toRadixString(16)));
     });
     return buffer.toString();
@@ -70,7 +70,7 @@ class RgbColor {
     return new HslColor(h, s, l);
   }
 
-  int get hashCode => Util.getHashCode([r,g,b]);
+  int get hashCode => Util.getHashCode([r, g, b]);
 
   bool operator ==(RgbColor other) {
     return other != null && other.r == r && other.g == g && other.b == b;

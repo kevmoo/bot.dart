@@ -76,12 +76,10 @@ class _TarjanCycleDetect<T> {
     return (value == null) ? -1 : value;
   }
 
-  int _setIndex(_GraphNode<T> node, int value) =>
-    _indexExpando[node] = value;
+  int _setIndex(_GraphNode<T> node, int value) => _indexExpando[node] = value;
 
   int _getLowLink(_GraphNode<T> node) => _linkExpando[node];
 
-  int _setLowLink(_GraphNode<T> node, int value) =>
-    _linkExpando[node] = value;
+  int _setLowLink(_GraphNode<T> node, int value) => _linkExpando[node] = value;
 }
 

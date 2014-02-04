@@ -77,13 +77,13 @@ class TestArray2d {
   }
 
   static void _testReadonlyFromCtorParams() {
-    expect(() => new Array2d<int>.readonlyFrom(null, [0,1,2,3]),
+    expect(() => new Array2d<int>.readonlyFrom(null, [0, 1, 2, 3]),
         throwsNullArgumentError);
     expect(() => new Array2d<int>.readonlyFrom(2, null),
         throwsNullArgumentError);
-    expect(() => new Array2d<int>.readonlyFrom(0, [0,1,2,3]),
+    expect(() => new Array2d<int>.readonlyFrom(0, [0, 1, 2, 3]),
         throwsArgumentError);
-    expect(() => new Array2d<int>.readonlyFrom(3, [0,1,2,3]),
+    expect(() => new Array2d<int>.readonlyFrom(3, [0, 1, 2, 3]),
         throwsArgumentError);
 
     var skinnyArray = new Array2d<int>.readonlyFrom(3, []);

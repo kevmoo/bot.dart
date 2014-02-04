@@ -6,11 +6,11 @@ class ReadOnlyCollection<T> extends Sequence<T> {
   /**
    * Wraps [source]. Changes to [source] will be reflected.
    **/
-  ReadOnlyCollection.wrap(List<T> source) :
-    _items = source;
+  ReadOnlyCollection.wrap(List<T> source)
+      : _items = source;
 
-  const ReadOnlyCollection.empty() :
-    _items = const [];
+  const ReadOnlyCollection.empty()
+      : _items = const [];
 
   /**
    * Copies all of the elements from [source] into a new collection.
@@ -19,8 +19,8 @@ class ReadOnlyCollection<T> extends Sequence<T> {
    *
    * _Note: this is not a **deep** copy._
    **/
-  ReadOnlyCollection(Iterable<T> source) :
-    _items = new List<T>.from(source, growable: false);
+  ReadOnlyCollection(Iterable<T> source)
+      : _items = new List<T>.from(source, growable: false);
 
   /**
    * Returns the number of elements in this collection.

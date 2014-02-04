@@ -44,8 +44,8 @@ class StringLineReader {
     // to handle Windows newlines, see if the value before nextLF is a Carriage return
     final isWinNL = nextLF > 0 && source.substring(nextLF - 1, nextLF) == '\r';
 
-    final value = isWinNL ? source.substring(_position, nextLF-1) :
-      source.substring(_position, nextLF);
+    final value = isWinNL ? source.substring(_position, nextLF - 1) :
+        source.substring(_position, nextLF);
 
     if (updatePosition) {
       _position = nextLF + 1;

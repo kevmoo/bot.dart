@@ -44,7 +44,7 @@ class HslColor {
     return new RgbColor(r.round().toInt(), g.round().toInt(), b.round().toInt());
   }
 
-  int get hashCode => Util.getHashCode([h,s,l]);
+  int get hashCode => Util.getHashCode([h, s, l]);
 
   bool operator ==(HslColor other) {
     return other != null && other.h == h && other.s == s && other.l == l;

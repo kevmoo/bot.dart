@@ -3,7 +3,7 @@ part of bot;
 class DisposableImpl implements Disposable {
   bool _disposed = false;
 
-  void dispose(){
+  void dispose() {
     validateNotDisposed();
     // Set disposed_ to true first, in case during the chain of disposal this
     // gets disposed recursively.
@@ -12,7 +12,7 @@ class DisposableImpl implements Disposable {
   }
 
   void validateNotDisposed() {
-    if(_disposed) {
+    if (_disposed) {
       throw new DisposedError();
     }
   }

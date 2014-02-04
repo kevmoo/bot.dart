@@ -25,7 +25,7 @@ class Array2d<T> extends Sequence<T> {
     requireArgument(height >= 0, 'height');
     final s = new List<T>.filled(width * height, initialValue);
     assert(s.length == width * height);
-    if(width == 0) {
+    if (width == 0) {
       return new Array2d._skinny(height);
     }
     return new Array2d.wrap(width, s);
@@ -45,9 +45,9 @@ class Array2d<T> extends Sequence<T> {
     requireArgumentNotNull(source, 'source');
     requireArgument(width >= 0, 'width', 'width must be non-zero');
 
-    if(width * height == 0) {
+    if (width * height == 0) {
       requireArgument(_source.length == 0, 'width',
-        'width must be greater than zero if the source is non-empty');
+          'width must be greater than zero if the source is non-empty');
     } else {
       requireArgument(_source.length > 0, 'source',
           'if width is non-zero, source must be non-empty');
@@ -66,8 +66,7 @@ class Array2d<T> extends Sequence<T> {
 
   // TODO: test
   //  - especially equality across instances, rows, etc
-  Sequence<Sequence<T>> get rows =>
-      new _Array2dRows(this);
+  Sequence<Sequence<T>> get rows => new _Array2dRows(this);
 
   T get(int x, int y) {
     final i = _getIndex(x, y);
@@ -87,9 +86,9 @@ class Array2d<T> extends Sequence<T> {
   List<int> getAdjacentIndices(int x, int y) {
     final List<int> adj = new List<int>();
 
-    for(int k = math.max(0, y - 1); k < math.min(height, (y + 2)); k++) {
-      for(int j = math.max(0, x - 1); j < math.min(width, (x + 2)); j++) {
-        if(j != x || k != y) {
+    for (int k = math.max(0, y - 1); k < math.min(height, (y + 2)); k++) {
+      for (int j = math.max(0, x - 1); j < math.min(width, (x + 2)); j++) {
+        if (j != x || k != y) {
           adj.add(_getIndex(j, k));
         }
       }

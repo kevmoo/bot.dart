@@ -1,7 +1,7 @@
 part of bot;
 
 Enumerable $(Iterable source) {
-  if(source is Enumerable) {
+  if (source is Enumerable) {
     return source;
   } else {
     return new Enumerable.fromIterable(source);
@@ -16,16 +16,13 @@ abstract class Enumerable<T> extends IterableBase<T> {
     return new _SimpleEnumerable<T>(source);
   }
 
-  int count(Func1<T, bool> f) =>
-      CollectionUtil.count(this, f);
+  int count(Func1<T, bool> f) => CollectionUtil.count(this, f);
 
   @override
-  Enumerable map(Func1<T, Object> f) =>
-      $(super.map(f));
+  Enumerable map(Func1<T, Object> f) => $(super.map(f));
 
   @override
-  Enumerable<T> where(Func1<T, bool> f) =>
-      $(super.where(f));
+  Enumerable<T> where(Func1<T, bool> f) => $(super.where(f));
 
   Enumerable<T> exclude(Iterable<T> items) =>
       CollectionUtil.exclude(this, items);
@@ -48,7 +45,7 @@ abstract class Enumerable<T> extends IterableBase<T> {
 
   void forEachWithIndex(Action2<T, int> f) {
     int i = 0;
-    for(final e in this) {
+    for (final e in this) {
       f(e, i++);
     }
   }

@@ -24,8 +24,8 @@ abstract class NumberEnumerable<T extends num> extends IterableBase<T> {
 
   num sum() {
     num theSum = 0;
-    for(final n in this) {
-      if(n == null) {
+    for (final n in this) {
+      if (n == null) {
         throw const InvalidOperationError('Input contained a null item');
       }
       theSum += n;
@@ -36,8 +36,8 @@ abstract class NumberEnumerable<T extends num> extends IterableBase<T> {
   num average() {
     int theCount = 0;
     num theSum = 0;
-    for(final n in this) {
-      if(n == null) {
+    for (final n in this) {
+      if (n == null) {
         throw const InvalidOperationError('Input contained a null item');
       }
       theSum += n;

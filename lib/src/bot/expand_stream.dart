@@ -30,8 +30,8 @@ class _StreamForEachAsync<T> {
 
   final Completer _completer = new Completer();
 
-  _StreamForEachAsync(Stream<T> source, this._action) :
-    this._iterator = new StreamIterator(source) {
+  _StreamForEachAsync(Stream<T> source, this._action)
+      : this._iterator = new StreamIterator(source) {
     _moveNext();
   }
 

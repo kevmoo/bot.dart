@@ -39,7 +39,7 @@ void requireArgumentContainsPattern(Pattern pattern, String argValue, String arg
     throw new InvalidOperationError("That's just sad. No null pattern");
   }
   requireArgumentNotNull(argValue, argName);
-  if(!argValue.contains(pattern)) {
+  if (!argValue.contains(pattern)) {
     throw new DetailedArgumentError(argName,
         'The value "$argValue" does not contain the pattern "${pattern}"');
   }

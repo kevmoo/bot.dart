@@ -26,14 +26,12 @@ class Vector<T extends num> extends Coordinate<T> {
    * Multiplies each dimensions by the provided magnitude and returns a new [Vector].
    **/
   @override
-  Vector<T> operator *(num magnitude) =>
-      this.scale(magnitude);
+  Vector<T> operator *(num magnitude) => this.scale(magnitude);
 
   /**
    * Multiplies each dimensions by the provided magnitude and returns a new [Vector].
    **/
-  Vector<T> scale(num magnitude) =>
-      new Vector<T>(x * magnitude, y * magnitude);
+  Vector<T> scale(num magnitude) => new Vector<T>(x * magnitude, y * magnitude);
 
   /**
    * Computes the dot product with the given [Vector].

@@ -31,11 +31,11 @@ abstract class Sequence<E> extends Enumerable<E> {
   // TODO: ponder making the type Iterable and be smarter about length, etc.
   bool itemsEqual(Sequence other) {
     requireArgumentNotNull(other, 'other');
-    if(other.length != this.length) {
+    if (other.length != this.length) {
       return false;
     }
-    for(int i = 0; i < length; i++) {
-      if(other[i] != this[i]) {
+    for (int i = 0; i < length; i++) {
+      if (other[i] != this[i]) {
         return false;
       }
     }
@@ -84,14 +84,13 @@ class _SequenceList<E> extends Sequence<E> with ListMixin<E>
   }
   @override
   void operator []=(int index, E value) {
-    throw new UnsupportedError(
-        "Cannot modify an unmodifiable list");
+    throw new UnsupportedError("Cannot modify an unmodifiable list");
   }
 
   @override
   void set length(int newLength) {
-    throw new UnsupportedError(
-        "Cannot change the length of an unmodifiable list");
+    throw new
+        UnsupportedError("Cannot change the length of an unmodifiable list");
   }
 
 }

@@ -9,8 +9,8 @@ class EventHandle<T> implements Disposable {
 
   void add(T event) => _controller.add(event);
 
-  void dispose(){
-    if(_disposed) {
+  void dispose() {
+    if (_disposed) {
       throw new DisposedError();
     }
     // Set disposed_ to true first, in case during the chain of disposal this

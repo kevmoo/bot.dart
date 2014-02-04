@@ -14,7 +14,7 @@ class HuslConverter {
 
   //Pass in RGB values ranging from 0 to 1 and get back HUSL values.
   //H ranges from 0 to 360, S and L from 0 to 100.
-  static List<num> RGBtoHUSL( num r, num g, num b ) {
+  static List<num> RGBtoHUSL(num r, num g, num b) {
     return _LCH_HUSL(_LUV_LCH(_XYZ_LUV(_RGB_XYZ([r, g, b]))));
   }
 
@@ -38,7 +38,7 @@ class HuslConverter {
   static final num lab_e = 0.008856;
   static final num lab_k = 903.3;
 
-  static num _maxChroma(num L, num H){
+  static num _maxChroma(num L, num H) {
     final List<num> _ref = [0.0, 1.0];
 
     final hrad = ((H / 360.0) * 2 * math.PI);
@@ -68,7 +68,7 @@ class HuslConverter {
     return result;
   }
 
-  static num _dotProduct(List<num> a, List<num> b){
+  static num _dotProduct(List<num> a, List<num> b) {
     assert(a.length == b.length);
 
     num ret = 0.0;
@@ -78,7 +78,7 @@ class HuslConverter {
     return ret;
   }
 
-  static num _round( num number, int places ) {
+  static num _round(num number, int places) {
     final n = math.pow(10.0, places);
     return (number * n).floor() / n;
   }
@@ -91,8 +91,7 @@ class HuslConverter {
     }
   }
 
-  static num _f_inv( num t )
-  {
+  static num _f_inv(num t) {
     if (math.pow(t, 3) > lab_e) {
       return math.pow(t, 3);
     } else {
@@ -119,18 +118,17 @@ class HuslConverter {
   }
 
   static List<num> _rgbPrepare(List<num> tuple) {
-    for(var i = 0; i < 3; ++i){
+    for (var i = 0; i < 3; ++i) {
       tuple[i] = _round(tuple[i], 3);
 
       if (tuple[i] < 0 || tuple[i] > 1) {
-        if(tuple[i] < 0) {
+        if (tuple[i] < 0) {
           tuple[i] = 0;
-        }
-        else {
+        } else {
           tuple[i] = 1;
         }
       }
-      tuple[i] = _round(tuple[i]*255, 0);
+      tuple[i] = _round(tuple[i] * 255, 0);
     }
 
     return tuple;
@@ -166,7 +164,7 @@ class HuslConverter {
     return tuple;
   }
 
-  static List<num> _XYZ_LUV( List<num> tuple ) {
+  static List<num> _XYZ_LUV(List<num> tuple) {
     final X = tuple[0];
     final Y = tuple[1];
     final Z = tuple[2];
@@ -243,7 +241,7 @@ class HuslConverter {
     return tuple;
   }
 
-   static List<num> _HUSL_LCH(List<num> tuple) {
+  static List<num> _HUSL_LCH(List<num> tuple) {
     final H = tuple[0];
     final S = tuple[1];
     final L = tuple[2];

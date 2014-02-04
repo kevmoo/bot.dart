@@ -31,10 +31,10 @@ class AttachableObject extends DisposableImpl {
 
   void _onCancel(Attachable property) {
     assert(property != null);
-    if(!isDisposed) {
+    if (!isDisposed) {
       var handle = _eventHandlers[property];
       assert(handle != null);
-      if(!handle.hasListener) {
+      if (!handle.hasListener) {
         handle.dispose();
         _eventHandlers.remove(property);
       }
@@ -89,8 +89,8 @@ class AttachableObject extends DisposableImpl {
   void _fireChange(Property key, dynamic value, bool isClear) {
     validateNotDisposed();
     var handle = _eventHandlers[key];
-    if(handle != null){
-      if(isClear) {
+    if (handle != null) {
+      if (isClear) {
         assert(value == null);
         handle.add(new PropertyChangedEventArgs.valueCleared(key));
       } else {

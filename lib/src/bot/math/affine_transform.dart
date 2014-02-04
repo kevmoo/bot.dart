@@ -44,23 +44,23 @@ class AffineTransform implements Cloneable<AffineTransform> {
       _tX = translateX;
     }
 
-    if(translateY != null) {
+    if (translateY != null) {
       _tY = translateY;
     }
 
-    if(scaleX != null) {
+    if (scaleX != null) {
       _scX = scaleX;
     }
 
-    if(scaleY != null) {
+    if (scaleY != null) {
       _scY = scaleY;
     }
 
-    if(shearX != null) {
+    if (shearX != null) {
       _shX = shearX;
     }
 
-    if(shearY != null) {
+    if (shearY != null) {
       _shY = shearY;
     }
   }
@@ -137,7 +137,7 @@ class AffineTransform implements Cloneable<AffineTransform> {
     return this;
   }
 
-  Coordinate transformCoordinate([math.Point point = const Coordinate()]){
+  Coordinate transformCoordinate([math.Point point = const Coordinate()]) {
     num x = point.x * _scX + point.y * _shX + _tX;
     num y = point.x * _shY + point.y * _scY + _tY;
 
@@ -168,7 +168,7 @@ class AffineTransform implements Cloneable<AffineTransform> {
     return new AffineTransform(m00, m10, m01, m11, m02, m12);
   }
 
-  AffineTransform clone(){
+  AffineTransform clone() {
     return new AffineTransform(_scX, _shY, _shX, _scY, _tX, _tY);
   }
 

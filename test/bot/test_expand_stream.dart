@@ -75,12 +75,10 @@ void main() {
         } else {
           controller.addError('never 5');
         }
-      })
-      .catchError((err) {
+      }).catchError((err) {
         expect(err, 'never 5');
         errorCaught = true;
-      })
-      .then((_) {
+      }).then((_) {
         expect(errorCaught, isTrue);
         expect(canceled, isTrue);
       });
@@ -105,12 +103,10 @@ void main() {
         } else {
           throw 'never 5';
         }
-      })
-      .catchError((err) {
+      }).catchError((err) {
         expect(err, 'never 5');
         errorCaught = true;
-      })
-      .then((_) {
+      }).then((_) {
         expect(errorCaught, isTrue);
         expect(canceled, isTrue);
       });
@@ -135,12 +131,10 @@ void main() {
         } else {
           return new Future.error('never 5');
         }
-      })
-      .catchError((err) {
+      }).catchError((err) {
         expect(err, 'never 5');
         errorCaught = true;
-      })
-      .then((_) {
+      }).then((_) {
         expect(errorCaught, isTrue);
         expect(canceled, isTrue);
       });
@@ -148,11 +142,9 @@ void main() {
   });
 }
 
-Stream<int> _fromNumber(int input) =>
-    _slowFromList([input, input * 2]);
+Stream<int> _fromNumber(int input) => _slowFromList([input, input * 2]);
 
-Stream<int> _final() =>
-    _slowFromList([0,1,2,3]);
+Stream<int> _final() => _slowFromList([0, 1, 2, 3]);
 
 Stream _slowFromList(List items) {
   var controller = new StreamController();

@@ -18,10 +18,10 @@ class _Graph<T> {
         map.putIfAbsent(value, () => new _GraphNode<T>(value));
 
     items.forEach((T item, Iterable<T> outLinks) {
-      if(outLinks == null) outLinks = [];
+      if (outLinks == null) outLinks = [];
 
       var node = getNode(item);
-      for(T outLink in outLinks) {
+      for (T outLink in outLinks) {
         var newItem = node.outNodes.add(getNode(outLink));
         requireArgument(newItem, 'items', 'Outlinks must not contain dupes');
       }

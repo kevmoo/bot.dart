@@ -4,7 +4,7 @@ class Grouping<K, V> {
   final HashMap<K, List<V>> _values = new HashMap<K, List<V>>();
 
   Grouping(Iterable<V> source, [K keyFunc(V) = null]) {
-    if(keyFunc == null) {
+    if (keyFunc == null) {
       keyFunc = (v) => v;
     }
 

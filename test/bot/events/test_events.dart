@@ -7,11 +7,11 @@ class TestEvents {
 
   async.Stream<String> get testEvent => _testEventHandle.stream;
 
-  void fireTestEvent(String value){
+  void fireTestEvent(String value) {
     _testEventHandle.add(value);
   }
 
-  static void run(){
+  static void run() {
     test('Event, EventHandle', () {
 
       var target = new TestEvents();

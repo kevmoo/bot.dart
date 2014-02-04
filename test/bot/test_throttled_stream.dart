@@ -83,11 +83,11 @@ void main() {
 }
 
 Future<int> _sum(Iterable<int> values) {
-  if(values == null) throw new ArgumentError('null!');
+  if (values == null) throw new ArgumentError('null!');
 
   return new Future(() => values.reduce((a, b) {
-    if(a == null) throw new ArgumentError();
-    if(b == null) throw new ArgumentError();
+    if (a == null) throw new ArgumentError();
+    if (b == null) throw new ArgumentError();
     return a + b;
   }));
 }

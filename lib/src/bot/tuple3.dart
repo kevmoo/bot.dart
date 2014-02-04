@@ -1,11 +1,10 @@
 part of bot;
 
-class Tuple3<T1, T2, T3>
-  extends Tuple<T1, T2> {
+class Tuple3<T1, T2, T3> extends Tuple<T1, T2> {
   final T3 item3;
 
-  const Tuple3(T1 param1, T2 param2, this.item3) :
-    super(param1, param2);
+  const Tuple3(T1 param1, T2 param2, this.item3)
+      : super(param1, param2);
 
   bool operator ==(Tuple3<T1, T2, T3> other) {
     return other != null &&

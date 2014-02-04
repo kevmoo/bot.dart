@@ -32,7 +32,7 @@ class BungeeNum {
     assert(isValidNumber(_target));
     assert(isValidNumber(_current));
 
-    if(_velocity == null) {
+    if (_velocity == null) {
       _velocity = 0;
     } else {
       _velocity *= 0.8;

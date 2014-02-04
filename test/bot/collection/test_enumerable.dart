@@ -73,8 +73,7 @@ class TestEnumerable {
         throwsUnsupportedError);
 
     final withDupes = $(['the', 'cat', 'is', 'the', 'super', 'cat']);
-    expect(() => withDupes.toMap((s) => s.length),
-        throwsUnsupportedError);
+    expect(() => withDupes.toMap((s) => s.length), throwsUnsupportedError);
   }
 
   static void _testCount() {

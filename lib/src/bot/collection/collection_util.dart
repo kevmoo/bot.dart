@@ -4,9 +4,9 @@ class CollectionUtil {
   static bool allUnique(Iterable items) {
     requireArgumentNotNull(items, 'items');
 
-    for(int i = 0; i < items.length; i++) {
-      for(int j = i + 1; j < items.length; j++) {
-        if(items.elementAt(i) == items.elementAt(j)) {
+    for (int i = 0; i < items.length; i++) {
+      for (int j = i + 1; j < items.length; j++) {
+        if (items.elementAt(i) == items.elementAt(j)) {
           return false;
         }
       }
@@ -16,7 +16,7 @@ class CollectionUtil {
 
   static int count(Iterable source, bool test(dynamic)) {
     return source.fold(0, (int previous, dynamic element) {
-      if(test(element)) {
+      if (test(element)) {
         return previous + 1;
       } else {
         return previous;
@@ -41,7 +41,7 @@ class CollectionUtil {
 
   static void forEachWithIndex(Iterable source, Action2<dynamic, int> f) {
     int i = 0;
-    for(final e in source) {
+    for (final e in source) {
       f(e, i++);
     }
   }
@@ -52,9 +52,9 @@ class CollectionUtil {
     }
 
     final map = new Map();
-    for(final e in source) {
+    for (final e in source) {
       final k = keyFunc(e);
-      if(map.containsKey(k)) {
+      if (map.containsKey(k)) {
         throw new UnsupportedError("The key '$k' is duplicated");
       }
       map[k] = valueFunc(e);
@@ -70,15 +70,15 @@ class _DistinctIterator<T> implements Iterator<T> {
   final List<T> _found;
   T _current;
 
-  _DistinctIterator(this._source, this._comparer) :
-    _found = new List<T>();
+  _DistinctIterator(this._source, this._comparer)
+      : _found = new List<T>();
 
   T get current => _current;
 
   bool moveNext() {
-    while(_source.moveNext()) {
+    while (_source.moveNext()) {
       final candidate = _source.current;
-      if(!_found.any((e) => _comparer(e, candidate))) {
+      if (!_found.any((e) => _comparer(e, candidate))) {
         _current = candidate;
         _found.add(_current);
         return true;
