@@ -37,6 +37,9 @@ part 'attached/test_properties.dart';
 
 part 'attached/test_attached_events.dart';
 
+part 'language/test_objects.dart';
+part 'language/test_strings.dart';
+
 void main() {
   group('bot', () {
     group('expandStream', expand_stream.main);
@@ -72,6 +75,9 @@ void main() {
       TestProperties.run();
       TestPropertyEventIntegration.run();
     });
+    
+    TestObjects.run();
+    TestStrings.run();
   });
 }
 
