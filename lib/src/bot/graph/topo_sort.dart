@@ -9,7 +9,7 @@ List topologicalSort(Map<dynamic, Iterable<dynamic>> dependencies) {
 
   int targetCount = graph._map.length;
 
-  while(items.length < targetCount) {
+  while (items.length < targetCount) {
 
     var zeros = graph._map.values
         .where((_GraphNode node) {

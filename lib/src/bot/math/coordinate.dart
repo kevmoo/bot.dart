@@ -2,7 +2,7 @@ part of bot;
 
 class Coordinate<T extends num> extends math.Point<T> {
 
-  const Coordinate([T x = 0, T y = 0]) : super(x, y);
+  const Coordinate([T x = 0, T y = 0]): super(x, y);
 
   bool get isValid => isValidNumber(x) && isValidNumber(y);
 

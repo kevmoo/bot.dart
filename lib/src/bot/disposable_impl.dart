@@ -24,5 +24,5 @@ class DisposableImpl implements Disposable {
    * Do not call this method directly. Call [dispose] instead.
    * Subclasses should override this method to implement [Disposable] behavior.
    */
-  void disposeInternal() { }
+  void disposeInternal() {}
 }

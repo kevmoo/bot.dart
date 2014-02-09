@@ -60,7 +60,7 @@ class _StringLineIterator extends Iterator<String> {
 
   String _current;
 
-  _StringLineIterator(String source) : _reader = new StringLineReader(source);
+  _StringLineIterator(String source): _reader = new StringLineReader(source);
 
   String get current => _current;
 

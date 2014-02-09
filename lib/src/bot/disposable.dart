@@ -6,5 +6,5 @@ abstract class Disposable {
 }
 
 class DisposedError extends StateError {
-  DisposedError() : super('Invalid operation on disposed object');
+  DisposedError(): super('Invalid operation on disposed object');
 }

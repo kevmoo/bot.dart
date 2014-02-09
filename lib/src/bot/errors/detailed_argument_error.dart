@@ -5,10 +5,11 @@ class DetailedArgumentError extends ArgumentError {
   final details;
 
   DetailedArgumentError(this.argument, this.details) {
-    if(argument == null || argument.length == 0) {
-      throw new InvalidOperationError("That's just sad. Give me a valid argument");
+    if (argument == null || argument.length == 0) {
+      throw new InvalidOperationError(
+          "That's just sad. Give me a valid argument");
     }
-    if(details == null || details.length == 0) {
+    if (details == null || details.length == 0) {
       throw new InvalidOperationError("That's just sad. I need details!");
     }
   }
