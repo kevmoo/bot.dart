@@ -4,14 +4,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:hop/hop.dart';
 import 'package:hop/hop_tasks.dart';
+import 'package:hop_docgen/hop_docgen.dart';
 import '../test/harness_console.dart' as test_console;
-
-import 'package:hop/src/hop_tasks_experimental.dart' as dartdoc;
 
 void main(List<String> args) {
   addTask('test', createUnitTestTask(test_console.testCore));
 
-  addTask('docs', createDartDocTask(_getLibs, linkApi: true, postBuild: dartdoc.createPostBuild(_cfg)));
+  addTask('docs', createDocGenTask('../kev_dartdoc_viewer'));
 
   //
   // Analyzer
@@ -38,6 +37,3 @@ Future<List<String>> _getLibs() {
       .map((File file) => file.path)
       .toList();
 }
-
-final _cfg = new dartdoc.DocsConfig('BOT', 'https://github.com/kevmoo/bot.dart',
-    'logo.png', 333, 250, (String libName) => libName.startsWith('bot'));
