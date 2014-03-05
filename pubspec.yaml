@@ -9,6 +9,6 @@ documentation: http://kevmoo.github.io/bot.dart
 dev_dependencies:
   bot_test: '>=0.1.5'
   browser: '>=0.9.0 <0.10.0'
-  hop: '>=0.30.1 <0.31.0'
+  hop: '>=0.30.2 <0.31.0'
   hop_docgen: '>=0.1.1 <0.2.0'
   unittest: '>=0.9.0 <0.11.0'
