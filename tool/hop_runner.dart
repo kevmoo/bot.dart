@@ -20,14 +20,6 @@ void main(List<String> args) {
   addTask('analyze_test_libs', createAnalyzerTask(
       ['test/harness_browser.dart', 'test/harness_console.dart']));
 
-  //
-  // Dart2js
-  //
-  final paths = ['test/harness_browser.dart'];
-
-  addTask('dart2js', createDartCompilerTask(paths,
-      liveTypeAnalysis: true));
-
   runHop(args);
 }
 
