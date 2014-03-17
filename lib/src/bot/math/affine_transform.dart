@@ -63,6 +63,8 @@ class AffineTransform implements Cloneable<AffineTransform> {
     if (shearY != null) {
       _shY = shearY;
     }
+
+    return this;
   }
 
   bool get isIdentity {
