@@ -12,6 +12,8 @@ import 'test_throttled_stream.dart' as throttled_stream;
 import 'graph/topo_sort_test.dart' as topological;
 import 'graph/tarjan_test.dart' as tarjan;
 
+import 'math/test_rect.dart' as math_rect;
+
 part 'test_cloneable.dart';
 part 'test_tuple.dart';
 
@@ -27,7 +29,6 @@ part 'test_util.dart';
 part 'math/test_coordinate.dart';
 part 'math/test_vector.dart';
 part 'math/test_affine_transform.dart';
-part 'math/test_rect.dart';
 
 part 'color/test_rgb_color.dart';
 part 'color/test_hsl_color.dart';
@@ -53,10 +54,12 @@ void main() {
     TestCollectionUtil.run();
     TestArray2d.run();
 
-    TestCoordinate.run();
-    TestBox.run();
-    TestVector.run();
-    TestAffineTransform.run();
+    group('math', () {
+      TestCoordinate.run();
+      math_rect.main();
+      TestVector.run();
+      TestAffineTransform.run();
+    });
 
     TestUtil.run();
     TestCloneable.run();
