@@ -37,7 +37,7 @@ void _testValid() {
   Box a;
 
   var validLocations = const [-1, 0, 1];
-  var validSizes = const [-1, 0, 1];
+  var validSizes = const [0, 1];
 
   var invalidLocations = const [double.NAN, double.NEGATIVE_INFINITY,
       double.INFINITY, null];
@@ -49,6 +49,7 @@ void _testValid() {
     for (var y in validLocations) {
       for (var w in validSizes) {
         for (var h in validSizes) {
+          print([x, y, w, h]);
           a = new Box(x, y, w, h);
           expect(a.isValid, isTrue);
 
