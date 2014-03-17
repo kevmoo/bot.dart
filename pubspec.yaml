@@ -1,5 +1,5 @@
 name: bot
-version: 0.26.1-dev
+version: 0.26.1
 author: Kevin Moore <github@j832.com>
 description: A collection of (mostly) general libraries to make working with Dart more productive.
 homepage: https://github.com/kevmoo/bot.dart

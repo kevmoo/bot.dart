@@ -1,5 +1,11 @@
 # Changelog - Dart Bag of Tricks
 
+## 0.26.1 2014-03-17
+
+* Dependency tweaks.
+* Fixed subclass issues with `Box` and `Rectangle` super class.
+* Test cleanup.
+
 ## 0.26.0 2013-12-09 (SDK 1.0.2.1 r30821)
 
 * **BREAKING** Removed deprecated functions in math: `Vector.length` and `Coordinate.getDistance`.
