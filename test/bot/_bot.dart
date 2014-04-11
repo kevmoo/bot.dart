@@ -12,7 +12,7 @@ import 'test_throttled_stream.dart' as throttled_stream;
 import 'graph/topo_sort_test.dart' as topological;
 import 'graph/tarjan_test.dart' as tarjan;
 
-import 'math/test_rect.dart' as math_rect;
+import 'math/test_box.dart' as math_rect;
 
 part 'test_cloneable.dart';
 part 'test_tuple.dart';

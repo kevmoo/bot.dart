@@ -49,7 +49,6 @@ void _testValid() {
     for (var y in validLocations) {
       for (var w in validSizes) {
         for (var h in validSizes) {
-          print([x, y, w, h]);
           a = new Box(x, y, w, h);
           expect(a.isValid, isTrue);
 
