@@ -2,7 +2,7 @@ library test.bot.graph.topo_sort;
 
 import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
-import 'package:bot/src/bot/graph.dart';
+import 'package:bot/src/graph.dart';
 
 void main() {
   _test('empty', {}, []);

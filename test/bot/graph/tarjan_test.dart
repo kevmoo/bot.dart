@@ -1,7 +1,7 @@
 library test.bot.graph.tarjan;
 
 import 'package:unittest/unittest.dart';
-import 'package:bot/src/bot/graph.dart';
+import 'package:bot/src/graph.dart';
 
 void main() {
   test('single item', () {

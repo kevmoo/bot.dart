@@ -1,7 +1,7 @@
 library test.bot.expand_stream;
 
 import 'dart:async';
-import 'package:bot/src/bot/expand_stream.dart';
+import 'package:bot/src/expand_stream.dart';
 import 'package:unittest/unittest.dart';
 
 void main() {

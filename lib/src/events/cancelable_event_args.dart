@@ -1,0 +1,11 @@
+part of bot.events;
+
+class CancelableEventArgs extends EventArgs {
+  bool _canceled = false;
+
+  bool get isCanceled => _canceled;
+
+  void cancel() {
+    _canceled = true;
+  }
+}
