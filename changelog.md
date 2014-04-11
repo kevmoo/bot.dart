@@ -1,4 +1,12 @@
-# Changelog - Dart Bag of Tricks
+## 0.27.2
+
+* **DEPRECATIONS**
+    * `Cloneable`
+    * `Disposable` and related classes.
+    * `EventHandler` and related classes.
+    * The `@protected` annotation.
+    * `Sequence` and `ReadOnlyCollection`
+* Moved library code into many mini-libraries.
 
 ## 0.26.1 2014-03-17
 
@@ -16,7 +24,7 @@
     * `expandStream`: Like `Stream.expand` but allows one to yield a sub-`Stream` for each item in the source.
 * Miscellaneous
     * Broke a few pieces of `bot` into sub-libraries.
-    * Broke tests into seperate libraries.    
+    * Broke tests into seperate libraries.
 
 ## 0.25.3 2013-11-24 (SDK 1.0.0.7 r30338)
 

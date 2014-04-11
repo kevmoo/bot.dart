@@ -1,5 +1,9 @@
 part of bot.collection;
 
+/// **DEPRECATED**
+///
+/// This model was never generalized enough to expose it in a low-level library.
+@deprecated
 class ReadOnlyCollection<T> extends Sequence<T> {
   final List<T> _items;
 

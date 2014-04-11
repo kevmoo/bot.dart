@@ -87,29 +87,3 @@ class _DistinctIterator<T> implements Iterator<T> {
     return false;
   }
 }
-
-class _SequenceIterator<E> implements Iterator<E> {
-  final Sequence<E> _list;
-  final int _length;
-  int _position;
-  E _current;
-
-  _SequenceIterator(Sequence<E> list)
-      : _list = list, _position = -1, _length = list.length;
-
-  bool moveNext() {
-    if (_list.length != _length) {
-      throw new ConcurrentModificationError(_list);
-    }
-    int nextPosition = _position + 1;
-    if (nextPosition < _length) {
-      _position = nextPosition;
-      _current = _list[nextPosition];
-      return true;
-    }
-    _current = null;
-    return false;
-  }
-
-  E get current => _current;
-}

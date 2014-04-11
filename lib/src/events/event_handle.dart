@@ -1,5 +1,11 @@
 part of bot.events;
 
+/// **DEPRECATED**
+///
+/// This model was never generalized enough to expose it in a low-level library.
+///
+/// Use `StreamController` from `dart:async` instead.
+@deprecated
 class EventHandle<T> implements Disposable {
   final async.StreamController<T> _controller;
   bool _disposed = false;
