@@ -1,4 +1,4 @@
-## 0.27.2
+## 0.26.2
 
 * **DEPRECATIONS**
     * `Cloneable`
