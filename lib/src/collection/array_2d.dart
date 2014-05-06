@@ -1,11 +1,20 @@
-part of bot.collection;
+library bot.collection.array_2d;
+
+import 'dart:math' as math;
+
+import 'dart:collection';
+
+import 'package:bot/src/math.dart';
+import 'package:bot/src/require.dart';
+import 'package:bot/src/tuple.dart';
+import 'package:bot/src/util.dart';
 
 // TODO: many...
 // ponder implementing other mutation methods
 // implement equals
 // toString
 
-class Array2d<T> extends Sequence<T> {
+class Array2d<T> extends ListBase<T> {
   final int width;
   final int height;
   final List<T> _source;
@@ -13,9 +22,9 @@ class Array2d<T> extends Sequence<T> {
   factory Array2d.readonlyFrom(int width, Iterable<T> source) {
     requireArgumentNotNull(width, 'width');
     requireArgumentNotNull(source, 'source');
-    final list = new List<T>.from(source);
-    final s = source == null ? null : new ReadOnlyCollection<T>.wrap(list);
-    return new Array2d.wrap(width, s.asList());
+    var list = new List<T>.from(source);
+    var s = source == null ? null : new UnmodifiableListView<T>(list);
+    return new Array2d.wrap(width, s);
   }
 
   factory Array2d(int width, int height, [T initialValue]) {
@@ -58,6 +67,10 @@ class Array2d<T> extends Sequence<T> {
 
   int get length => _source.length;
 
+  void set length(int value) {
+    throw new UnsupportedError('Not supported');
+  }
+
   T operator [](int index) => _source[index];
 
   void operator []=(int index, T value) {
@@ -66,7 +79,7 @@ class Array2d<T> extends Sequence<T> {
 
   // TODO: test
   //  - especially equality across instances, rows, etc
-  Sequence<Sequence<T>> get rows => new _Array2dRows(this);
+  List<List<T>> get rows => new _Array2dRows(this);
 
   T get(int x, int y) {
     final i = _getIndex(x, y);
@@ -110,18 +123,23 @@ class Array2d<T> extends Sequence<T> {
   }
 }
 
-class _Array2dRows<T> extends Sequence<Sequence<T>> {
+class _Array2dRows<T> extends ListBase<List<T>> {
   final Array2d<T> source;
 
   _Array2dRows(this.source);
 
-  @override
   int get length => source.height;
 
-  @override
-  Sequence<T> operator [](int index) => new _Array2dRow<T>(this.source, index);
+  void set length(int value) {
+    throw new UnsupportedError('Not supported');
+  }
 
-  @override
+  List<T> operator [](int index) => new _Array2dRow<T>(this.source, index);
+
+  void operator []=(int index, List<T> value) {
+    throw new UnsupportedError('Not supported');
+  }
+
   bool operator ==(other) {
     return other is _Array2dRows && other.source == this.source;
   }
@@ -129,7 +147,7 @@ class _Array2dRows<T> extends Sequence<Sequence<T>> {
   int get hashCode => source.hashCode;
 }
 
-class _Array2dRow<T> extends Sequence<T> {
+class _Array2dRow<T> extends ListBase<T> {
   final Array2d<T> source;
   final int row;
 
@@ -138,8 +156,16 @@ class _Array2dRow<T> extends Sequence<T> {
   @override
   int get length => source.width;
 
+  void set length(int value) {
+    throw new UnsupportedError('Not supported');
+  }
+
   @override
   T operator [](int index) => source.get(index, row);
+
+  void operator []=(int index, T value) {
+    throw new UnsupportedError('Not supported');
+  }
 
   @override
   bool operator ==(other) {

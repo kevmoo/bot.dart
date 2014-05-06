@@ -2,7 +2,6 @@ library bot.math;
 
 import 'dart:math' as math;
 
-import 'cloneable.dart';
 import 'require.dart';
 import 'util.dart';
 

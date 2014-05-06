@@ -1,6 +1,6 @@
 part of bot.math;
 
-class AffineTransform implements Cloneable<AffineTransform> {
+class AffineTransform {
   num _scX, _shY, _shX, _scY, _tX, _tY;
 
   AffineTransform([num scaleX = 1, num shearY = 0,

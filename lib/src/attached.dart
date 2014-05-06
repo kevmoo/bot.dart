@@ -1,3 +1,4 @@
+@deprecated
 library bot.attached;
 
 import 'dart:async' as async;

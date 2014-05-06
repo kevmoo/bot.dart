@@ -1,5 +1,6 @@
 part of bot.math;
 
+@deprecated
 class Box<T extends num> extends math.Rectangle<T> {
 
   const Box(T left, T top, T width, T height): super(left, top, width, height);

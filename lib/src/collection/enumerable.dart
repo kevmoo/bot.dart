@@ -41,6 +41,7 @@ abstract class Enumerable<T> extends IterableBase<T> {
   Enumerable<T> concat(Iterable<T> source) =>
       $([this, source]).expand((e) => e);
 
+  @deprecated
   ReadOnlyCollection<T> toReadOnlyCollection() => new ReadOnlyCollection<T>(this);
 
   void forEachWithIndex(Action2<T, int> f) {

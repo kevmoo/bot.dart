@@ -1,3 +1,10 @@
+## 0.27.0
+* `Array2d` no longer depends on deprecated types.
+* `AffineTransform` no longer depends on deprecated tyes.
+* The attached library is now deprecated.
+* `Enumerable.toReadOnlyCollection` is now deprecated.
+* `Box` is now deprecated.
+
 ## 0.26.2
 
 * **DEPRECATIONS**

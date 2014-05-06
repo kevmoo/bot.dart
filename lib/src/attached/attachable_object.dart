@@ -1,5 +1,6 @@
 part of bot.attached;
 
+@deprecated
 class AttachableObject extends DisposableImpl {
   final Map<Property, Object> _propertyValues =
       new Map<Property, Object>();
