@@ -1,3 +1,7 @@
+## 0.27.0+2
+
+* Updated `hop` and added `hop_unittest` dev dependencies.
+
 ## 0.27.0+1
 
 * Updated test dependencies.
