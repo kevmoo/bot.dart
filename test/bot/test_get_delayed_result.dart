@@ -80,7 +80,7 @@ void _drTest(String description, input, expectedOutput, [bool expectThrow = fals
     if (expectThrow) {
       expect(future, throwsA("sorry, I don't like $expectedOutput"));
     } else {
-      expect(future, finishesWith(same(expectedOutput)));
+      expect(future, completion(same(expectedOutput)));
     }
   });
 }
