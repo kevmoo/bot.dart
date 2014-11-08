@@ -14,7 +14,6 @@ import 'graph/tarjan_test.dart' as tarjan;
 
 part 'test_tuple.dart';
 
-part 'collection/test_enumerable.dart';
 part 'collection/test_number_enumerable.dart';
 
 part 'test_util.dart';
