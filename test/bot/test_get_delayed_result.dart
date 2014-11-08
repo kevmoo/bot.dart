@@ -2,7 +2,6 @@ library test.bot.delayed_result;
 
 import 'dart:async';
 import 'package:bot/bot.dart';
-import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
 void main() {

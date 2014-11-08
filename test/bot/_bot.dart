@@ -1,6 +1,5 @@
 library test_bot;
 
-import 'dart:async' as async;
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
 import 'package:bot_test/bot_test.dart';
@@ -12,16 +11,10 @@ import 'test_throttled_stream.dart' as throttled_stream;
 import 'graph/topo_sort_test.dart' as topological;
 import 'graph/tarjan_test.dart' as tarjan;
 
-import 'math/test_box.dart' as math_rect;
-
-part 'test_cloneable.dart';
 part 'test_tuple.dart';
-
-part 'events/test_events.dart';
 
 part 'collection/test_collection_util.dart';
 part 'collection/test_enumerable.dart';
-part 'collection/test_sequence.dart';
 part 'collection/test_number_enumerable.dart';
 part 'collection/test_array_2d.dart';
 
@@ -32,11 +25,6 @@ part 'math/test_affine_transform.dart';
 
 part 'color/test_rgb_color.dart';
 part 'color/test_hsl_color.dart';
-
-part 'attached/test_property_event_integration.dart';
-part 'attached/test_properties.dart';
-
-part 'attached/test_attached_events.dart';
 
 void main() {
   group('bot', () {
@@ -49,32 +37,22 @@ void main() {
     });
     TestTuple.run();
     TestEnumerable.run();
-    TestSequence.run();
     TestNumberEnumerable.run();
     TestCollectionUtil.run();
     TestArray2d.run();
 
     group('math', () {
       TestCoordinate.run();
-      math_rect.main();
       TestVector.run();
       TestAffineTransform.run();
     });
 
     TestUtil.run();
-    TestCloneable.run();
-    TestEvents.run();
 
     TestRgbColor.run();
     TestHslColor.run();
 
     test('StringReader', _testStringReader);
-
-    group('attached', () {
-      TestAttachedEvents.run();
-      TestProperties.run();
-      TestPropertyEventIntegration.run();
-    });
   });
 }
 

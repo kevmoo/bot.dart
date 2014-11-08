@@ -5,13 +5,7 @@ class TestCollectionUtil {
   static void run() {
     group('CollectionUtil', () {
       test('allUnique', _testAllUnique);
-      test('listish', _testListish);
     });
-  }
-
-  static void _testListish() {
-    var roc = new ReadOnlyCollection([1, 2]);
-    expect(CollectionUtil.allUnique(roc), isTrue);
   }
 
   static void _testAllUnique() {
