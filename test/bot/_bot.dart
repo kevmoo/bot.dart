@@ -40,7 +40,6 @@ void main() {
     TestEnumerable.run();
     TestNumberEnumerable.run();
 
-
     group('math', () {
       TestCoordinate.run();
       TestVector.run();
@@ -56,7 +55,6 @@ void main() {
   });
 }
 
-
 void _testStringReader() {
   _verifyValues('', [''], null);
   _verifyValues('Shanna', ['Shanna'], null);
@@ -69,9 +67,11 @@ void _testStringReader() {
   // a bit crazy. \r not before \n is not counted as a newline
   _verifyValues('\r\n\r\n\r\r\n\n', ['', '', '\r', '', ''], null);
 
-  _verifyValues('line1\nline2\n\nthis\nis\the\rest\n',
-      ['line1','line2',''], 'this\nis\the\rest\n');
-
+  _verifyValues('line1\nline2\n\nthis\nis\the\rest\n', [
+    'line1',
+    'line2',
+    ''
+  ], 'this\nis\the\rest\n');
 }
 
 void _verifyValues(String input, List<String> output, String rest) {

@@ -1,7 +1,6 @@
 part of test_bot;
 
 class TestEnumerable {
-
   static void run() {
     group('Enumerable', () {
       test('count', _testCount);
@@ -69,8 +68,8 @@ class TestEnumerable {
     //
     // doesn't support duplicate keys
     //
-    expect(() => noDupes.toMap((s) => s, (s) => s.length),
-        throwsUnsupportedError);
+    expect(() =>
+        noDupes.toMap((s) => s, (s) => s.length), throwsUnsupportedError);
 
     final withDupes = $(['the', 'cat', 'is', 'the', 'super', 'cat']);
     expect(() => withDupes.toMap((s) => s.length), throwsUnsupportedError);

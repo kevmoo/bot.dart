@@ -5,7 +5,6 @@ part of test_bot;
 class TestAffineTransform {
   static void run() {
     group('AffineTransform', () {
-
       test('constructors', () {
         final scaleTx = new AffineTransform.fromScale(1, 2);
         expect(scaleTx, new AffineTransform(1, 0, 0, 2, 0, 0));

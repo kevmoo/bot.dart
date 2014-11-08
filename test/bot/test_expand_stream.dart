@@ -5,7 +5,6 @@ import 'package:bot/src/expand_stream.dart';
 import 'package:unittest/unittest.dart';
 
 void main() {
-
   group('expandStream', () {
     // source stream is paused during future
     // non-future value just works -- return value ignored

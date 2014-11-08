@@ -12,7 +12,6 @@ class _Graph<T> {
   final LinkedHashMap<T, _GraphNode<T>> _map;
 
   factory _Graph(Map<T, Iterable<T>> items) {
-
     var map = new LinkedHashMap<T, _GraphNode<T>>();
 
     _GraphNode<T> getNode(T value) =>
@@ -26,7 +25,6 @@ class _Graph<T> {
         var newItem = node.outNodes.add(getNode(outLink));
         requireArgument(newItem, 'items', 'Outlinks must not contain dupes');
       }
-
     });
 
     return new _Graph.core(map);
@@ -40,9 +38,7 @@ class _Graph<T> {
     var sb = new StringBuffer();
     sb.writeln('{');
     _map.values.forEach((_GraphNode<T> value) {
-      var outNodeStr = value.outNodes
-          .map((gn) => gn.value)
-          .join(', ');
+      var outNodeStr = value.outNodes.map((gn) => gn.value).join(', ');
 
       sb.writeln('  ${value.value} => {$outNodeStr}');
     });
@@ -50,7 +46,6 @@ class _Graph<T> {
     sb.writeln('}');
     return sb.toString();
   }
-
 }
 
 class _GraphNode<T> {

@@ -28,8 +28,7 @@ abstract class Enumerable<T> extends IterableBase<T> {
       CollectionUtil.exclude(this, items);
 
   @override
-  Enumerable expand(Func1<T, Iterable> f) =>
-      $(super.expand(f));
+  Enumerable expand(Func1<T, Iterable> f) => $(super.expand(f));
 
   Enumerable<T> distinct([Func2<T, T, bool> comparer = null]) =>
       CollectionUtil.distinct(this, comparer);

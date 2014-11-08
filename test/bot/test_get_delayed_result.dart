@@ -5,7 +5,6 @@ import 'package:bot/bot.dart';
 import 'package:unittest/unittest.dart';
 
 void main() {
-
   _drTest('null', null, null);
 
   _drTest('obj', 1, 1);
@@ -41,7 +40,6 @@ void main() {
 int _drValue = 0;
 
 void _testSilly(List<bool> values, bool doThrow) {
-
   final finalVal = _drValue++;
 
   var msg = values.map((v) => v ? 'future' : 'func').join(' to ');
@@ -58,9 +56,11 @@ void _testSilly(List<bool> values, bool doThrow) {
 
 _returnSilly(List<bool> values, finalVal, bool doThrow) {
   assert(values != null);
-  if(values.isEmpty) {
-    if(doThrow) {
-      return () { throw "sorry, I don't like $finalVal"; };
+  if (values.isEmpty) {
+    if (doThrow) {
+      return () {
+        throw "sorry, I don't like $finalVal";
+      };
     }
     return finalVal;
   }
@@ -73,7 +73,8 @@ _returnSilly(List<bool> values, finalVal, bool doThrow) {
   }
 }
 
-void _drTest(String description, input, expectedOutput, [bool expectThrow = false]) {
+void _drTest(String description, input, expectedOutput,
+    [bool expectThrow = false]) {
   test(description, () {
     final future = getDelayedResult(input);
     if (expectThrow) {

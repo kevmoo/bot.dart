@@ -89,14 +89,14 @@ class TestRgbColor {
 
   static List<RgbColor> _getCoreColors() {
     return [
-            new RgbColor(0,0,0),
-            new RgbColor(1,1,1),
-            new RgbColor(42,29,123),
-            new RgbColor(42,29,120),
-            new RgbColor(254,254,254),
-            new RgbColor(255,255,255),
-            new RgbColor(245, 255, 193)
-            ];
+      new RgbColor(0, 0, 0),
+      new RgbColor(1, 1, 1),
+      new RgbColor(42, 29, 123),
+      new RgbColor(42, 29, 120),
+      new RgbColor(254, 254, 254),
+      new RgbColor(255, 255, 255),
+      new RgbColor(245, 255, 193)
+    ];
   }
 
   static List<HslColor> _getCoreHslColors() {
@@ -104,7 +104,8 @@ class TestRgbColor {
   }
 
   static RgbColor _getRandom() {
-    return new RgbColor(_randomIntComponent(), _randomIntComponent(), _randomIntComponent());
+    return new RgbColor(
+        _randomIntComponent(), _randomIntComponent(), _randomIntComponent());
   }
 
   static int _randomIntComponent() => rnd.nextInt(256);

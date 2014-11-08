@@ -1,6 +1,5 @@
 part of bot.graph;
 
-
 /**
  * [Tarjan's strongly connected components algorithm](http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm)
  */
@@ -82,4 +81,3 @@ class _TarjanCycleDetect<T> {
 
   int _setLowLink(_GraphNode<T> node, int value) => _linkExpando[node] = value;
 }
-

@@ -9,9 +9,9 @@ void main() {
 
   _testThrow('null', null, throwsNullArgumentError);
 
-  _test('one node, no deps', {'a' : []}, ['a']);
+  _test('one node, no deps', {'a': []}, ['a']);
 
-  _test('one node, one dep', {'a' : ['b']}, ['b', 'a']);
+  _test('one node, one dep', {'a': ['b']}, ['b', 'a']);
 
   _test('test tushar', {
     'd': ['c'],

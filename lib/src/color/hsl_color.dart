@@ -64,5 +64,4 @@ class HslColor {
     }
     return v1;
   }
-
 }

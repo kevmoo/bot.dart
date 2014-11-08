@@ -1,7 +1,6 @@
 part of test_bot;
 
 class TestNumberEnumerable {
-
   static void run() {
     group('NumberEnumerable', () {
       test('sum', _testSum);

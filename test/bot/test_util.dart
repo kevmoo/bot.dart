@@ -11,15 +11,16 @@ class TestUtil {
   static void _testSplitLines() {
     expect(() => Util.splitLines(null), throwsNullArgumentError);
 
-    final inputMap = const [const Tuple('test', const ['test']),
-                            const Tuple('test\ntest', const ['test','test']),
-                            const Tuple('\n', const ['','']),
-                            const Tuple('  \n  ', const ['  ','  ']),
-                            const Tuple('  \n \n', const ['  ',' ','']),
-                            const Tuple('  \n \n', const ['  ',' ',''])
-                            ];
+    final inputMap = const [
+      const Tuple('test', const ['test']),
+      const Tuple('test\ntest', const ['test', 'test']),
+      const Tuple('\n', const ['', '']),
+      const Tuple('  \n  ', const ['  ', '  ']),
+      const Tuple('  \n \n', const ['  ', ' ', '']),
+      const Tuple('  \n \n', const ['  ', ' ', ''])
+    ];
 
-    for(final i in inputMap) {
+    for (final i in inputMap) {
       expect(Util.splitLines(i.item1), equals(i.item2));
     }
   }

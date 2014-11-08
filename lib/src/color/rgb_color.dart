@@ -95,8 +95,8 @@ class RgbColor {
     return hexColor.toLowerCase();
   }
 
-  static final RegExp _validHexColorRe = new RegExp('^#(?:[0-9a-f]{6})\$',
-      multiLine: false, caseSensitive: false);
+  static final RegExp _validHexColorRe =
+      new RegExp('^#(?:[0-9a-f]{6})\$', multiLine: false, caseSensitive: false);
 
   static bool _isValidHexColor(String str) {
     return _validHexColorRe.hasMatch(str);

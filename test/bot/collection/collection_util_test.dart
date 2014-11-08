@@ -3,8 +3,8 @@ library bot.test.collection.collection_util.test;
 import 'package:bot/src/collection.dart';
 import 'package:unittest/unittest.dart';
 
-  void main() {
-      test('allUnique', () {
+void main() {
+  test('allUnique', () {
     expect(CollectionUtil.allUnique([]), isTrue);
 
     expect(CollectionUtil.allUnique([1]), isTrue);
@@ -21,4 +21,4 @@ import 'package:unittest/unittest.dart';
     expect(CollectionUtil.allUnique(['', '']), isFalse);
     expect(CollectionUtil.allUnique(['str', 'str']), isFalse);
   });
-  }
+}
