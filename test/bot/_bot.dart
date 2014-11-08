@@ -14,8 +14,6 @@ import 'graph/tarjan_test.dart' as tarjan;
 
 part 'test_tuple.dart';
 
-part 'collection/test_number_enumerable.dart';
-
 part 'test_util.dart';
 part 'math/test_coordinate.dart';
 part 'math/test_vector.dart';
@@ -36,8 +34,6 @@ void main() {
       group('tarjan', tarjan.main);
     });
     TestTuple.run();
-    TestEnumerable.run();
-    TestNumberEnumerable.run();
 
     group('math', () {
       TestCoordinate.run();
