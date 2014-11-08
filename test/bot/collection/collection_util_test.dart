@@ -1,14 +1,10 @@
-part of test_bot;
+library bot.test.collection.collection_util.test;
 
-class TestCollectionUtil {
+import 'package:bot/src/collection.dart';
+import 'package:unittest/unittest.dart';
 
-  static void run() {
-    group('CollectionUtil', () {
-      test('allUnique', _testAllUnique);
-    });
-  }
-
-  static void _testAllUnique() {
+  void main() {
+      test('allUnique', () {
     expect(CollectionUtil.allUnique([]), isTrue);
 
     expect(CollectionUtil.allUnique([1]), isTrue);
@@ -24,5 +20,5 @@ class TestCollectionUtil {
     expect(CollectionUtil.allUnique(['', '']), isFalse);
     expect(CollectionUtil.allUnique(['', '']), isFalse);
     expect(CollectionUtil.allUnique(['str', 'str']), isFalse);
+  });
   }
-}

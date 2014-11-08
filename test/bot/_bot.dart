@@ -5,6 +5,7 @@ import 'package:bot/bot.dart';
 import 'package:bot_test/bot_test.dart';
 import 'package:unittest/unittest.dart';
 
+import 'collection/_collection_test.dart' as collection;
 import 'test_expand_stream.dart' as expand_stream;
 import 'test_get_delayed_result.dart' as get_delayed_result;
 import 'test_throttled_stream.dart' as throttled_stream;
@@ -13,10 +14,8 @@ import 'graph/tarjan_test.dart' as tarjan;
 
 part 'test_tuple.dart';
 
-part 'collection/test_collection_util.dart';
 part 'collection/test_enumerable.dart';
 part 'collection/test_number_enumerable.dart';
-part 'collection/test_array_2d.dart';
 
 part 'test_util.dart';
 part 'math/test_coordinate.dart';
@@ -28,6 +27,8 @@ part 'color/test_hsl_color.dart';
 
 void main() {
   group('bot', () {
+    group('collection', collection.main);
+
     group('expandStream', expand_stream.main);
     group('getDelayedResult', get_delayed_result.main);
     group('ThrottledStream', throttled_stream.main);
@@ -38,8 +39,7 @@ void main() {
     TestTuple.run();
     TestEnumerable.run();
     TestNumberEnumerable.run();
-    TestCollectionUtil.run();
-    TestArray2d.run();
+
 
     group('math', () {
       TestCoordinate.run();
