@@ -11,20 +11,6 @@ List<List> stronglyConnectedComponents(Map<dynamic, Iterable> graph) {
   return tarjan.calculate();
 }
 
-/**
- * Use top-level [stronglyConnectedComponents] instead.
- */
-@deprecated
-class TarjanCycleDetect<TNode> {
-
-  /**
-   * Use top-level [stronglyConnectedComponents] instead.
-   */
-  @deprecated
-  static List<List> getStronglyConnectedComponents(Map graph) =>
-      stronglyConnectedComponents(graph);
-}
-
 class _TarjanCycleDetect<T> {
   final _indexExpando = new Expando<int>('index');
   final _linkExpando = new Expando<int>('link');

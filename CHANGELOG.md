@@ -1,3 +1,7 @@
+## 0.28.0
+
+* Removal of a lot of deprecated members.
+
 ## 0.27.0+2
 
 * Updated `hop` and added `hop_unittest` dev dependencies.
@@ -106,7 +110,7 @@
 
 ## 0.20.0 2013-04-17 (SDK 0.4.7+3 r21604)
 
-* Removal of a lot of `@deprecated` members.
+* Removal of a lot of deprecated members.
 * The big library split up. Libraries have been moved into seperate packages.
     * [HOP](https://github.com/kevmoo/hop.dart)
     * [bot_io](https://github.com/kevmoo/bot_io.dart)

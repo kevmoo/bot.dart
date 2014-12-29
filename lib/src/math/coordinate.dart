@@ -24,7 +24,4 @@ class Coordinate<T extends num> extends math.Point<T> {
 
   static bool valid(math.Point point) =>
       isValidNumber(point.x) && isValidNumber(point.y);
-
-  @deprecated
-  dynamic toJson() => {'x': x, 'y': y};
 }
