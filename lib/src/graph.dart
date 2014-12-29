@@ -18,7 +18,7 @@ class _Graph<T> {
         map.putIfAbsent(value, () => new _GraphNode<T>(value));
 
     items.forEach((T item, Iterable<T> outLinks) {
-      if (outLinks == null) outLinks = [];
+      if (outLinks == null) outLinks = <T>[];
 
       var node = getNode(item);
       for (T outLink in outLinks) {
@@ -50,12 +50,13 @@ class _Graph<T> {
 
 class _GraphNode<T> {
   final T value;
-  final LinkedHashSet<_GraphNode> outNodes = new LinkedHashSet<_GraphNode<T>>();
+  final LinkedHashSet<_GraphNode<T>> outNodes =
+      new LinkedHashSet<_GraphNode<T>>();
 
   _GraphNode(this.value);
 
-  bool operator ==(Object other) =>
-      other is _GraphNode<T> && other.value == value;
+  bool operator ==(other) =>
+      other is _GraphNode && other.value == value;
 
   int get hashCode => value.hashCode;
 }

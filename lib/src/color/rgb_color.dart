@@ -72,8 +72,8 @@ class RgbColor {
 
   int get hashCode => Util.getHashCode([r, g, b]);
 
-  bool operator ==(RgbColor other) {
-    return other != null && other.r == r && other.g == g && other.b == b;
+  bool operator ==(other) {
+    return other is RgbColor && other.r == r && other.g == g && other.b == b;
   }
 
   String toString() => '{RgbColor: $r, $g, $b}';

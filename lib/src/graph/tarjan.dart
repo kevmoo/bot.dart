@@ -29,7 +29,7 @@ class _TarjanCycleDetect<T> {
   final _indexExpando = new Expando<int>('index');
   final _linkExpando = new Expando<int>('link');
 
-  final Queue<_GraphNode> _stack = new Queue<_GraphNode<T>>();
+  final Queue<_GraphNode<T>> _stack = new Queue<_GraphNode<T>>();
   final List<List<T>> _scc = new List<List<T>>();
   final _Graph<T> _list;
 
